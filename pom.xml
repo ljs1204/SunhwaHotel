@@ -90,8 +90,7 @@
 		    <artifactId>cglib</artifactId>
 		    <version>3.2.4</version>
 		</dependency>
-				
-				
+		
 		<!-- 암호화 관련 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 		<dependency>
@@ -99,24 +98,25 @@
 		    <artifactId>spring-security-core</artifactId>
 		    <version>4.2.17.RELEASE</version>
 		</dependency>
-		
-		<!-- 파일업로드 관련 -->
-		
-		<!-- JSON 처리 관련 -->
+
+
+		<!-- 파일업로드  -->								
+		<!-- JSON 처리 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.9.4</version>
 		</dependency>
-		
+
+
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-core</artifactId>
 		    <version>2.9.4</version>
-		</dependency>
-												
+		</dependency>	
+		
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper PUBLIC	"-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 <mapper namespace="co.kr.hotel.dao.MemberDAO">
-<!-- 이지선 로그인  -->
-   <select id="login" resultType="String">
-      SELECT mem_pw FROM member WHERE mem_id = #{param1}
-   </select>
 
 <!--   0311 백유나 회원정보 수정 START -->
 	<select id="myprofile" resultType="co.kr.hotel.dto.MemberDTO">
@@ -27,7 +22,33 @@
 	<select id="emailIdentify" resultType="string">
 	SELECT mem_email FROM member WHERE mem_email = #{param1}
 	</select>
+
+	<select id="login" resultType="String">
+		SELECT mem_pw FROM member WHERE mem_id = #{param1}
+	</select>
+	
+	<select id="overlay" resultType="String">
+		SELECT mem_id FROM member WHERE mem_id = #{param1}
+	</select>
+	
+	<select id="emailcheck" resultType="string">
+		SELECT mem_email FROM member WHERE mem_email = #{param1}
+	
+	</select>
 	
 	
-	 	
+	<insert id="join" parameterType="hashmap">
+		INSERT INTO member(mem_id,mem_grade,mem_pw,mem_name_kr,mem_name_en,mem_birth,mem_phone,mem_email)
+			VALUES(#{id},#{grade},#{pw},#{name_kr},#{name_en},#{user_birth},#{user_phone},#{user_email})
+	</insert>
+	
+	
+	<select id="findid" resultType="string">
+		SELECT mem_id FROM member WHERE mem_name_kr = #{param1} AND mem_birth = #{param2} AND mem_email = #{param3}
+	</select> 
+
+	<update id="findpw">
+		UPDATE member SET mem_pw = #{param3} WHERE mem_id = #{param1} AND mem_email = #{param2}
+	</update>
+
 </mapper>

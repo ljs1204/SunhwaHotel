@@ -6,7 +6,7 @@
    <title>SeonhwaHotel login</title>
    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
    <style>
-         .row {
+			.row {
                 display: flex;
                 flex-wrap: wrap;
                 margin-right: -15px;
@@ -15,6 +15,7 @@
 
             .box{
             margin: 0 auto;
+				margin: 0 auto;
                 min-width: 600px;
                 max-width: 50%;
             }
@@ -51,12 +52,11 @@
             h2{
                 text-align: center;
                 margin-bottom: 10px; 
-            }
-      
+}
    </style>
 </head>
 <body>
-   <div class="register-login-section spad">
+	<div class="register-login-section spad">
         <div class="container">
             <div class="row">
                 <div class="box">
@@ -89,5 +89,6 @@
    if(msg != ""){
        alert(msg);
    }
+
 </script>
 </html>

@@ -37,7 +37,7 @@ public class BoardController {
 	public String write(Model model, @RequestParam HashMap<String, String> params) {		
 		logger.info("write 요청 : {}",params);
 		service.write(params);
-		return "redirect:/";
+		return "redirect:/list";
 	}
 	//상세보기 
 	@GetMapping(value="/detail")
