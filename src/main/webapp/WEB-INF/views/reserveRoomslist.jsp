@@ -1,3 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+
+
 <!DOCTYPE HTML>
 <html>
   <head>
@@ -10,38 +16,26 @@
     <meta name="author" content="" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700">
 
-    <link rel="stylesheet" href="resources/css/
-bootstrap.min.css">
-    <link rel="stylesheet" href="resources/css/
-animate.css">
-    <link rel="stylesheet" href="resources/css/
-owl.carousel.min.css">
-    <link rel="stylesheet" href="resources/css/
-aos.css">
-    <link rel="stylesheet" href="resources/css/
-bootstrap-datepicker.css">
-    <link rel="stylesheet" href="resources/css/
-jquery.timepicker.css">
-    <link rel="stylesheet" href="resources/css/
-fancybox.min.css">
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/animate.css">
+    <link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="resources/css/aos.css">
+    <link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="resources/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="resources/css/fancybox.min.css">
     
-    <link rel="stylesheet" href="resources/fonts/
-ionicons/resources/css/
-ionicons.min.css">
-    <link rel="stylesheet" href="resources/fonts/
-fontawesome/resources/css/
-font-awesome.min.css">
+    <link rel="stylesheet" href="resources/fonts/ionicons/resources/css/ionicons.min.css">
+    <link rel="stylesheet" href="resources/fonts/fontawesome/resources/css/font-awesome.min.css">
 
     <!-- Theme Style -->
-    <link rel="stylesheet" href="resources/css/
-style.css">
+    <link rel="stylesheet" href="resources/css/style.css">
   </head>
   <body>
     
     <header class="site-header js-site-header">
       <div class="container-fluid">
         <div class="row align-items-center">
-          <div class="col-6 col-lg-4 site-logo" data-aos="fade"><a href="index.html">Sogo Hotel</a></div>
+          <div class="col-6 col-lg-4 site-logo" data-aos="fade"><a href="./">선화 호텔</a></div>
           <div class="col-6 col-lg-8">
 
 
@@ -76,8 +70,7 @@ style.css">
     </header>
     <!-- END head -->
 
-    <section class="site-hero inner-page overlay" style="background-image: url(resources/images/
-hero_4.jpg)" data-stellar-background-ratio="0.5">
+    <section class="site-hero inner-page overlay" style="background-image: url(resources/images/hero_4.jpg)" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row site-hero-inner justify-content-center align-items-center">
           <div class="col-md-10 text-center" data-aos="fade">
@@ -106,53 +99,48 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
           <div class="block-32" data-aos="fade-up" data-aos-offset="-200">
 
             <form action="#">
+            
+           	
               <div class="row">
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkin_date" class="form-control">
+                    <input type="text" id="checkin_date" class="form-control" value="${checkin_date}"/>
                   </div>
                 </div>
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkout_date" class="form-control">
+                    <input type="text" id="checkout_date" class="form-control" value="${checkout_date}"/>
                   </div>
                 </div>
                 <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
                   <div class="row">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                      <label for="adults" class="font-weight-bold text-black">Adults</label>
-                      <div class="field-icon-wrap">
-                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="adults" class="form-control">
-                          <option value="">1</option>
-                          <option value="">2</option>
-                          <option value="">3</option>
-                          <option value="">4+</option>
-                        </select>
-                      </div>
-                    </div>
+                    
                     <div class="col-md-6 mb-3 mb-md-0">
                       <label for="children" class="font-weight-bold text-black">Children</label>
                       <div class="field-icon-wrap">
                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="children" class="form-control">
-                          <option value="">1</option>
-                          <option value="">2</option>
-                          <option value="">3</option>
-                          <option value="">4+</option>
+                        <select name="cnt" id="children" class="form-control"  >
+                          <option value="1" <c:if test="${cnt eq '1'}">selected</c:if>>1</option>
+                          <option value="2" <c:if test="${cnt eq '2'}">selected</c:if>>2</option>
+                          <option value="3" <c:if test="${cnt eq '3'}">selected</c:if>>3</option>
                         </select>
                       </div>
                     </div>
+                    
+                    
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-3 align-self-end">
                   <button class="btn btn-primary btn-block text-white">Check Availabilty</button>
                 </div>
               </div>
+              
+              
+              
             </form>
           </div>
 
@@ -166,83 +154,23 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
       <div class="container">
         
         <div class="row">
+          
+        <c:forEach items="${roomReservelist}" var="list">
           <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
-            <a href="#" class="room">
+            <a href="roomdetail?room_num=${list.room_num}" class="room">
               <figure class="img-wrap">
-                <img src="resources/images/
-img_1.jpg" alt="Free website template" class="img-fluid mb-3">
+                <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3">
               </figure>
               <div class="p-3 text-center room-info">
-                <h2>Single Room</h2>
-                <span class="text-uppercase letter-spacing-1">90$ / per night</span>
+                <h2>${list.room_type_name} </h2>
+                <span class="text-uppercase letter-spacing-1">${list.room_price} / per night</span>
               </div>
             </a>
           </div>
+        
+        </c:forEach>
 
-          <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
-            <a href="#" class="room">
-              <figure class="img-wrap">
-                <img src="resources/images/
-img_2.jpg" alt="Free website template" class="img-fluid mb-3">
-              </figure>
-              <div class="p-3 text-center room-info">
-                <h2>Family Room</h2>
-                <span class="text-uppercase letter-spacing-1">120$ / per night</span>
-              </div>
-            </a>
-          </div>
 
-          <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
-            <a href="#" class="room">
-              <figure class="img-wrap">
-                <img src="resources/images/
-img_3.jpg" alt="Free website template" class="img-fluid mb-3">
-              </figure>
-              <div class="p-3 text-center room-info">
-                <h2>Presidential Room</h2>
-                <span class="text-uppercase letter-spacing-1">250$ / per night</span>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
-            <a href="#" class="room">
-              <figure class="img-wrap">
-                <img src="resources/images/
-img_1.jpg" alt="Free website template" class="img-fluid mb-3">
-              </figure>
-              <div class="p-3 text-center room-info">
-                <h2>Single Room</h2>
-                <span class="text-uppercase letter-spacing-1">90$ / per night</span>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
-            <a href="#" class="room">
-              <figure class="img-wrap">
-                <img src="resources/images/
-img_2.jpg" alt="Free website template" class="img-fluid mb-3">
-              </figure>
-              <div class="p-3 text-center room-info">
-                <h2>Family Room</h2>
-                <span class="text-uppercase letter-spacing-1">120$ / per night</span>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
-            <a href="#" class="room">
-              <figure class="img-wrap">
-                <img src="resources/images/
-img_3.jpg" alt="Free website template" class="img-fluid mb-3">
-              </figure>
-              <div class="p-3 text-center room-info">
-                <h2>Presidential Room</h2>
-                <span class="text-uppercase letter-spacing-1">250$ / per night</span>
-              </div>
-            </a>
-          </div>
 
         </div>
       </div>
@@ -280,8 +208,7 @@ img_3.jpg" alt="Free website template" class="img-fluid mb-3">
       </div>
     </section>
 
-    <section class="section bg-image overlay" style="background-image: url('resources/images/
-hero_4.jpg');">
+    <section class="section bg-image overlay" style="background-image: url('resources/images/hero_4.jpg');">
       <div class="container" >
         <div class="row align-items-center">
           <div class="col-12 col-md-6 text-center mb-4 mb-md-0 text-md-left" data-aos="fade-up">
@@ -347,33 +274,38 @@ hero_4.jpg');">
       </div>
     </footer>
     
-    <script src="resources/js/
-jquery-3.3.1.min.js"></script>
-    <script src="resources/js/
-jquery-migrate-3.0.1.min.js"></script>
-    <script src="resources/js/
-popper.min.js"></script>
-    <script src="resources/js/
-bootstrap.min.js"></script>
-    <script src="resources/js/
-owl.carousel.min.js"></script>
-    <script src="resources/js/
-jquery.stellar.min.js"></script>
-    <script src="resources/js/
-jquery.fancybox.min.js"></script>
+    <script src="resources/js/jquery-3.3.1.min.js"></script>
+    <script src="resources/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="resources/js/popper.min.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+    <script src="resources/js/owl.carousel.min.js"></script>
+    <script src="resources/js/jquery.stellar.min.js"></script>
+    <script src="resources/js/jquery.fancybox.min.js"></script>
     
     
-    <script src="resources/js/
-aos.js"></script>
+    <script src="resources/js/aos.js"></script>
     
-    <script src="resources/js/
-bootstrap-datepicker.js"></script> 
-    <script src="resources/js/
-jquery.timepicker.min.js"></script> 
+    <script src="resources/js/bootstrap-datepicker.js"></script> 
+    <script src="resources/js/jquery.timepicker.min.js"></script> 
 
     
 
-    <script src="resources/js/
-main.js"></script>
+    <script src="resources/js/main.js"></script>
   </body>
+  <script>
+
+  
+	var msg = "${msg}";
+	
+	if(msg != ""){
+		alert(msg);
+	}
+	
+  
+  </script>
+  
+  
+  
+  
+  
 </html>

@@ -10,6 +10,7 @@
 		<property name="url" value="jdbc:mariadb://61.75.28.215:1522/seonhwahotel"/>
 		<property name="username" value="gongGu"/>
 		<property name="password" value="pass"/>
+
 	</bean>
 	
 </beans>

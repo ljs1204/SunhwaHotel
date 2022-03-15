@@ -11,36 +11,6 @@
 	</appender>
 	
 	
-	<logger name="jdbc.sqltiming" additivity="false">
-		<level value="info"/>
-		<appender-ref ref="console" />
-	</logger>
-	
-   <!-- 실행 쿼리+쿼리 결과 값 -->
-   <!--  level = off : 이 로그는 보지 않겠다. -->
-   <logger name="jdbc.resultset" additivity="false">
-      <level value="off"/>
-      <appender-ref ref="console" />
-   </logger>
-   
-   <!-- 쿼리 실행시 보여줄 수 있는 모든 값 -->
-   <logger name="jdbc.audit" additivity="false">
-      <level value="off"/>
-      <appender-ref ref="console" />
-   </logger>
-   
-   <!-- 실행 쿼리 + 커넥션 열고 닫음 -->
-   <logger name="jdbc.connection" additivity="false">
-      <level value="off"/>
-      <appender-ref ref="console" />
-   </logger>
-   
-   <!-- 실행 쿼리만 -->
-   <logger name="jdbc.sqlonly" additivity="false">
-      <level value="off"/>
-      <appender-ref ref="console" />
-   </logger>
-   
 	
 	
 	
@@ -49,6 +19,48 @@
 	<logger name="co.kr.hotel">
 		<level value="info" />
 	</logger>
+	<!-- log4.xml수정 유선화 START -->
+	
+	<!-- SQL 로그 설정 -->
+	<!-- additivity : true 는 두번 찍힌다 -->
+	<!-- level = info 는 logger.info() 와 같다 -->
+	<!-- 실행 쿼리 + 걸린 시간을 보여줌 -->
+	<logger name="jdbc.sqltiming" additivity="false">
+		<level value="info"/>
+		<appender-ref ref="console" />
+	</logger>
+	
+	<!-- 실행 쿼리 + 결과 값을 보여줌 -->
+	<!-- level = off 는 이 로그는 보지 않겠다 -->
+	<logger name="jdbc.resultset" additivity="false">
+		<level value="off"/>
+		<appender-ref ref="console" />
+	</logger>
+	
+
+	
+	<!-- 쿼리 실행시 보여줄 수 있는 모든 값을 보여줌 -->
+	<logger name="jdbc.audit" additivity="false">
+		<level value="off"/>
+		<appender-ref ref="console" />
+	</logger>
+	
+	<!-- 실행 쿼리 + 커넥션 열고 닫음 을 보여줌-->
+	<logger name="jdbc.connection" additivity="false">
+		<level value="off"/>
+		<appender-ref ref="console" />
+	</logger>
+	
+	<!-- 실행 쿼리만 보여줌-->
+	<logger name="jdbc.sqlonly" additivity="false">
+		<level value="off"/>
+		<appender-ref ref="console" />
+	</logger>
+	
+	
+	
+	<!-- log4.xml수정 유선화 END-->
+	
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
