@@ -133,9 +133,29 @@ public class MypageController {
 	
 	//2022.03.15 문의페이지 리스트 end
 
-	//마이페이지 
+	//마이페이지 마일리지리스트 유선화 START 2022.03.15
 		
 		
+	@RequestMapping(value = "/myPagemymilelist", method = RequestMethod.GET)
+	public String myPagemymilelist(Model model, HttpSession session) {
+		logger.info("myPagemymilelist 마이페이지 마일리지 조회 페이지 ");
+		String page = "index";
+		
+		String loginId = (String) session.getAttribute("loginId");
+		logger.info("loginId : "+loginId);
+		
+		if (loginId != null) {
+			page = "myPagemymilelist";
+			
+		}
+		return page;
+	}
+		
+		
+		
+		
+	//마이페이지 마일리지리스트 유선화 END 2022.03.15
+			
 		
 		
 		

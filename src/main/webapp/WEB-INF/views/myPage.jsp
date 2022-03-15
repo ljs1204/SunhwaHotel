@@ -108,7 +108,7 @@
 						<a class="list-group-item list-group-item-action active" id="list-home-list" href="./myPage">프로필</a>
 						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve">예약 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyMilelist">마일리지 내역 조회</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemymilelist">마일리지 내역 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">회원정보 수정</a>
 
