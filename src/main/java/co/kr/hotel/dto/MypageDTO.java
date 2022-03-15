@@ -4,8 +4,8 @@ public class MypageDTO {
 
 	private int board_num;
 	private String mem_id;
-	private String board_orinum;
-	private String re_num;
+	private int board_orinum;
+	private int re_num;
 	private int board_type;
 	private String board_title;
 	private String board_content;
@@ -24,16 +24,16 @@ public class MypageDTO {
 	public void setMem_id(String mem_id) {
 		this.mem_id = mem_id;
 	}
-	public String getBoard_orinum() {
+	public int getBoard_orinum() {
 		return board_orinum;
 	}
-	public void setBoard_orinum(String board_orinum) {
+	public void setBoard_orinum(int board_orinum) {
 		this.board_orinum = board_orinum;
 	}
-	public String getRe_num() {
+	public int getRe_num() {
 		return re_num;
 	}
-	public void setRe_num(String re_num) {
+	public void setRe_num(int re_num) {
 		this.re_num = re_num;
 	}
 	public int getBoard_type() {

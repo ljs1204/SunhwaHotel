@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="co.kr.hotel.dao.RoomDAO">
+
+	<!-- 객실 상세정보 START 20220311 유선화 -->
+	
+	<select id="roomlist" resultType="co.kr.hotel.dto.RoomDTO">
+		select r.room_num ,r.room_type ,r.bed_type ,r.room_size ,r.room_price ,r.room_capacity ,r.room_type_name,p.room_img ,p.photo_num ,p.photoflg
+		from room r inner join photo p ON r.room_num =p.room_num 
+		where r.room_num = '1001' and p.photoflg=1 or r.room_num = '1007' and p.photoflg=1
+
+	</select>
+
+
+	<select id="roomdetaillist" resultType="co.kr.hotel.dto.RoomDTO">
+		select r.room_num,r.room_type,r.bed_type,r.room_size,r.room_price,r.room_capacity,r.room_type_name,p.photo_num ,p.room_img ,p.photoflg
+		from room r inner join photo p on r.room_num = p.room_num 
+		where r.room_num = #{param1} and p.photoflg=1
+	</select>
+
+	<select id="roomPhotodto" resultType="co.kr.hotel.dto.RoomDTO">
+		select r.room_num ,r.room_type ,r.bed_type ,r.room_size ,r.room_price ,r.room_capacity ,r.room_type_name,p.room_img ,p.photo_num ,p.photoflg
+		from room r inner join photo p ON r.room_num =p.room_num 
+		where r.room_num =  #{param1}
+	</select>
+
+	<!-- 객실 상세정보 END 20220311 유선화 -->
+
+</mapper>
