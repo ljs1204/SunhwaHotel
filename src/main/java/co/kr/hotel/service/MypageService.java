@@ -50,6 +50,7 @@ public class MypageService {
 		ArrayList<MypageDTO> tomemberboardlist = mypageDao.tomemberboardlist();		
 		logger.info("리스트 갯수 : {}",tomemberboardlist.size());
 		mav.addObject("tomemberboardlist", tomemberboardlist);
+		
 		return mav;
 	}
 }
