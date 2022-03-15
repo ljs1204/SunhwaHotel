@@ -159,11 +159,14 @@
       'autoclose': true
     });
     $('#checkin_date, #checkout_date').datepicker({
-      'format': 'd MM, yyyy',
+      'format': 'yyyy-mm-dd',
       'autoclose': true
     });
     $('#m_time').timepicker();
   };
+  
+ 
+  
   dateAndTime();
 
 

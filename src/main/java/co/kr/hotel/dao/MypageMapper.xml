@@ -6,5 +6,28 @@
 
 <mapper namespace="co.kr.hotel.dao.MypageDAO">
 
+	<select id="mypage2Reservelist" resultType="co.kr.hotel.dto.ReserveDTO">
+		
+		select reserve_idx,mem_id,reserve_num,room_num,reserve_date,reserve_state,checkindate,checkoutdate,adult_cnt,child_cnt,infant_cnt,extrabed_cnt,breakfast_cnt,add_requests
+		from reserve r where mem_id = #{param1} order by reserve_idx
+	
+	</select>
+
+	<select id="reserInfo" resultType="co.kr.hotel.dto.ReserveDTO">
+		select * from reserve r  where mem_id = #{param1} and reserve_num = #{param2} order by reserve_date,reserve_idx desc limit 1
+	</select>
+
+	<select id="payDto" resultType="co.kr.hotel.dto.ReserveDTO">
+		select pay_idx,r.reserve_idx,pay_num,AES_DECRYPT(UNHEX(credit_num), SHA2('a-key',512))AS credit_num,pay_date,pay_state,credit_validity,credit_type,pay_price,pay_mileage,amount 
+		from pay p inner join reserve r on r.reserve_idx = p.reserve_idx 
+		where reserve_num = #{param1}
+		order by pay_date desc limit 1
+	</select>
+
+
+	<select id="resernum" resultType="co.kr.hotel.dto.ReserveDTO">
+		select distinct reserve_num 
+		from reserve r where mem_id = #{param1} 
+	</select>
 
 </mapper>
