@@ -7,4 +7,6 @@
 <mapper namespace="co.kr.hotel.dao.MypageDAO">
 
 
+
+
 </mapper>

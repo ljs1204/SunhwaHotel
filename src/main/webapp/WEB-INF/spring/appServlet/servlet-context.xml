@@ -26,25 +26,23 @@
 	
 	<!-- DB접속 정보 -->
 	<beans:import resource="classpath:config/datasorce.xml"/>	
+	
 	<!-- 트랜잭션  -->
 	<beans:import resource="classpath:config/tranx-context.xml"/>
+	
 	<!-- 사용설정 -->
 	<beans:bean id="sql/SessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	
 	<!-- 위에서 설정한 datasource 불러오기 -->
-		<beans:property name="dataSource" ref="datasource"/>
-		<!-- 쿼리를 지정한 xml 위치를 지정(지정된 패키지가 만들어지지 않았으면 오류 발생)-->
-		<beans:property name="mapperLocations" value="classpath:co/kr/hotel/dao/*.xml"/>
+	<beans:property name="dataSource" ref="datasource"/>
+	
+	<!-- 쿼리를 지정한 xml 위치를 지정(지정된 패키지가 만들어지지 않았으면 오류 발생)-->
+	<beans:property name="mapperLocations" value="classpath:co/kr/hotel/dao/*.xml"/>
 	</beans:bean>
 	
 	<!-- 마이바티스를 별다른 코드 없이 사용할 수 있도록 빈 등록 -->
 	<mybatis-spring:scan base-package="co.kr.hotel.dao"/>
-	
-	
-	<!-- ctrl shift /  -->
-
-	
 	<context:component-scan base-package="co.kr.hotel" />
-	
-	
+
 	
 </beans:beans>
