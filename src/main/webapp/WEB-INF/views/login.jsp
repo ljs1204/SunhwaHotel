@@ -2,10 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>SeonhwaHotel login</title>
-	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-	<style>
+   <meta charset="UTF-8">
+   <title>SeonhwaHotel login</title>
+   <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+   <style>
 			.row {
                 display: flex;
                 flex-wrap: wrap;
@@ -14,6 +14,7 @@
             }
 
             .box{
+            margin: 0 auto;
 				margin: 0 auto;
                 min-width: 600px;
                 max-width: 50%;
@@ -51,9 +52,8 @@
             h2{
                 text-align: center;
                 margin-bottom: 10px; 
-            }
-		
-	</style>
+}
+   </style>
 </head>
 <body>
 	<div class="register-login-section spad">
@@ -84,10 +84,11 @@
 
 </body>
 <script>
-	var msg="${msg}";
-	
-	if(msg != ""){
-	    alert(msg);
-	}
+   var msg="${msg}";
+   
+   if(msg != ""){
+       alert(msg);
+   }
+
 </script>
 </html>

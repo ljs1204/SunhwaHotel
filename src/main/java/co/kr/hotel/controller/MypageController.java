@@ -9,13 +9,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.service.MypageService;
+
+
 
 @Controller
 public class MypageController {
@@ -76,7 +79,7 @@ public class MypageController {
 		// 메인페이지 요청 세션검사 추가 START - SI 20220314
 		String loginId = (String) session.getAttribute("loginId");
 		// loginId = "admin"; // 아이디 'admin' 일 때
-		loginId = "아이디";
+		//loginId = "아이디";
 
 		if (loginId != null) {
 			model.addAttribute("loginId", loginId);
@@ -112,5 +115,16 @@ public class MypageController {
 	// 마이페이지 - 환불리스트 유선화 END 20220314
 
 	// 마이페이지 END yuseonhwa 20220314
+	
+	// 2022.03.14  문의페이지 리스트 박형민
+			@GetMapping(value="/tomemberboardlist")
+			public ModelAndView tomemberboardlist() {
+				
+				logger.info("리스트 요청");
+				
+				return mypageService.tomemberboardlist();
+			}
+		//2022.03.15 문의페이지 리스트 end
 
 }
+
