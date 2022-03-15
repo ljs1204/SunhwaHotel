@@ -102,7 +102,7 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
                     <div class="col-md-30 mx-auto">
                       <ul class="list-unstyled menu">
                         <li><a href="index.html">프로필</a></li>
-                        <li><a href="mypage2Reserve">예약조회</a></li>
+                        <li><a href="mypageRefundDetail">예약조회</a></li>
                         <li><a href="about.html">내가 쓴 문의글&답글</a></li>
                         <li><a href="events.html">마일리지내역조회</a></li>
                         <li><a href="contact.html">내 정보 조회</a></li>
@@ -130,7 +130,7 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
 		     </c:if>
 		     <c:forEach items="${mypage2Reservelist}" var="list">
 		     <tr>
-		     	<th><a href="mypage2Reserve?reserve_num=${list.reserve_num}&reserve_idx=${list.reserve_idx}">${list.reserve_num}</a></th>
+		     	<th><a href="mypageRefundDetail?reserve_num=${list.reserve_num}&reserve_idx=${list.reserve_idx}">${list.reserve_num}</a></th>
 		       	<th>${list.reserve_state}</th>
 		       			           		     
 		     </tr>  

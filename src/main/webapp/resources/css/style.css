@@ -124,7 +124,8 @@ textarea.form-control {
     color: #fff;
     font-weight: bold;
     line-height: 1;
-    font-family: "Playfair Display", times, serif; }
+    /* font-family: "trajan pro"; */
+     }
     @media (max-width: 991.98px) {
       .site-logo a {
         font-size: 27px; } }
@@ -139,12 +140,16 @@ textarea.form-control {
   z-index: 99;
   border: 20px solid transparent;
   background: #fff;
-  min-height: 300px;
-  overflow-y: scroll; }
+  /* 20220313 변경 / 추가 */
+  min-height: 100px;
+  /* overflow-y: scroll; */
+  line-height: 1.2; 
+  /* 20220313 변경 / 추가 */
+  }
   .site-navbar nav {
     text-align: left; }
     .site-navbar nav .menu {
-      font-family: "Playfair Display", times, serif; }
+      font-family: "trajan pro" }
       .site-navbar nav .menu li a {
         color: #000;
         font-size: 40px;

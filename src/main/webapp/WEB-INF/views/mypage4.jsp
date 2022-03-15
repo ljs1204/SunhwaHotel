@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -53,33 +54,28 @@
 	}
 /* 세로 네비게이션(리스트그룹) 관련 css END - SI 20220314 */
 
-/* 컨텐츠 - 프로필 영역 css START - SI 20220314 */
-	
-    #list-home .table{
-       width: 100%;
-       height: auto;
-       text-align: center;
-       color: #333333;
-    }
-    #list-home th, #list-home td{
-       width: 40%;
-    }
-/* 컨텐츠 - 프로필 영역 css END - SI 20220314 */
-
-/* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 => 페이지 분리 */
-	/* 
+/* 컨텐츠 - 예약 상세보기 영역 css START - SI 20220314 */
 	#list-reserve .table th{
 		background-color: #f1ebd6;
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 		color: #633e12 !important;
+		width: 20%;
 	}
 	#list-reserve .table tr{
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 	}
-	 */
-/* 컨텐츠 - 예약 조회 영역 css END - SI 20220314 */	
+	.focu:hover{
+		background-color:#633e12 !important;
+		color:white !important;
+	}
+/* 컨텐츠 - 예약 상세보기 영역 css END - SI 20220314 */	
+
+<style>
+
+
+
 
 
 </style>
@@ -104,176 +100,95 @@
 		<!-- 세로 네비게이션 바 -->
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
- 
-						<a class="list-group-item list-group-item-action active" id="list-home-list" href="./myPage">프로필</a>
-						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve">예약 조회</a>
+
+						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
+						<a class="list-group-item list-group-item-action active" id="list-reserve-list" href="./myReserve">예약 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">마일리지 내역 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">내 정보 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">회원정보 수정</a>
 
-
-<!-- 페이지 이동 없이 사용할 땐 이걸로 
-						<a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" 
-						href="#list-home" role="tab" aria-controls="home">프로필</a>
-
-						<a class="list-group-item list-group-item-action" id="list-profile-list" 
-						href="./myReserve">예약 조회</a>
-
-						<a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" 
-						href="#list-messages" role="tab" aria-controls="messages">문의 글 & 답 글</a>
-
-						<a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" 
-						href="#list-miliage" role="tab" aria-controls="settings">마일리지 내역 조회</a>
-
-						<a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" 
-						href="#list-myInfo" role="tab" aria-controls="noticeWrite">내 정보 조회</a>
-
-						<a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" 
-						href="#list-myInfoEdit" role="tab" aria-controls="boardWrite">회원정보 수정</a>
- -->	
-
-
 					</div>
 				</div>
 <!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
 
-<!-- 컨텐츠 영역 START - SI 20220314 -->
+<!-- 예약조회 START - SI 20220314 -->
 			<!-- tabContent 있어야 발동함 -->
 			<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
-
-				<!-- 프로필 START - SI 20220314 -->
-				<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-
-					<form action="" method="">
-						<h4 style="color: #633e12;">기본정보</h4>
-						<hr style="border-color: #633e12;" />
-
-
-						<!-- 기본정보 - SI 20220314 -->
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<th scope="row">성명</th>
-									<td colspan="2">${userInfo.mem_id }</td>
-								</tr>
-								<tr>
-									<th scope="row">마일리지</th>
-									<td>${userInfo.mem_nick }</td>
-									<td>마일리지 내역 보기</td>
-								</tr>
-								<tr>
-									<th scope="row">회원등급</th>
-									<td colspan="2">${userInfo.mem_regidate }</td>
-								</tr>
-							</tbody>
-						</table>
-
-						<br />
-						<hr />
-						<br />
-
-
-						<!-- 이용실적 - SI 20220314 -->
-						<!-- 올해 실적 스크립트에서 년도 계산해서 삽입 -->
-						<h4 id="useFrequency"></h4>
-						<hr style="border-color: #633e12;" />
-
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<th scope="row">투숙횟수</th>
-									<td colspan="2">${userInfo.mem_id }</td>
-								</tr>
-								<tr>
-									<th scope="row">내년 예상 등급</th>
-									<td>${userInfo.mem_nick }</td>
-									<td>ⓘ 등급산정기준</td>
-								</tr>
-								<tr>
-									<th scope="row">다음 등급 남은 조건</th>
-									<td colspan="2">${userInfo.mem_regidate }</td>
-								</tr>
-							</tbody>
-						</table>
-
-					</form>
-				</div>
-				<!-- 프로필 END - SI 20220314 -->
-					
-			</div>		
-					
-<!-- '프로필' 컨텐츠 영역 END - SI 20220314 -->
-
-
-<!-- 예약조회 START - SI 20220314 => mypage3로 분리 -->
-				<%-- <div class="col-md-10 tab-pane fade" id="list-reserve" role="tabpanel" aria-labelledby="list-profile-list"
+				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
 						style="max-width:100% !important">
 					<form action="" method="">
-						<h4 style="color: #633e12;">XXX 님의 예약 리스트</h4>
+						<h4 style="color: #633e12;">예약 상세보기 - SVW8432Q</h4>
 						<hr style="border-color: #633e12;" />
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>예약번호</th>
-								<th>객실타입</th>
-								<th>체크인</th>
-								<th>체크아웃</th>
-								<th>가격</th>
-								<th>예약상태</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><a href="" onclick="">SVW8432Q</a></td>
-								<td>디럭스(더블) 외 2개</td>
-								<td>2022-03-06</td>
-								<td>2022-03-08</td>
-								<td>1,992,000원</td>
-								<c:choose>
-									<c:when test="">
-										<td>예약완료</td>
-									</c:when>
-									<c:when test="true">
-										<td><a href="">부분취소</a>
-									</c:when>
-									<c:when test="">
-										<td>예약취소</td>
-									</c:when>
-								</c:choose>
-							</tr>
-							<tr>
-								<td><a href="">QWASD145</a></td>
-								<td>디럭스(트윈)</td>
-								<td>2022-01-17</td>
-								<td>2022-01-18</td>
-								<td>679,000원</td>
-								<td>예약취소</td>
-							</tr>
-							
-							<c:forEach var="" items="">
+					
+					<table class="table table-bordered">
+							<tbody>
 								<tr>
-									<td>${mychk.cafe_modtime }</td>
-									<td>${mychk.cafe_idx}</td>
-									<td>
-										<a href="./detail?idx=${mychk.cafe_idx}">${mychk.cafe_title}</a>
-									</td>
-									<td>${mychk.cafe_hit}</td>
-									<td>${mychk.cafe_likecnt }</td>
-									<td></td>
+									<th scope="row">예약번호</th>
+									<td colspan="3">SVW8432Q</td>
 								</tr>
-							</c:forEach>
-							
-						</tbody>
-					</table>
-
-					페이징 영역!
-					<hr style="border-color: #633e12;" />
+								<tr>
+									<th scope="row">기간</th>
+									<td colspan="3">20220304 - 20220306</td>
+								</tr>
+								<tr>
+									<th scope="row">타입</th>
+									<td colspan="3">디럭스(더블), 프리미엄(더블), 디럭스(트윈)</td>
+								</tr>
+								<tr>
+									<th scope="row">인원</th>
+									<td colspan="3">3명</td>
+								</tr>
+								<tr>
+									<th scope="row">예약자이름</th>
+									<td colspan="3">이름(name)</td>
+								</tr>
+								<tr>
+									<th scope="row">전화번호</th>
+									<td colspan="3">010-0000-0000</td>
+								</tr>
+								<tr>
+									<th scope="row">이메일</th>
+									<td colspan="3">email@gmail.com</td>
+								</tr>
+								<tr>
+									<th scope="row">옵션</th>
+									<td colspan="3">엑스트라베드 1, 조식 3</td>
+								</tr>
+								<tr>
+									<th scope="row">마일리지 상품</th>
+									<td colspan="3"><a href="">와인 2, 디저트 1, 수건 1</a></td>
+								</tr>
+								<tr>
+									<th scope="row">현금 결제 금액</th>
+										<td>1,938,200</td>
+									<th scope="row">마일리지 사용 금액</th>
+										<td>53800</td>
+								</tr>
+								<tr>
+									<th scope="row">총 금액</th>
+									<td colspan="3">1,992,000</td>
+								</tr>
+							</tbody>
+						</table>
+					<div style="text-align:right;">
+						<input type="button" class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;"
+								onclick="location.href=''" value="환불신청">
+						<input type="button" class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;"
+								onclick="location.href='./myReserve'" value="목록으로">
+					</div>
 					</form>
 
 				</div>
-				 --%>
+			</div>
 <!-- 예약조회 END - SI 20220314 -->	
+
+
+
+
+
+					
+					
 				
 
 				<!-- 20220314 폐기
@@ -520,30 +435,4 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 
 </script>
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sogo Hotel by Colorlib.com</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="author" content="" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700">
-
-    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="resources/css/animate.css">
-    <link rel="stylesheet" href="resources/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="resources/css/aos.css">
-    <link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="resources/css/jquery.timepicker.css">
-    <link rel="stylesheet" href="resources/css/fancybox.min.css">
-    
-    <link rel="stylesheet" href="resources/fonts/ionicons/resources/css/ionicons.min.css">
-    <link rel="stylesheet" href="resources/fonts/fontawesome/resources/css/font-awesome.min.css">
-
-    <!-- Theme Style -->
-    <link rel="stylesheet" href="resources/css/style.css">
-  </head>
-  <body>
- 
 </html>

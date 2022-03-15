@@ -2,7 +2,6 @@ package co.kr.hotel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.util.NestedServletException;
 
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.dto.RoomDTO;
@@ -33,16 +31,27 @@ public class HomeController {
 	//메인페이지 START 유선화 20220311
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home2(Model model) {
+	public String home2(Model model, HttpSession session) {
 		logger.info("homepage로 요청이 들어옴 ");
 		
 		ArrayList<RoomDTO> roomdto = roomservice.roomlist();
 		logger.info("roomdto"+roomdto);
 		model.addAttribute("roomlist",roomdto);
 		
+		// 메인페이지 요청 세션검사 추가 START - SI 20220314  
+		String loginId = (String) session.getAttribute("loginId");
+		//loginId = "admin";	// 아이디 'admin' 일 때
+		loginId = "아이디";
+		
+		if(loginId != null) {
+			model.addAttribute("loginId", loginId);
+		}
+		// 메인페이지 요청 세션검사 추가 END - SI 20220314 
+		
 		return "index";
 	}
 	
+
 	@RequestMapping(value = "/toReserve", method = RequestMethod.POST) 
 	public String toReserve(Model model,HttpSession session,@RequestParam String checkin_date
 			,@RequestParam String checkout_date,@RequestParam int cnt) {
@@ -64,7 +73,6 @@ public class HomeController {
 		
 		
 		//오늘 날짜,체크인 체크아웃 비교하기 start
-
 		LocalDate dateInformat = LocalDate.parse(checkin_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		LocalDate dateoutformat = LocalDate.parse(checkout_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		LocalDate now = LocalDate.now();
@@ -79,7 +87,7 @@ public class HomeController {
 		logger.info("roomReservelist"+roomReservelist);
 		model.addAttribute("roomReservelist",roomReservelist);
 		//객실 예약 리스트 END 20220311 유선화
-		
+			
 		int compare = dateInformat.compareTo(dateoutformat);
 		int compareinnow = nowformat.compareTo(dateInformat);
 		int comparoutenow = nowformat.compareTo(dateoutformat);

@@ -102,7 +102,7 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
                     <div class="col-md-30 mx-auto">
                       <ul class="list-unstyled menu">
                         <li><a href="index.html">프로필</a></li>
-                        <li><a href="mypage2Reserve">예약조회</a></li>
+                        <li><a href="mypageRefundDetail">예약조회</a></li>
                         <li><a href="about.html">내가 쓴 문의글&답글</a></li>
                         <li><a href="events.html">마일리지내역조회</a></li>
                         <li><a href="contact.html">내 정보 조회</a></li>
@@ -188,6 +188,7 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
             
             <div class="testimonial text-center slider-item">
               <div class="author-image mb-3">
+
                 <img src="resources/images/person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
               </div>
               <blockquote>
