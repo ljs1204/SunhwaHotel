@@ -113,19 +113,41 @@ public class MypageController {
 		return "mypageRefundDetail";
 	}
 
+		
+	// 2022.03.14  문의페이지 리스트 박형민
+		@GetMapping(value="/tomemberboardlist")
+		public ModelAndView tomemberboardlist() {
+			
+			logger.info("리스트 요청");
+			
+			return mypageService.tomemberboardlist();
+		}
+	//2022.03.15 문의페이지 리스트 end
+		
+		
+	
+
 	// 마이페이지 - 환불리스트 유선화 END 20220314
 
 	// 마이페이지 END yuseonhwa 20220314
 	
-	// 2022.03.14  문의페이지 리스트 박형민
-			@GetMapping(value="/tomemberboardlist")
-			public ModelAndView tomemberboardlist() {
-				
-				logger.info("리스트 요청");
-				
-				return mypageService.tomemberboardlist();
-			}
-		//2022.03.15 문의페이지 리스트 end
+	
+	//2022.03.15 문의페이지 리스트 end
+
+	//마이페이지 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 }
 

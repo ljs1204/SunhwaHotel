@@ -45,7 +45,6 @@ public class BoardController {
 		logger.info("상세보기 요청 :{} ",board_num);
 		return service.detail(board_num);
 	}
-	
 	//리스트
 	@GetMapping(value="/list")
 	public ModelAndView list() {

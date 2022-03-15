@@ -96,7 +96,7 @@
                                 <li><a href="./login" class="nav-link">로그인</a></li>
                                 <!-- 20220311 반응형으로 작아졌을땐 안보이게 하는 class -->
                                 <li class="non-display">|</li>
-                                <li><a href="index.html" class="nav-link">회원가입</a></li>
+                                <li><a href="./joinForm" class="nav-link">회원가입</a></li>
                                 <li class="non-display">|</li>
                                 <li><a href="index.html" class="nav-link">예약확인</a></li>
                             </ul>

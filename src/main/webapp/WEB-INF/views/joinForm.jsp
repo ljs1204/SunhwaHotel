@@ -89,7 +89,7 @@
 ※ 위 사항에 대한 동의를 거부할 수 있으나, 이에 대한 동의가 없을 경우 선화호텔 회원 가입 및 서비스 이용이 불가합니다.
 		    </textarea>
 			</td>
-		</tr>
+		</tr>	
 		<tr>
 			<th colspan="2">
 				<input id="member_join" type="button" value="회원가입" disabled/>
@@ -101,7 +101,7 @@
 	var overlayChk = false;//아이디 중복확인 시 True
 	var passChk2 = false; //비밀번호 조건 만족시 True
 	var passChk = false; //입력한 비밀번호 일치 시 True
-	var emailChk = false; //이메일 인증 완료시 True
+	var certifinum_check = false; //이메일 인증 완료시 True
 	var birthChk = false; //생년월일 확인 되면 True
 	
 	//아이디 중복 확인
@@ -180,6 +180,18 @@
 	
 	
 	//이메일 인증버튼 클릭 시 중복 여부 확인
+	
+    random();
+    
+    function random(){
+        // clearInterval(time);
+        //var cnt = 11;
+        
+        console.log('난수번호');
+        randomNum = Math.floor(Math.random()*1000000);
+        certifinum = randomNum;
+    };	
+	
 	$('#certify').click(function(){
 		var chkemail = $('input[name="mem_email"]').val();
 			 
@@ -202,10 +214,13 @@
 					$('#emailCode').attr('type','text');
 					$('#emailBtn').attr('type','button');
 					
+					random();				
+					win = window.open('emailPage','최신식 구글 메일','width=800,height=600');					
 				}
 				
 			},
 			error:function(e){
+				console.log('에러');
 				console.log(e)
 			}
 		});
@@ -298,6 +313,9 @@
 			}else if ($email.val() == '') {
 				alert('이메일을 입력하세요');
 				$email.focus();	
+			}else if (certifinum_check == false){
+				alert('이메일 인증을 해주세요.');	
+				$email.focus();
 			}else{
 				console.log('회원가입 입력 시작');
 				
@@ -310,8 +328,7 @@
 				param.user_email = $email.val(); 		
 				param.user_phone = $phone.val();
 				console.log(param);
-				
-				
+							
 				$.ajax({
 					type : 'POST',
 					url : 'join',
@@ -339,7 +356,22 @@
 		}		
 	});
 	
+	$('#emailBtn').click(function(){
+		$('#emailCode').val();
+		if($('#emailCode').val() == certifinum){
+			certifinum_check = true;
+			alert('이메일 인증을 성공하였습니다.');
+			$('#emailCode').attr('type','hidden');
+			$('#emailBtn').attr('type','hidden');
+		} else {
+			certifinum_check = false;
+			alert('인증번호 확인 후 재 입력 바랍니다.');
+		}		
+	});
 	
+	$('input[name="email"]').keyup(function(e){
+		certifinum_check = false;
+	});	
 
 </script>
 </html>
