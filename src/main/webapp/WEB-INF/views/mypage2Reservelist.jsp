@@ -116,62 +116,26 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
         
           <table>
       		<tr style="background-color:#212529;color:white;">
-            	 
-	            <tr>
-	             	<td >아이디</td>
-	           		<td>${reserInfo.mem_id}</td>           
-	            </tr>               
-	            <tr>
-	            	<td id="title">예약번호</td>
-	             	<td>${reserInfo.reserve_num}</td>
-	            </tr>   
-	            <tr>
-	            	<td id="title">신용카드번호</td>
-	           		<td>${payInfo.credit_num} </td>
-	            </tr>   
-	            <tr>
-	            	<td id="title">유효기간</td>
-	           		<td>${payInfo.credit_validity}</td>
-				</tr>   
-	            <tr> 
-					<td id="title">카드종류</td>
-	           		<c:if test="${payInfo.credit_type eq 1}"><td>하나카드</td></c:if>
-	           		<c:if test="${payInfo.credit_type eq 2}"><td>국민카드</td></c:if>
-	           		<c:if test="${payInfo.credit_type eq 3}"><td>현대카드</td></c:if>
-	            </tr>                               
-	            <tr>
-	            	<td id="title">신청날짜</td>          
-				 	<td>${payInfo.pay_date}</td> 
-	            </tr> 
-	            <tr>
-	            	<td id="title">예약현황</td>          
-				 	
-				 	<c:if test="${reserInfo.reserve_state eq 1}"><td>부분취소</td></c:if> 
-					<c:if test="${reserInfo.reserve_state eq 2}"><td>예약취소</td></c:if>
-			 	
-	            </tr> 
-	            <tr>
-	            	<td id="title">처리상태</td>          
-			 	
-			 		<c:if test="${payInfo.pay_state eq 1}"><td>환불 신청 완료</td></c:if> 
-					<c:if test="${payInfo.pay_state eq 2}"><td>부분 환불 신청 완료</td></c:if>
-					<c:if test="${payInfo.pay_state eq 3}"><td>환불 완료</td></c:if>
-			 	
-	            </tr>	
-	            <tr>
-	            	<td id="title">처리날짜</td>          
-				 	<td>${payInfo.pay_date}</td> 
-	            </tr> 	
-	            <tr>
-	            	<td id="title">환불 금액</td>          
-				 	<td>${payInfo.amount}</td> 
-	            </tr>            
-            </tr>
+		     	<th>예약번호</th>
+		      	<th>객실타입</th>
+		      	<th>체크인</th>
+		      	<th>체크아웃</th>
+		      	<th>가격</th>	
+		      	<th>예약상태</th>	             		           		     
+		     </tr>    
+		     <c:if test="${mypage2Reservelist.size() == 0 }">           
+		     <tr>
+		      	<td colspan="6">예약 내역이 존재하지 않습니다.</td>		             	             	           		     
+		     </tr>
+		     </c:if>
+		     <c:forEach items="${mypage2Reservelist}" var="list">
+		     <tr>
+		     	<th><a href="mypage2Reserve?reserve_num=${list.reserve_num}&reserve_idx=${list.reserve_idx}">${list.reserve_num}</a></th>
+		       	<th>${list.reserve_state}</th>
+		       			           		     
+		     </tr>  
+		     </c:forEach>        
           </table>
-          <br/>
-          <c:if test="${payInfo.pay_state eq 2}"><button type="submit" class="btn"><a href="mypage2Reservelist" class="fa fa-paper-plane">예약보기</a></button></c:if>
-          <br/>
-          <button type="submit" class="btn"><a href="mypage2Reservelist" class="fa fa-paper-plane">목록으로</a></button>
         </div>
       </div>
     </section>
@@ -188,7 +152,6 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
             
             <div class="testimonial text-center slider-item">
               <div class="author-image mb-3">
-
                 <img src="resources/images/person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
               </div>
               <blockquote>
