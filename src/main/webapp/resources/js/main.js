@@ -154,11 +154,13 @@
   smoothScroll();
 
   var dateAndTime = function() {
+  	
     $('#m_date').datepicker({
       'format': 'm/d/yyyy',
       'autoclose': true
     });
     $('#checkin_date, #checkout_date').datepicker({
+    console.log('메롱');
       'format': 'yyyy-mm-dd',
       'autoclose': true
     });

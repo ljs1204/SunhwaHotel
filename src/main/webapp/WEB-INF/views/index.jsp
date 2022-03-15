@@ -126,7 +126,7 @@
                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                         <select name="cnt" id="children" class="form-control" >
                           <option value="1">1</option>
-                          <option value="2">2</option>
+                          <option   value="2">2</option>
                           <option value="3">3</option>
                         </select>
                       </div>
