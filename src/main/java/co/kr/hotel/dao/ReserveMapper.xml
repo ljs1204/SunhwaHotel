@@ -6,7 +6,7 @@
 
 <mapper namespace="co.kr.hotel.dao.ReserveDAO">
 
-
+<!-- 
 	<select id="toReservelist" resultType="co.kr.hotel.dto.RoomDTO">
 	
 		SELECT distinct r.room_num,r.room_type, r.room_price, r.room_type_name,p.room_img FROM room r inner join photo p ON r.room_num = p.room_num 
@@ -22,8 +22,11 @@
 		or room_img = '스위트1.png' and bed_type = 1)
 		order by r.room_type,p.room_img;
 	</select>
-	
-	<!-- <select id="myReserve1" resultType="co.kr.hotel.dto.ReserveDTO">
+	 -->
+	 
+	 
+	 <!-- MypageMapper.xml 로 이사갔어요 20220315
+	<select id="myReserveAll" resultType="co.kr.hotel.dto.ReserveDTO">
 		SELECT r.*, sum(p.amount) as reserve_amount
 		FROM (
 			SELECT *
@@ -37,13 +40,14 @@
 			having mem_id = ${param1}
 	</select>
 	
-	<select id="myReserve2" resultType="co.kr.hotel.dto.ReserveDTO">
+	<select id="myReserveParts" resultType="co.kr.hotel.dto.ReserveDTO">
 		select reserve_num, mem_id, reserve_state, count(*) as reserve_room_cnt
 		from reserve r 
 		group by reserve_num, reserve_state 
 		having mem_id = ${param} and reserve_state = 1
-	</select> -->
-	
+	</select>
+	 -->
+	 
 </mapper>
 
 

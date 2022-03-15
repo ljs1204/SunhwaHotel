@@ -22,6 +22,7 @@ public class ReserveDTO {
 	// 김승일 예약조회 START 20220315
 	private int reserve_amount;
 	private int reserve_room_cnt;
+	private String room_type_name;
 	// 김승일 예약조회 END 20220315
 	
 	public int getPay_idx() {
@@ -175,7 +176,14 @@ public class ReserveDTO {
 	public void setReserve_room_cnt(int reserve_room_cnt) {
 		this.reserve_room_cnt = reserve_room_cnt;
 	}
+	public String getRoom_type_name() {
+		return room_type_name;
+	}
+	public void setRoom_type_name(String room_type_name) {
+		this.room_type_name = room_type_name;
+	}
 	// 김승일 예약조회 END 20220315	
+	
 	
 	
 	
