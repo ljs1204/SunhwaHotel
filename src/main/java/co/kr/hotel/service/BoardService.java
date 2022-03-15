@@ -21,7 +21,6 @@ public class BoardService {
 	
 	@Autowired BoardDAO dao;
 
-	@Transactional
 	public ModelAndView detail(String board_num) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("detail");
