@@ -93,7 +93,7 @@
                         <nav class="site-navigation text-right ml-auto " role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block"
                                 style="font-size:0.8rem; color:gray;">
-                                <li><a href="index.html" class="nav-link">로그인</a></li>
+                                <li><a href="./login" class="nav-link">로그인</a></li>
                                 <!-- 20220311 반응형으로 작아졌을땐 안보이게 하는 class -->
                                 <li class="non-display">|</li>
                                 <li><a href="index.html" class="nav-link">회원가입</a></li>
@@ -115,7 +115,7 @@
 	                                <li class="non-display">|</li>
 	                                <li><a href="./myPage" class="nav-link">마이페이지</a></li>
 	                                <li class="non-display">|</li>
-	                                <li><a href="index.html" class="nav-link">예약확인</a></li>
+	                                <li><a href="" class="nav-link">예약확인</a></li>
 	                            </ul>
 	                        </nav>
 	                    </div>
@@ -182,7 +182,7 @@
                 <!-- 로고 -->
                 <div class="col-lg-4 text-center">
                     <div class="site-logo" onclick="location.href='index.html'">
-                        <a href="index.html">
+                        <a href="./">
                             THE SUNHWA
                             <!-- 20220311 - 로고 밑 글자 -->
                             <!-- 20220314 로그인 상태에 따라 회원/비대면, ID에 따라 관리자 구분 -->
@@ -211,23 +211,23 @@
                         <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                         <!-- 20220314 로그인 상태에 따라 회원/비대면, ID에 따라 관리자 구분 START -->
                         <c:if test="${loginId eq null}">
-                            <li><a href="about.html" class="nav-link" style="font-weight: bolder;">객실 소개</a></li>
-                            <li><a href="blog.html" class="nav-link" style="font-weight: bolder;">고객문의</a></li>
-                            <li><a href="contact.html" class="nav-link" style="font-weight: bolder;">선화 마일리지</a></li>
+                            <li><a href="about.html" class="nav-link" style="font-weight: bold;">객실 소개</a></li>
+                            <li><a href="blog.html" class="nav-link" style="font-weight: bold;">고객문의</a></li>
+                            <li><a href="contact.html" class="nav-link" style="font-weight: bold;">선화 마일리지</a></li>
                         </c:if>
                         
                         <c:if test="${loginId ne null}">
                 			<c:if test="${loginId ne 'admin' }">
-                        	<li><a href="about.html" class="nav-link" style="font-weight: bolder;">객실 소개</a></li>
-                            <li><a href="blog.html" class="nav-link" style="font-weight: bolder;">고객문의</a></li>
-                            <li><a href="contact.html" class="nav-link" style="font-weight: bolder;">선화 마일리지</a></li>
+                        	<li><a href="about.html" class="nav-link" style="font-weight: bold;">객실 소개</a></li>
+                            <li><a href="blog.html" class="nav-link" style="font-weight: bold;">고객문의</a></li>
+                            <li><a href="contact.html" class="nav-link" style="font-weight: bold;">선화 마일리지</a></li>
                            	</c:if>
                         </c:if>
                         
                         <c:if test="${loginId ne null}">
                 			<c:if test="${loginId eq 'admin' }">
-                            <li><a href="about.html" class="nav-link" style="font-weight: bolder;">문의 리스트</a></li>
-                            <li><a href="blog.html" class="nav-link" style="font-weight: bolder;">마일리지 상품 리스트</a></li>
+                            <li><a href="about.html" class="nav-link" style="font-weight: bold;">문의 리스트</a></li>
+                            <li><a href="blog.html" class="nav-link" style="font-weight: bold;">마일리지 상품 리스트</a></li>
                         	</c:if>
                        	</c:if>
                         
