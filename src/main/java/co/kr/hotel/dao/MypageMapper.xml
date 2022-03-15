@@ -6,5 +6,11 @@
 
 <mapper namespace="co.kr.hotel.dao.MypageDAO">
 
-
+	<select id="tomemberboardlist" resultType="co.kr.hotel.dto.MypageDTO">
+	select * from board order by board_orinum desc , re_num asc
+	</select>
+	
+	
+	
+	
 </mapper>
