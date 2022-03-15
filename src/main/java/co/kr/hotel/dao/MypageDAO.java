@@ -9,13 +9,13 @@ import co.kr.hotel.dto.ReserveDTO;
 public interface MypageDAO {
 
 	// 20220315 예약 리스트 SI
-	ArrayList<ReserveDTO> myReserve1(String loginId);
-	ArrayList<ReserveDTO> myReserve2(String loginId);
-	
+	ArrayList<ReserveDTO> myReserveAll(String loginId);
+	ArrayList<ReserveDTO> myReserveParts(String loginId);
+	//
 
 	ArrayList<MypageDTO> tomemberboardlist();
 
-	ArrayList<ReserveDTO> mypage2Reservelist(String loginId);
+	//ArrayList<ReserveDTO> mypage2Reservelist(String loginId);
 	
 	ReserveDTO reserInfo(String userId, String reserve_num);
 	

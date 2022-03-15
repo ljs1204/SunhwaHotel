@@ -38,7 +38,7 @@
 			<tr>
 				<td id="confirm">				
 				</td>				
-			</tr>							
+			</tr>	
 			<tr>
 				<th>이름(한글)</th>
 				<td> 

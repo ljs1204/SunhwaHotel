@@ -63,7 +63,8 @@ public class MypageController {
 			ArrayList<ReserveDTO> result = mypageService.myReserve(loginId);
 
 			model.addAttribute("result", result);
-			logger.info("result : ", result.size());
+			logger.info("result : {}", result.size());
+			logger.info("음음 : {}", result.get(0).getReserve_num());
 
 		}
 		return page;
