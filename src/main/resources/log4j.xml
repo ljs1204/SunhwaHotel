@@ -11,6 +11,11 @@
 	</appender>
 	
 	
+	<logger name="jdbc.sqltiming" additivity="false">
+		<level value="info"/>
+		<appender-ref ref="console" />
+	</logger>
+	
    <!-- 실행 쿼리+쿼리 결과 값 -->
    <!--  level = off : 이 로그는 보지 않겠다. -->
    <logger name="jdbc.resultset" additivity="false">
