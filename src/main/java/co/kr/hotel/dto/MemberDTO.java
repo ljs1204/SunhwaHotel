@@ -15,13 +15,21 @@ public class MemberDTO {
    private String credit_num;
    private int credit_validity;
    private String credit_type;
+
    
    //마일리지 테이블
    private int mileage_idx;
    private int mileage_price;
    private Date mileage_date;
-   private int mileage_useable;
 
+// 20220316 회원의 올해 실적 컬럼 추가 START
+   private int reserve_cnt_year;	// 투숙횟수
+   private int mileage_useable;		// 사용 가능 마일리지량
+   private int mileage_stacked;		// 누적 마일리지량
+// 20220316 회원의 올해 실적 컬럼 추가 END
+
+   
+   
    public String getMem_id() {
       return mem_id;
    }
@@ -106,12 +114,28 @@ public Date getMileage_date() {
 public void setMileage_date(Date mileage_date) {
 	this.mileage_date = mileage_date;
 }
-public int getMileage_useable() {
-	return mileage_useable;
-}
-public void setMileage_useable(int mileage_useable) {
-	this.mileage_useable = mileage_useable;
-}
-   
+
+// 20220316 회원의 올 해 실적 컬럼 추가 START( DB엔 없음 )
+	public int getReserve_cnt_year() {
+		return reserve_cnt_year;
+	}
+	public void setReserve_cnt_year(int reserve_cnt_year) {
+		this.reserve_cnt_year = reserve_cnt_year;
+	}
+	public int getMileage_useable() {
+		return mileage_useable;
+	}
+	public void setMileage_useable(int mileage_useable) {
+		this.mileage_useable = mileage_useable;
+	}
+	public int getMileage_stacked() {
+		return mileage_stacked;
+	}
+	public void setMileage_stacked(int mileage_stacked) {
+		this.mileage_stacked = mileage_stacked;
+	}
+	
+	
+// 20220316 회원의 올 해 실적 컬럼 추가 END
    
 }

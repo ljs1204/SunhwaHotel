@@ -20,6 +20,27 @@ public class MypageService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired MypageDAO mypageDao;
 	
+// 20220316 회원 정보 조회 SI START
+	public MemberDTO myInfo(String loginId) {
+		// 회원 정보 쿼리
+		MemberDTO result = mypageDao.myInfo(loginId);
+		// 이용 실적 계산을 위한 해당 년도안의 예약 횟수 쿼리( 예약취소 제외 / 부분취소 포함 )
+		ArrayList<ReserveDTO> reserveCnt = mypageDao.reserveCnt(loginId);
+		int cnt = reserveCnt.size();		// 올 해 이용 실적
+		result.setReserve_cnt_year(cnt);
+		
+		logger.info("사용 마일리지 : {}", result.getMileage_useable());
+		logger.info("누적 마일리지 : {}", result.getMileage_stacked());
+		
+		
+		return result;
+	}
+	
+	
+// 20220316 회원 정보 조회 SI START
+	
+	
+	
 // 20220315 예약 리스트 조회 SI START
 	public ArrayList<ReserveDTO> myReserve(String loginId) {
 				
@@ -94,6 +115,7 @@ public class MypageService {
 		return mav;
 	}
 
+
 	public ArrayList<MypageDTO> myPagemilelist(String loginId) {
 		// TODO Auto-generated method stub
 		return mypageDao.myPagemilelist(loginId);
@@ -132,4 +154,20 @@ public class MypageService {
 		
 		return mypageDao.memberlist(loginId);
 	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

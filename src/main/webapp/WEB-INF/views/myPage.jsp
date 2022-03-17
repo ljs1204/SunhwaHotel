@@ -64,6 +64,20 @@
     #list-home th, #list-home td{
        width: 40%;
     }
+    #list-home td{
+    	text-align: left;
+    	padding-left: 5%;
+    }
+    #grade_require1{
+    	color: #633e12;
+    	font-weight: 550;
+    }
+    #grade_require2{
+    	color: #633e12;
+    	font-weight: 550;
+    }
+    
+    
 /* 컨텐츠 - 프로필 영역 css END - SI 20220314 */
 
 /* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 => 페이지 분리 */
@@ -149,22 +163,24 @@
 						<h4 style="color: #633e12;">기본정보</h4>
 						<hr style="border-color: #633e12;" />
 
-
 						<!-- 기본정보 - SI 20220314 -->
+						<!-- 변수 선언 : 사용 가능 마일리지 -->
+						<c:set var="useable" value="${result.mileage_useable }" />
+						
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
 									<th scope="row">성명</th>
-									<td colspan="2">${userInfo.mem_id }</td>
+									<td colspan="2">${result.mem_name_kr }</td>
 								</tr>
 								<tr>
-									<th scope="row">마일리지</th>
-									<td>${userInfo.mem_nick }</td>
-									<td>마일리지 내역 보기</td>
+									<th scope="row">사용 가능한 마일리지</th>
+									<td>${useable }</td>
+									<th onclick="location.href='./myPagemilelist?orderNum=1'" style="background-color:#f1ebd6; font-weight:500; cursor:pointer;">마일리지 내역 보기</th>
 								</tr>
 								<tr>
 									<th scope="row">회원등급</th>
-									<td colspan="2">${userInfo.mem_regidate }</td>
+									<td colspan="2" style="text-transform:uppercase;">${result.mem_grade }</td>
 								</tr>
 							</tbody>
 						</table>
@@ -176,6 +192,15 @@
 
 						<!-- 이용실적 - SI 20220314 -->
 						<!-- 올해 실적 스크립트에서 년도 계산해서 삽입 -->
+						<!-- 
+							가입시 SILVER
+							10회 투숙 / 5만 마일리지 GOLD
+							50회 투숙 / 20만 마일리지 DIAMOND
+						-->
+						<!-- 변수 선언 : 숙박횟수 / 누적마일리지-->
+						<c:set var="cnt" value="${result.reserve_cnt_year}" />
+						<c:set var="stacked" value="${result.mileage_stacked }" />
+						
 						<h4 id="useFrequency"></h4>
 						<hr style="border-color: #633e12;" />
 
@@ -183,16 +208,41 @@
 							<tbody>
 								<tr>
 									<th scope="row">투숙횟수</th>
-									<td colspan="2">${userInfo.mem_id }</td>
+									<!-- c:set 출력 방법 1 -->
+									<td colspan="2"><c:out value="${cnt}"/></td>
+								</tr>
+								<tr>
+									<th scope="row">누적 마일리지</th>
+									<td colspan="2">${stacked }</td>
 								</tr>
 								<tr>
 									<th scope="row">내년 예상 등급</th>
-									<td>${userInfo.mem_nick }</td>
-									<td>ⓘ 등급산정기준</td>
+									<!-- 투숙횟수 : 10회 이상이면 GOLD / 50회 이상이면 DIAMOND -->
+									<!-- 마일리지 : 5만점 이상이면 GOLD / 20만 이상이면 DIAMOND -->
+									<!-- c:set 출력 방법 2 -->
+									<%-- <td>${stacked }</td> --%>
+									<td id="grade">
+										<c:choose>
+											<c:when test="${cnt ge 10 && cnt lt 50}">GOLD</c:when>
+											<c:when test="${stacked ge 50000 && stacked lt 200000}">GOLD</c:when>
+											<c:when test="${cnt ge 50 }">DIAMOND</c:when>
+											<c:when test="${stacked ge 200000 }">DIAMOND</c:when>
+											<c:otherwise>SILVER</c:otherwise>
+										</c:choose>
+											<!-- SILVER 기준 -->
+									</td>
+									<th onclick="gradePoint()" style="background-color:#f1ebd6; font-weight:500; cursor:pointer;">ⓘ 등급산정기준</th>
+									
 								</tr>
 								<tr>
+								<!-- SILVER 일 경우 => 10 - 현재 박수 /// 50000 - 사용가능한 마일리지
+									GOLD 일 경우 => 50 - 현재 박수 /// 200000 - 사용가능한 마일리지
+									DIAMOND 일 경우 => 이미 최고등급
+								 -->
 									<th scope="row">다음 등급 남은 조건</th>
-									<td colspan="2">${userInfo.mem_regidate }</td>
+									<td colspan="2">
+										<span id="grade_require1"></span> 회 숙박 or <span id="grade_require2"></span> 마일리지 누적
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -444,7 +494,48 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	});
 /* 올해 년도 계산해서 이용실적 앞에 적어주기 END - SI 20220314 */
 
+/* 다음 등급까지 남은 조건 적어주기 START - SI 20220316 */
+	// 변수 선언( 회원등급(공백제거) / 투숙횟수 / 누적마일리지 )
+	var set = $('#grade').text().trim();
+	var cnt = ${cnt};
+	var stacked = ${stacked};
+	
+	//console.log(set);
+	
+	// 현재 등급에 따라 구분
+	switch(set){
+	case 'SILVER':{
+		//$('#grade_require').text('실버');
+		// 10-cnt 회 숙박 or 50000-stacked 마일리지를 누적
+		var cntRequire = 10 - cnt;
+		var stackedRequire = 50000 - stacked;
+		$('#grade_require1').text(cntRequire);
+		$('#grade_require2').text(stackedRequire);		
+	}
+		break;
+	case 'GOLD':
+		// 50-cnt 회 숙박 or 200000-stacked 마일리지 누적
+		var cntRequire = 50 - cnt;
+		var stackedRequire = 200000 - stacked;
+		$('#grade_require1').text(cntRequire);
+		$('#grade_require2').text(stackedRequire);
+		
+		break;
+	case 'DIAMOND':{
+		$('#grade_require').text('현재 최고 등급입니다.');
+	}
+		break;
+	}
+	
+	
+	function gradePoint(){
+		alert(`Silver - 회원가입시
+Gold -  전년도 10박 or 전년도 5만 마일리지 이상
+Diamond - 전년도 50박 or 전년도 20만 마일리지 이상`
+				);
+	}
 
+/* 다음 등급까지 남은 조건 적어주기 END - SI 20220316 */
 
 </script>
 

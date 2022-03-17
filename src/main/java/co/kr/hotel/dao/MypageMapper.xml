@@ -36,6 +36,58 @@
 		from reserve r where mem_id = #{param1} 
 	</select>
 
+<!-- 20220315 회원 정보 조회 SI - START -->
+	<!-- 
+		20220316 사용가능 마일리지, 올해 누적 마일리지 구하기
+		필요1 : 특정 회원의 사용 가능 마일리지( 현재 마일리지 테이블에서 가장 최근(mileage_date desc) mileage_usable 값 )
+		필요2 : 특정 회원의 누적 마일리지( mileage_price가 0보다 크고 올 해 집계된 것들의 총 합 )
+
+ 		(1) 필요1에 의해 order by limit 1을 사용하고, 필요2 를 충족시키려고 sum()을 사용하면 필요1이 제대로 동작 X
+ 		(2) from 절 서브쿼리로 미리 order by 끝내놓고 sum을 하면 sum() 발동이 안된다
+		 		=> 투숙 횟수 구할 때도 만났던 에러로 컬럼명을 못 찾는 문제( 거기선 쿼리결과 rows 수를 count() 하려고 했었다 )
+ 		(3) mileage 테이블을 서브쿼리 + 조인 ( 총 세번 사용 )
+		 		=> from 서브쿼리해서 order by한 결과 따로 뽑고(필요1, m1) + left outer join해서 sum() 값 따로 뽑기(필요2, m2) => 현재 잘 동작
+		(4) member(mb) 테이블과 한번 더 조인
+	 -->
+	<select id="myInfo" resultType="co.kr.hotel.dto.MemberDTO">
+		select mb.*, m1.*, sum(if(m2.mileage_price > 0, m2.mileage_price, 0)) as mileage_stacked
+		from 
+		(
+		select *
+		from mileage m
+		where mem_id = #{param1}
+		order by m.mileage_date desc limit 1
+		) as m1
+		left outer join mileage m2
+		on m2.mem_id = m1.mem_id and year(m2.mileage_date) = DATE_FORMAT(now(), '%Y')
+		left outer join `member` mb 
+		on m1.mem_id = mb.mem_id
+		
+	</select>
+
+	<!--
+		올 해 투숙 횟수 Query 
+		(1) 예약취소 상태가 아닌 예약 리스트 중에서 예약 번호가 같은건 한개로 Group.
+		(2) reserve_state 가 3( 예약 전체 취소 ) 인 예약번호는 검색결과에서 제외되도록 해야한다.
+	-->
+	<select id="reserveCnt" resultType="co.kr.hotel.dto.ReserveDTO">
+		select *
+		from reserve
+		group by reserve_num
+		having mem_id = #{param1} and
+		        year(checkoutdate) = DATE_FORMAT(now(), '%Y') and
+		        reserve_num not in
+		(
+		    select reserve_num
+		    from reserve
+		    where reserve_state = 3
+		)
+	</select>
+
+
+<!-- 20220315 회원 정보 조회 SI - END -->
+	
+
 
 <!-- 20220315 예약 리스트 보기 SI - START -->
 	<select id="myReserveAll" resultType="co.kr.hotel.dto.ReserveDTO">
