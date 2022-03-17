@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dao.MypageDAO;
+import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.MypageDTO;
+import co.kr.hotel.dto.PageDto;
 import co.kr.hotel.dto.ReserveDTO;
 
 @Service
@@ -62,9 +64,9 @@ public class MypageService {
 	}
 // 20220315 예약 리스트 조회 SI END
 	
-	public ReserveDTO reserInfo(String userId, String reserve_num) {
+	public MypageDTO reserInfo(String userId, int reserve_idx) {
 		// TODO Auto-generated method stub
-		return mypageDao.reserInfo(userId,reserve_num);
+		return mypageDao.reserInfo(userId,reserve_idx);
 	}
 
 
@@ -90,5 +92,44 @@ public class MypageService {
 		mav.addObject("tomemberboardlist", tomemberboardlist);
 		
 		return mav;
+	}
+
+	public ArrayList<MypageDTO> myPagemilelist(String loginId) {
+		// TODO Auto-generated method stub
+		return mypageDao.myPagemilelist(loginId);
+	}
+	// 마일리지 리스트 페이징 START 유선화 2022.03.16
+	public int milelistCount(String loginId) {
+		// TODO Auto-generated method stub
+		PageDto dto = new PageDto();
+		dto.setLoginId(loginId);
+		
+		return mypageDao.milelistCount(loginId);
+	}
+	// 마일리지 리스트 페이징 ENd 유선화 2022.03.16
+
+	public ArrayList<MemberDTO> milelistInfo(int displayPost, int postNum, String loginId) {
+		PageDto dto = new PageDto();
+		dto.setUserid(loginId);
+		dto.setPostNum(postNum);
+		dto.setDisplayPost(displayPost);
+		logger.info("postNum : {}", postNum);
+		
+		return mypageDao.milelistInfo(displayPost,postNum,loginId);
+	}
+
+	public MypageDTO mypagedto(String loginId) {
+		
+		
+		return mypageDao.mypagedto(loginId);
+	}
+
+	public MemberDTO memberlist(String loginId) {
+		MemberDTO dto = new MemberDTO();
+		
+		String pw = dto.getMem_pw();
+		logger.info("memberlist service pw : "+pw);
+		
+		return mypageDao.memberlist(loginId);
 	}
 }

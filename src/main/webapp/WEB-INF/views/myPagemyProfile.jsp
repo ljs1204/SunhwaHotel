@@ -105,11 +105,11 @@
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
  
-						<a class="list-group-item list-group-item-action active" id="list-home-list" href="./myPage">프로필</a>
+						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
 						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve">예약 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">마일리지 내역 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">내 정보 조회</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
+						<a class="list-group-item list-group-item-action active" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">회원정보 수정</a>
 
 
@@ -150,56 +150,81 @@
 						<hr style="border-color: #633e12;" />
 
 
-						<!-- 기본정보 - SI 20220314 -->
+						<!-- 프로필 - 유선화 20220316 -->
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
-									<th scope="row">성명</th>
-									<td colspan="2">${userInfo.mem_id }</td>
+									<th scope="row">아이디</th>
+									<td colspan="2">${memberlist.mem_id}</td>
 								</tr>
 								<tr>
-									<th scope="row">마일리지</th>
-									<td>${userInfo.mem_nick }</td>
-									<td>마일리지 내역 보기</td>
+									<th scope="row">이름(한글)</th>
+									<td colspan="2">${memberlist.mem_name_kr }</td>
 								</tr>
+								
 								<tr>
-									<th scope="row">회원등급</th>
-									<td colspan="2">${userInfo.mem_regidate }</td>
+									<th scope="row">이름(영문)</th>
+									<td colspan="2">${memberlist.mem_name_en }</td>
 								</tr>
+								
+								
+								<tr>
+									<th scope="row">생년월일</th>
+									<td colspan="2">${memberlist.mem_birth }</td>
+								</tr>
+								
+								<tr>
+									<th scope="row">이메일</th>
+									<td colspan="2">${memberlist.mem_email }</td>
+								</tr>
+								
+								<tr>
+									<th scope="row">휴대폰 번호</th>
+									<td colspan="2">${memberlist.mem_phone }</td>
+								</tr>
+								
+								<tr>
+									<th scope="row"><a href="./myPagemilelist?orderNum=1">마일리지</a></th>
+									<td colspan="2">${mypageInfo.mileage_useable}</td>
+								</tr>
+								
 							</tbody>
 						</table>
-
+						
 						<br />
 						<hr />
 						<br />
 
-
-						<!-- 이용실적 - SI 20220314 -->
-						<!-- 올해 실적 스크립트에서 년도 계산해서 삽입 -->
 						<h4 id="useFrequency"></h4>
 						<hr style="border-color: #633e12;" />
 
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
-									<th scope="row">투숙횟수</th>
-									<td colspan="2">${userInfo.mem_id }</td>
+									<th scope="row">카드 번호</th>
+									<c:if test="${memberlist.credit_validity ne 0}"><td colspan="2">${memberlist.credit_num}</td></c:if>
+									<c:if test="${memberlist.credit_validity eq 0}"><td>등록된 카드정보가 없습니다</td></c:if>
 								</tr>
 								<tr>
-									<th scope="row">내년 예상 등급</th>
-									<td>${userInfo.mem_nick }</td>
-									<td>ⓘ 등급산정기준</td>
+									<th scope="row">유효 기간</th>
+									<c:if test="${memberlist.credit_validity ne 0}"><td colspan="2">${memberlist.credit_validity}</td></c:if>
+									<c:if test="${memberlist.credit_validity eq 0}"><td>등록된 카드정가 없습니다</td></c:if>
 								</tr>
 								<tr>
-									<th scope="row">다음 등급 남은 조건</th>
-									<td colspan="2">${userInfo.mem_regidate }</td>
+									<th scope="row">카드 종류</th>
+									<c:if test="${memberlist.credit_type eq 1}"><td colspan="2">하나카드</td></c:if>
+					           		<c:if test="${memberlist.credit_type eq 2}"><td colspan="2">국민카드</td></c:if>
+					           		<c:if test="${memberlist.credit_type eq 3}"><td colspan="2">현대카드</td></c:if>
+					           		<c:if test="${memberlist.credit_validity eq 0}"><td>등록된 카드정가 없습니다</td></c:if>
+									<c:if test="${memberlist.credit_validity eq 0}"><td>카드정보 입력하기</td></c:if>
+									
 								</tr>
 							</tbody>
 						</table>
 
 					</form>
 				</div>
-				<!-- 프로필 END - SI 20220314 -->
+				
 					
 			</div>		
 					
@@ -439,7 +464,7 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	var year = d.getFullYear();
 	
 	$(document).ready(function(){
-		$('#useFrequency').html(year+"년 이용실적");
+		$('#useFrequency').html(year+"년 카드정보");
 		$('#useFrequency').css({'color':'#633e12'});
 	});
 /* 올해 년도 계산해서 이용실적 앞에 적어주기 END - SI 20220314 */

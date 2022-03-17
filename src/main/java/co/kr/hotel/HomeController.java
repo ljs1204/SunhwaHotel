@@ -84,6 +84,11 @@ public class HomeController {
 		ArrayList<RoomDTO> roomReservelist = reserveService.toReservelist(checkin_date,checkout_date,cnt);
 		logger.info("roomReservelist"+roomReservelist);
 		model.addAttribute("roomReservelist",roomReservelist);
+		
+		
+		
+		
+		
 		//객실 예약 리스트 END 20220311 유선화
 			
 		int compare = dateInformat.compareTo(dateoutformat);

@@ -6,7 +6,7 @@
 
 <mapper namespace="co.kr.hotel.dao.ReserveDAO">
 
-<!-- 
+
 	<select id="toReservelist" resultType="co.kr.hotel.dto.RoomDTO">
 	
 		SELECT distinct r.room_num,r.room_type, r.room_price, r.room_type_name,p.room_img FROM room r inner join photo p ON r.room_num = p.room_num 
@@ -22,7 +22,7 @@
 		or room_img = '스위트1.png' and bed_type = 1)
 		order by r.room_type,p.room_img;
 	</select>
-	 -->
+
 	 
 	 
 	 <!-- MypageMapper.xml 로 이사갔어요 20220315

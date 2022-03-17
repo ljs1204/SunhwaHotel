@@ -62,7 +62,7 @@
        color: #333333;
     }
     #list-home th, #list-home td{
-       width: 40%;
+       width: 10%;
     }
 /* 컨텐츠 - 프로필 영역 css END - SI 20220314 */
 
@@ -105,10 +105,10 @@
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
  
-						<a class="list-group-item list-group-item-action active" id="list-home-list" href="./myPage">프로필</a>
+						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
 						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve">예약 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyMilelist">마일리지 내역 조회</a>
+						<a class="list-group-item list-group-item-action  active" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">회원정보 수정</a>
 
@@ -151,53 +151,72 @@
 
 
 						<!-- 기본정보 - SI 20220314 -->
-						<table class="table table-bordered">
-							<tbody>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>회원아이디</th>
+								<th>마일리지 금액</th>
+								<th>마일리지<br/>내역</th>
+								<th>처리날짜</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- 예약 조회 리스트 뿌리기 --> 
+							<c:forEach var="milelist" items="${milelist}">
 								<tr>
-									<th scope="row">성명</th>
-									<td colspan="2">${userInfo.mem_id }</td>
+									<td><a href="">${milelist.mem_id}</a></td>
+									<td>${milelist.mileage_price}</td>
+									<td>${milelist.mileage_useable}</td>
+									<td style="width: 20%">${milelist.mileage_date}</td>
 								</tr>
-								<tr>
-									<th scope="row">마일리지</th>
-									<td>${userInfo.mem_nick }</td>
-									<td>마일리지 내역 보기</td>
-								</tr>
-								<tr>
-									<th scope="row">회원등급</th>
-									<td colspan="2">${userInfo.mem_regidate }</td>
-								</tr>
-							</tbody>
-						</table>
-
-						<br />
-						<hr />
-						<br />
-
-
-						<!-- 이용실적 - SI 20220314 -->
-						<!-- 올해 실적 스크립트에서 년도 계산해서 삽입 -->
-						<h4 id="useFrequency"></h4>
-						<hr style="border-color: #633e12;" />
-
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<th scope="row">투숙횟수</th>
-									<td colspan="2">${userInfo.mem_id }</td>
-								</tr>
-								<tr>
-									<th scope="row">내년 예상 등급</th>
-									<td>${userInfo.mem_nick }</td>
-									<td>ⓘ 등급산정기준</td>
-								</tr>
-								<tr>
-									<th scope="row">다음 등급 남은 조건</th>
-									<td colspan="2">${userInfo.mem_regidate }</td>
-								</tr>
-							</tbody>
-						</table>
-
+							</c:forEach>
+						</tbody>
+					</table>
+					
 					</form>
+					<table class="table table-hover">
+					<thead>
+					<tr><th> 현재 사용가능한 마일리지 입니다</th></tr>
+					</thead>
+					<tbody>
+					<tr><td>${mypageInfo.mileage_useable}</td></tr>
+					</tbody>
+					</table>
+					
+					
+					<!-- 페이징 유선화 start 20220316 -->
+					<div class="row" data-aos="fade">
+			          <div class="col-12">
+			            <div class="custom-pagination">
+			              <ul class="list-unstyled">
+			              
+			              <c:if test="${milelistPage.prev}">
+			                <li class="active"><a href="myPagemilelist?orderNum=${milelistPage.startPageNum - 1}">&lt;</a></li>
+			              </c:if>
+		                  <c:forEach begin="${milelistPage.startPageNum}" end="${milelistPage.endPageNum}" var="num">
+						      <c:if test="${milelistNum == num}"> 
+							      <li class="active">
+							      	<span>${num}</span>
+							      </li>
+						      </c:if>
+						      <c:if test="${milelistNum != num}">
+							      <li>
+							      	<a href="myPagemilelist?orderNum=${num}">${num}</a>
+							      </li>			     
+						      </c:if>    		
+					      </c:forEach>
+			              <c:if test="${milelistPage.next}">
+					      	<li>
+					      		<a href="myPagemilelist?orderNum=${milelistPage.endPageNum + 1}">&gt;</a>
+					      	</li>
+					      </c:if>
+			               
+			              </ul>
+			            </div>
+			          </div>
+			        </div>
+						<!-- 페이징 유선화 end 20220316 -->
+					
 				</div>
 				<!-- 프로필 END - SI 20220314 -->
 					
@@ -294,106 +313,6 @@
 				</div>
 				 -->
 			</div>
-		</div>
-	</section>
-
-	<section class="section testimonial-section bg-light">
-		<div class="container">
-			<div class="row justify-content-center text-center mb-5">
-				<div class="col-md-7">
-					<h2 class="heading" data-aos="fade-up">People Says</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="js-carousel-2 owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200">
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; Jean Smith</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-							<p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; Jean Smith</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-							<p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-				</div>
-				<!-- END slider -->
-			</div>
-
 		</div>
 	</section>
 

@@ -16,6 +16,11 @@ public class MemberDTO {
    private int credit_validity;
    private String credit_type;
    
+   //마일리지 테이블
+   private int mileage_idx;
+   private int mileage_price;
+   private Date mileage_date;
+   private int mileage_useable;
 
    public String getMem_id() {
       return mem_id;
@@ -83,6 +88,30 @@ public class MemberDTO {
    public void setCredit_type(String credit_type) {
       this.credit_type = credit_type;
    }
+public int getMileage_idx() {
+	return mileage_idx;
+}
+public void setMileage_idx(int mileage_idx) {
+	this.mileage_idx = mileage_idx;
+}
+public int getMileage_price() {
+	return mileage_price;
+}
+public void setMileage_price(int mileage_price) {
+	this.mileage_price = mileage_price;
+}
+public Date getMileage_date() {
+	return mileage_date;
+}
+public void setMileage_date(Date mileage_date) {
+	this.mileage_date = mileage_date;
+}
+public int getMileage_useable() {
+	return mileage_useable;
+}
+public void setMileage_useable(int mileage_useable) {
+	this.mileage_useable = mileage_useable;
+}
    
    
 }
