@@ -82,11 +82,20 @@
 			<tr>
 				<th colspan="2">
 					<input type="button" id="submit" value="저장"/>
-				</th>		
+				</th>	
+				<th colspan="2">
+					<input type="button" onclick="location.href='./myPage'" value ="목록으로"/>
+				</th>	
 			</tr>
 		</table>
 </body>
 <script>   
+var msg = "${msg}";
+
+if(msg != ""){
+	alert(msg);
+}
+
 // 2022-03-11 백유나 비밀번호 조건 START   
 	$(function(){
 

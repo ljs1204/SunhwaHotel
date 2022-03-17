@@ -124,7 +124,7 @@
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">회원정보 수정</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myProfile">회원정보 수정</a>
 
 
 <!-- 페이지 이동 없이 사용할 땐 이걸로 
