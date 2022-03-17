@@ -24,4 +24,20 @@
 					
 	
 	</select>
+	
+	
+	<select id="reservation_option" resultType="hashmap">
+		SELECT * FROM room_option
+	</select>
+	
+	<select id="reservation_product" resultType="hashmap">
+		SELECT * FROM product
+	</select>
+	
+	<select id="useable" resultType="int">
+		SELECT m.mileage_useable FROM mileage m WHERE mem_id = #{param1} order by mileage_date desc limit 1;
+	</select>
+	
+	
+	
 </mapper>

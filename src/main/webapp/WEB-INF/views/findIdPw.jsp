@@ -17,8 +17,7 @@
             #idfind,#pwfind{
                 margin-top: 10px;
                 color: #ffffff;
-                background: #e7ab3c;
-                border: 1px solid #e7ab3c;
+                background: black;
                 font-size: 14px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -35,7 +34,7 @@
                 margin-bottom: 10px; 
             }
             .register-login-section {
-                padding-top: 72px;
+                padding-top: 200px;
                 padding-bottom: 80px;
             }
             .container{
@@ -47,14 +46,22 @@
 			    margin-left: auto;
             }
             .box{
+            	margin: 0 auto;
 				position: relative;
-			    width: 100%;
-			    padding-right: 15px;
-			    padding-left: 15px;	
+			    width: 60%;
+			    padding : 30 30 30 30px;
+			    border: 1px solid black;
             }
+
        </style>
 </head>
 <body>
+
+	<header class="site-header">
+		<jsp:include page="header.jsp" flush="true" />
+	</header>
+	
+	
 	<div class="register-login-section spad">
 	           <div class="container">
 	               <div class="row">
@@ -75,13 +82,13 @@
 	                                   <label for="email">이메일</label><br/>
 	                                   <input type="text" id="email" name="email" placeholder="이메일을 입력해주세요.">
 	                               </div>
-	                               <input type = "button" id = "idfind" value = "아이디 찾기"/>
+	                               <input type = "button" id = "idfind" class="btn" value = "아이디 찾기"/>
 	                           </form>
 	                       </div>
 	                       <!-- 비밀번호 찾기 Form -->
 	                       <div class="pw-form">
 	                           <form action="#">
-	                               <h2>비밀번호 찾기</h2>
+	                               <h2>비밀번호 재발급</h2>
 	                               <div class="group-input">
 	                                   <label for="username2">아이디</label><br/>
 	                                   <input type="text" id="userId" name="userId" placeholder="아이디를 입력해주세요.">
@@ -90,7 +97,7 @@
 	                                   <label for="email2">이메일</label><br/>
 	                                   <input type="text" id="email2" name="email2" placeholder="이메일을 입력해주세요.">
 	                               </div>
-	                               <input type = "button" id = "pwfind" value = "비밀번호 찾기"/>
+	                               <input type = "button" id = "pwfind" class="btn" value = "비밀번호 재발급"/>
 	                           </form>
 	                       </div>
 	
@@ -98,6 +105,11 @@
 	               </div>
 	           </div>
 	       </div>
+	       
+	<footer class="footer-section">
+		<jsp:include page="footer.jsp" flush="true" />
+	</footer>
+	
 	
 </body>
 <script>
@@ -148,9 +160,7 @@ $('#pwfind').click(function() {
    		let ranPick4 = Math.floor(Math.random() * ranValue4.length);
    		temp_pw = temp_pw + ranValue1[ranPick1] + ranValue2[ranPick2] + ranValue3[ranPick3] + ranValue4[ranPick4];
    	}
-   	
-   	alert("예정 임시 비밀번호는 " + temp_pw + " 입니다.");
-
+	
    	
 	$.ajax({
 		type:'POST',
