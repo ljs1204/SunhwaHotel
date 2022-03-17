@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dao.MypageDAO;
 import co.kr.hotel.dto.MemberDTO;
+import co.kr.hotel.dto.BoardDTO;
 import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.PageDto;
 import co.kr.hotel.dto.ReserveDTO;
@@ -177,16 +178,21 @@ public class MypageService {
 		return mypageDao.resernum(loginId);
 	}
 
-
-	public ModelAndView tomemberboardlist() {
-		
-		logger.info("Mypage 서비스 시작");
+	public ModelAndView tomemberboarddetail(String board_num) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("tomemberboarddetail");
+		BoardDTO dto = mypageDao.tomemberboarddetail(board_num);
+		mav.addObject("tomemberboarddetail", dto);		
+		return mav;
+	}
+	
+	//리스트
+	public ModelAndView tomemberboardlist(String loginId) {		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("tomemberboardlist");
-		ArrayList<MypageDTO> tomemberboardlist = mypageDao.tomemberboardlist();		
+		ArrayList<BoardDTO> tomemberboardlist = mypageDao.tomemberboardlist(loginId);		
 		logger.info("리스트 갯수 : {}",tomemberboardlist.size());
 		mav.addObject("tomemberboardlist", tomemberboardlist);
-		
 		return mav;
 	}
 
@@ -230,6 +236,14 @@ public class MypageService {
 		return mypageDao.memberlist(loginId);
 	}
 
+	//글쓰기 
+	public void tomemberboardwrite(HashMap<String, String> params) {
+		int row = mypageDao.tomemberboardwrite(params);
+		logger.info(" 입력된 건수 : {}",row);
+	}
+	
+
+	
 }
 
 

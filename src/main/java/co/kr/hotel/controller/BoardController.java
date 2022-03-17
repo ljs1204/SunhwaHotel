@@ -2,15 +2,13 @@ package co.kr.hotel.controller;
 
 import java.util.HashMap;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,16 +26,33 @@ public class BoardController {
 	
 	//글쓰기
 	@RequestMapping(value = "/writeForm", method = RequestMethod.GET)
-	public String writeForm(Model model) {		
+	public String writeForm(Model model , String board_orinum) {
+		
+		String board_orinum = (int)board_orinum.get
+		
+		logger.info("board_orinum : "+board_orinum );
 		logger.info("writeForm 이동");
+		
+		ModelAttribute("board_orinum" , board_orinum);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject ("board_orinum" ,board_orinum);
+		
+		
+		//유선화 START
+		
+		
+		//유선화 END
+		
 		return "writeForm";
 	}
 	//글쓰기 요청명 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(Model model, @RequestParam HashMap<String, String> params) {		
+	public String write(Model model, @RequestParam HashMap<String, String> params , String board_orinum) {
+
 		logger.info("write 요청 : {}",params);
 		service.write(params);
-		return "redirect:/tomemberboardlist";
+		
+		return "redirect:/list";
 	}
 	//상세보기 
 	@GetMapping(value="/detail")
@@ -45,10 +60,12 @@ public class BoardController {
 		logger.info("상세보기 요청 :{} ",board_num);
 		return service.detail(board_num);
 	}
-	//리스트
-	@GetMapping(value="/list")
-	public ModelAndView list() {
-		return service.list();
-		
+	// 2022.03.14  문의페이지 리스트 박형민
+			@GetMapping(value="/list")
+			public ModelAndView list() {
+				
+				logger.info("리스트 요청");
+				
+				return service.list();
+			}
 	}
-}
