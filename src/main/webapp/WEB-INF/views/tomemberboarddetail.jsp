@@ -18,36 +18,31 @@
 </style>
 </head>
 <body>
-	<h1 style="text-align:center;">고객의 소리</h1>
 	<table>
 		<tr>
 			<th>글번호</th>
-			<td>${board.board_num}</td>
+			<td>${tomemberboarddetail.board_num}</td>
 		</tr>
 		<tr>
 			<th>작성일자</th>
-			<td>${board.reg_datetime}</td>
+			<td>${tomemberboarddetail.reg_datetime}</td>
 		</tr>
 		<tr>
 			<th>작성자</th>
-			<td>${board.mem_id}</td>
+			<td>${tomemberboarddetail.mem_id}</td>
 		</tr>		
 		<tr>
 			<th>제목</th>
-			<td>${board.board_title}</td>			
+			<td>${tomemberboarddetail.board_title}</td>			
 		</tr>
 		<tr>
 			<th>내용</th>
-			<td>${board.board_content}</td>
+			<td>${tomemberboarddetail.board_content}</td>
 		<!-- <td><textarea name="board_content"				
 			style= "width:500px;height:200px;font-size:12px;" 
 			placeholder="내용을 입력해주세요."></textarea></td>	-->		
 						
 		</tr>
-		<input type="button" onclick="location.href='./writeForm?board_orinum=${board.board_orinum}'" value="글쓰기"/>
-		
-		<a href="./writeForm?board_orinum=${board.board_orinum}">글쓰기</a>
-		
 	</table>
 </body>
 <script>
