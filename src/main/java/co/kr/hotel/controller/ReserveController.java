@@ -84,4 +84,11 @@ public class ReserveController {
 	//객실 옵션 페이지 이지선 END 220315
 	
 	
+		@RequestMapping(value = "/doReservation", method = RequestMethod.GET)
+		public String doReservation(Model model,HttpSession session) {
+			
+			return "doReservation";
+		}
+		
+		
 }
