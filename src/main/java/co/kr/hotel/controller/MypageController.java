@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.service.MypageService;
 
@@ -29,27 +30,36 @@ public class MypageController {
 	// 20220314 마이페이지 START - SI
 	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
 	public String myPage(Model model, HttpSession session) {
-
 		logger.info("myPage 요청");
+		
+		String page = "index";
 
 		// 메인페이지 요청 세션검사 추가 START - SI 20220314
 		String loginId = (String) session.getAttribute("loginId");
-		// loginId = "admin"; // 아이디 'admin' 일 때
-		// loginId = "아이디";
-
+		
 		if (loginId != null) {
 			model.addAttribute("loginId", loginId);
+			page = "myPage";
+			
+			// 서비스
+			MemberDTO result = mypageService.myInfo(loginId);
+			
+			model.addAttribute("result", result);
+			logger.info("투숙횟수 확인! : {}", result.getReserve_cnt_year());
+			
 		}
 		// 메인페이지 요청 세션검사 추가 END - SI 20220314
 
-		return "myPage";
+		
+		
+		return page;
 
 	}
 	// 20220314 마이페이지 작업 END - SI
 
 	// 마이페이지 예약리스트 START 20220314
 	@RequestMapping(value = "/myReserve", method = RequestMethod.GET)
-	public String mypage2Reservelist(Model model, HttpSession session) {
+	public String myReserve(Model model, HttpSession session) {
 		logger.info("myReserve로 요청이 들어옴 ");
 
 // 세션 확인 후 페이지 분기 - SI 20220315
