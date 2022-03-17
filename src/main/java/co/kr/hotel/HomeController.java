@@ -39,7 +39,7 @@ public class HomeController {
 		// 메인페이지 요청 세션검사 추가 START - SI 20220314  
 		String loginId = (String) session.getAttribute("loginId");
 		//loginId = "admin";	// 아이디 'admin' 일 때
-		loginId = "아이디";
+		//loginId = "아이디";
 		
 		if(loginId != null) {
 			model.addAttribute("loginId", loginId);
@@ -84,6 +84,11 @@ public class HomeController {
 		ArrayList<RoomDTO> roomReservelist = reserveService.toReservelist(checkin_date,checkout_date,cnt);
 		logger.info("roomReservelist"+roomReservelist);
 		model.addAttribute("roomReservelist",roomReservelist);
+		
+		
+		
+		
+		
 		//객실 예약 리스트 END 20220311 유선화
 			
 		int compare = dateInformat.compareTo(dateoutformat);

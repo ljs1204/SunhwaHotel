@@ -21,10 +21,8 @@
 		or room_img = '패밀리1.png' and bed_type = 1 
 		or room_img = '스위트1.png' and bed_type = 1)
 		order by r.room_type,p.room_img;
-					
-	
 	</select>
-	
+
 	
 	<select id="reservation_option" resultType="hashmap">
 		SELECT * FROM room_option
@@ -37,7 +35,6 @@
 	<select id="useable" resultType="int">
 		SELECT m.mileage_useable FROM mileage m WHERE mem_id = #{param1} order by mileage_date desc limit 1;
 	</select>
-	
-	
-	
+
+	 
 </mapper>

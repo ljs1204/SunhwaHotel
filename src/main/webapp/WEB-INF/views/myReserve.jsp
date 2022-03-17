@@ -99,89 +99,99 @@
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
 						<a class="list-group-item list-group-item-action active" id="list-reserve-list" href="./myReserve">예약 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist">마일리지 내역 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">내 정보 조회</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">회원정보 수정</a>
 
 					</div>
 				</div>
 <!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
 
-<!-- 환불조회 END - 유선화 20220316 -->
+<!-- 예약조회 START - SI 20220314 -->
 			<!-- tabContent 있어야 발동함 -->
 			<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
 				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
 						style="max-width:100% !important">
-					<form action="myReserve" method="get">
+					<form action="" method="">
 						<h4 style="color: #633e12;">${loginId} 님의 예약 리스트</h4>
 						<hr style="border-color: #633e12;" />
-						 <table class="table table-hover">
-				      		<tr style="background-color:#212529;color:white;">
-				            	 
-					            <tr>
-					             	<td >아이디</td>
-					           		<td>${payInfo.mem_id}</td>           
-					            </tr>               
-					            <tr>
-					            	<td id="title">예약번호</td>
-					             	<td>${payInfo.reserve_num}</td>
-					            </tr>   
-					            <tr>
-					            	<td id="title">신용카드번호</td>
-					           		<td>${payInfo.credit_num} </td>
-					            </tr>   
-					            <tr>
-					            	<td id="title">유효기간</td>
-					           		<td>${payInfo.credit_validity}</td>
-								</tr>   
-					            <tr> 
-									<td id="title">카드종류</td>
-					           		<c:if test="${payInfo.credit_type eq 1}"><td>하나카드</td></c:if>
-					           		<c:if test="${payInfo.credit_type eq 2}"><td>국민카드</td></c:if>
-					           		<c:if test="${payInfo.credit_type eq 3}"><td>현대카드</td></c:if>
-					            </tr>                               
-					            <tr>
-					            	<td id="title">신청날짜</td>          
-								 	<td>${payInfo.pay_date}</td> 
-					            </tr> 
-					            <tr>
-					            	<td id="title">예약현황</td>          
-								 	<c:if test="${payInfo.reserve_state eq 1}"><td>예약완료</td></c:if> 
-								 	<c:if test="${payInfo.reserve_state eq 2}"><td>부분취소</td></c:if> 
-									<c:if test="${payInfo.reserve_state eq 3}"><td>예약취소</td></c:if>
-							 	
-					            </tr> 
-					            <tr>
-					            	<td id="title">처리상태</td>          
-							 	
-							 		<c:if test="${payInfo.pay_state eq 1}"><td>결제완료</td></c:if> 
-									<c:if test="${payInfo.pay_state eq 2}"><td>부분환불완료</td></c:if>
-									<c:if test="${payInfo.pay_state eq 3}"><td>환불 완료</td></c:if>
-							 	
-					            </tr>	
-					            <tr>
-					            	<td id="title">처리날짜</td>          
-								 	<td>${payInfo.pay_date}</td> 
-					            </tr> 	
-					            <tr>
-					            	<td id="title">환불 금액</td>          
-								 	<td>${payInfo.amount}</td> 
-					            </tr>            
-				            </tr>
-				          </table>
-				          <br/>
-				          <c:if test="${payInfo.pay_state eq 1}"><button type="submit" class="btn">예약보기</button></c:if>
-				          <br/>
-				          <hr style="border-color: #633e12;" />
-				          <button type="submit" class="btn">목록으로</button>
-										
-						  <hr style="border-color: #633e12;" />
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>예약번호</th>
+								<th>객실타입</th>
+								<th>체크인</th>
+								<th>체크아웃</th>
+								<th>가격</th>
+								<th>예약상태</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%-- 
+							<tr>
+								<td><a href="./reserveDetail">SVW8432Q</a></td>
+								<td>디럭스(더블) 외 2개</td>
+								<td>2022-03-06</td>
+								<td>2022-03-08</td>
+								<td>1,992,000원</td>
+								<c:choose>
+									<c:when test="">
+										<td>예약완료</td>
+									</c:when>
+									<c:when test="true">
+										<td><a href="">부분취소</a>
+									</c:when>
+									<c:when test="">
+										<td>예약취소</td>
+									</c:when>
+								</c:choose>
+							</tr>
+							<tr>
+								<td><a href="">QWASD145</a></td>
+								<td>디럭스(트윈)</td>
+								<td>2022-01-17</td>
+								<td>2022-01-18</td>
+								<td>679,000원</td>
+								<td>예약취소</td>
+							</tr>
+							 --%>
+							
+							<!-- 예약 조회 리스트 뿌리기 --> 
+							<c:forEach var="res" items="${result }">
+								<!-- 20220315 객실 수 - 1 해주기( ~외 1개 ) -->
+								<c:set var="roomCnt" value="${res.reserve_room_cnt - 1}" />
+								
+								<!-- 20220315 객실 수 - 1 해주기( ~외 1개 ) -->
+								
+								<tr>
+									<td><a href="mypageRefundDetail?reserve_num=${res.reserve_num}&reserve_idx=${res.reserve_idx}">${res.reserve_num}</a></td>
+									<td>${res.room_type_name} 외 ${roomCnt} 개</td>
+									<td>${res.checkindate}</td>
+									<td>${res.checkoutdate}</td>
+									<td>${res.reserve_amount}</td>
+									<c:choose>
+										<c:when test="${res.reserve_state eq 1}">
+											<td>예약완료</td>									
+										</c:when>
+										<c:when test="${res.reserve_state eq 2}">
+											<td><a href="">부분취소</a></td>									
+										</c:when>
+										<c:when test="${res.reserve_state eq 3}">
+											<td>예약취소</td>									
+										</c:when>
+									</c:choose>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+
+					페이징 영역!
+					<hr style="border-color: #633e12;" />
 					</form>
-						
 
 				</div>
 			</div>
-<!-- 환불조회 END - 유선화 20220316 -->	
+<!-- 예약조회 END - SI 20220314 -->	
 
 
 

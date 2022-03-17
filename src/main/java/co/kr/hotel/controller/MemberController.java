@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -128,13 +127,11 @@ public class MemberController {
         return map;
     }
 	
-	
 	@RequestMapping(value = "/findpw")
     @ResponseBody 
     public HashMap<String, Object> findpw(
             @RequestParam String user_id, @RequestParam String user_email, @RequestParam String temp_pw) {
 		logger.info("비밀번호 확인시 필수 정보 체크:{} / {}", user_id, user_email);
-
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String hashText = encoder.encode(temp_pw);
 		logger.info("암호화 된 값 : "+hashText);
@@ -146,8 +143,45 @@ public class MemberController {
         map.put("success", success);
         
         return map;
-    }
+	}
 	
+	// 0311 백유나 회원정보 수정 START 
+	@RequestMapping(value = "/myProfile", method = RequestMethod.GET)
+	public String myProfile(Model model,  HttpSession session) { 
+		logger.info("myProfile 요청");
+		String loginId = (String) session.getAttribute("loginId");
+		MemberDTO myProfile = service.myprofile(loginId);
+		model.addAttribute("myProfile",myProfile);
+		
+
+		return "myProfile"; 	
+	}
+	// 0311 백유나 회원정보 수정 END
 	
-	//아이디,비밀번호 찾기 이지선 0314 END
+	// 0311 백유나 회원정보 업데이트 START 
+	@RequestMapping(value = "/emailPage", method = RequestMethod.GET)
+	public String emailPage(Model model) {
+		logger.info("email입니다.");
+		
+		return "emailPage";
+	}	
+
+	
+	@RequestMapping(value="/overlayemail" , method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> overlayemail(@RequestParam String email) {
+		logger.info("email 중복조회 : {}",email);
+		HashMap<String, Object> emailIdentify = service.emailIdentify(email);
+		return emailIdentify;
+	}
+	
+	@RequestMapping(value="/profileupdate" , method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> profileupdate(@RequestParam HashMap<String, String> userupdate) {
+		logger.info("프로필 업데이트 요청을 받았습니다. {}",userupdate);
+		return service.profileUpdate(userupdate);		
+	}
+	
+	// 0311 백유나 회원정보 업데이트 END	
+
 }

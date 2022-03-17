@@ -19,6 +19,12 @@ public class ReserveDTO {
 	private Date reserve_date;
 	private String reserve_state;
 	
+	// 김승일 예약조회 START 20220315
+	private int reserve_amount;
+	private int reserve_room_cnt;
+	private String room_type_name;
+	// 김승일 예약조회 END 20220315
+	
 	public int getPay_idx() {
 		return pay_idx;
 	}
@@ -156,6 +162,31 @@ public class ReserveDTO {
 	public void setAdd_requests(String add_requests) {
 		this.add_requests = add_requests;
 	}
+	
+	// 김승일 예약조회 START 20220315
+	public int getReserve_amount() {
+		return reserve_amount;
+	}
+	public void setReserve_amount(int reserve_amount) {
+		this.reserve_amount = reserve_amount;
+	}
+	public int getReserve_room_cnt() {
+		return reserve_room_cnt;
+	}
+	public void setReserve_room_cnt(int reserve_room_cnt) {
+		this.reserve_room_cnt = reserve_room_cnt;
+	}
+	public String getRoom_type_name() {
+		return room_type_name;
+	}
+	public void setRoom_type_name(String room_type_name) {
+		this.room_type_name = room_type_name;
+	}
+	// 김승일 예약조회 END 20220315	
+	
+	
+	
+	
 	private int child_cnt;
 	private int infant_cnt;
 	private int extrabed_cnt;

@@ -15,9 +15,35 @@ import co.kr.hotel.dto.MemberDTO;
 public class MemberService {
 	
 	@Autowired MemberDAO dao;
-	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	//로그인 이지선 0311 Start
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	// 0311 백유나 회원정보 수정 START 	
+	public MemberDTO myprofile(String loginId) {
+		MemberDTO myProfile = dao.myprofile(loginId);
+
+		return myProfile;
+	}
+	// 0311 백유나 회원정보 수정 END		
+	
+	public HashMap<String, Object> emailIdentify(String email) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String overlayd = dao.emailIdentify(email);
+		boolean emailTF = overlayd == null? false : true;
+		map.put("emailTF", emailTF);
+		return map;
+	}
+	
+	public HashMap<String, Object> profileUpdate(HashMap<String, String> userupdate) {
+		logger.info("파라메터가 서비스에 도착함? {}",userupdate);
+		int row = dao.profileUpdate(userupdate);	
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("success", row);
+		logger.info("성공했니? {}",row);
+		
+		return map;
+	}
+	
 	public boolean login(String userId, String userPw) {
 		String Db_pw = dao.login(userId);
 		
@@ -51,18 +77,15 @@ public class MemberService {
 		return map;
 	}
 
-	
-	
 	public HashMap<String, Object> join(HashMap<String, String> param) {
 		
-		
-		String pw = param.get("pw"); 
+		String pw = param.get("pw");
 		logger.info("plain pw : "+ pw);
 		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String encPw = encoder.encode(pw);
 		logger.info("enc pw :"+encPw);
-		param.replace("pw", encPw);		
+		param.replace("pw", encPw);
 		
 		int row = dao.join(param);
 		HashMap<String, Object> map = new HashMap<String, Object>(); 
@@ -79,13 +102,5 @@ public class MemberService {
 	public int findpw(String user_id, String user_email, String hashText) {
 		return dao.findpw(user_id,user_email,hashText);
 	}
-
-
-
-
-
-
-
-	
 	
 }

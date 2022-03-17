@@ -4,6 +4,25 @@
 >
 <mapper namespace="co.kr.hotel.dao.MemberDAO">
 
+<!--   0311 백유나 회원정보 수정 START -->
+	<select id="myprofile" resultType="co.kr.hotel.dto.MemberDTO">
+	SELECT * FROM member WHERE mem_id = #{param1}
+	</select>
+	
+	<update id="profileUpdate">
+	UPDATE member SET mem_pw =#{mem_pw},mem_phone = #{mem_phone},mem_email = #{mem_email} 
+	WHERE mem_id= #{mem_id}
+	</update>
+<!--   0311 백유나 회원정보 수정 END -->	
+<!-- 	<select id="detail" resultType="co.kr.hotel.dto.BoardDTO">
+	SELECT * FROM member WHERE mem_id = #{param1}
+	</select>
+	 -->
+<!-- 0314 백유나 이메일 인증 START -->	 
+	<select id="emailIdentify" resultType="string">
+	SELECT mem_email FROM member WHERE mem_email = #{param1}
+	</select>
+
 	<select id="login" resultType="String">
 		SELECT mem_pw FROM member WHERE mem_id = #{param1}
 	</select>
@@ -31,8 +50,5 @@
 	<update id="findpw">
 		UPDATE member SET mem_pw = #{param3} WHERE mem_id = #{param1} AND mem_email = #{param2}
 	</update>
-
-
-
 
 </mapper>
