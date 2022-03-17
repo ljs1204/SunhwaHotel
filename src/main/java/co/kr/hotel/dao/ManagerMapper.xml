@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper PUBLIC	"-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
-
 <mapper namespace="co.kr.hotel.dao.ManagerDAO">
 
+   <select id="adOrderList" resultType="co.kr.hotel.dto.ProductDTO">
+   SELECT * FROM product
+   </select>
 
+	<insert id="writing" parameterType="hashmap">
+		INSERT INTO product(product_num, product_name, product_price)
+		VALUES(#{product_num},#{product_name},#{product_price})
+	</insert>	
+<!--    <insert id="write" 
+      useGeneratedKeys="true"
+      keyProperty="idx"
+      keyColumn="idx"   
+      parameterType="com.mvc.photo.dto.BoardDTO">
+      INSERT INTO bbs(subject,content,user_name)VALUES(#{subject},#{content},#{user_name})
+   </insert> -->		
 
 </mapper>

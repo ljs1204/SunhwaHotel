@@ -1,7 +1,5 @@
 package co.kr.hotel.dto;
 
-import java.sql.Date;
-
 public class ProductDTO {
 
 	private String product_num;
@@ -35,5 +33,5 @@ public class ProductDTO {
 		this.product_price = product_price;
 	}	
 
-	
+	 
 }
