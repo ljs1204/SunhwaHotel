@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.kr.hotel.dao.ManagerDAO;
-import co.kr.hotel.dto.ProductDTO;
 
 @Service
 public class ManagerService {

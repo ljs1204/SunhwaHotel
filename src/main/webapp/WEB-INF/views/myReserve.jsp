@@ -99,8 +99,8 @@
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
 						<a class="list-group-item list-group-item-action active" id="list-reserve-list" href="./myReserve">예약 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">마일리지 내역 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">내 정보 조회</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">회원정보 수정</a>
 
 					</div>
@@ -113,7 +113,7 @@
 				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
 						style="max-width:100% !important">
 					<form action="" method="">
-						<h4 style="color: #633e12;">XXX 님의 예약 리스트</h4>
+						<h4 style="color: #633e12;">${loginId} 님의 예약 리스트</h4>
 						<hr style="border-color: #633e12;" />
 					<table class="table table-hover">
 						<thead>
@@ -127,6 +127,7 @@
 							</tr>
 						</thead>
 						<tbody>
+							<%-- 
 							<tr>
 								<td><a href="./reserveDetail">SVW8432Q</a></td>
 								<td>디럭스(더블) 외 2개</td>
@@ -153,20 +154,34 @@
 								<td>679,000원</td>
 								<td>예약취소</td>
 							</tr>
-							<%-- 
-							<c:forEach var="" items="">
+							 --%>
+							
+							<!-- 예약 조회 리스트 뿌리기 --> 
+							<c:forEach var="res" items="${result }">
+								<!-- 20220315 객실 수 - 1 해주기( ~외 1개 ) -->
+								<c:set var="roomCnt" value="${res.reserve_room_cnt - 1}" />
+								
+								<!-- 20220315 객실 수 - 1 해주기( ~외 1개 ) -->
+								
 								<tr>
-									<td>${mychk.cafe_modtime }</td>
-									<td>${mychk.cafe_idx}</td>
-									<td>
-										<a href="./detail?idx=${mychk.cafe_idx}">${mychk.cafe_title}</a>
-									</td>
-									<td>${mychk.cafe_hit}</td>
-									<td>${mychk.cafe_likecnt }</td>
-									<td></td>
+									<td><a href="mypageRefundDetail?reserve_num=${res.reserve_num}&reserve_idx=${res.reserve_idx}">${res.reserve_num}</a></td>
+									<td>${res.room_type_name} 외 ${roomCnt} 개</td>
+									<td>${res.checkindate}</td>
+									<td>${res.checkoutdate}</td>
+									<td>${res.reserve_amount}</td>
+									<c:choose>
+										<c:when test="${res.reserve_state eq 1}">
+											<td>예약완료</td>									
+										</c:when>
+										<c:when test="${res.reserve_state eq 2}">
+											<td><a href="">부분취소</a></td>									
+										</c:when>
+										<c:when test="${res.reserve_state eq 3}">
+											<td>예약취소</td>									
+										</c:when>
+									</c:choose>
 								</tr>
 							</c:forEach>
-							 --%>
 						</tbody>
 					</table>
 

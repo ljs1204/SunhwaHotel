@@ -1,19 +1,26 @@
 package co.kr.hotel.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.kr.hotel.service.ReserveService;
+
 @Controller
 public class ReserveController {
-	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Autowired ReserveService service;
 
 	
 	@RequestMapping(value = "/reservation", method = RequestMethod.GET)
@@ -42,4 +49,46 @@ public class ReserveController {
 	
 	//메인페이지 -> 객실 예약하기 페이지 요청 유선화 END 20220311
 	
+	
+	//객실 옵션 페이지 이지선 START 220315
+	
+	 //객실 옵션 페이지 접속 리스트 불러오기	
+	 @RequestMapping(value = "/reservation_option", method = RequestMethod.GET)
+		public String reservation_option(Model model,HttpSession session) { 
+			logger.info("reservation_option 요청");
+			
+			//옵션 값 불러오기
+			ArrayList<HashMap<String, String>> option = service.reservation_option();
+			logger.info("받아온 값 확인 {}",option);
+			model.addAttribute("option",option);
+			
+			//마일리지 상품 4가지 불러오기
+			ArrayList<HashMap<String, String>> product = service.reservation_product();
+			logger.info("받아온 값 확인 {}",product);
+			model.addAttribute("product",product);
+			
+			//회원님의 마일리지 불러오기
+			//테스트하고 로그인 세션체크로 바꾸기 ★
+			//String loginId = (String)session.getAttribute();
+			String loginId = "testid";
+			int useable = service.useable(loginId);
+			model.addAttribute("useable", useable);
+			
+			
+			
+			return "reservation_option"; 
+	 }
+	
+	 
+	 
+	//객실 옵션 페이지 이지선 END 220315
+	
+	
+		@RequestMapping(value = "/doReservation", method = RequestMethod.GET)
+		public String doReservation(Model model,HttpSession session) {
+			
+			return "doReservation";
+		}
+		
+		
 }

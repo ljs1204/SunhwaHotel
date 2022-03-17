@@ -98,7 +98,7 @@
                                 <li class="non-display">|</li>
                                 <li><a href="./joinForm" class="nav-link">회원가입</a></li>
                                 <li class="non-display">|</li>
-                                <li><a href="index.html" class="nav-link">예약확인</a></li>
+                                <li><a href="./myReserve" class="nav-link">예약확인</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -110,12 +110,12 @@
 	                        <nav class="site-navigation text-right ml-auto " role="navigation">
 	                            <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block"
 	                                style="font-size:0.8rem; color:gray;">
-	                                <li><a href="index.html" class="nav-link">로그아웃</a></li>
+	                                <li><a href="./logout" class="nav-link">로그아웃</a></li>
 	                                <!-- 20220311 반응형으로 작아졌을땐 안보이게 하는 class -->
 	                                <li class="non-display">|</li>
 	                                <li><a href="./myPage" class="nav-link">마이페이지</a></li>
 	                                <li class="non-display">|</li>
-	                                <li><a href="" class="nav-link">예약확인</a></li>
+	                                <li><a href="./myReserve" class="nav-link">예약확인</a></li>
 	                            </ul>
 	                        </nav>
 	                    </div>
@@ -126,7 +126,7 @@
 	                        <nav class="site-navigation text-right ml-auto " role="navigation">
 	                            <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block"
 	                                style="font-size:0.8rem; color:gray;">
-	                                <li><a href="index.html" class="nav-link">로그아웃</a></li>
+	                                <li><a href="./logout" class="nav-link">로그아웃</a></li>
 	                                <!-- 20220311 반응형으로 작아졌을땐 안보이게 하는 class -->
 	                                <li class="non-display">|</li>
 	                                <li><a href="index.html" class="nav-link">관리자 메뉴</a></li>
@@ -213,14 +213,14 @@
                         <c:if test="${loginId eq null}">
                             <li><a href="about.html" class="nav-link" style="font-weight: bold;">객실 소개</a></li>
                             <li><a href="blog.html" class="nav-link" style="font-weight: bold;">고객문의</a></li>
-                            <li><a href="contact.html" class="nav-link" style="font-weight: bold;">선화 마일리지</a></li>
+                            <li><a href="./myPagemilelist?orderNum=1" class="nav-link" style="font-weight: bold;">${loginId}님의 마일리지</a></li>
                         </c:if>
                         
                         <c:if test="${loginId ne null}">
                 			<c:if test="${loginId ne 'admin' }">
                         	<li><a href="about.html" class="nav-link" style="font-weight: bold;">객실 소개</a></li>
                             <li><a href="blog.html" class="nav-link" style="font-weight: bold;">고객문의</a></li>
-                            <li><a href="contact.html" class="nav-link" style="font-weight: bold;">선화 마일리지</a></li>
+                            <li><a href="./myPagemilelist?orderNum=1" class="nav-link" style="font-weight: bold;">${loginId}님의 마일리지</a></li>
                            	</c:if>
                         </c:if>
                         

@@ -18,9 +18,48 @@ public class RoomDTO {
 	private int adult_cnt;
 	// 예약 객실 리스트 END 유선화 20220311
 	
+	// 객실 타입테이블 (메인객실상세) START 유선화 20220311
+	private int roomType_type;
+	private String roomType_name;
+	private String roomType_price;
+	private String roomType_size;
+	private int roomType_capacity;
+	
+	
+	// 객실 타입테이블 (메인객실상세) END 유선화 20220311
 	
 	
 	
+	public int getRoomType_capacity() {
+		return roomType_capacity;
+	}
+	public void setRoomType_capacity(int roomType_capacity) {
+		this.roomType_capacity = roomType_capacity;
+	}
+	public int getRoomType_type() {
+		return roomType_type;
+	}
+	public void setRoomType_type(int roomType_type) {
+		this.roomType_type = roomType_type;
+	}
+	public String getRoomType_name() {
+		return roomType_name;
+	}
+	public void setRoomType_name(String roomType_name) {
+		this.roomType_name = roomType_name;
+	}
+	public String getRoomType_price() {
+		return roomType_price;
+	}
+	public void setRoomType_price(String roomType_price) {
+		this.roomType_price = roomType_price;
+	}
+	public String getRoomType_size() {
+		return roomType_size;
+	}
+	public void setRoomType_size(String roomType_size) {
+		this.roomType_size = roomType_size;
+	}
 	private int photoflg;
 	
 	public String getCheckindate() {

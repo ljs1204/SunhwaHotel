@@ -79,14 +79,13 @@ public class MemberService {
 
 	public HashMap<String, Object> join(HashMap<String, String> param) {
 		
-		
-		String pw = param.get("pw"); 
+		String pw = param.get("pw");
 		logger.info("plain pw : "+ pw);
 		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String encPw = encoder.encode(pw);
 		logger.info("enc pw :"+encPw);
-		param.replace("pw", encPw);		
+		param.replace("pw", encPw);
 		
 		int row = dao.join(param);
 		HashMap<String, Object> map = new HashMap<String, Object>(); 
