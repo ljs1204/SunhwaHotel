@@ -42,7 +42,16 @@ public class MemberController {
 		if(service.login(userId,userPw)) {
 			page = "redirect:/";
 			session.setAttribute("loginId", userId);
-
+			
+			//로그인 session에 mem_grade저장하기 유선화 2022.03.16 START 
+			MemberDTO dto = new MemberDTO();
+			dto = service.logmem_grade(userId);
+			String grade = dto.getMem_grade();
+			logger.info("로그인 한 회원의 grade : "+grade);
+			
+			session.setAttribute("mem_grade", grade);
+			model.addAttribute("login_mem_grade",grade);
+			//로그인 session에 mem_grade저장하기 유선화 2022.03.16 START 
 		}else {
 			model.addAttribute("msg","입력하신 내용이 일치하지 않습니다.");
 		}

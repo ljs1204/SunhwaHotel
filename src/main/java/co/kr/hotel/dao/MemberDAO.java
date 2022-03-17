@@ -24,4 +24,6 @@ public interface MemberDAO {
 
 	int findpw(String user_id, String user_email, String hashText);
 
+	MemberDTO logmem_grade(String userId);
+
 }

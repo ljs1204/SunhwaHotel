@@ -13,6 +13,8 @@
 		from room r inner join photo p ON r.room_num =p.room_num 
 		where r.room_num = '1001' and p.photoflg=1 or r.room_num = '1007' and p.photoflg=1
 
+
+
 	</select>
 
 
