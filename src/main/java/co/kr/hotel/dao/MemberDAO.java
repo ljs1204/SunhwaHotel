@@ -24,4 +24,7 @@ public interface MemberDAO {
 
 	int findpw(String user_id, String user_email, String hashText);
 
+	// 20220317 회원가입시 마일리지 지급 - SI
+	int initMileage(String id);
+
 }

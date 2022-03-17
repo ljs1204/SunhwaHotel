@@ -35,6 +35,13 @@
 		SELECT mem_email FROM member WHERE mem_email = #{param1}
 	
 	</select>
+
+<!--  20220317 회원가입시 마일리지 지급 - SI -->	
+	<insert id="initMileage" parameterType="String">
+		INSERT 
+		INTO mileage( mem_id, mileage_price, mileage_useable)
+		VALUES (#{param1}, 1000, 1000);
+	</insert>
 	
 	
 	<insert id="join" parameterType="hashmap">

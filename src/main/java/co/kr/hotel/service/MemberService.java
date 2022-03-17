@@ -90,6 +90,15 @@ public class MemberService {
 		int row = dao.join(param);
 		HashMap<String, Object> map = new HashMap<String, Object>(); 
 		map.put("success",row);
+		
+// 20220317 회원가입시 마일리지 지급 START - SI
+		String id = param.get("id");
+		logger.info("아이디는 : {}", id);
+		int success = dao.initMileage(id);
+		if(success != 0) {
+			logger.info("성공");
+		}
+		
 		return map;
 	}
 
