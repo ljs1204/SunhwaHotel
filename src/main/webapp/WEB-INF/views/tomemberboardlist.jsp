@@ -8,8 +8,8 @@
 </head>
 <body>
 
-<button onclick="location.href='writeForm'">글쓰기</button>
-	<table>
+<input type="button" onclick="location.href='./tomemberboardwriteForm'" value="글쓰기"/>	<table>
+	<h1 style="text-align:center;">문의 게시판</h1>
 		<tr>
 			<th>글번호</th>
 			<th>제목</th>
@@ -21,10 +21,11 @@
 		<c:forEach items="${tomemberboardlist}" var="tomemberboardlist">
 			<tr>
 				<td>${tomemberboardlist.board_num}</td>
-				<td><a href="detail?board_num=${tomemberboardlist.board_num}">${tomemberboardlist.board_title}</a></td>
+				<td><a href="tomemberboarddetail?board_num=${tomemberboardlist.board_num}">${tomemberboardlist.board_title}</a></td>
 				<td>${tomemberboardlist.mem_id}</td>
 				<td>${tomemberboardlist.reg_datetime}</td>
 			</tr>
+			
 			</c:forEach>
 	</table>
 </body>

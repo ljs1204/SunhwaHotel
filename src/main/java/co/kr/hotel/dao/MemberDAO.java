@@ -1,7 +1,9 @@
 package co.kr.hotel.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import co.kr.hotel.dto.BoardDTO;
 import co.kr.hotel.dto.MemberDTO;
 
 public interface MemberDAO {

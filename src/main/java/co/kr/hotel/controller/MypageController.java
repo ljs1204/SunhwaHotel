@@ -1,6 +1,7 @@
 package co.kr.hotel.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -114,14 +115,7 @@ public class MypageController {
 	}
 
 		
-	// 2022.03.14  문의페이지 리스트 박형민
-		@GetMapping(value="/tomemberboardlist")
-		public ModelAndView tomemberboardlist() {
-			
-			logger.info("리스트 요청");
-			
-			return mypageService.tomemberboardlist();
-		}
+	
 	//2022.03.15 문의페이지 리스트 end
 		
 		
@@ -131,8 +125,58 @@ public class MypageController {
 
 	// 마이페이지 END yuseonhwa 20220314
 	
+	//글쓰기
+	@RequestMapping(value = "/tomemberboardwriteForm", method = RequestMethod.GET)
+	public String tomemberboardwriteForm(Model model , HttpSession session) {
+		
+		String loginId = (String) session.getAttribute("loginId");
+		model.addAttribute("loginId", loginId);
+		
+		logger.info("writeForm 이동");
+		return "tomemberboardwriteForm";
+	}
+	//글쓰기 요청명 
+	@RequestMapping(value = "/tomemberboardwrite", method = RequestMethod.POST)
+	public String tomemberboardwrite(Model model, @RequestParam HashMap<String, String> params , HttpSession session) {
+		
+		String loginId = (String) session.getAttribute("loginId");
+		// loginId = "admin"; // 아이디 'admin' 일 때
+		//loginId = "아이디";
+
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("loginId" , loginId);
+		
+		
+		logger.info("write 요청 : {}",params);
+		
+		mypageService.tomemberboardwrite(params);
+		
+		return "redirect:/tomemberboardlist";
+	}
+	//상세보기 
+	@GetMapping(value="/tomemberboarddetail")
+	public ModelAndView tomemberboarddetail(@RequestParam String board_num) {
+		logger.info("상세보기 요청 :{} ",board_num);
+		return mypageService.tomemberboarddetail(board_num);
+	}
+	// 2022.03.14  문의페이지 리스트 박형민
+			@GetMapping(value="/tomemberboardlist")
+			public ModelAndView tomemberboardlist(HttpSession session) {
+				
+				String loginId = (String) session.getAttribute("loginId");
+				// loginId = "admin"; // 아이디 'admin' 일 때
+				//loginId = "아이디";
+
+				ModelAndView mv = new ModelAndView();
+				mv.addObject("loginId" , loginId);
+				
+				logger.info("login id : {}", loginId);	
+				
+				logger.info("리스트 요청");
+				
+				return mypageService.tomemberboardlist(loginId);
+			}
 	
-	//2022.03.15 문의페이지 리스트 end
 
 	//마이페이지 
 		

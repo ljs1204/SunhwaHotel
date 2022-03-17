@@ -6,10 +6,6 @@
 
 <mapper namespace="co.kr.hotel.dao.MypageDAO">
 
-	<select id="tomemberboardlist" resultType="co.kr.hotel.dto.MypageDTO">
-		select * from board order by board_orinum desc , re_num asc;
-	</select>
-	
 	
 	<select id="mypage2Reservelist" resultType="co.kr.hotel.dto.ReserveDTO">
 		
@@ -62,5 +58,24 @@
 	</select>
 <!-- 20220315 예약 리스트 보기 SI - END -->
 
+
+	<select id="tomemberboarddetail" resultType="co.kr.hotel.dto.BoardDTO">
+		SELECT * FROM board WHERE board_num = #{param1}
+	</select>
+		   
+	<select id="tomemberboardlist" resultType="co.kr.hotel.dto.BoardDTO">
+		select * from board where board_orinum in (select board_orinum from board b where mem_id = #{param1})
+			ORDER BY board_orinum DESC , re_num asc
+	</select>
+		
+	
+	<insert id="tomemberboardwrite" parameterType="co.kr.hotel.dto.BoardDTO">
+	
+	INSERT INTO board(
+      board_title,board_orinum,board_type,mem_id,board_content
+      )VALUES(
+      #{board_title},(select ifnull( max(board_orinum),0)+1 from board b),2,#{mem_id},#{board_content})
+	</insert>
+	
 
 </mapper>

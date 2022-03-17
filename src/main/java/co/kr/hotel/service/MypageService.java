@@ -1,6 +1,7 @@
 package co.kr.hotel.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dao.MypageDAO;
+import co.kr.hotel.dto.BoardDTO;
 import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.ReserveDTO;
 
@@ -79,16 +81,29 @@ public class MypageService {
 		return mypageDao.resernum(loginId);
 	}
 
-
-	public ModelAndView tomemberboardlist() {
-		
-		logger.info("Mypage 서비스 시작");
+	public ModelAndView tomemberboarddetail(String board_num) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("tomemberboardlist");
-		ArrayList<MypageDTO> tomemberboardlist = mypageDao.tomemberboardlist();		
-		logger.info("리스트 갯수 : {}",tomemberboardlist.size());
-		mav.addObject("tomemberboardlist", tomemberboardlist);
-		
+		mav.setViewName("tomemberboarddetail");
+		BoardDTO dto = mypageDao.tomemberboarddetail(board_num);
+		mav.addObject("tomemberboarddetail", dto);		
 		return mav;
 	}
+	
+	//리스트
+	public ModelAndView tomemberboardlist(String loginId) {		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("tomemberboardlist");
+		ArrayList<BoardDTO> tomemberboardlist = mypageDao.tomemberboardlist(loginId);		
+		logger.info("리스트 갯수 : {}",tomemberboardlist.size());
+		mav.addObject("tomemberboardlist", tomemberboardlist);
+		return mav;
+	}
+	//글쓰기 
+	public void tomemberboardwrite(HashMap<String, String> params) {
+		int row = mypageDao.tomemberboardwrite(params);
+		logger.info(" 입력된 건수 : {}",row);
+	}
+	
+
+	
 }
