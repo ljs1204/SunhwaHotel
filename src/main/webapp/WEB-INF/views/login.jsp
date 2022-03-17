@@ -21,7 +21,7 @@
             }
 
             .register-login-section {
-                padding-top: 72px;
+                padding-top: 200px;
                 padding-bottom: 80px;
             }
             .register-form form .group-input input, .login-form form .group-input input {
@@ -56,6 +56,10 @@
    </style>
 </head>
 <body>
+	<header class="site-header">
+		<jsp:include page="header.jsp" flush="true" />
+	</header>
+	
 	<div class="register-login-section spad">
         <div class="container">
             <div class="row">
@@ -72,7 +76,7 @@
                                 <input type="password" name="userPw" id="userPw">
                             </div>
                             <div class="gi-more">
-                                <a href="#" class="forget">아이디 및 비밀번호 찾기</a>
+                                <a href="./findIdPw" class="forget">아이디 및 비밀번호 찾기</a>
                             </div>
                             <button type="submit" class="btn">로그인</button>
                         </form>
@@ -81,6 +85,11 @@
             </div>
         </div>
     </div>
+    
+	<footer class="footer-section">
+		<jsp:include page="footer.jsp" flush="true" />
+	</footer>
+	
 
 </body>
 <script>

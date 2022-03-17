@@ -23,32 +23,18 @@
 		order by r.room_type,p.room_img;
 	</select>
 
-	 
-	 
-	 <!-- MypageMapper.xml 로 이사갔어요 20220315
-	<select id="myReserveAll" resultType="co.kr.hotel.dto.ReserveDTO">
-		SELECT r.*, sum(p.amount) as reserve_amount
-		FROM (
-			SELECT *
-		    FROM reserve
-		    ORDER BY reserve_date desc, reserve_state desc
-		    LIMIT 18446744073709551615
-		) as r
-		left outer join pay p 
-		on r.reserve_idx = p.reserve_idx 
-			GROUP BY reserve_num
-			having mem_id = ${param1}
+	
+	<select id="reservation_option" resultType="hashmap">
+		SELECT * FROM room_option
 	</select>
 	
-	<select id="myReserveParts" resultType="co.kr.hotel.dto.ReserveDTO">
-		select reserve_num, mem_id, reserve_state, count(*) as reserve_room_cnt
-		from reserve r 
-		group by reserve_num, reserve_state 
-		having mem_id = ${param} and reserve_state = 1
+	<select id="reservation_product" resultType="hashmap">
+		SELECT * FROM product
 	</select>
-	 -->
+	
+	<select id="useable" resultType="int">
+		SELECT m.mileage_useable FROM mileage m WHERE mem_id = #{param1} order by mileage_date desc limit 1;
+	</select>
+
 	 
 </mapper>
-
-
-

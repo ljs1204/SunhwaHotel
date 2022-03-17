@@ -111,5 +111,10 @@ public class MemberService {
 	public int findpw(String user_id, String user_email, String hashText) {
 		return dao.findpw(user_id,user_email,hashText);
 	}
+
+	public MemberDTO logmem_grade(String userId) {
+		// TODO Auto-generated method stub
+		return dao.logmem_grade(userId);
+	}
 	
 }

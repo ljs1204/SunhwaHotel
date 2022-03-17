@@ -10,11 +10,6 @@
 		</layout>
 	</appender>
 	
-	
-	
-	
-	
-	
 	<!-- Application Loggers -->
 	<logger name="co.kr.hotel">
 		<level value="info" />

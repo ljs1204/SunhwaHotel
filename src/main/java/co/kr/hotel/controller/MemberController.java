@@ -42,7 +42,16 @@ public class MemberController {
 		if(service.login(userId,userPw)) {
 			page = "redirect:/";
 			session.setAttribute("loginId", userId);
-
+			
+			//로그인 session에 mem_grade저장하기 유선화 2022.03.16 START 
+			MemberDTO dto = new MemberDTO();
+			dto = service.logmem_grade(userId);
+			String grade = dto.getMem_grade();
+			logger.info("로그인 한 회원의 grade : "+grade);
+			
+			session.setAttribute("mem_grade", grade);
+			model.addAttribute("login_mem_grade",grade);
+			//로그인 session에 mem_grade저장하기 유선화 2022.03.16 START 
 		}else {
 			model.addAttribute("msg","입력하신 내용이 일치하지 않습니다.");
 		}
@@ -149,12 +158,30 @@ public class MemberController {
 	@RequestMapping(value = "/myProfile", method = RequestMethod.GET)
 	public String myProfile(Model model,  HttpSession session) { 
 		logger.info("myProfile 요청");
-		String loginId = (String) session.getAttribute("loginId");
-		MemberDTO myProfile = service.myprofile(loginId);
-		model.addAttribute("myProfile",myProfile);
 		
+		
+		String loginId = (String) session.getAttribute("loginId");
+		// 회원정보 수정 유선화 2022.03.17 아이디 세션처리 START
+		String page = "index";
+		MemberDTO myProfile = new MemberDTO();
+		logger.info("loginId : "+loginId);
+		String id = myProfile.getMem_id();
+		logger.info("id : "+id);
+		String msg = "수정할 수 없습니다.";
+		if(loginId != null) {
+			
+			myProfile = service.myprofile(loginId);
+			model.addAttribute("myProfile",myProfile);
+			page = "myProfile";
+			
+		}else {
+			model.addAttribute("msg",msg);
+			page = "index";
+		}
+		
+		// 회원정보 수정 유선화 2022.03.17 아이디 세션처리 END
 
-		return "myProfile"; 	
+		return page; 	
 	}
 	// 0311 백유나 회원정보 수정 END
 	
@@ -179,6 +206,8 @@ public class MemberController {
 	@ResponseBody
 	public HashMap<String, Object> profileupdate(@RequestParam HashMap<String, String> userupdate) {
 		logger.info("프로필 업데이트 요청을 받았습니다. {}",userupdate);
+		
+		
 		return service.profileUpdate(userupdate);		
 	}
 	

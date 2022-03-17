@@ -26,5 +26,7 @@ public interface MemberDAO {
 
 	// 20220317 회원가입시 마일리지 지급 - SI
 	int initMileage(String id);
+	
+	MemberDTO logmem_grade(String userId);
 
 }
