@@ -33,7 +33,7 @@
 		</c:if>
 			<th colspan="2">
 				<input type="button" value="리스트" onclick="location.href='./writingForm'"/>
-				<input type="button" value="삭제" onclick="location.href='./deleting?product_num=${dto.product_num}'"/>
+				<!-- <input type="button" value="삭제" onclick="location.href='./deleting?product_num=${dto.product_num}'"/> -->
 			</th>			
 		</tr>
 	</table>

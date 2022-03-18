@@ -7,17 +7,40 @@
    <select id="adOrderList" resultType="co.kr.hotel.dto.ProductDTO">
    SELECT * FROM product
    </select>
-
-	<insert id="writing" parameterType="hashmap">
-		INSERT INTO product(product_num, product_name, product_price)
-		VALUES(#{product_num},#{product_name},#{product_price})
-	</insert>	
-<!--    <insert id="write" 
+   
+<!-- 	 <insert id="writing" 
       useGeneratedKeys="true"
-      keyProperty="idx"
-      keyColumn="idx"   
-      parameterType="com.mvc.photo.dto.BoardDTO">
-      INSERT INTO bbs(subject,content,user_name)VALUES(#{subject},#{content},#{user_name})
-   </insert> -->		
+      keyProperty="product_num"
+      keyColumn="product_num"   
+      parameterType="co.kr.hotel.dto.ProductDTO">
+      INSERT INTO product(product_num,product_name,product_price)VALUES(#{product_num},#{product_name},#{product_price})
+   </insert>	
+ -->   
+ 	<insert id="writing"
+ 	  useGeneratedKeys="true"
+      keyProperty="product_num"
+      keyColumn="product_num"   
+      parameterType="co.kr.hotel.dto.ProductDTO">
+      INSERT INTO product(product_num,product_name,product_price)
+      	VALUES(#{product_num},#{product_name},#{product_price})
+ 	 </insert>
+ <!--  
+ 	<select id="detailing" resultType="co.kr.hotel.dto.ProductDTO">
+   	   SELECT * FROM product WHERE product_num = #{param1}
+   	</select>	
+   -->  		
+   <insert id="fileWriting">
+      INSERT INTO mileagePhoto (product_num, oriFileName, newFileName)
+      	VALUES(#{param1},#{param2},#{param3})
+   </insert>
+   
+   <select id="photoListing" resultType="co.kr.hotel.dto.MileagePhotoDTO">
+      SELECT oriFileName, newFileName FROM mileagePhoto
+         WHERE product_num = #{param1} ORDER BY fileIdx DESC
+   </select>
+  
+  	<delete id="deleting">
+  		DELETE FROM product WHERE product_num = #{param1}
+  	</delete>   		
 
 </mapper>
