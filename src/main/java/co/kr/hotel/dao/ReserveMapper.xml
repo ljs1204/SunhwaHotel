@@ -37,4 +37,17 @@
 	</select>
 
 	 
+	 <insert id="roomOne" 
+	 	useGeneratedKeys="true"
+	 	keyProperty="reserve_idx"
+	 	keyColumn="reserve_idx"
+	 	parameterType="co.kr.hotel.dto.ReserveDTO">
+	 		
+		insert into reserve (mem_id,add_requests)
+		values(#{mem_id},#{add_requests})
+
+	 	
+	 </insert>
+	 
+	 
 </mapper>

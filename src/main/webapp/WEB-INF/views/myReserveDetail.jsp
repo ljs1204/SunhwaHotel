@@ -102,7 +102,7 @@
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
 
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
-						<a class="list-group-item list-group-item-action active" id="list-reserve-list" href="./myReserve">예약 조회</a>
+						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./myReserve?num=1">예약 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">마일리지 내역 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">내 정보 조회</a>

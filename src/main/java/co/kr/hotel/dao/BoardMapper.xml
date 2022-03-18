@@ -10,16 +10,20 @@
 		   
 	<select id="list" resultType="co.kr.hotel.dto.BoardDTO">
 		SELECT board_num, board_title, mem_id, reg_datetime FROM board
-			ORDER BY board_num DESC
+			ORDER BY board_orinum DESC , re_num asc
 	</select>
 		
 	
-	<insert id="write" parameterType="hashmap">
-		INSERT INTO board(mem_id, board_title, board_content)
-		VALUES('admin',#{board_title},#{board_content})
+	<insert id="write" useGeneratedKeys="true" parameterType="co.kr.hotel.dto.BoardDTO">
+	
+	INSERT INTO board(
+      board_title,board_orinum,re_num,board_type,mem_id,board_content
+      )VALUES(
+      #{board_title},#{board_orinum},(select ifnull( max(re_num),0)+1 from board b ),2,'admin',#{board_content})
 	</insert>
 	
 
+	
 
- 
+ 	
 </mapper>

@@ -1,6 +1,7 @@
 package co.kr.hotel.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dto.MemberDTO;
-
 import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.PageDto;
-
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.service.MypageService;
 
@@ -47,7 +46,7 @@ public class MypageController {
 			MemberDTO result = mypageService.myInfo(loginId);
 			
 			model.addAttribute("result", result);
-			logger.info("투숙횟수 확인! : {}", result.getReserve_cnt_year());
+			//logger.info("투숙횟수 확인! : {}", result.getReserve_cnt_year());
 			
 		}
 		// 메인페이지 요청 세션검사 추가 END - SI 20220314
@@ -61,7 +60,7 @@ public class MypageController {
 
 	// 마이페이지 예약리스트 START 20220314
 	@RequestMapping(value = "/myReserve", method = RequestMethod.GET)
-	public String myReserve(Model model, HttpSession session) {
+	public String myReserve(Model model, HttpSession session, @RequestParam("num") int num) {
 		logger.info("myReserve로 요청이 들어옴 ");
 
 		// 세션 확인 후 페이지 분기 - SI 20220315
@@ -73,16 +72,49 @@ public class MypageController {
 		if (loginId != null) {
 			page = "myReserve";
 
-			// 서비스 일 시키기
-			ArrayList<ReserveDTO> result = mypageService.myReserve(loginId);
-
-			model.addAttribute("result", result);
+			// 서비스 일 시키기 -> 반환값 hashmap
+			HashMap<String, Object> result = mypageService.myReserve(loginId, num);
 			
-			logger.info("result : {}", result.size());
-			logger.info("idx가 필요한데 안나와요 : {}", result.get(0).getReserve_idx());
-			logger.info("음음 : {}", result.get(0).getReserve_num());
+// 20220317 페이징 => hashmap 풀기
+			int count = (int) result.get("count");			// 쿼리 rows 갯수
+			ArrayList<ReserveDTO> processAll = (ArrayList<ReserveDTO>) result.get("processAll");	// 쿼리 결과(5개)
+			int pageNum = (int) result.get("pageNum");		// 페이지 끝번호
 
+			logger.info("cnt, pageNum : {},{}", count, pageNum);
+			logger.info("processAll : {}", processAll);
+
+			model.addAttribute("cnt", count);
+			model.addAttribute("pageNum", pageNum);
+			model.addAttribute("result", processAll);	// 페이징 전에 이게 result로 보내지고 있어서 그냥 이렇게..
+			model.addAttribute("size", processAll.size());
 			
+// 20220317 페이징 10개씩 자르기 SI - START
+			int startPageNum = (int) result.get("startPageNum");
+			int endPageNum = (int) result.get("endPageNum");
+			int pageNum_cnt = (int) result.get("pageNum_cnt");
+			
+			boolean prev = startPageNum == 1 ? false : true;
+			boolean next = endPageNum * pageNum_cnt >= count ? false : true;
+			
+			logger.info("startPageNum : {}", startPageNum);
+			logger.info("endPageNum : {}", endPageNum);
+			logger.info("pageNum_cnt : {}", pageNum_cnt);
+			
+			logger.info("prev : {}", prev); 
+			logger.info("next : {}", next);
+			
+			// 시작 및 끝 번호
+			 model.addAttribute("startPageNum", startPageNum);
+			 model.addAttribute("endPageNum", endPageNum);
+
+			 // 이전 및 다음 
+			 model.addAttribute("prev", prev);
+			 model.addAttribute("next", next);
+			
+			 // 현재 페이지
+			 model.addAttribute("select", num);
+// 20220317 페이징 10개씩 자르기 SI - END
+			 
 		}
 		return page;
 	}
@@ -135,14 +167,7 @@ public class MypageController {
 	}
 
 		
-	// 2022.03.14  문의페이지 리스트 박형민
-		@GetMapping(value="/tomemberboardlist")
-		public ModelAndView tomemberboardlist() {
-			
-			logger.info("리스트 요청");
-			
-			return mypageService.tomemberboardlist();
-		}
+	
 	//2022.03.15 문의페이지 리스트 end
 		
 		
@@ -152,8 +177,58 @@ public class MypageController {
 
 	// 마이페이지 END yuseonhwa 20220314
 	
+	//글쓰기
+	@RequestMapping(value = "/tomemberboardwriteForm", method = RequestMethod.GET)
+	public String tomemberboardwriteForm(Model model , HttpSession session) {
+		
+		String loginId = (String) session.getAttribute("loginId");
+		model.addAttribute("loginId", loginId);
+		
+		logger.info("writeForm 이동");
+		return "tomemberboardwriteForm";
+	}
+	//글쓰기 요청명 
+	@RequestMapping(value = "/tomemberboardwrite", method = RequestMethod.POST)
+	public String tomemberboardwrite(Model model, @RequestParam HashMap<String, String> params , HttpSession session) {
+		
+		String loginId = (String) session.getAttribute("loginId");
+		// loginId = "admin"; // 아이디 'admin' 일 때
+		//loginId = "아이디";
+
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("loginId" , loginId);
+		
+		
+		logger.info("write 요청 : {}",params);
+		
+		mypageService.tomemberboardwrite(params);
+		
+		return "redirect:/tomemberboardlist";
+	}
+	//상세보기 
+	@GetMapping(value="/tomemberboarddetail")
+	public ModelAndView tomemberboarddetail(@RequestParam String board_num) {
+		logger.info("상세보기 요청 :{} ",board_num);
+		return mypageService.tomemberboarddetail(board_num);
+	}
+	// 2022.03.14  문의페이지 리스트 박형민
+			@GetMapping(value="/tomemberboardlist")
+			public ModelAndView tomemberboardlist(HttpSession session) {
+				
+				String loginId = (String) session.getAttribute("loginId");
+				// loginId = "admin"; // 아이디 'admin' 일 때
+				//loginId = "아이디";
+
+				ModelAndView mv = new ModelAndView();
+				mv.addObject("loginId" , loginId);
+				
+				logger.info("login id : {}", loginId);	
+				
+				logger.info("리스트 요청");
+				
+				return mypageService.tomemberboardlist(loginId);
+			}
 	
-	//2022.03.15 문의페이지 리스트 end
 
 	//마이페이지 마일리지리스트 유선화 START 2022.03.15
 		

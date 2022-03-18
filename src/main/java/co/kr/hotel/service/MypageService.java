@@ -1,6 +1,7 @@
 package co.kr.hotel.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dao.MypageDAO;
 import co.kr.hotel.dto.MemberDTO;
+import co.kr.hotel.dto.BoardDTO;
 import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.PageDto;
 import co.kr.hotel.dto.ReserveDTO;
@@ -27,10 +29,12 @@ public class MypageService {
 		// 이용 실적 계산을 위한 해당 년도안의 예약 횟수 쿼리( 예약취소 제외 / 부분취소 포함 )
 		ArrayList<ReserveDTO> reserveCnt = mypageDao.reserveCnt(loginId);
 		int cnt = reserveCnt.size();		// 올 해 이용 실적
-		result.setReserve_cnt_year(cnt);
+		if(cnt != 0) {
+			result.setReserve_cnt_year(cnt);
+		}
 		
-		logger.info("사용 마일리지 : {}", result.getMileage_useable());
-		logger.info("누적 마일리지 : {}", result.getMileage_stacked());
+		//logger.info("사용 마일리지 : {}", result.getMileage_useable());
+		//logger.info("누적 마일리지 : {}", result.getMileage_stacked());
 		
 		
 		return result;
@@ -42,8 +46,9 @@ public class MypageService {
 	
 	
 // 20220315 예약 리스트 조회 SI START
-	public ArrayList<ReserveDTO> myReserve(String loginId) {
-				
+	public HashMap<String, Object> myReserve(String loginId, int num) {
+		HashMap<String, Object> result = new HashMap<String, Object>();		
+		
 		// process1 => loginId의 예약리스트를 예약번호별로 group, 그 결과를 예약날짜, 
 		//예약상태 순으로 내림차순한 결과
 		// ==> 해당 사용자의 모든 예약의 상태를 볼 수 있음
@@ -81,7 +86,78 @@ public class MypageService {
 			 iter2 = processParts.iterator();
 		}
 		
-		return processAll;		
+// 20220317 게시물 페이징 처리( 단위 : 5 ) START SI
+		
+		// 게시물 총 갯수
+		 int count = processAll.size();
+		  
+		 // 한 페이지에 출력할 게시물 갯수
+		 int postNum = 5;
+		  
+		 // 하단 페이징 번호 ([ 게시물 총 갯수 ÷ 한 페이지에 출력할 갯수 ]의 올림)
+		 int pageNum = (int)Math.ceil((double)count/postNum);
+		  
+		 // 게시물 시작 번호
+		 int displayPost = (num - 1) * postNum;
+		 
+		 // 1번째 0~5
+		 // displayPost ~ postNum * num
+		 // 2번째 5~10
+		 // displayPost ~ PostNum * num
+		 // 3번째 10~15
+		 // displayPost ~ PostNum * num
+		 // 게시글 끝 번호
+		 int endPost = postNum * num;
+		 
+		 
+		 // 루프 돌면서 페이지 번호에 맞는 데이터만 남기기
+		 Iterator<ReserveDTO> iter3 = processAll.iterator();
+		 int reserveIdx = 0;
+		 
+		 logger.info("{}, {}" , displayPost, endPost);
+		 
+		 
+		 // iterator 루프시키면서 게시글 시작 번호, 게시글 끝 번호 바깥에 있는 데이터는 지워주기
+		 while (iter3.hasNext()) {
+			 iter3.next();
+			 
+			if(reserveIdx < displayPost | reserveIdx >= endPost) {
+				iter3.remove();
+				logger.info("무한루프");
+			}
+			reserveIdx++;
+		 }
+		 
+		 result.put("count", count);			// 게시물 총 갯수
+		 result.put("pageNum", pageNum);		// 하단 페이징 번호
+		 result.put("processAll", processAll);	// 예약 리스트
+		 
+// 20220317 게시물 페이징 처리( 단위 : 5 ) END SI
+		 
+// 20220317 페이징 번호를 10개씩 나누기 START SI => 현재는 Start 1 / end 2 라서 이전, 다음 표시가 안나옴니당
+		 // 한번에 표시할 페이징 번호의 갯수
+		 int pageNum_cnt = 5;
+
+		 // 표시되는 페이지 번호 중 마지막 번호
+		 int endPageNum = (int)(Math.ceil((double)num / (double)pageNum_cnt) * pageNum_cnt);
+
+		 // 표시되는 페이지 번호 중 첫번째 번호
+		 int startPageNum = endPageNum - (pageNum_cnt - 1);
+		 
+		// 마지막 번호 재계산
+		 int endPageNum_tmp = (int)(Math.ceil((double)count / (double)pageNum_cnt));
+		  
+		 if(endPageNum > endPageNum_tmp) {
+		  endPageNum = endPageNum_tmp;
+		 }
+		 
+		 result.put("startPageNum", startPageNum);
+		 result.put("endPageNum", endPageNum);
+		 result.put("pageNum_cnt", pageNum_cnt);
+// 20220317 페이징 번호 나누기 END SI
+		 
+		 
+		return result;		
 	}
 // 20220315 예약 리스트 조회 SI END
 	
@@ -102,16 +178,21 @@ public class MypageService {
 		return mypageDao.resernum(loginId);
 	}
 
-
-	public ModelAndView tomemberboardlist() {
-		
-		logger.info("Mypage 서비스 시작");
+	public ModelAndView tomemberboarddetail(String board_num) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("tomemberboarddetail");
+		BoardDTO dto = mypageDao.tomemberboarddetail(board_num);
+		mav.addObject("tomemberboarddetail", dto);		
+		return mav;
+	}
+	
+	//리스트
+	public ModelAndView tomemberboardlist(String loginId) {		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("tomemberboardlist");
-		ArrayList<MypageDTO> tomemberboardlist = mypageDao.tomemberboardlist();		
+		ArrayList<BoardDTO> tomemberboardlist = mypageDao.tomemberboardlist(loginId);		
 		logger.info("리스트 갯수 : {}",tomemberboardlist.size());
 		mav.addObject("tomemberboardlist", tomemberboardlist);
-		
 		return mav;
 	}
 
@@ -155,6 +236,14 @@ public class MypageService {
 		return mypageDao.memberlist(loginId);
 	}
 
+	//글쓰기 
+	public void tomemberboardwrite(HashMap<String, String> params) {
+		int row = mypageDao.tomemberboardwrite(params);
+		logger.info(" 입력된 건수 : {}",row);
+	}
+	
+
+	
 }
 
 

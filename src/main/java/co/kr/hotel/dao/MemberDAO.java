@@ -1,7 +1,9 @@
 package co.kr.hotel.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import co.kr.hotel.dto.BoardDTO;
 import co.kr.hotel.dto.MemberDTO;
 
 public interface MemberDAO {
@@ -23,5 +25,10 @@ public interface MemberDAO {
 	String findid(String user_name, String user_birth, String user_email);
 
 	int findpw(String user_id, String user_email, String hashText);
+
+	// 20220317 회원가입시 마일리지 지급 - SI
+	int initMileage(String id);
+	
+	MemberDTO logmem_grade(String userId);
 
 }

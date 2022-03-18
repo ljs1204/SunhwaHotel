@@ -7,9 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import co.kr.hotel.dao.BoardDAO;
 import co.kr.hotel.dto.BoardDTO;
@@ -41,7 +39,9 @@ public class BoardService {
 	//글쓰기 
 	public void write(HashMap<String, String> params) {
 		int row = dao.write(params);
-		logger.info(" 입력된 건수 : {}",row);		
+		logger.info(" 입력된 건수 : {}",row);
 	}
-}
+	
+	
+	}
 

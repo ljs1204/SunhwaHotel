@@ -67,6 +67,13 @@
 	}
 /* 컨텐츠 - 예약 조회 영역 css END - SI 20220314 */	
 
+/* 20220317 페이징 영역 SI */
+	.custom-pagination ul li.active span{
+		background: #633e12 !important;
+	    color: #fff !important;
+	    border-radius: 50% !important;
+	}
+
 <style>
 
 
@@ -97,7 +104,7 @@
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
 
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
-						<a class="list-group-item list-group-item-action active" id="list-reserve-list" href="./myReserve">예약 조회</a>
+						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./myReserve?num=1">예약 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
@@ -157,35 +164,71 @@
 							 --%>
 							
 							<!-- 예약 조회 리스트 뿌리기 --> 
-							<c:forEach var="res" items="${result }">
-								<!-- 20220315 객실 수 - 1 해주기( ~외 1개 ) -->
-								<c:set var="roomCnt" value="${res.reserve_room_cnt - 1}" />
-								
-								<!-- 20220315 객실 수 - 1 해주기( ~외 1개 ) -->
-								
+							<c:if test="${size ne 0 }">
+								<c:forEach var="res" items="${result }">
+									<!-- 20220315 객실 수 - 1 해주기( ~외 1개 ) -->
+									<c:set var="roomCnt" value="${res.reserve_room_cnt}" />
+									<tr>
+										<td><a href="mypageRefundDetail?reserve_num=${res.reserve_num}&reserve_idx=${res.reserve_idx}"
+												style="color:#633e12 !important; text-decoration:underline !important;">${res.reserve_num}</a></td>
+										<td>${res.room_type_name} 포함 ${roomCnt} 개</td>
+										<td>${res.checkindate}</td>
+										<td>${res.checkoutdate}</td>
+										<td>${res.reserve_amount}</td>
+										<c:choose>
+											<c:when test="${res.reserve_state eq 1}">
+												<td>예약완료</td>									
+											</c:when>
+											<c:when test="${res.reserve_state eq 2}">
+												<td><a href="" style="font-weight: 550; color:#633e12 !important; text-decoration:underline !important;">부분취소</a></td>									
+											</c:when>
+											<c:when test="${res.reserve_state eq 3}">
+												<td>예약취소</td>									
+											</c:when>
+										</c:choose>
+									</tr>
+								</c:forEach>
+							</c:if>
+							<c:if test="${size eq 0 }">
 								<tr>
-									<td><a href="mypageRefundDetail?reserve_num=${res.reserve_num}&reserve_idx=${res.reserve_idx}">${res.reserve_num}</a></td>
-									<td>${res.room_type_name} 외 ${roomCnt} 개</td>
-									<td>${res.checkindate}</td>
-									<td>${res.checkoutdate}</td>
-									<td>${res.reserve_amount}</td>
-									<c:choose>
-										<c:when test="${res.reserve_state eq 1}">
-											<td>예약완료</td>									
-										</c:when>
-										<c:when test="${res.reserve_state eq 2}">
-											<td><a href="">부분취소</a></td>									
-										</c:when>
-										<c:when test="${res.reserve_state eq 3}">
-											<td>예약취소</td>									
-										</c:when>
-									</c:choose>
+									<td style="text-align:center;" colspan="6">예약된 내역이 없어요.</td>
 								</tr>
-							</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 
-					페이징 영역!
+<!-- 20220317 페이징 START - SI -->
+					<div class="row" data-aos="fade">
+			          <div class="col-12">
+			            <div class="custom-pagination">
+			              <ul class="list-unstyled">
+			              	<c:if test="${prev}">
+							 <li><a href="/board/listPage?num=${startPageNum - 1}">&lt;</a></li>
+							</c:if>
+							
+							<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
+							  <li class="active">
+							   <c:if test="${select != num}">
+								   <a href="./myReserve?num=${num}" style="color:#633e12 !important;">${num}</a>
+								  </c:if>    
+								  
+								  <c:if test="${select == num}">
+								   <b style="font-size: 21px; color:#633e12 !important;"><span>${num}</span></b>
+								  </c:if>
+							 </li>
+							</c:forEach>
+							
+							<c:if test="${next}">
+							 <li><a href="/board/listPage?num=${endPageNum + 1}">&gt;</a></li>
+							</c:if>
+			              
+			              </ul>
+			            </div>
+			          </div>
+			        </div>
+<!-- 20220317 페이징 END - SI -->					
+										
+					
 					<hr style="border-color: #633e12;" />
 					</form>
 

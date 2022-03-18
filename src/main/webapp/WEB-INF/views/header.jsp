@@ -105,7 +105,7 @@
                 </c:if>
                 
                 <c:if test="${loginId ne null}">
-                	<c:if test="${loginId ne 'admin' }">
+                	<c:if test="${mem_grade ne 'admin' }">
 	                	<div>
 	                        <nav class="site-navigation text-right ml-auto " role="navigation">
 	                            <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block"
@@ -121,7 +121,7 @@
 	                    </div>
                     </c:if>
                     
-                    <c:if test="${loginId eq 'admin' }">
+                    <c:if test="${mem_grade eq 'admin' }">
                     	<div>
 	                        <nav class="site-navigation text-right ml-auto " role="navigation">
 	                            <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block"
@@ -159,7 +159,7 @@
                                         	src="resources//images/icon/booking.png" style="width:25px">&nbsp;선화호텔 예약</a></li>
                             </c:if>
                             <c:if test="${loginId ne null}">
-                				<c:if test="${loginId ne 'admin' }">
+                				<c:if test="${mem_grade ne 'admin' }">
                 					<li><a href="index.html" class="nav-link"><img class="non-display"
                                     	    src="resources/images/icon/search.png" style="width:25px;">&nbsp;선화호텔 소개</a></li>
                            			<li><a href="index.html" class="nav-link"><img class="non-display"
@@ -169,7 +169,7 @@
                             
                             
                             <c:if test="${loginId ne null}">
-                				<c:if test="${loginId eq 'admin' }">
+                				<c:if test="${mem_grade eq 'admin' }">
                             		<li><a href="index.html" class="nav-link">&nbsp;회원 정보</a></li>
                             		<li><a href="index.html" class="nav-link">&nbsp;객실 예약 정보</a></li>
                                 </c:if>
@@ -187,10 +187,10 @@
                             <!-- 20220311 - 로고 밑 글자 -->
                             <!-- 20220314 로그인 상태에 따라 회원/비대면, ID에 따라 관리자 구분 -->
                             <span style="display:block; font-size:1rem; font-family:trajan pro;">
-                                <c:if test="${loginId ne 'admin' }">
+                                <c:if test="${mem_grade ne 'admin' }">
                                 	HOTELS &amp; RESORTS
                                 </c:if>
-                                <c:if test="${loginId eq 'admin' }">
+                                <c:if test="${mem_grade eq 'admin' }">
                                 	ADMIN PAGE
                                 </c:if>
                                 
@@ -217,7 +217,7 @@
                         </c:if>
                         
                         <c:if test="${loginId ne null}">
-                			<c:if test="${loginId ne 'admin' }">
+                			<c:if test="${mem_grade ne 'admin' }">
                         	<li><a href="about.html" class="nav-link" style="font-weight: bold;">객실 소개</a></li>
                             <li><a href="blog.html" class="nav-link" style="font-weight: bold;">고객문의</a></li>
                             <li><a href="./myPagemilelist?orderNum=1" class="nav-link" style="font-weight: bold;">${loginId}님의 마일리지</a></li>
@@ -225,9 +225,9 @@
                         </c:if>
                         
                         <c:if test="${loginId ne null}">
-                			<c:if test="${loginId eq 'admin' }">
-                            <li><a href="about.html" class="nav-link" style="font-weight: bold;">문의 리스트</a></li>
-                            <li><a href="blog.html" class="nav-link" style="font-weight: bold;">마일리지 상품 리스트</a></li>
+                			<c:if test="${mem_grade eq 'admin' }">
+                           	<li><a href="./tomemberboardlist" class="nav-link" style="font-weight: bold;">문의 리스트</a></li>
+                            <li><a href="./adminOrderList" class="nav-link" style="font-weight: bold;">마일리지 상품 리스트</a></li>
                         	</c:if>
                        	</c:if>
                         

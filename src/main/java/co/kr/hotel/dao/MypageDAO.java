@@ -1,8 +1,10 @@
 package co.kr.hotel.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import co.kr.hotel.dto.MemberDTO;
+import co.kr.hotel.dto.BoardDTO;
 import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.ReserveDTO;
 
@@ -19,7 +21,7 @@ public interface MypageDAO {
 	ArrayList<ReserveDTO> myReserveParts(String loginId);
 	//
 
-	ArrayList<MypageDTO> tomemberboardlist();
+	
 
 	//ArrayList<ReserveDTO> mypage2Reservelist(String loginId);
 	
@@ -41,8 +43,11 @@ public interface MypageDAO {
 	
 	MemberDTO memberlist(String loginId);
 
-
+	BoardDTO tomemberboarddetail(String board_num);
 	
+	ArrayList<BoardDTO> tomemberboardlist(String loginId);
+	
+	int tomemberboardwrite(HashMap<String, String> params);
 
 	
 

@@ -16,17 +16,13 @@
 	</style>
 </head>
 <body>
-	<form action="write" method="POST">
-		<h2 style="text-align:center;">관리자 게시글 문의 답변 페이지 </h2>
-		
-		<input type="text" name="board_orinum" value=${board_orinum}> 
-		
+	<form action="tomemberboardwrite" method="POST">
+		<h2 style="text-align:center;">고객 문의 글쓰기 </h2>
 		<table>	
 			<tr>
 				<th>아이디</th>
 				<td>
-				admin
-				<input type="hidden" name="id"/>
+				<input type="text" name="mem_id" value=${loginId} readonly> 
 				</td>
 			</tr>
 			<tr>
@@ -43,7 +39,7 @@
 				<th colspan="2">
 					<input type="submit" value="등록"/>
 					<!-- <input type="submit" onclick="location.href='./list'" value="등록"/> -->
-					<input type="button" onclick="location.href='./'" value="취소"/>
+					<input type="button" onclick="location.href='./tomemberboardlist.jsp'" value="취소"/>
 				</th>
 			</tr>
 		</table>

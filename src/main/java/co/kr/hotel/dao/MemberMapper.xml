@@ -35,6 +35,13 @@
 		SELECT mem_email FROM member WHERE mem_email = #{param1}
 	
 	</select>
+
+<!--  20220317 회원가입시 마일리지 지급 - SI -->	
+	<insert id="initMileage" parameterType="String">
+		INSERT 
+		INTO mileage( mem_id, mileage_price, mileage_useable)
+		VALUES (#{param1}, 1000, 1000);
+	</insert>
 	
 	
 	<insert id="join" parameterType="hashmap">
@@ -50,5 +57,10 @@
 	<update id="findpw">
 		UPDATE member SET mem_pw = #{param3} WHERE mem_id = #{param1} AND mem_email = #{param2}
 	</update>
+	
+	<select id="logmem_grade" resultType="co.kr.hotel.dto.MemberDTO">
+		select mem_grade from `member` m where mem_id = #{param1}
+	</select>
+	
 
 </mapper>

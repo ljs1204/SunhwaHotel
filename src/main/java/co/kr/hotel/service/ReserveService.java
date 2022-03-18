@@ -2,6 +2,7 @@ package co.kr.hotel.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.kr.hotel.dao.ReserveDAO;
+import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.dto.RoomDTO;
 
 @Service
@@ -41,6 +43,12 @@ public class ReserveService {
 	public int useable(String loginId) {
 		
 		return reserveDao.useable(loginId);
+	}
+
+	public void roomOne(ReserveDTO dto) {
+		// TODO Auto-generated method stub
+		
+		reserveDao.roomOne(dto);
 	}
 	
 	

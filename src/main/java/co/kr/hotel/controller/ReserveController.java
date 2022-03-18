@@ -2,6 +2,8 @@ package co.kr.hotel.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.service.ReserveService;
 
 @Controller
@@ -80,15 +83,45 @@ public class ReserveController {
 	 }
 	
 	 
+	@RequestMapping(value = "/toReserveOrder", method = RequestMethod.GET)
+		public String toReserveOrder(Model model,HttpSession session,
+				@RequestParam Map<String, String> params) {
+		logger.info("toReserveOrder 요청 : {}",params);
+		
+		String userId = "seon119";
+		//params.replace("userId", userId);
+		
+		ReserveDTO dto = new ReserveDTO();
+		dto.setMem_id(params.get("userId"));
+		dto.setAdd_requests(params.get("ADD2"));
+	
+		service.roomOne(dto);
+		
+		int reserve_idx = dto.getReserve_idx();
+		logger.info("reserve_idx : "+reserve_idx);
+		
+		if(reserve_idx > 0 ) {
+			logger.info("pay insert");
+		}
+		
+		
+		return "toReserveOrder";
+	}
+		
+	 
+	 
 	 
 	//객실 옵션 페이지 이지선 END 220315
 	
 	
-		@RequestMapping(value = "/doReservation", method = RequestMethod.GET)
-		public String doReservation(Model model,HttpSession session) {
-			
-			return "doReservation";
-		}
+	@RequestMapping(value = "/doReservation", method = RequestMethod.GET)
+	public String doReservation(Model model,HttpSession session) {
 		
+		return "doReservation";
+	}
+	
+
+	
+	
 		
 }
