@@ -3,8 +3,27 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>SeonhwaHotel Join</title>
-	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SunhwaHotel Join</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700">
+
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/animate.css">
+    <link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="resources/css/aos.css">
+    <link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="resources/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="resources/css/fancybox.min.css">
+    
+    <link rel="stylesheet" href="resources/fonts/ionicons/resources/css/ionicons.min.css">
+    <link rel="stylesheet" href="resources/fonts/fontawesome/resources/css/font-awesome.min.css">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="resources/css/style.css">
 	<style>
 		table, th, td{
 			border : 1px solid black;
@@ -15,9 +34,20 @@
 		  resize: none;
 		  width:300px;
 		}
+	     body{
+	    	height: auto !important;
+	    }
 	</style>
 </head>
 <body>
+	<header class="site-header">
+		<jsp:include page="header.jsp" flush="true" />
+	</header>
+	
+	<div style="margin-top:200px"></div>
+		
+		
+		
 	<table>
 		<tr>
 			<th>아이디</th>
@@ -96,6 +126,31 @@
 			</th>
 		</tr>
 	</table>
+	
+	
+	<footer class="footer-section">
+	<jsp:include page="footer.jsp" flush="true" />
+	</footer>
+	
+	<script src="resources/js/jquery-3.3.1.min.js"></script>
+    <script src="resources/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="resources/js/popper.min.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+    <script src="resources/js/owl.carousel.min.js"></script>
+    <script src="resources/js/jquery.stellar.min.js"></script>
+    <script src="resources/js/jquery.fancybox.min.js"></script>
+    
+    
+    <script src="resources/js/aos.js"></script>
+    
+    <script src="resources/js/bootstrap-datepicker.js"></script> 
+    <script src="resources/js/jquery.timepicker.min.js"></script> 
+
+    
+
+    <script src="resources/js/main.js"></script>
+    
+    
 </body>
 <script>
 	var overlayChk = false;//아이디 중복확인 시 True
@@ -181,6 +236,8 @@
 	
 	//이메일 인증버튼 클릭 시 중복 여부 확인
 	
+	
+	//이메일 인증
     random();
     
     function random(){
@@ -194,36 +251,44 @@
 	
 	$('#certify').click(function(){
 		var chkemail = $('input[name="mem_email"]').val();
-			 
-		$.ajax({
-			url:'emailcheck',
-			type:'get',
-			data:{
-				email:chkemail
-			},
-			dataType:'JSON',
-			success:function(data){
-				var msg = "";
-			 	
-				if(data.emailChecked){
-					alert('이미 사용중인 이메일 입니다.');
-					$('input[name="mem_email"]').val('');
-				}else{
-					alert('이메일로 인증번호를 발송했습니다.');
-					$('input[name="mem_email"]').attr('readonly', true);
-					$('#emailCode').attr('type','text');
-					$('#emailBtn').attr('type','button');
+		
+		if(chkemail == ''){
+			alert('이메일을 입력해주세요.');	
+		}else{
+			
+			$.ajax({
+				url:'emailcheck',
+				type:'get',
+				data:{
+					email:chkemail
+				},
+				dataType:'JSON',
+				success:function(data){
+					var msg = "";
+				 	
+					if(data.emailChecked){
+						alert('이미 사용중인 이메일 입니다.');
+						$('input[name="mem_email"]').val('');
+					}else{
+						alert('이메일로 인증번호를 발송했습니다.');
+						$('input[name="mem_email"]').attr('readonly', true);
+						$('#emailCode').attr('type','text');
+						$('#emailBtn').attr('type','button');
+						
+						//이메일 인증
+						random();				
+						win = window.open('emailPage','최신식 구글 메일','width=800,height=600');					
+					}
 					
-					random();				
-					win = window.open('emailPage','최신식 구글 메일','width=800,height=600');					
+				},
+				error:function(e){
+					console.log('에러');
+					console.log(e)
 				}
-				
-			},
-			error:function(e){
-				console.log('에러');
-				console.log(e)
-			}
-		});
+			});
+			
+		}
+		
 		
 	});
 	
