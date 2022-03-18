@@ -88,6 +88,10 @@
 	
 	<div style="margin-top:200px;"></div> 
 	
+	
+	<form action="toReserveOrder" method="get">
+	
+	
 	<div class="rooms"><h5>객실1</h5></div>
 	<div class="box">
 		<div id="top">
@@ -97,6 +101,7 @@
 		    	<c:forEach var="op" items="${option}">
 		    		<div>
 				  		<input type="hidden" value="${op.option_num}"/>
+				  		<input type="hidden" value="seon119" name="userId"/>
 				  		<p>	${op.option_name} / ${op.option_price}원 </p>
 			    	
 				  		<div style="float: right">
@@ -111,7 +116,7 @@
 			
 			<div id="addmemo">
 				<p>추가옵션사항</p>
-				<textarea placeholder="문의하실 사항이 있으시면 입력해주십시오."></textarea>
+				<textarea placeholder="문의하실 사항이 있으시면 입력해주십시오." name="ADD1">인서트 3줄 한번에 하기 파라미터 1 </textarea>
 			</div>
 		</div>
 		<br/><hr/><br/>
@@ -134,6 +139,128 @@
         </div>
    		</c:forEach>
 	</div>
+		
+		
+		
+	<div class="rooms"><h5>객실2</h5></div>
+	<div class="box">
+		<div id="top">
+			<div id="optionplus">
+				<p>옵션 사항</p>
+				
+		    	<c:forEach var="op" items="${option}">
+		    		<div>
+				  		<input type="hidden" value="${op.option_num}"/>
+				  		<p>	${op.option_name} / ${op.option_price}원 </p>
+			    	
+				  		<div style="float: right">
+				  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
+				            <div class="number" style="display: inline">0</div>
+				            <img class="plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
+			    		</div>
+		    		</div>
+			        <br/>
+		    	</c:forEach>
+			</div>
+			
+			<div id="addmemo">
+				<p>추가옵션사항</p>
+				<textarea placeholder="문의하실 사항이 있으시면 입력해주십시오." name="ADD2">인서트 3줄 한번에 하기 파라미터 2 </textarea>
+			</div>
+		</div>
+		<br/><hr/><br/>
+		
+	  	<c:forEach var="p" items="${product}">
+	  	<div id="list">
+	  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
+	  		<p>	${p.product_name}</p>
+	  		<p>	${p.product_price}마일리지</p>
+	  		<input type="hidden" value="${p.product_num}"/>
+			<input type="checkbox" class="checkbox" value="checkitem">선택하기
+			
+			<div class="button2" style="margin-top: 10px; display:none;">
+				<img class="minus2" src="resources/images/minusbtn.png"  alt="마이너스버튼">
+	            <div class="number2" style="display: inline">0</div>
+	            <img class="plus2" src="resources/images/plusbtn.png"  alt="플러스버튼">
+            </div>
+            
+            <br/>
+        </div>
+   		</c:forEach>
+	</div>
+		
+	<div class="rooms"><h5>객실3</h5></div>
+	<div class="box">
+		<div id="top">
+			<div id="optionplus">
+				<p>옵션 사항</p>
+				
+		    	<c:forEach var="op" items="${option}">
+		    		<div>
+				  		<input type="hidden" value="${op.option_num}"/>
+				  		<p>	${op.option_name} / ${op.option_price}원 </p>
+			    	
+				  		<div style="float: right">
+				  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
+				            <div class="number" style="display: inline">0</div>
+				            <img class="plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
+			    		</div>
+		    		</div>
+			        <br/>
+		    	</c:forEach>
+			</div>
+			
+			<div id="addmemo">
+				<p>추가옵션사항</p>
+				<textarea placeholder="문의하실 사항이 있으시면 입력해주십시오." name = "ADD3">인서트 3줄 한번에 하기 파라미터 3 </textarea>
+			</div>
+		</div>
+		<br/><hr/><br/>
+		
+	  	<c:forEach var="p" items="${product}">
+	  	<div id="list">
+	  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
+	  		<p>	${p.product_name}</p>
+	  		<p>	${p.product_price}마일리지</p>
+	  		<input type="hidden" value="${p.product_num}"/>
+			<input type="checkbox" class="checkbox" value="checkitem">선택하기
+			
+			<div class="button2" style="margin-top: 10px; display:none;">
+				<img class="minus2" src="resources/images/minusbtn.png"  alt="마이너스버튼">
+	            <div class="number2" style="display: inline">0</div>
+	            <img class="plus2" src="resources/images/plusbtn.png"  alt="플러스버튼">
+            </div>
+            
+            <br/>
+        </div>
+   		</c:forEach>
+	</div>
+	<input type = "submit" class="btn" value = "결제하기"/>
+	</form>
+	
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 			
 	<div class="box">
