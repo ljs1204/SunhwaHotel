@@ -93,7 +93,7 @@ public class ReserveController {
 		
 		ReserveDTO dto = new ReserveDTO();
 		dto.setMem_id(params.get("userId"));
-		dto.setAdd_requests("ADD2");
+		dto.setAdd_requests(params.get("ADD2"));
 	
 		service.roomOne(dto);
 		
