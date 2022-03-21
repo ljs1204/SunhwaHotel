@@ -3,7 +3,7 @@
 <html>
 <head>
    <meta charset="UTF-8">
-   <title>SeonhwaHotel login</title>
+   <title>SunhwaHotel login</title>
    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
    <style>
 			.row {
@@ -38,7 +38,22 @@
                 color: #6B6B6B;
                 float:right;
             }
-            .btn{
+            h2{
+                text-align: center;
+                margin-bottom: 10px; 
+			}
+	        .btn-primary {
+			    color: #fff;
+			    background-color: black !important;
+			    border-color: black !important;
+			}
+			
+			.btn-primary:hover {
+			    color: #fff;
+			    background-color: #0069d9;
+			    
+			}
+			.btn{
                 margin-top: 10px;
                 color: #ffffff;
                 background: black;
@@ -49,10 +64,9 @@
                 cursor: pointer;
                 width: 600px;
             }
-            h2{
-                text-align: center;
-                margin-bottom: 10px; 
-}
+		     body{
+		    	height: auto !important;
+		    }
    </style>
 </head>
 <body>
@@ -65,7 +79,7 @@
             <div class="row">
                 <div class="box">
                     <div class="login-form">
-                        <h2>Seonhwa Hotel Login</h2>
+                        <h2>Sunhwa Hotel Login</h2>
                         <form action="login" method="post">
                             <div class="group-input">
                                 <label for="userId">아이디</label>
@@ -78,7 +92,8 @@
                             <div class="gi-more">
                                 <a href="./findIdPw" class="forget">아이디 및 비밀번호 찾기</a>
                             </div>
-                            <button type="submit" class="btn">로그인</button>
+							<input type="submit" value="로그인" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
+							
                         </form>
                     </div>
                 </div>

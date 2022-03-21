@@ -13,7 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import co.kr.hotel.dto.MileagePhotoDTO;
+import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.service.ManagerService;
 
 @Controller
@@ -41,22 +44,14 @@ public class ManagerController {
 		}
 		
 		@RequestMapping(value = "/writing", method = RequestMethod.POST)
-		public String write(Model model, @RequestParam HashMap<String, String> params) {		
-			logger.info("writing 요청 : {}",params);
-			service.writing(params);
-			return "redirect:/";
-		}			
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		   public String writing(Model model, MultipartFile[] photos,
+		         @RequestParam HashMap<String, String> params) {
+		      logger.info("글쓰기 페이지 요청"+ params);
+		      logger.info("업로드 할 파일 수 : {}",photos.length);
+				service.writing(photos,params); 
+				return "redirect:/adminOrderList"; 
+		}
+
 		
 		
 }

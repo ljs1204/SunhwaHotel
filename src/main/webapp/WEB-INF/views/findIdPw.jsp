@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>SeonhwaHotel Finding ID/PW</title>
+	<title>SunhwaHotel Finding ID/PW</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<style>
             .id-form{
@@ -52,6 +52,9 @@
 			    padding : 30 30 30 30px;
 			    border: 1px solid black;
             }
+		     body{
+		    	height: auto !important;
+		    }
 
        </style>
 </head>
@@ -172,7 +175,8 @@ $('#pwfind').click(function() {
 		success : function (data) {
 			if (data.success == '1') {
 				alert('이메일로 인증번호를 발송했습니다.');
-				
+				certifinum = temp_pw;
+				win = window.open('emailPage','최신식 구글 메일','width=800,height=600');//이메일 창 오픈
 			}else{
 				alert('입력하신 정보가 일치 하지 않습니다. 다시 확인 후 입력바랍니다.');
 			}

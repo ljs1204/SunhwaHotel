@@ -37,7 +37,6 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject ("board_orinum" ,board_orinum);
 		
-		
 		//유선화 START
 		
 		
@@ -61,11 +60,22 @@ public class BoardController {
 		return service.detail(board_num);
 	}
 	// 2022.03.14  문의페이지 리스트 박형민
-			@GetMapping(value="/list")
-			public ModelAndView list() {
-				
-				logger.info("리스트 요청");
-				
-				return service.list();
-			}
+	@GetMapping(value="/list")
+	public ModelAndView list() {
+		
+		logger.info("리스트 요청");
+		
+		return service.list();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			
+			
+}

@@ -39,11 +39,12 @@
 				</tr>
 		</c:if>		
 			<c:forEach items="${adOrderList}" var="adOrderList">
+		<!-- 	<fmt:parseNumber type="number" var = "baekyuna" value="${adOrderList.product_price}" /> -->
 			<tr>
 				<td>${adOrderList.product_img}</td>
 				<td>${adOrderList.product_num}</td>
 				<td>${adOrderList.product_name}</td>
-				<td>${adOrderList.product_price} 마일리지</td>						
+				<td>${adOrderList.product_price}</td>					
 			</tr>	
 			</c:forEach>
 		</table>	

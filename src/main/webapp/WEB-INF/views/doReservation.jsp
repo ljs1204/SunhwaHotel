@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <html>
   <head>
@@ -26,6 +27,16 @@
 
     <!-- Theme Style -->
     <link rel="stylesheet" href="resources/css/style.css">
+    
+    <style>
+    	textarea{
+    		resize: none !important;
+    	}
+    	body{
+        	height: auto !important;
+        }
+        
+    </style>
   </head>
   <body>
   
@@ -42,7 +53,7 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
           <div class="col-md-10 text-center" data-aos="fade">
             <h1 class="heading mb-3">Reservation Form</h1>
             <ul class="custom-breadcrumbs mb-4">
-              <li><a href="index.html">Home</a></li>
+              <li><a href="./">Home</a></li>
               <li>&bullet;</li>
               <li>Reservation</li>
             </ul>
@@ -81,9 +92,18 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
                   <input type="text" id="phone" class="form-control ">
                 </div>
                 <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="">연락처</label>
-                  <input type="text" id="phone" class="form-control ">
+                  <label class="text-black font-weight-bold" for="adult_cnt">인원 수</label>
+                  <input type="text" id="adult_cnt" class="form-control" readonly>
                 </div>
+                <div class="col-md-6 form-group">
+                  <label class="text-black font-weight-bold" for="checkin">체크인 날짜</label>
+                  <input type="text" id="checkin" class="form-control " readonly>
+                </div>
+               <div class="col-md-6 form-group">
+                  <label class="text-black font-weight-bold" for="checkout">체크아웃 날짜</label>
+                  <input type="text" id="checkout" class="form-control " readonly>
+                </div>
+                
               </div>
           
               <div class="row">
@@ -96,15 +116,11 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
 
               <div class="row mb-4">
                 <div class="col-md-12 form-group">
-                  <label class="text-black font-weight-bold" for="message">Notes</label>
-                  <textarea name="message" id="message" class="form-control " cols="30" rows="8"></textarea>
+                  <label class="text-black font-weight-bold" for="addmessage">추가요청사항</label>
+                  <textarea name="message" id="addmessage" class="form-control " cols="30" rows="8"></textarea>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <input type="submit" value="Reserve Now" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
-                </div>
-              </div>
+              
             </form>
 
           </div>
@@ -117,32 +133,26 @@ hero_4.jpg)" data-stellar-background-ratio="0.5">
           <form action="#" method="post" class="bg-white p-md-5 p-4 mb-5 border">
             <div class="row">
               <div class="col-md-6 form-group">
-                <label class="text-black font-weight-bold" for="name">Name</label>
-                <input type="text" id="name" class="form-control ">
+                <label class="text-black font-weight-bold" for="credit_num">신용카드번호</label>
+                <input type="text" id="credit_num" class="form-control ">
               </div>
               <div class="col-md-6 form-group">
-                <label class="text-black font-weight-bold" for="phone">Phone</label>
-                <input type="text" id="phone" class="form-control ">
+                <label class="text-black font-weight-bold" for="credit_validity">유효기간</label>
+                <input type="text" id="credit_validity" class="form-control ">
               </div>
             </div>
         
             <div class="row">
               <div class="col-md-12 form-group">
-                <label class="text-black font-weight-bold" for="email">Email</label>
-                <input type="email" id="email" class="form-control ">
+                <label class="text-black font-weight-bold" for="credit_type">카드종류</label>
+                <input type="email" id="credit_type" class="form-control ">
               </div>
             </div>
 
 
-            <div class="row mb-4">
-              <div class="col-md-12 form-group">
-                <label class="text-black font-weight-bold" for="message">Notes</label>
-                <textarea name="message" id="message" class="form-control " cols="30" rows="8"></textarea>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-6 form-group">
-                <input type="submit" value="Reserve Now" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
+                <input type="button" value="카드정보 저장" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
               </div>
             </div>
           </form>
