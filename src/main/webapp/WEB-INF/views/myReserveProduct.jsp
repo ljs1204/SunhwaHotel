@@ -35,51 +35,48 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 
+<!-- 이미지 모달 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+
+
 
 
 </head>
 <style>
 /* 세로 네비게이션(리스트그룹) 관련 css START - SI 20220314 */
-	.list-group-item.active {
-		background-color: #f1ebd6 !important;
-		/* border: 1px solid #f1ebd6 !important; */
-		color: #633e12 !important;
-		font-weight: bold;
-	}
-	.list-group-item {
-		font-size: 14px;
-		font-family: Helvetica;
-		border: 1px solid #f1ebd6 !important;
-		padding-right: 10px !important;
-	}
+.list-group-item.active {
+	background-color: #f1ebd6 !important;
+	/* border: 1px solid #f1ebd6 !important; */
+	color: #633e12 !important;
+	font-weight: bold;
+}
+
+.list-group-item {
+	font-size: 14px;
+	font-family: Helvetica;
+	border: 1px solid #f1ebd6 !important;
+	padding-right: 10px !important;
+}
 /* 세로 네비게이션(리스트그룹) 관련 css END - SI 20220314 */
 
-/* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 */
-	#list-reserve .table th{
-		background-color: #f1ebd6;
-		border-top: 1px solid #cdcbbe;
-		border-bottom: 1px solid #cdcbbe;
-		color: #633e12 !important;
-	}
-	#list-reserve .table tr{
-		border-top: 1px solid #cdcbbe;
-		border-bottom: 1px solid #cdcbbe;
-	}
-/* 컨텐츠 - 예약 조회 영역 css END - SI 20220314 */	
+/* 컨텐츠 - 마일리지 상품 영역 css START - SI 20220314 */
+#list-reserve .table th {
+	background-color: #f1ebd6;
+	border-top: 1px solid #cdcbbe;
+	border-bottom: 1px solid #cdcbbe;
+	color: #633e12 !important;
+}
 
-/* 20220317 페이징 영역 SI */
-	.custom-pagination ul li.active span{
-		background: #633e12 !important;
-	    color: #fff !important;
-	    border-radius: 50% !important;
-	}
+#list-reserve .table tr {
+	border-top: 1px solid #cdcbbe;
+	border-bottom: 1px solid #cdcbbe;
+}
 
-<style>
+table tr td {
+	vertical-align: middle !important;
+}
 
-
-
-
-
+/* 컨텐츠 - 마일리지 상품 영역 css END - SI 20220314 */
 </style>
 <body>
 
@@ -90,16 +87,14 @@
 	<!-- END head -->
 
 
-<!-- 마이페이지 세로 네비게이션 추가 START - SI 20220314 -->
+	<!-- 마이페이지 세로 네비게이션 추가 START - SI 20220314 -->
 	<section class="section contact-section" id="next">
-		<!-- 칸 띄우기 용 div -->
 		<div style="height: 75px; display: block;"></div>
 
-		<!-- 전부를 묶는 컨테이너 -->
 		<div class="container">
 			<div class="row">
 
-		<!-- 세로 네비게이션 바 -->
+				<!-- 세로 네비게이션 바 -->
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
 
@@ -112,166 +107,66 @@
 
 					</div>
 				</div>
-<!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
+				<!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
 
-<!-- 예약조회 START - SI 20220314 -->
-			<!-- tabContent 있어야 발동함 -->
-			<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
-				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
-						style="max-width:100% !important">
-					<form action="" method="">
-						<h4 style="color: #633e12;">${loginId} 님의 예약 리스트</h4>
+				<!-- 마일리지 상품 START - SI 20220320 -->
+				<!-- tabContent 있어야 발동함 -->
+				<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
+					<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list" style="max-width: 100% !important">
+						<h4 style="color: #633e12;">예약 상세보기 - 마일리지 상품</h4>
 						<hr style="border-color: #633e12;" />
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>예약번호</th>
-								<th>객실타입</th>
-								<th>체크인</th>
-								<th>체크아웃</th>
-								<th>가격</th>
-								<th>예약상태</th>
-							</tr>
-						</thead>
-						<tbody>
-							<%-- 
-							<tr>
-								<td><a href="./reserveDetail">SVW8432Q</a></td>
-								<td>디럭스(더블) 외 2개</td>
-								<td>2022-03-06</td>
-								<td>2022-03-08</td>
-								<td>1,992,000원</td>
-								<c:choose>
-									<c:when test="">
-										<td>예약완료</td>
-									</c:when>
-									<c:when test="true">
-										<td><a href="">부분취소</a>
-									</c:when>
-									<c:when test="">
-										<td>예약취소</td>
-									</c:when>
-								</c:choose>
-							</tr>
-							<tr>
-								<td><a href="">QWASD145</a></td>
-								<td>디럭스(트윈)</td>
-								<td>2022-01-17</td>
-								<td>2022-01-18</td>
-								<td>679,000원</td>
-								<td>예약취소</td>
-							</tr>
-							 --%>
-							
-							<!-- 예약 조회 리스트 뿌리기 --> 
-							<c:if test="${size ne 0 }">
-								<c:forEach var="res" items="${result }">
-									<!-- 20220315 객실 수 count ( 포함 n개 ) -->
-									<c:set var="roomCnt" value="${res.reserve_room_cnt}" />
+						<table class="table" style="text-align: center;">
+							<thead>
+								<tr>
+									<th>상품 이미지</th>
+									<th>상품명</th>
+									<th>수량</th>
+									<th>가격</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- 마일리지 상품 총액 계산할 변수 초기화 -->
+								<c:set var="amount" value="0" />
+								<!-- 마일리지 상품 리스트 뿌리기 -->
+								<c:forEach var="prod" items="${prod }">
 									<tr>
-									<!-- 20220317 예약상세 / 환불상세 분기 START SI - 예약확인, 부분취소면 예약상세 || 예약취소면 환불상세 -->
-									<c:choose>
-										<c:when test="${res.reserve_state eq 3 }">
-											<td><a href="mypageRefundDetail?reserve_num=${res.reserve_num}&reserve_idx=${res.reserve_idx}"
-													style="color:#633e12 !important; text-decoration:underline !important;">${res.reserve_num}</a></td>
-										</c:when>
-										<c:otherwise>
-											<td><a href="myReserveDetail?reserve_num=${res.reserve_num}&reserve_idx=${res.reserve_idx}"
-													style="color:#633e12 !important; text-decoration:underline !important;">${res.reserve_num}</a></td>
-										</c:otherwise>
-									</c:choose>
-												
-												
-										<td>${res.room_type_name} 포함 ${roomCnt} 개</td>
-										<td>${res.checkindate}</td>
-										<td>${res.checkoutdate}</td>
-										<td>${res.reserve_amount}</td>
-										<c:choose>
-											<c:when test="${res.reserve_state eq 1}">
-												<td>예약완료</td>									
-											</c:when>
-											<c:when test="${res.reserve_state eq 2}">
-												<td><a href="" style="font-weight: 550; color:#633e12 !important; text-decoration:underline !important;">부분취소</a></td>									
-											</c:when>
-											<c:when test="${res.reserve_state eq 3}">
-												<td style="color:red;">예약취소</td>
-											</c:when>
-										</c:choose>
+										<!-- ** 이미지 클릭시 모달 팝업 -->
+										<td>
+											<img onclick="fnImgPop(this.src)" src="resources/mileage/${prod.product_img}.png" style="width: 100px; height: 90px;">
+										</td>
+										<td>${prod.product_name}</td>
+										<td>${prod.cnt_by_product}</td>
+										<!-- 금액에 콤마 찍어주는 jstl 라이브러리 -->
+										<td>
+											<fmt:formatNumber type="number" maxFractionDigits="3" value="${prod.product_price}" />
+										</td>
+										<!-- 총 금액 계산 -->
+										<c:set var="amount" value="${amount + (prod.cnt_by_product * prod.product_price)}" />
 									</tr>
 								</c:forEach>
-							</c:if>
-							<c:if test="${size eq 0 }">
-								<tr>
-									<td style="text-align:center;" colspan="6">예약된 내역이 없어요.</td>
-								</tr>
-							</c:if>
-						</tbody>
-					</table>
+							</tbody>
+						</table>
+						<!-- 총 금액 comma 찍기 -->
+						<div class="amount" style="text-align: right; margin-right: 8%;">
+							마일리지 총액 :
+							<c:out value="${amount}" />
+						</div>
 
-<!-- 20220317 페이징 START - SI -->
-					<div class="row" data-aos="fade">
-			          <div class="col-12">
-			            <div class="custom-pagination">
-			              <ul class="list-unstyled">
-			              	<c:if test="${prev}">
-							 <li><a href="/myReserve?num=${startPageNum - 1}">&lt;</a></li>
-							</c:if>
-							
-							<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
-							  <li class="active">
-							   <c:if test="${select != num}">
-								   <a href="./myReserve?num=${num}" style="color:#633e12 !important;">${num}</a>
-								  </c:if>    
-								  
-								  <c:if test="${select == num}">
-								   <b style="font-size: 21px; color:#633e12 !important;"><span>${num}</span></b>
-								  </c:if>
-							 </li>
-							</c:forEach>
-							
-							<c:if test="${next}">
-							 <li><a href="/myReserve?num=${endPageNum + 1}">&gt;</a></li>
-							</c:if>
-			              
-			              </ul>
-			            </div>
-			          </div>
-			        </div>
-<!-- 20220317 페이징 END - SI -->					
-										
-					
-					<hr style="border-color: #633e12;" />
-					</form>
-
-				</div>
-			</div>
-<!-- 예약조회 END - SI 20220314 -->	
-
-
-
-
-
-					
-					
-				
-
-				<!-- 20220314 폐기
-				<div class="col-md-5" data-aos="fade-up" data-aos-delay="200">
-					<div class="row">
-						<div class="col-md-10 ml-auto contact-info">
-							<p>
-								<span class="d-block">Address:</span> <span class="text-black"> 98 West 21th Street, Suite 721 New York NY 10016</span>
-							</p>
-							<p>
-								<span class="d-block">Phone:</span> <span class="text-black"> (+1) 435 3533</span>
-							</p>
-							<p>
-								<span class="d-block">Email:</span> <span class="text-black"> info@yourdomain.com</span>
-							</p>
+						<hr style="border-color: #633e12;" />
+						<div style="text-align: right;">
+							<!-- 20220319 뒤로가기와 같음 SI -->
+							<input type="button" class="btn btn-outline-warning focu" style="color: #633e12; border-color: #633e12;" onclick="window.history.back()" value="예약상세">
 						</div>
 					</div>
 				</div>
-				 -->
+				<!-- 마일리지 상품 END - SI 20220314 -->
+
+
+
+
+
+
+
 			</div>
 		</div>
 	</section>
@@ -482,21 +377,36 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	<script src="resources/js/jquery.timepicker.min.js"></script>
 
 	<script src="resources/js/main.js"></script>
+
+
 </body>
 <script>
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 START - SI 20220314 */
-	var d = new Date();
+	/* 20220319 금액 콤마 찍기 SI */
+	$('.amount').text(amountComma($('.amount').text()));
 
-	var year = d.getFullYear();
-	
-	$(document).ready(function(){
-		$('#useFrequency').html(year+"년 이용실적");
-		$('#useFrequency').css({'color':'#633e12'});
-	});
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 END - SI 20220314 */
+	// 변환 함수
+	function amountComma(price) {
+		var comma = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
+		return comma;
+	}
+	/* 20220319 금액 콤마 찍기 SI */
 
+	/* 20220320 이미지 클릭시 큰 팝업 START SI */
+	function fnImgPop(url) {
+		var img = new Image();
+		img.src = url;
+		var img_width = img.width;
+		var win_width = img.width;
+		var img_height = img.height;
+		var win = img.height;
+		var OpenWindow = window.open('', '_blank', 'width=' + img_width
+				+ ', height=' + img_height + ', menubars=no, scrollbars=auto');
+		OpenWindow.document
+				.write("<style>body{margin:0px;}</style><img src='"+url+"' width='"+win_width+"'>");
+	}
 
+	/* 20220320 이미지 클릭시 큰 팝업 SI */
 </script>
 
 </html>
