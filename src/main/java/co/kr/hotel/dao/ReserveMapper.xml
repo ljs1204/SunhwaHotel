@@ -43,11 +43,27 @@
 	 	keyColumn="reserve_idx"
 	 	parameterType="co.kr.hotel.dto.ReserveDTO">
 	 		
-		insert into reserve (mem_id,add_requests)
-		values(#{mem_id},#{add_requests})
-
+		insert into reserve (mem_id,reserve_num,room_num,reserve_date,reserve_state,checkindate,checkoutdate,adult_cnt,extrabed_cnt,breakfast_cnt,add_requests)
+		values(#{mem_id},#{reserve_num},#{room_num},#{reserve_date},#{reserve_state},#{checkindate},#{checkoutdate},#{adult_cnt},#{extrabed_cnt},#{breakfast_cnt},#{add_requests})
 	 	
 	 </insert>
 	 
+	 <insert id="roomOneCart">
+	 	INSERT INTO cart(reserve_idx,product_cnt,product_num)VALUES(#{param1},#{param2},#{param3})
+	 </insert>
 	 
+	 <insert id="buyMileageminus">
+	 INSERT INTO mileage(mem_id,mileage_price,mileage_useable)VALUES(#{param1},#{param2},#{param3})
+	 </insert>           
+	 
+	 <select id="product_price" resultType="int">
+		select p.product_price from product p where product_num = #{param1}
+	</select>
+	
+	<select id="reservation_memInfo" resultType="co.kr.hotel.dto.MemberDTO">
+		select mem_id,AES_DECRYPT(UNHEX(credit_num), SHA2('a-key',512))as credit_num,mem_grade,mem_name_kr,mem_name_en,mem_phone,mem_email,credit_num,credit_validity,credit_type           
+		from member
+		where mem_id = #{param1} 
+	</select>
+	
 </mapper>

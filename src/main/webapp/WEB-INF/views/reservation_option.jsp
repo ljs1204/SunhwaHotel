@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
 <head>
@@ -100,6 +101,13 @@
 		p {
 		    color: black !important;
 		}
+		
+		.number, .number2 {
+			border-style:none !important;
+			width:22px !important;
+			outline:none !important;
+			text-align:center !important;
+		}
 
             
 	</style>
@@ -131,225 +139,194 @@
     </section>
     <!-- END section -->
 	
-	<form action="toReserveOrder" method="get">
 	
 	
-
-	<div style="margin-top:200px"></div>
 	
 	
-	<!-- 객실옵션선택창 시작-->
-
-	<div class="rooms"><h5>객실1</h5></div>
-	<div class="box">
-		<div class="top">
-			<div class="optionplus">
-				<p>옵션 사항</p>
-				<!--  -->
-		    	<c:forEach var="op" items="${option}">
-		    		<div>
-				  		<input type="hidden" value="${op.option_num}"/>
-				  		<input type="hidden" value="seon119" name="userId"/>
-				  		<p>	${op.option_name} / ${op.option_price}원 </p>
-			    	
-				  		<div style="float: right">
-				  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-				            <div class="number" style="display: inline">0</div>
-				            <img class="plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
-			    		</div>
-		    		</div>
-			        <br/>
-		    	</c:forEach>
-			</div>
+	
+	<form action="toReserveOrder" method="POST">
+	
+		<div style="margin-top:200px"></div>
+		
+		<!-- 공통 DB - 로그인/체크인/체크아웃 -->
+		<input type="hidden" value="${loginId}" name="loginId"/>
+		<input type="hidden" value="${checkindate}" name="checkindate"/>
+		<input type="hidden" value="${checkoutdate}" name="checkoutdate"/>
+		
+		
+		<!-- 객실옵션선택창 시작-->
+		<c:forEach var="rD" items="${reserveData}" varStatus="RDS">
+		
+		<!-- 객실별(객실번호,객실가격,인원 수) -->
+			<input type="hidden" value="${rD.room_num}" name="room_num_${RDS.count}"/>
+			<input type="hidden" value="${rD.room_price}" name="room_price_${RDS.count}"/>
 			
-			<div id="addmemo">
-				<p>추가옵션사항</p>
-				<textarea placeholder="문의하실 사항이 있으시면 입력해주십시오." name="ADD1">인서트 3줄 한번에 하기 파라미터 1 </textarea>
-			</div>
-		</div>
-		<br/><hr/><br/>
-		
-	  	<c:forEach var="p" items="${product}">
-	  	<div id="list">
-	  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
-	  		<p>	${p.product_name}</p>
-	  		<p>	${p.product_price}마일리지</p>
-	  		<input type="hidden" value="${p.product_num}"/>
-			<input type="checkbox" class="checkbox" value="checkitem">선택하기
-			
-			<div class="button2" style="margin-top: 10px; display:none;">
-				<img class="minus2" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-	            <div class="number2" style="display: inline">0</div>
-	            <img class="plus2" src="resources/images/plusbtn.png"  alt="플러스버튼">
-            </div>
-            
-            <br/>
-        </div>
-   		</c:forEach>
-	</div>
-		
-		
-		
-	<div class="rooms"><h5>객실2</h5></div>
-	<div class="box">
-		<div id="top">
-			<div id="optionplus">
-				<p>옵션 사항</p>
+			<!-- 객실box -->
+			<div class="rooms"><h5>객실${RDS.count}</h5></div>
+			<div class="box">
+				<div class="top">
+					<div class="optionplus">					
+						<p>옵션 사항</p>
+						
+						<!-- 엑베/조식/추가요청 옵션 -->
+				    	<c:forEach var="op" items="${option}">
+				    		<div>
+						  		<p>	${op.option_name} / ${op.option_price}원 </p>
+				    		</div>
+				    		<input type="hidden" value="${op.option_price}" name="optionPrice${op.option_num}_${RDS.count}"/>
+				    	</c:forEach>
+					  		<div>
+					  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
+					  			<input type="text" class="number" name="extra_cnt_${RDS.count}" value="0" readonly/>
+					            <img class="extra_plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
+				    		</div>
+				    		<div>
+					  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
+					  			<input type="text" class="number" name="break_cnt_${RDS.count}" value="0" readonly/>
+					            <img class="break_plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
+					  			<input type="hidden" value="${rD.room_people}" name="room_people_${RDS.count}"/>
+				    		</div>
+				        <br/>
+				    	
+					</div>
+					
+					<div id="addmemo">
+						<p>추가요청사항</p>
+						<textarea placeholder="문의하실 사항이 있으시면 입력해주십시오." name="ADD_${RDS.count}"> </textarea>
+					</div>
+				</div>
+				<br/><hr/><br/>
 				
-		    	<c:forEach var="op" items="${option}">
-		    		<div>
-				  		<input type="hidden" value="${op.option_num}"/>
-				  		<p>	${op.option_name} / ${op.option_price}원 </p>
-			    	
-				  		<div style="float: right">
-				  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-				            <!--  <input type="text" class="number" value="0" readonly/> -->
-				            <div class="number" style="display: inline">0</div>
-				            <img class="plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
-			    		</div>
-		    		</div>
-			        <br/>
-		    	</c:forEach>
-			</div>
-			
-			<div class="addmemo">
-				<p>추가옵션사항</p>
-				<textarea placeholder="문의하실 사항이 있으시면 입력해주십시오." name="ADD2">인서트 3줄 한번에 하기 파라미터 2 </textarea>
-			</div>
-		</div>
-		<br/><hr/><br/>
-		
-		
-	  	<c:forEach var="p" items="${product}">
-	  	<div class="list">
-	  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
-	  		<p>	${p.product_name}</p>
-	  		<p>	${p.product_price}마일리지</p>
-	  		<input type="hidden" value="${p.product_num}"/>
-	  		<input type="hidden" value="${p.product_price}"/>
-			<input type="checkbox" class="checkbox">선택하기
-			
-			<div class="button2" style="margin-top: 10px; display:none;">
-				<img class="minus2" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-	            <div class="number2" style="display: inline">0</div>
-	            <img class="plus2" src="resources/images/plusbtn.png"  alt="플러스버튼">
-            </div>
-            
-            <br/>
-        </div>
-   		</c:forEach>
-   		
-	</div>
+			  	<c:forEach var="p" items="${product}" varStatus="pnum">	
+			  	<div class="list">
+			  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
+			  		<p>	${p.product_name}</p>
+			  		<p>	${p.product_price}마일리지</p>
+			  		<input type="hidden" value="${p.product_num}" name="product${pnum.count}_${RDS.count}"/>
+			  		<input type="hidden" value="${p.product_price}"/>
 	
-	<!-- 객실옵션선택창 끝 -->
-
-		
-
-	<div class="rooms"><h5>객실3</h5></div>
-	<div class="box">
-		<div id="top">
-			<div id="optionplus">
-				<p>옵션 사항</p>
-				
-		    	<c:forEach var="op" items="${option}">
-		    		<div>
-				  		<input type="hidden" value="${op.option_num}"/>
-				  		<p>	${op.option_name} / ${op.option_price}원 </p>
-			    	
-				  		<div style="float: right">
-				  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-				            <div class="number" style="display: inline">0</div>
-				            <img class="plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
-			    		</div>
-		    		</div>
-			        <br/>
-		    	</c:forEach>
+					<input type="checkbox" class="checkbox">선택하기
+					
+					<div class="button2" style="margin-top: 10px; display:none;">
+						<img class="minus2" src="resources/images/minusbtn.png"  alt="마이너스버튼">
+			            <input type="text" class="number2" value="0" name="p${pnum.count}_cnt_${RDS.count}"  onchange="valueChange()" readonly/>
+			            <img class="plus2" src="resources/images/plusbtn.png"  alt="플러스버튼">
+		            </div>
+		            
+		            <br/>
+		        </div>
+		   		</c:forEach>
 			</div>
+		</c:forEach>
 			
-			<div id="addmemo">
-				<p>추가옵션사항</p>
-				<textarea placeholder="문의하실 사항이 있으시면 입력해주십시오." name = "ADD3">인서트 3줄 한번에 하기 파라미터 3 </textarea>
-			</div>
-		</div>
-		<br/><hr/><br/>
+			
+		<!-- 객실옵션선택창 끝 -->
 		
-	  	<c:forEach var="p" items="${product}">
-	  	<div id="list">
-	  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
-	  		<p>	${p.product_name}</p>
-	  		<p>	${p.product_price}마일리지</p>
-	  		<input type="hidden" value="${p.product_num}"/>
-			<input type="checkbox" class="checkbox" value="checkitem">선택하기
-			
-			<div class="button2" style="margin-top: 10px; display:none;">
-				<img class="minus2" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-	            <div class="number2" style="display: inline">0</div>
-	            <img class="plus2" src="resources/images/plusbtn.png"  alt="플러스버튼">
+		<!-- 회원정보 및 카드 정보 -->
+		<div class="box">
+			<div class="row">
+                <div class="col-md-6 form-group">
+                  <label class="text-black font-weight-bold" for="name_en">이름(영문)</label>
+                  <input type="text" id="name_en" value="${memInfo.mem_name_en}" class="form-control" readonly>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="text-black font-weight-bold" for="name_kr">이름(국문)</label>
+                  <input type="text" id="name_kr" value="${memInfo.mem_name_kr}" class="form-control" readonly>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="text-black font-weight-bold" for="checkin">체크인 날짜</label>
+                  <input type="text" id="checkin" value="${checkindate}" class="form-control" readonly>
+                </div>
+               <div class="col-md-6 form-group">
+                  <label class="text-black font-weight-bold" for="checkout">체크아웃 날짜</label>
+                  <input type="text" id="checkout" value="${checkoutdate}" class="form-control" readonly>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="text-black font-weight-bold" for="phone">연락처</label>
+                  <input type="text" id="phone" value="${memInfo.mem_phone}" class="form-control" readonly>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="text-black font-weight-bold" for="email">Email</label>
+                  <input type="email" id="email" value="${memInfo.mem_email}" class="form-control" readonly>
+                </div>
             </div>
-            
-            <br/>
+		
+		</div>
+		
+		<div class="box">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label class="text-black font-weight-bold" for="credit_num">신용카드번호</label>
+                <input type="text" id="credit_num" value="${memInfo.credit_num}" class="form-control ">
+              </div>
+              <div class="col-md-6 form-group">
+                <label class="text-black font-weight-bold" for="credit_validity">유효기간</label>
+                <input type="text" id="credit_validity" value="${memInfo.credit_validity}" class="form-control ">
+              </div>
+            </div>
+        
+            <div class="row">
+              <div class="col-md-12 form-group">
+                <label class="text-black font-weight-bold" for="credit_type">카드종류</label>
+                <input type="email" id="credit_type" value="${memInfo.credit_type}" class="form-control ">
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="button" value="카드정보 저장하기" class="btn btn-primary text-white py-3 px-5 font-weight-bold"/>
+              </div>
+            </div>
+
         </div>
-   		</c:forEach>
-	</div>
-	<input type = "submit" class="btn" value = "결제하기"/>
+		
+		<div class="box">
+			<textarea>ADDRESS:98 West 21th Street, Suite 721 New York NY 10016
+PHONE:(+1) 435 3533
+EMAIL:info@yourdomain.com
+
+노쇼(no-show)에 대한 규정 
+
+
+예약 취소에 대한 규정
+
+
+개인정보수집 이용에 대한 규정
+			</textarea><br/>
+			<input type="checkbox">동의하시겠습니까?
+			<p>비동의시 결제가 불가능합니다.</p>
+		</div>
+		
+		<!-- 결제금액/버튼 시작 -->
+		<div class="box">
+			<div class="box2">
+			<span>회원님의 마일리지 :</span>
+			<span id="useable"> ${useable}</span>
+			<span>원</span>
+			</div>
+			
+			<div class="box2" id="mPrice"style="float:right">마일리지상품 총 금액 : 0원</div>
+		</div>
+		<div class="box">
+			<%-- <div class="box2">
+			<span>사용가능 마일리지 : </span>
+			<span id="useablePay"> ${useable}</span>
+			<span>원</span>
+			</div>
+			<div class="box2">사용 할 마일리지 : <input type="text" id="useMileage" style="width:140px;"></div> --%>
+			<div class="box2" style="float:right">결제 금액 : 0원</div>
+		</div>
+		<br/>
+		<div class="btn2">
+	        <div class="col-md-6 form-group">
+	            <input type="button" value="돌아가기" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
+	        </div>
+	        <div class="col-md-6 form-group">
+	            <input type="submit" value="결제하기" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
+	        </div>
+		</div>
 	</form>
-	
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-			
-
-	<!-- 결제금액/버튼 시작 -->
-
-	<div class="box">
-		<div class="box2">
-		<span>회원님의 마일리지 :</span>
-		<span id="useable"> ${useable}</span>
-		<span>원</span>
-		</div>
-		
-		<div class="box2" id="mPrice"style="float:right">마일리지상품 총 금액 : 0원</div>
-	</div>
-	<div class="box">
-		<div class="box2">
-		<span>사용가능 마일리지 : </span>
-		<span id="useablePay"> ${useable}</span>
-		<span>원</span>
-		</div>
-		<div class="box2">사용 할 마일리지 : <input type="text" id="useMileage" style="width:140px;"></div>
-		<div class="box2" style="float:right">결제 금액 : 0원</div>
-	</div>
-	<br/>
-	<div class="btn2">
-        <div class="col-md-6 form-group">
-            <input type="button" value="돌아가기" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
-        </div>
-        <div class="col-md-6 form-group">
-            <input type="button" value="결제하기" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
-        </div>
-	</div>
-	
 	<!-- 결제금액/버튼 끝 -->
 	
 	<footer class="footer-section">
@@ -381,32 +358,32 @@
 	$('.checkbox').click(function(){
 		if(this.checked){//체크 시 
 			$(this).next().css('display', 'block');//버튼 활성화
-			$(this).next().find('.number2').html(1);
+			$(this).next().find('input[type="text"]').val(1);
 		}else{//비 체크 시
 			$(this).next().css('display', 'none'); //버튼 비활성화
-			$(this).next().find('.number2').html(0);
+			$(this).next().find('input[type="text"]').val(0);
 			
 		}
 		
 	});
 	
-	// 수량 - 
+	//엑베/조식 옵션 수량 - 버튼
 	$('.minus').click(function(){
-	    var one =  $(this).next().html();
+	    var one =  $(this).next().val();
 	    var num = parseInt(one);
 	    num--;
 	
-	    //수량 0인 경우 체크 해제
+	    //수량 0인 경우
 	    if(num<=0){
-	    num = 0;
-	    };
+	    	num = 0;
+	    }
 	    
-		$(this).next().html(num);
+		$(this).next().val(num);
 	});
 	
-	//마일리지 수량 -
+	//마일리지 수량 - 버튼
 	$('.minus2').click(function(){
-	    var one =  $(this).next().html();
+	    var one =  $(this).next().val();
 	    var num = parseInt(one);
 	    num--;
 	
@@ -416,91 +393,130 @@
 	    $(this).parent().prev().prop("checked", false); 
 	    };
 	    
-		$(this).next().html(num);
+		$(this).next().val(num);
 	});
 	
 	
 	
-	// 수량 +
-	$('.plus').click(function(){
-	    var one = $(this).prev().html();
-	    var num = parseInt(one);
+	//엑베/조식 옵션 수량 + 버튼
+	$('.extra_plus').click(function(){
+	    var num = $(this).prev().val();
 	    num++;
 	    
-	    $(this).prev().html(num);
+	    if(num >= 2){
+	    	alert('엑스트라베드는 최대 1개만 가능합니다.');
+	    	num = 1;
+	    }
+	    $(this).prev().val(num);
 	});
 	
-	// 수량 +
+	$('.break_plus').click(function(){
+	    var people = $(this).next().val();
+		var num = $(this).prev().val();
+	    
+	    num++;
+	    if(num > people){
+	    	alert('조식은 투숙 인원 수까지만 신청 가능합니다.');	
+	    	num = people;
+	    }
+	    $(this).prev().val(num);
+	});
+	
+	
+	
+	//마일리지 수량 + 버튼
 	$('.plus2').click(function(){
-	    var one = $(this).prev().html();
+	    var one = $(this).prev().val();
 	    var num = parseInt(one);
 	    num++;
 	    
-	    $(this).prev().html(num);
-	    
-	    
-	    
+	    $(this).prev().val(num); 
 	});
+
 	
-	
+	//마일리지 상품 수량 변경시 함수 START
 	//선택한 마일리지상품의 금액X수량 계산하여 마일리지상품 총 금액에 나타내기
-	var mTotalPrice = 0;
-	
-	$('.number2').on('DOMSubtreeModified', function() { //div.html 수량 변동시 
-		mTotalPrice = 0;
-		
-		$('input:checkbox:checked').each(function(){ 
-			
-			var checkPrice = $(this).prev().val();//체크된 값의 가격 가져오기			
-			var check_cnt = $(this).next().find('.number2').html();
-			var mTotal = checkPrice*check_cnt;
-			mTotalPrice += parseInt(mTotal);
-			
-			
-				
-			if($('#useable').html() <= mTotalPrice){				
-				$("#mPrice").html("마일리지상품 총 금액 : "+mTotalPrice+"원");
-				$('.plus2').css('pointer-events','none'); // +버튼 비활성화
-				$('.checkbox').not('input:checkbox:checked').css('pointer-events','none'); //체크 안된 박스 select 클릭 불가
-				
-			}else{
-				$("#mPrice").html("마일리지상품 총 금액 : "+mTotalPrice+"원");	
-				$('.plus2').css('pointer-events','auto');
-				$('.checkbox').css('pointer-events','auto');
-			}
-		});
-		
-	//$('.입력하려는 클래스 또는 ID').text( $('.입력 값이 있는 클래스 또는 ID').text() );
+	$(document).ready(function(){
+	    var $input = $(".number2"); // readonly inputBox  
+	        $(".number2").on('input', function() {
+	        	
+	        	var mTotalPrice = 0;
+	        	console.log('수량변경됨');
+	        		
+	        	$('input:checkbox:checked').each(function(){ 
+	        			
+	       			var checkPrice = $(this).prev().val();//체크한 상품의 가격
+	       			var check_cnt = $(this).next().find('.number2').val();//체크한 상품의 수량
+	       			//console.log(checkPrice);
+	       			console.log("cnt: "+check_cnt);
+	       			
+	       			var mTotal = checkPrice*check_cnt;
+	       			console.log("개별가: "+mTotal);
+	       			mTotalPrice += parseInt(mTotal);
+	       			
+	       			console.log("총 합계: "+mTotalPrice);
+	       			
+		       			if($('#useable').html() < mTotalPrice){ //회원의 마일리지보다 마일리지 총 금액이 큰 경우 
+		       				alert('회원님의 마일리지를 초과할 수 없습니다.');
+		       				$('input:checkbox:checked').prop("checked", false);
+		       				$('.button2').css('display', 'none'); //버튼 비활성화
+		       				$('.number2').val(0);//수량 초기화
+		       				mTotalPrice = 0;
+		       			}
+	       		});
+       	
+     			$("#mPrice").html("마일리지상품 총 금액 : "+mTotalPrice+"원");	
+			});
+       	
+	        	
 	});
+	// 밑에 함수 구현(없으면 안됨)
+	(function ($) {
+	        var originalVal = $.fn.val;
+	        $.fn.val = function (value) {
+	            var res = originalVal.apply(this, arguments);
+	     
+	            if (this.is('input:text') && arguments.length >= 1) {
+	                // this is input type=text setter
+	                this.trigger("input");
+	            }
+	     
+	            return res;
+	        };
+	    })(jQuery);
+	//마일리지 상품 수량 변경시 함수 END
 	
-	//사용가능 마일리지 계산
-	var subtract = 0;
-	 $('#mPrice').on('DOMSubtreeModified', function() {
-		subtract = ($('#useable').html() - mTotalPrice);
-		$('#useablePay').html(subtract);
-	 });
-	
-	//사용가능 마일리지 over시 alert
-	$('#useMileage').focusout(function() {
-		subtract = ($('#useable').html() - mTotalPrice);
-		//console.log(subtract, "원");
- 		//console.log($('#useMileage').val());
- 		
- 		if( subtract < $('#useMileage').val()){
- 			alert('사용가능한 마일리지를 초과하였습니다.');
- 			$('#useMileage').val('');
- 		}
-	});
-	
-	//사용할 마일리지만큼 결제금액 빼기
- 
  
 	//옵션 변경에 따른 총 결제금액 계산
-	
-	
+	//객실1 - 객실가격+(옵션가격*수량)
+	$(document).ready(function(){
+    var $input = $(".number"); // readonly inputBox  
+        $(".number").on('input', function() {
+			        	
+			var cardTotal_1 = 0;
+			var cardTotal_2 = 0;
+			var cardTotal_3 = 0;
+			var length = ${fn:length(reserveData)}+1; 
+			console.log("length:"+length);
+				for (var i = 1; i < length; i++) { //들어온 reserveData 수만큼 반복
+					var room_price = $("input[name=room_price_"+i+"]").val();
+					console.log("룸가격 : "+room_price);
+					
+					var option1 = $("input[name=optionPrice1_"+i+"]").val() * $("input[name=extra_cnt_"+i+"]").val();
+					console.log("엑베 가격X수량 값: "+option1);
+					//문제점~ 여기서 F12로 value값 수정시 바뀐값이 적용된다. 어떻게 해야할까~?
+					
+					/* var option2 = $("input[name=optionPrice2_"+i+"]").val() * $("input[name=break_cnt_"+i+"]").val();
+					console.log("조식 가격X수량 값: "+option2);
+					
+					cardTotal_i = room_price+option1+option2;*/
+				}
+ 			/* 	console.log(cardTotal_1);
+				console.log(cardTotal_2);
+				console.log(cardTotal_3); */
+        });
+	});
 	//숫자 3자리 콤마찍기
-
-
 
 </script>
 </html>
