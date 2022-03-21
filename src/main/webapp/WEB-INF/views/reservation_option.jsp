@@ -150,14 +150,20 @@
 		
 		<!-- 공통 DB - 로그인/체크인/체크아웃 -->
 		<input type="hidden" value="${loginId}" name="loginId"/>
-		<input type="hidden" value="${checkindate}" name="checkindate"/>
-		<input type="hidden" value="${checkoutdate}" name="checkoutdate"/>
-		
+		<input type="text" value="${checkindate}" name="checkindate"/>
+		<input type="text" value="${checkoutdate}" name="checkoutdate"/>
 		
 		<!-- 객실옵션선택창 시작-->
-		<c:forEach var="rD" items="${reserveData}" varStatus="RDS">
+		<c:forEach items="${params}" var="item">
+		<input type ="text" name = "price" value="${item.price }">
+		<input type ="text" value="${item.bedType }">
+		<input type ="text" value="${item.number }">
+		<input type ="text" value="${item.room }">
 		
-		<!-- 객실별(객실번호,객실가격,인원 수) -->
+	
+	
+		<c:forEach var="rD" items="${reserveData}" varStatus="RDS"> 
+			<!-- 객실별(객실번호,객실가격,인원 수) -->
 			<input type="hidden" value="${rD.room_num}" name="room_num_${RDS.count}"/>
 			<input type="hidden" value="${rD.room_price}" name="room_price_${RDS.count}"/>
 			
@@ -229,8 +235,9 @@
 		        </div>
 		   		</c:forEach>
 			</div>
+		
 		</c:forEach>
-			
+		</c:forEach>	
 			
 		<!-- 객실옵션선택창 끝 -->
 		
@@ -327,11 +334,16 @@ EMAIL:info@yourdomain.com
 			<span>원</span>
 			</div>
 			<div class="box2">사용 할 마일리지 : <input type="text" id="useMileage" style="width:140px;"></div> --%>
+			
+			<!-- 지선결제금액 -->
 			<div style="float:right">
-			<span>결제 금액 : </span>
-			<input type="text" id="cardTotal" value=""/>
+				<span>결제 금액 : </span>			
+				<input type="text" id="cardTotal" value=""/>
 			
 			</div>
+			
+			<!-- 형민결제금액 -->
+			<div class="box2" id="priceDiv" style="float:right">결제 금액 : 0원</div>
 		</div>
 		<br/>
 		<div class="btn2">
@@ -526,8 +538,11 @@ EMAIL:info@yourdomain.com
     var $input = $(".number"); // readonly inputBox  
         $(".number").on('input', function() {
 			        	
-			var cardTotal = 0;
-
+			var cardTotal1 = 0;
+			var cardTotal2 = 0;
+			var cardTotal3 = 0;
+			
+			
 			var length = ${fn:length(reserveData)}+1; 
 			console.log("length:"+length);
 				for (var i = 1; i < length; i++) { //들어온 reserveData 수만큼 반복
@@ -536,19 +551,29 @@ EMAIL:info@yourdomain.com
 					
 					var option1 = parseInt($("input[name=optionPrice1_"+i+"]").val() * $("input[name=option1_cnt_"+i+"]").val());
 					console.log("엑베 가격X수량 값: "+option1);
-					//문제점~ 여기서 F12로 value값 수정시 바뀐값이 적용된다. 어떻게 해야할까~?
 					
 					var option2 = parseInt($("input[name=optionPrice2_"+i+"]").val() * $("input[name=option2_cnt_"+i+"]").val());
 					console.log("조식 가격X수량 값: "+option2);
 					
+					//('cardTotal_'+i) = room_price+option1+option2;
+					
 					cardTotal += (room_price+option1+option2);
 				}
-				console.log("카드사용금액 : "+cardTotal);
+				
+				console.log(cardTotal_1);
+				console.log(cardTotal_2);
+				console.log(cardTotal_3);
+				console.log("총 카드사용금액 : "+cardTotal);
 				$('#cardTotal').val(cardTotal);
  
         });
 	});
+	
+	
 	//숫자 3자리 콤마찍기
+	
 
+	
 </script>
+
 </html>

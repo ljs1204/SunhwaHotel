@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.dto.RoomDTO;
@@ -60,10 +65,35 @@ public class ReserveController {
 	//객실 옵션 페이지 이지선 START 220315
 	
 	 //객실 옵션 페이지 접속 리스트 불러오기	
-	 @RequestMapping(value = "/reservation_option", method = RequestMethod.GET)
-		public String reservation_option(Model model,HttpSession session) { 
+	 @RequestMapping(value = "/reservation_option", method = RequestMethod.POST)
+		public String reservation_option(Model model,HttpSession session,String params) { 
 			logger.info("reservation_option 요청");
 			
+			
+			
+			logger.info("받아온 값 확인 {}",params);
+			
+			
+			List<Map<String,Object>> dataList = new ArrayList<> ();
+			JsonArray ja = new JsonArray();
+			JsonParser jsonParser = new JsonParser(); //List를 String으로 변환
+			ja = (JsonArray) jsonParser.parse(params);
+			int len = ja.size();
+			   for (int i=0;i<len;i++){
+				 
+				 Map<String,Object> map = new HashMap<String,Object>();
+				 JsonObject jsonObj = (JsonObject) ja.get(i);
+				 
+				 Gson gson = new Gson();
+				 map = (Map<String,Object>) gson.fromJson(jsonObj.toString(), map.getClass());
+				 dataList.add(map);
+			   } 								
+			  model.addAttribute("params", dataList); //객실타입/객실 침타입/인원 수/가격/
+			
+			  
+			   
+			   
+			  
 			//아이디, 객실별(객실번호, 객실가격, 인원 수), 체크인날짜, 체크아웃날짜 임의값 설정.
 			String loginId = "testid";
 			model.addAttribute("loginId",loginId);
@@ -148,8 +178,8 @@ public class ReserveController {
 		dto.setAdult_cnt(Integer.parseInt(params.get("room_people_1")));//인원수
 		dto.setChild_cnt(Integer.parseInt("0"));
 		dto.setInfant_cnt(Integer.parseInt("0"));
-		dto.setExtrabed_cnt(Integer.parseInt(params.get("extra_cnt_1")));//엑스트라베드 수량
-		dto.setBreakfast_cnt(Integer.parseInt(params.get("break_cnt_1")));//조식 수량
+		dto.setExtrabed_cnt(Integer.parseInt(params.get("option1_cnt_1")));//엑스트라베드 수량
+		dto.setBreakfast_cnt(Integer.parseInt(params.get("option2_cnt_1")));//조식 수량
 		
 		String add = params.get("ADD_1");
 		if(add == null) {
@@ -171,6 +201,7 @@ public class ReserveController {
 		roomDto.setCheckoutdate(params.get("checkoutdate"));
 		
 		ArrayList<RoomDTO> roomIdx = service.roomIdx(roomDto);
+		
 		logger.info("roomIdx"+roomIdx);
 		
 		// 빈 객실 가져오기 유선화 END 22.03.21

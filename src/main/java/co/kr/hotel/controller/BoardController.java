@@ -26,16 +26,11 @@ public class BoardController {
 	
 	//글쓰기
 	@RequestMapping(value = "/writeForm", method = RequestMethod.GET)
-	public String writeForm(Model model , String board_orinum) {
+	public String writeForm(Model model , @RequestParam HashMap<String, String> params) {
 		
-		//String board_orinum = (int)board_orinum.get
-		
-		logger.info("board_orinum : "+board_orinum );
 		logger.info("writeForm 이동");
-		
-		//ModelAttribute("board_orinum" , board_orinum);
-		ModelAndView mv = new ModelAndView();
-		mv.addObject ("board_orinum" ,board_orinum);
+		model.addAttribute("board_orinum",params.get("board_orinum").toString());
+
 		
 		//유선화 START
 		
@@ -49,6 +44,7 @@ public class BoardController {
 	public String write(Model model, @RequestParam HashMap<String, String> params , String board_orinum) {
 
 		logger.info("write 요청 : {}",params);
+		logger.info("write 답글 : {}" ,board_orinum);
 		service.write(params);
 		
 		return "redirect:/list";
