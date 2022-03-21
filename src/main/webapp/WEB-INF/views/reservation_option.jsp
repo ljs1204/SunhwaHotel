@@ -47,11 +47,11 @@
 		}
 		.optionplus{
 			float:left;
-			width: 300px;
+			width: 500px;
 		}
-		.addmemo{
+		#addmemo{
 			float:right;
-			margin-right: 20px;
+			margin-right: 10px;
 		}
 		.list{
 			padding-top: 30px;
@@ -170,22 +170,34 @@
 						
 						<!-- 엑베/조식/추가요청 옵션 -->
 				    	<c:forEach var="op" items="${option}">
-				    		<div>
-						  		<p>	${op.option_name} / ${op.option_price}원 </p>
-				    		</div>
-				    		<input type="hidden" value="${op.option_price}" name="optionPrice${op.option_num}_${RDS.count}"/>
+				    		
+				    		<div style="display:flow-root;">
+							  	<div style="float:left">${op.option_name} / ${op.option_price}원 </div>
+			
+					    		<input type="hidden" value="${op.option_price}" name="optionPrice${op.option_num}_${RDS.count}"/>
+					    		
+						    	<div style="float:right">
+						  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
+						  			<input type="text" class="number" name="option${op.option_num}_cnt_${RDS.count}" value="0" readonly/>
+						            <img class="plus_${op.option_num}" src="resources/images/plusbtn.png"  alt="플러스버튼">
+						            <input type="hidden" value="${rD.room_people}" name="room_people_${RDS.count}"/>
+						    	</div>
+				    	</div>
+				    	<br/>
 				    	</c:forEach>
-					  		<div>
-					  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-					  			<input type="text" class="number" name="extra_cnt_${RDS.count}" value="0" readonly/>
-					            <img class="extra_plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
-				    		</div>
-				    		<div>
-					  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-					  			<input type="text" class="number" name="break_cnt_${RDS.count}" value="0" readonly/>
-					            <img class="break_plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
-					  			<input type="hidden" value="${rD.room_people}" name="room_people_${RDS.count}"/>
-				    		</div>
+<%-- 				    	
+				    	<div style="float:left">
+				  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
+				  			<input type="text" class="number" name="extra_cnt_${RDS.count}" value="0" readonly/>
+				            <img class="extra_plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
+				    	</div>
+				    	
+				    	<div style="float:left">
+				  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
+				  			<input type="text" class="number" name="break_cnt_${RDS.count}" value="0" readonly/>
+				            <img class="break_plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
+				  			<input type="hidden" value="${rD.room_people}" name="room_people_${RDS.count}"/>
+					 	</div> --%>
 				        <br/>
 				    	
 					</div>
@@ -268,7 +280,7 @@
             <div class="row">
               <div class="col-md-12 form-group">
                 <label class="text-black font-weight-bold" for="credit_type">카드종류</label>
-                <input type="email" id="credit_type" value="${memInfo.credit_type}" class="form-control ">
+                <input type="text" id="credit_type" value="${memInfo.credit_type}" class="form-control ">
               </div>
             </div>
 
@@ -282,7 +294,7 @@
         </div>
 		
 		<div class="box">
-			<textarea>ADDRESS:98 West 21th Street, Suite 721 New York NY 10016
+			<textarea style="width:100%; height:100px;">ADDRESS:98 West 21th Street, Suite 721 New York NY 10016
 PHONE:(+1) 435 3533
 EMAIL:info@yourdomain.com
 
@@ -295,7 +307,7 @@ EMAIL:info@yourdomain.com
 개인정보수집 이용에 대한 규정
 			</textarea><br/>
 			<input type="checkbox">동의하시겠습니까?
-			<p>비동의시 결제가 불가능합니다.</p>
+			<p>* 비동의시 결제가 불가능합니다.</p>
 		</div>
 		
 		<!-- 결제금액/버튼 시작 -->
@@ -315,7 +327,11 @@ EMAIL:info@yourdomain.com
 			<span>원</span>
 			</div>
 			<div class="box2">사용 할 마일리지 : <input type="text" id="useMileage" style="width:140px;"></div> --%>
-			<div class="box2" style="float:right">결제 금액 : 0원</div>
+			<div style="float:right">
+			<span>결제 금액 : </span>			
+			<input type="text" id="cardTotal" value=""/>
+			
+			</div>
 		</div>
 		<br/>
 		<div class="btn2">
@@ -399,7 +415,7 @@ EMAIL:info@yourdomain.com
 	
 	
 	//엑베/조식 옵션 수량 + 버튼
-	$('.extra_plus').click(function(){
+	$('.plus_1').click(function(){
 	    var num = $(this).prev().val();
 	    num++;
 	    
@@ -410,7 +426,7 @@ EMAIL:info@yourdomain.com
 	    $(this).prev().val(num);
 	});
 	
-	$('.break_plus').click(function(){
+	$('.plus_2').click(function(){
 	    var people = $(this).next().val();
 		var num = $(this).prev().val();
 	    
@@ -487,8 +503,25 @@ EMAIL:info@yourdomain.com
 	//마일리지 상품 수량 변경시 함수 END
 	
  
+	//페이지 들어올때 총 결제금액 기본값
+	$(document).ready(function(){
+  
+			var cardTotal = 0;
+
+			var length = ${fn:length(reserveData)}+1;
+			
+			for (var i = 1; i < length; i++) { //들어온 reserveData 수만큼 반복
+				var room_price = parseInt($("input[name=room_price_"+i+"]").val());
+				
+				cardTotal += room_price;
+			}
+			$('#cardTotal').val(cardTotal);
+ 
+	});
+		
+	
 	//옵션 변경에 따른 총 결제금액 계산
-	//객실1 - 객실가격+(옵션가격*수량)
+	//객실별 - 객실가격+(옵션가격*수량)
 	$(document).ready(function(){
     var $input = $(".number"); // readonly inputBox  
         $(".number").on('input', function() {
@@ -496,27 +529,37 @@ EMAIL:info@yourdomain.com
 			var cardTotal_1 = 0;
 			var cardTotal_2 = 0;
 			var cardTotal_3 = 0;
+			
 			var length = ${fn:length(reserveData)}+1; 
 			console.log("length:"+length);
 				for (var i = 1; i < length; i++) { //들어온 reserveData 수만큼 반복
-					var room_price = $("input[name=room_price_"+i+"]").val();
+					var room_price = parseInt($("input[name=room_price_"+i+"]").val());
 					console.log("룸가격 : "+room_price);
 					
-					var option1 = $("input[name=optionPrice1_"+i+"]").val() * $("input[name=extra_cnt_"+i+"]").val();
+					var option1 = parseInt($("input[name=optionPrice1_"+i+"]").val() * $("input[name=option1_cnt_"+i+"]").val());
 					console.log("엑베 가격X수량 값: "+option1);
 					//문제점~ 여기서 F12로 value값 수정시 바뀐값이 적용된다. 어떻게 해야할까~?
 					
-					/* var option2 = $("input[name=optionPrice2_"+i+"]").val() * $("input[name=break_cnt_"+i+"]").val();
+					var option2 = parseInt($("input[name=optionPrice2_"+i+"]").val() * $("input[name=option2_cnt_"+i+"]").val());
 					console.log("조식 가격X수량 값: "+option2);
 					
-					cardTotal_i = room_price+option1+option2;*/
+					//('cardTotal_'+i) = room_price+option1+option2;
+					
+					cardTotal += (room_price+option1+option2);
 				}
- 			/* 	console.log(cardTotal_1);
+				
+				console.log(cardTotal_1);
 				console.log(cardTotal_2);
-				console.log(cardTotal_3); */
+				console.log(cardTotal_3);
+				console.log("카드사용금액 : "+cardTotal);
+				$('#cardTotal').val(cardTotal);
+ 
         });
 	});
+	
+	
 	//숫자 3자리 콤마찍기
+	
 
 </script>
 </html>

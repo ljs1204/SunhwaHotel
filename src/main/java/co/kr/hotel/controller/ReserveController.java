@@ -145,8 +145,8 @@ public class ReserveController {
 		dto.setAdult_cnt(Integer.parseInt(params.get("room_people_1")));//인원수
 		dto.setChild_cnt(Integer.parseInt("0"));
 		dto.setInfant_cnt(Integer.parseInt("0"));
-		dto.setExtrabed_cnt(Integer.parseInt(params.get("extra_cnt_1")));//엑스트라베드 수량
-		dto.setBreakfast_cnt(Integer.parseInt(params.get("break_cnt_1")));//조식 수량
+		dto.setExtrabed_cnt(Integer.parseInt(params.get("option1_cnt_1")));//엑스트라베드 수량
+		dto.setBreakfast_cnt(Integer.parseInt(params.get("option2_cnt_1")));//조식 수량
 		
 		String add = params.get("ADD_1");
 		if(add == null) {
