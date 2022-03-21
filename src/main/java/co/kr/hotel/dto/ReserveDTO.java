@@ -9,11 +9,16 @@ public class ReserveDTO {
 	private String checkoutdate;
 	private int adult_cnt;
 	
+	//유선화 예약객실 가져오기 START 20220314
+	
+	
+	
 	//유선화 마이페이지 START 20220314
 	private int reserve_idx;
 	private String mem_id;
 	private String reserve_num;
 	private String room_num;
+	
 	private Date reserve_date;
 	private String reserve_state;
 	

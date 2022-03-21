@@ -322,9 +322,15 @@ public class MypageController {
 			public ModelAndView tomemberboardlist(HttpSession session) {
 				
 				String loginId = (String) session.getAttribute("loginId");
-				// loginId = "admin"; // 아이디 'admin' 일 때
-				//loginId = "아이디";
-
+				// 유선화 문의 리스트 세션처리 하기
+				String mem_grade = (String) session.getAttribute("mem_grade");
+				
+				ModelAndView v = null;
+				//if(loginId != null && mem_grade != "admin") {
+					
+					v = mypageService.tomemberboardlist(loginId);
+				//}
+				
 				ModelAndView mv = new ModelAndView();
 				mv.addObject("loginId" , loginId);
 				
@@ -332,7 +338,7 @@ public class MypageController {
 				
 				logger.info("리스트 요청");
 				
-				return mypageService.tomemberboardlist(loginId);
+				return v;
 			}
 	
 
