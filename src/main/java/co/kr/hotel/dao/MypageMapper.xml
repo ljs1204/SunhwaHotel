@@ -7,13 +7,6 @@
 <mapper namespace="co.kr.hotel.dao.MypageDAO">
 
 	
-	<select id="mypage2Reservelist" resultType="co.kr.hotel.dto.ReserveDTO">
-		
-		select reserve_idx,mem_id,reserve_num,room_num,reserve_date,reserve_state,checkindate,checkoutdate,adult_cnt,child_cnt,infant_cnt,extrabed_cnt,breakfast_cnt,add_requests
-		from reserve r where mem_id = #{param1} order by reserve_idx
-	
-	</select>
-
 	<select id="reserInfo" resultType="co.kr.hotel.dto.MypageDTO">
 		<!-- select * from reserve r  where mem_id = #{param1} and reserve_num = #{param2} order by reserve_date,reserve_idx desc limit 1 -->
 		select * from reserve r  where mem_id = #{param1} and reserve_idx = #{param2} order by reserve_date,reserve_idx
@@ -110,6 +103,79 @@
 		having mem_id = #{param1} and reserve_state = 1
 	</select>
 <!-- 20220315 예약 리스트 보기 SI - END -->
+
+<!-- 20220318 예약 상세보기 SI - START -->
+	<!-- 1번 쿼리 
+		예약번호, 기간(체크인~체크아웃), 예약자 이름, 핸드폰, 이메일
+		룸타입, 인원수, 베드수량, 조식수량( 합산 )
+		현금액, 마일리지, 총가격( 합산 ) 쿼리
+ 	-->
+	<select id="myReserveDetail" resultType="co.kr.hotel.dto.ReserveDTO">
+		select r.reserve_num, r.checkindate, r.checkoutdate, m.mem_name_kr as reserve_name, m.mem_phone as reserve_phone, m.mem_email as reserve_email,
+				r2.room_type_name, sum(r.adult_cnt) as adult_cnt, sum(r.extrabed_cnt) as extrabed_cnt, sum(r.breakfast_cnt) as breakfast_cnt, 
+				sum(p.pay_price) as pay_price, sum(p.pay_mileage) as pay_mileage, sum(p.amount) as reserve_amount
+		from reserve r
+			left outer join `member` m 
+				on r.mem_id = m.mem_id
+			left outer join room r2
+				on r.room_num = r2.room_num
+			left outer join pay p 
+				on r.reserve_idx = p.reserve_idx 
+		where r.mem_id = #{param1} and r.reserve_num = #{param2}
+	</select>
+	
+	<!-- 
+		2번 쿼리
+		예약번호별로 각 상품별로 몇개를 주문했는지만 확인
+		+
+		20220320 구매한 마일리지 상품 페이지에서도 사용( + 가격추가 )
+	 -->
+	<select id="myReserveProduct" resultType="co.kr.hotel.dto.ProductDTO">
+		select product_num, product_name, sum(product_cnt) as cnt_by_product, product_price, product_img
+		from 
+		(
+		select c.*, r.reserve_num, p.product_name, p.product_price, p.product_img
+		from cart c 
+			inner join reserve r 
+			on r.reserve_num = #{param1} and r.reserve_idx = c.reserve_idx
+			inner join product p
+			on c.product_num = p.product_num
+		) as c1
+		group by product_num;
+	</select>
+	
+	<!-- 
+		3번 쿼리 
+		예약num에 걸린 방 타입과 이름 가져오기	
+	-->
+	<select id="myReserveRoom" resultType="co.kr.hotel.dto.ReserveDTO">
+		select r.reserve_idx, r.reserve_num, r.reserve_state, ro.room_type, ro.room_num, ro.room_type_name, ro.bed_type
+		from reserve r
+			left outer join room ro
+			on r.room_num = ro.room_num 
+		where r.mem_id = #{param1} and r.reserve_num = #{param2}
+	</select>
+	
+<!-- 20220318 예약 상세보기 SI - END -->
+
+<!-- 20220319 환불 신청 페이지 SI - START -->
+	<select id = "myReserveRefund" resultType="co.kr.hotel.dto.ReserveDTO">
+		select r.reserve_idx, r.reserve_state, ro.bed_type, ro.room_type_name, r.adult_cnt, r.extrabed_cnt, 
+				r.breakfast_cnt, p.pay_price, p.amount, c.product_num, pr.product_name, c.product_cnt, r.checkindate
+		from reserve r
+			left outer join room ro 
+				on r.room_num = ro.room_num
+			left outer join pay p 
+				on r.reserve_idx = p.reserve_idx 
+			left outer join cart c 
+				on r.reserve_idx = c.reserve_idx 
+			left outer join product pr
+				on c.product_num = pr.product_num 
+		where r.mem_id = #{param1} and r.reserve_num = #{param2}
+	</select>
+
+
+<!-- 20220319 환불 신청 페이지 SI - START -->
 
 <!-- 20220315 마이페이지 마일리지 리스트 보기 유선화 - START -->
 

@@ -1,5 +1,6 @@
 package co.kr.hotel.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.kr.hotel.dao.ReserveDAO;
+import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.dto.RoomDTO;
 
@@ -46,9 +48,25 @@ public class ReserveService {
 	}
 
 	public void roomOne(ReserveDTO dto) {
-		// TODO Auto-generated method stub
-		
+
 		reserveDao.roomOne(dto);
+	}
+
+	public void roomOneCart(int reserve_idx, int product_cnt, String product_num) {
+		reserveDao.roomOneCart(reserve_idx,product_cnt,product_num);
+	}
+
+	public void buyMileageminus(String loginId, int productTotal, int mileage_useable) {
+		reserveDao.buyMileageminus(loginId,productTotal,mileage_useable);
+	}
+
+	public int product_price(String product_num) {
+		return reserveDao.product_price(product_num);
+	}
+
+	public MemberDTO reservation_memInfo(String loginId) {
+		MemberDTO dto = new MemberDTO();
+		return reserveDao.reservation_memInfo(loginId);
 	}
 	
 	

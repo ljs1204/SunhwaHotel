@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.PageDto;
+import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.service.MypageService;
 
@@ -29,7 +30,7 @@ public class MypageController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired MypageService mypageService;
 
-	// 20220314 마이페이지 START - SI
+// 20220314 마이페이지 START - SI
 	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
 	public String myPage(Model model, HttpSession session) {
 		logger.info("myPage 요청");
@@ -56,18 +57,28 @@ public class MypageController {
 
 
 	}
-	// 20220314 마이페이지 작업 END - SI
+// 20220314 마이페이지 작업 END - SI
 
-	// 마이페이지 예약리스트 START 20220314
+// 20220314 마이페이지 예약리스트 START 
 	@RequestMapping(value = "/myReserve", method = RequestMethod.GET)
 	public String myReserve(Model model, HttpSession session, @RequestParam("num") int num) {
 		logger.info("myReserve로 요청이 들어옴 ");
 
-		// 세션 확인 후 페이지 분기 - SI 20220315
+		// 로그인 세션 확인 후 페이지 분기 - SI 20220315
 		String page = "index";
 
 		String loginId = (String) session.getAttribute("loginId");
 		model.addAttribute("loginId", loginId);
+		
+		// 20220319 - 페이징 세션 확인 후 분기( 예약 상세보기에서 '목록으로' 클릭 시 ) START SI
+			// 1. session에 페이지 번호 저장
+			session.setAttribute("pagingNum", num);
+					
+			// 2. 저장한 페이지 번호 예약 상세보기에서 불러오기 => 상세보기 요청에서 계속
+					
+		// 20220319 - 페이징 세션 확인 후 분기( 목록으로 클릭 시 ) END SI
+		
+		
 		
 		if (loginId != null) {
 			page = "myReserve";
@@ -75,7 +86,7 @@ public class MypageController {
 			// 서비스 일 시키기 -> 반환값 hashmap
 			HashMap<String, Object> result = mypageService.myReserve(loginId, num);
 			
-// 20220317 페이징 => hashmap 풀기
+		// 20220317 페이징 => hashmap 풀기	
 			int count = (int) result.get("count");			// 쿼리 rows 갯수
 			ArrayList<ReserveDTO> processAll = (ArrayList<ReserveDTO>) result.get("processAll");	// 쿼리 결과(5개)
 			int pageNum = (int) result.get("pageNum");		// 페이지 끝번호
@@ -88,7 +99,7 @@ public class MypageController {
 			model.addAttribute("result", processAll);	// 페이징 전에 이게 result로 보내지고 있어서 그냥 이렇게..
 			model.addAttribute("size", processAll.size());
 			
-// 20220317 페이징 10개씩 자르기 SI - START
+			// 20220317 페이징 10개씩 자르기 SI - START
 			int startPageNum = (int) result.get("startPageNum");
 			int endPageNum = (int) result.get("endPageNum");
 			int pageNum_cnt = (int) result.get("pageNum_cnt");
@@ -113,35 +124,130 @@ public class MypageController {
 			
 			 // 현재 페이지
 			 model.addAttribute("select", num);
-// 20220317 페이징 10개씩 자르기 SI - END
+		// 20220317 페이징 10개씩 자르기 SI - END
 			 
 		}
 		return page;
 	}
-	// 마이페이지 예약리스트 START 20220314
+// 마이페이지 예약리스트 END 20220314
 	
-	// 20220314 예약 상세보기 START - SI
-	@RequestMapping(value = "/reserveDetail", method = RequestMethod.GET)
-	public String reserveDetail(Model model, HttpSession session) {
+	
+	
+// 20220314 예약 상세보기 START - SI
+	@RequestMapping(value = "/myReserveDetail", method = RequestMethod.GET)
+	public String myReserveDetail(
+			Model model, 
+			@RequestParam String reserve_num,
+			@RequestParam int reserve_idx,
+			HttpSession session) {
 
 		logger.info("reserveDetail 요청");
 
-		// 메인페이지 요청 세션검사 추가 START - SI 20220314
+	// 메인페이지 요청 세션검사 추가 START - SI 20220314
 		String loginId = (String) session.getAttribute("loginId");
-		// loginId = "admin"; // 아이디 'admin' 일 때
-		//loginId = "아이디";
-
+		
 		if (loginId != null) {
 			model.addAttribute("loginId", loginId);
 		}
-		// 메인페이지 요청 세션검사 추가 END - SI 20220314
+	// 메인페이지 요청 세션검사 추가 END - SI 20220314
 
-		return "mypage4";
-
+	// 20220318 예약 상세보기 구현 - SI
+		// 서비스에서 받은 HashMap 데이터 추출해서 model에 넘겨주기
+		HashMap<String, Object> result = mypageService.myReserveDetail(loginId, reserve_num, reserve_idx);
+		model.addAttribute("result", result.get("reserveDTO"));
+		model.addAttribute("product", result.get("productDTO"));
+		model.addAttribute("room", result.get("roomTypeName"));
+		
+		// 마일리지 상품 구매가 없을 때 처리를 위해 size 전송
+		ArrayList<ProductDTO> prod = (ArrayList<ProductDTO>) result.get("productDTO");
+		model.addAttribute("productSize", prod.size());
+		
+	// 20220319 페이징번호 가져오기 => 목록을 부를 때 세션에 pagingNum 저장 후 상세보기에서 사용
+		int pagingNum = (int) session.getAttribute("pagingNum");
+		model.addAttribute("pagingNum", pagingNum);
+	// 20220319 페이징번호 가져오기 END	
+		
+		return "myReserveDetail";
 	}
-	// 20220314 예약 상세보기 END - SI
+// 20220314 예약 상세보기 END - SI
 
-	// 마이페이지 예약리스트 END 20220314
+// 20220319 환불 신청 START - SI
+	@RequestMapping(value = "/myReserveRefund", method = RequestMethod.GET)
+	public String myReserveRefund(Model model,
+			@RequestParam String reserve_num,
+			HttpSession session
+			) {
+		logger.info("환불 신청 페이지 진입");
+		
+		// 메인페이지 요청 세션검사 추가 START - SI 20220319
+		String loginId = (String) session.getAttribute("loginId");
+			
+		if (loginId != null) {
+			model.addAttribute("loginId", loginId);
+		}
+		// 메인페이지 요청 세션검사 추가 END - SI 20220319
+		
+		// 서비스에 일시키기
+		HashMap<String, Object> result = mypageService.myReserveRefund(loginId, reserve_num);
+	
+		// 받아온 hashMap ArrayList로 자르기
+		ArrayList<ReserveDTO> first = (ArrayList<ReserveDTO>) result.get("first");
+		ArrayList<ReserveDTO> second = (ArrayList<ReserveDTO>) result.get("second");
+		ArrayList<ReserveDTO> third = (ArrayList<ReserveDTO>) result.get("third");
+			
+		// 확인
+		//logger.info("첫번째 : {}", first.size());
+		//logger.info("두번째 : {}", second.size());
+		//logger.info("세번째 : {}", third.size());
+		
+		// model에 각 ArrayList 담기
+		// List의 사이즈 비교하는 방법 두가지 : list.size()>0 / list.isEmpty()
+		// 근데 사이즈 비교 전에는 우선 null 비교가 들어가야한다.
+		if(first != null) {
+			model.addAttribute("firstSize", first.size());
+			model.addAttribute("first", first);
+		}
+		if(second != null) {
+			model.addAttribute("secondSize", second.size());
+			model.addAttribute("second", second);
+		}
+		if(third != null) {
+			model.addAttribute("thirdtSize", third.size());
+			model.addAttribute("third", third);
+		}
+		model.addAttribute("reserve_num", reserve_num);
+		
+		return "myReserveRefund";
+	}
+	
+// 20220319 환불 신청 END - SI
+	
+	
+// 20220320 구매한 마일리지 상품 확인 페이지 START - SI
+	@RequestMapping(value = "/myReserveProduct", method = RequestMethod.GET)
+	public String myReserveProduct(Model model, @RequestParam String reserve_num, HttpSession session) {
+		logger.info("마일리지 상품 구매 페이지 진입");
+		
+		// 메인페이지 요청 세션검사 추가 START - SI 20220319
+		String loginId = (String) session.getAttribute("loginId");
+			
+		if (loginId != null) {
+			model.addAttribute("loginId", loginId);
+		}
+		// 메인페이지 요청 세션검사 추가 END - SI 20220319
+		
+		ArrayList<ProductDTO> prod = mypageService.myReserveProduct(reserve_num);
+		model.addAttribute("prod", prod);
+		//logger.info("확인 : {}", prod.get(0).getProduct_name());
+		
+		
+		return "myReserveProduct";
+	}
+	
+// 20220320 구매한 마일리지 상품 확인 페이지 END - SI
+	
+	
+	
 
 	// 마이페이지 - 환불리스트 유선화 START 20220314
 	@RequestMapping(value = "/mypageRefundDetail", method = RequestMethod.GET)

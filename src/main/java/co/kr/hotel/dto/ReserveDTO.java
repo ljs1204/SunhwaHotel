@@ -3,15 +3,13 @@ package co.kr.hotel.dto;
 import java.sql.Date;
 
 public class ReserveDTO {
-
+		
 	// 유선화 메인페이지 예약하기 START 20220310
-	
 	private String checkindate;
 	private String checkoutdate;
 	private int adult_cnt;
 	
 	//유선화 마이페이지 START 20220314
-	
 	private int reserve_idx;
 	private String mem_id;
 	private String reserve_num;
@@ -19,11 +17,22 @@ public class ReserveDTO {
 	private Date reserve_date;
 	private String reserve_state;
 	
-	// 김승일 예약조회 START 20220315
-	private int reserve_amount;
-	private int reserve_room_cnt;
-	private String room_type_name;
-	// 김승일 예약조회 END 20220315
+	private int pay_idx;
+	private String pay_num;
+	private String credit_num;
+	private Date pay_date;
+	private int pay_state;
+	private int credit_validity;
+	private String credit_type;
+	private int pay_price;
+	private int pay_mileage;
+	private int amount;
+	
+	private int child_cnt;
+	private int infant_cnt;
+	private int extrabed_cnt;
+	private int breakfast_cnt;
+	private String add_requests;
 	
 	public int getPay_idx() {
 		return pay_idx;
@@ -85,17 +94,6 @@ public class ReserveDTO {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	private int pay_idx;
-	private String pay_num;
-	private String credit_num;
-	private Date pay_date;
-	private int pay_state;
-	private int credit_validity;
-	private String credit_type;
-	private int pay_price;
-	private int pay_mileage;
-	private int amount;
-	
 	public int getReserve_idx() {
 		return reserve_idx;
 	}
@@ -162,47 +160,7 @@ public class ReserveDTO {
 	public void setAdd_requests(String add_requests) {
 		this.add_requests = add_requests;
 	}
-	
-	// 김승일 예약조회 START 20220315
-	public int getReserve_amount() {
-		return reserve_amount;
-	}
-	public void setReserve_amount(int reserve_amount) {
-		this.reserve_amount = reserve_amount;
-	}
-	public int getReserve_room_cnt() {
-		return reserve_room_cnt;
-	}
-	public void setReserve_room_cnt(int reserve_room_cnt) {
-		this.reserve_room_cnt = reserve_room_cnt;
-	}
-	public String getRoom_type_name() {
-		return room_type_name;
-	}
-	public void setRoom_type_name(String room_type_name) {
-		this.room_type_name = room_type_name;
-	}
-	// 김승일 예약조회 END 20220315	
-	
-	
-	
-	
-	private int child_cnt;
-	private int infant_cnt;
-	private int extrabed_cnt;
-	private int breakfast_cnt;
-	private String add_requests;
-	
-	
-	
-	
 	//유선화 마이페이지 END 20220314
-	
-	
-	
-	
-	
-	
 	
 	public String getCheckindate() {
 		return checkindate;
@@ -222,7 +180,108 @@ public class ReserveDTO {
 	public void setAdult_cnt(int adult_cnt) {
 		this.adult_cnt = adult_cnt;
 	}
-	
 	// 유선화 메인페이지 예약하기 END 20220310
 	
+	// 김승일 예약리스트 START 20220315
+	private int reserve_amount;
+	private int reserve_room_cnt;
+	private String room_type_name;
+	// 김승일 예약리스트 END 20220315
+	
+	// 김승일 예약상세 START 20220318
+	private String reserve_name;
+	private String reserve_phone;
+	private String reserve_email;
+	//private String room_type_name;	// 리스트 할 때 썼던거 그대로
+	//private int adult_cnt;			// 총합 => 원래 있던 컬럼으로 사용
+	//private int breakfast_cnt;		// " 
+	//private int pay_price;			// "
+	//private int pay_mileage;			// "
+	//private int reserve_amount;		// "
+	private int room_type;
+	//private String room_num;			// "
+	private int bed_type;
+	//private int pay_price;
+	// 김승일 예약상세 END 20220318
+	
+	// 김승일 환불신청 START 20220319
+	private String product_num;
+	private String product_name;
+	private int product_cnt;
+	// 김승일 환불신청 END 20220319
+	
+	// 김승일 예약리스트 START 20220315
+	public int getReserve_amount() {
+		return reserve_amount;
+	}
+	public void setReserve_amount(int reserve_amount) {
+		this.reserve_amount = reserve_amount;
+	}
+	public int getReserve_room_cnt() {
+		return reserve_room_cnt;
+	}
+	public void setReserve_room_cnt(int reserve_room_cnt) {
+		this.reserve_room_cnt = reserve_room_cnt;
+	}
+	public String getRoom_type_name() {
+		return room_type_name;
+	}
+	public void setRoom_type_name(String room_type_name) {
+		this.room_type_name = room_type_name;
+	}
+	// 김승일 예약리스트 END 20220315	
+	
+	// 김승일 예약상세 START 20220318
+	public String getReserve_name() {
+		return reserve_name;
+	}
+	public void setReserve_name(String reserve_name) {
+		this.reserve_name = reserve_name;
+	}
+	public String getReserve_phone() {
+		return reserve_phone;
+	}
+	public void setReserve_phone(String reserve_phone) {
+		this.reserve_phone = reserve_phone;
+	}
+	public String getReserve_email() {
+		return reserve_email;
+	}
+	public void setReserve_email(String reserve_email) {
+		this.reserve_email = reserve_email;
+	}
+	public int getRoom_type() {
+		return room_type;
+	}
+	public void setRoom_type(int room_type) {
+		this.room_type = room_type;
+	}
+	public int getBed_type() {
+		return bed_type;
+	}
+	public void setBed_type(int bed_type) {
+		this.bed_type = bed_type;
+	}
+	// 김승일 예약상세 END 20220318	
+
+	// 김승일 환불신청 START 20220319
+	public String getProduct_num() {
+		return product_num;
+	}
+	public void setProduct_num(String product_num) {
+		this.product_num = product_num;
+	}
+	public String getProduct_name() {
+		return product_name;
+	}
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+	public int getProduct_cnt() {
+		return product_cnt;
+	}
+	public void setProduct_cnt(int product_cnt) {
+		this.product_cnt = product_cnt;
+	}
+	// 김승일 환불신청 END 20220319
 }

@@ -15,6 +15,7 @@ import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.BoardDTO;
 import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.PageDto;
+import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
 
 @Service
@@ -241,7 +242,101 @@ public class MypageService {
 		int row = mypageDao.tomemberboardwrite(params);
 		logger.info(" 입력된 건수 : {}",row);
 	}
-	
+
+
+	// 20220318 예약 상세보기 SI	
+	public HashMap<String, Object> myReserveDetail(String loginId, String reserve_num, int reserve_idx) {
+		// 1. 마일리지 상품 정보를 제외한 결과 쿼리( 방별로 또 상품별로 갯수가 다르기 때문에 따로 쿼리 )
+		ReserveDTO reserveDTO = mypageDao.myReserveDetail(loginId, reserve_num, reserve_idx);
+		
+		// 2. 마일리지 상품 정보 쿼리
+		ArrayList<ProductDTO> productDTO = mypageDao.myReserveProduct(reserve_num);
+		//logger.info("mypageDTO : {}", mypageDTO.getAdult_cnt());
+		//logger.info("productDTO : {}", productDTO.get(1));
+		
+		// 3. 방 타입 정보 쿼리
+		ArrayList<ReserveDTO> roomTypeName = mypageDao.myReserveRoom(loginId, reserve_num);
+		
+		// 3. hashmap에 담기
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("reserveDTO", reserveDTO);	// DTO 한 줄
+		result.put("productDTO", productDTO);	// ArrayList
+		result.put("roomTypeName", roomTypeName);
+		
+		return result;
+	}
+
+// 20220319 환불 신청 페이지 START - SI
+	public HashMap<String, Object> myReserveRefund(String loginId, String reserve_num) {
+	// 1. 컨트롤러로 보낼 Hashmap 생성
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+	// 2. 쿼리
+		ArrayList<ReserveDTO> reserveDTO = mypageDao.myReserveRefund(loginId, reserve_num);
+		
+	// 3. iterator로 순회하면서 hashmap에 담기
+		// 3-1. 변수 초기화
+		Iterator<ReserveDTO> iter = reserveDTO.iterator();					// iterator
+		ReserveDTO reserveIter = null;										// iterator에서 사용할 한줄 받을 DTO 
+		ArrayList<ReserveDTO> reserveRoom = new ArrayList<ReserveDTO>();	// 객실별로 잘라서 담을 ArrayList( Hashmap의 values )
+		String mapKey = "first";											// hashmap의 키 값
+		int cnt = 0;														// while문 마지막 루프 확인할 변수
+		int size = reserveDTO.size() - 1;										// 현재 쿼리문의 rows 수
+		
+		// 3-2. 예약순번을 가지고 있는 Int 변수 초기화
+		int reserveIdx = 0;
+		
+		// 3-3. 순회하기		
+		while(iter.hasNext()) {
+			reserveIter = iter.next();
+			// 3-4. 초회차는 무조건 한 개 추가
+			if(reserveIdx == 0) {
+				reserveRoom.add(reserveIter);
+			}else {
+			
+				// 3-6. 현재 iterator의 예약 순번이 이전 순회의 예약순번과 같다면
+				if(reserveIdx == reserveIter.getReserve_idx()) {
+					// 3-7. 같은 객실정보이기 때문에 ArrayList에 추가
+					reserveRoom.add(reserveIter);
+				// 3-8. 예약순번이 달라졌다면
+				}else if(reserveIdx != reserveIter.getReserve_idx()){
+					// 3-9. 다른 객실정보이기 때문에 현재까지의 값을 hashmap에 저장
+					result.put(mapKey, reserveRoom);
+					// 3-10. hashmap의 키 값 바꿔주기( first -> second, second -> third )
+					if(mapKey.equals("first")) {
+						mapKey = "second";
+					}else if(mapKey.equals("second")) {
+						mapKey = "third";
+					}
+					// 3-11. 객실정보 초기화시키기
+					reserveRoom = new ArrayList<ReserveDTO>();
+					
+					// 3-12. 현재 rows ArrayList에 담기
+					reserveRoom.add(reserveIter);
+				}
+			}
+			// 3-5. Int 변수에 현재 예약순번 저장( 다음 회차때 비교할 값 )
+			reserveIdx = reserveIter.getReserve_idx();
+			
+			// 3-13. while의 마지막 루프땐 무조건 put
+			cnt += 1;
+			if(cnt == size) {
+				result.put(mapKey, reserveRoom);
+			}
+		}
+		
+		return result;
+	}
+// 20220319 환불 신청 페이지 END - SI
+
+// 20220320 구매한 마일리지 상품 확인 페이지 START - SI
+	public ArrayList<ProductDTO> myReserveProduct(String reserve_num) {
+		ArrayList<ProductDTO> result = mypageDao.myReserveProduct(reserve_num);
+		
+		return result;
+	}
+
+// 20220320 구매한 마일리지 상품 확인 페이지 END - SI
 
 	
 }
