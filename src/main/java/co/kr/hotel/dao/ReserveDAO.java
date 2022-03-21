@@ -1,9 +1,11 @@
 package co.kr.hotel.dao;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.dto.RoomDTO;
 
@@ -18,5 +20,13 @@ public interface ReserveDAO {
 	int useable(String loginId);
 
 	void roomOne(ReserveDTO dto);
+
+	void roomOneCart(int reserve_idx, int product_cnt, String product_num);
+
+	void buyMileageminus(String loginId, int productTotal, int mileage_useable);
+
+	int product_price(String product_num);
+
+	MemberDTO reservation_memInfo(String loginId);
 
 }

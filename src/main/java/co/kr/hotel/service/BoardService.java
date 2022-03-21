@@ -42,6 +42,15 @@ public class BoardService {
 		logger.info(" 입력된 건수 : {}",row);
 	}
 	
+	public ModelAndView writeForm(String board_num) {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("writeForm");
+		BoardDTO dto = dao.detail(board_num);
+		mav.addObject("board_num" , dto);
+		return mav;
+	}
+	
 	
 	}
 
