@@ -91,9 +91,10 @@ public class ReserveController {
 		String userId = "seon119";
 		//params.replace("userId", userId);
 		
+		
 		ReserveDTO dto = new ReserveDTO();
 		dto.setMem_id(params.get("userId"));
-		dto.setAdd_requests(params.get("ADD2"));
+		dto.setAdd_requests(params.get("ADD1"));
 	
 		service.roomOne(dto);
 		
@@ -102,7 +103,9 @@ public class ReserveController {
 		
 		if(reserve_idx > 0 ) {
 			logger.info("pay insert");
+			
 		}
+	
 		
 		
 		return "toReserveOrder";

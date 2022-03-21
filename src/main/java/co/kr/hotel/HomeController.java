@@ -124,7 +124,7 @@ public class HomeController {
 		model.addAttribute("cnt",dto.getAdult_cnt());
 		
 		return page;
-	}
+	}	
 	
 	//메인페이지 END 유선화 20220311
 	

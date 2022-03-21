@@ -6,8 +6,6 @@ public class ProductDTO {
 	private String product_name;	
 	private String product_img;
 	private int product_price;
-	
-	
 	public String getProduct_num() {
 		return product_num;
 	}
@@ -29,10 +27,10 @@ public class ProductDTO {
 	public int getProduct_price() {
 		return product_price;
 	}
-	public void setProduct_price(String string) {
-		// TODO Auto-generated method stub
-		
+	public void setProduct_price(int product_price) {
+		this.product_price = product_price;
 	}
+	
 
 
 	 

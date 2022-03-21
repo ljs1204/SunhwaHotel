@@ -8,7 +8,7 @@ import co.kr.hotel.dto.ProductDTO;
 
 public interface ManagerDAO {
 
-	ArrayList<HashMap<String, String>> adOrderList();
+	ArrayList<ProductDTO> adOrderList();
 
 	int writing(ProductDTO dto);
 	
