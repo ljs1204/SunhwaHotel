@@ -155,6 +155,11 @@
 		
 		
 		<!-- 객실옵션선택창 시작-->
+		<c:forEach items="${params }" var="item">
+	<input type ="text" name = "price" value="${item.price }">
+	<input type ="text" value="${item.bedType }">
+	<input type ="text" value="${item.number }">
+	<input type ="text" value="${item.room }">
 		<c:forEach var="rD" items="${reserveData}" varStatus="RDS">
 		
 		<!-- 객실별(객실번호,객실가격,인원 수) -->
@@ -217,8 +222,9 @@
 		        </div>
 		   		</c:forEach>
 			</div>
+		
 		</c:forEach>
-			
+		</c:forEach>	
 			
 		<!-- 객실옵션선택창 끝 -->
 		
@@ -315,7 +321,7 @@ EMAIL:info@yourdomain.com
 			<span>원</span>
 			</div>
 			<div class="box2">사용 할 마일리지 : <input type="text" id="useMileage" style="width:140px;"></div> --%>
-			<div class="box2" style="float:right">결제 금액 : 0원</div>
+			<div class="box2" id="priceDiv" style="float:right">결제 금액 : 0원</div>
 		</div>
 		<br/>
 		<div class="btn2">
@@ -518,5 +524,6 @@ EMAIL:info@yourdomain.com
 	});
 	//숫자 3자리 콤마찍기
 
+	
 </script>
 </html>

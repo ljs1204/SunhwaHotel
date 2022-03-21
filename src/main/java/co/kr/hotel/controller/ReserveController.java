@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.service.ReserveService;
@@ -59,9 +64,24 @@ public class ReserveController {
 	//객실 옵션 페이지 이지선 START 220315
 	
 	 //객실 옵션 페이지 접속 리스트 불러오기	
-	 @RequestMapping(value = "/reservation_option", method = RequestMethod.GET)
-		public String reservation_option(Model model,HttpSession session) { 
+	 @RequestMapping(value = "/reservation_option", method = RequestMethod.POST)
+		public String reservation_option(Model model,HttpSession session,String params) { 
 			logger.info("reservation_option 요청");
+			
+			logger.info("받아온 값 확인 {}",params);
+			List<Map<String,Object>> dataList = new ArrayList<> ();
+			JsonArray ja = new JsonArray();
+			JsonParser jsonParser = new JsonParser();
+			ja = (JsonArray) jsonParser.parse(params);
+			int len = ja.size();
+			   for (int i=0;i<len;i++){
+				 Map<String,Object> map = new HashMap<String,Object>();
+				 JsonObject jsonObj = (JsonObject) ja.get(i);
+				 Gson gson = new Gson();
+				 map = (Map<String,Object>) gson.fromJson(jsonObj.toString(), map.getClass());
+				 dataList.add(map);
+			   } 								
+			   model.addAttribute("params", dataList);
 			
 			//아이디, 객실별(객실번호, 객실가격, 인원 수), 체크인날짜, 체크아웃날짜 임의값 설정.
 			String loginId = "testid";

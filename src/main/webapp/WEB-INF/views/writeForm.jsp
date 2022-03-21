@@ -19,7 +19,7 @@
 	<form action="write" method="POST">
 		<h2 style="text-align:center;">관리자 게시글 문의 답변 페이지 </h2>
 		
-		<input type="text" name="board_orinum" value=${board_orinum}> 
+		<input type="hidden" name="board_orinum" value=${board_orinum}> 
 		
 		<table>	
 			<tr>
