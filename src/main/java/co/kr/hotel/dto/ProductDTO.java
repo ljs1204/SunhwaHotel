@@ -4,7 +4,7 @@ public class ProductDTO {
 
 	private String product_num;
 	private String product_name;	
-	private String product_img;
+// 	private String product_img;
 	private int product_price;
 
 // 20220318 예약 상세 컬럼추가 START - SI
@@ -32,12 +32,14 @@ public class ProductDTO {
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
 	}
+	/*
 	public String getProduct_img() {
 		return product_img;
 	}
 	public void setProduct_img(String product_img) {
 		this.product_img = product_img;
 	}
+	*/
 	public int getProduct_price() {
 		return product_price;
 	}
@@ -46,6 +48,5 @@ public class ProductDTO {
 	}
 	
 
-
-	 
-}
+		
+	}	

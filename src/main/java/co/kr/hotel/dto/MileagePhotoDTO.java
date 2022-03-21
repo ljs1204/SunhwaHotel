@@ -16,12 +16,14 @@ public class MileagePhotoDTO {
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
+	
 	public int getFileIdx() {
 		return fileIdx;
 	}
 	public void setFileIdx(int fileIdx) {
 		this.fileIdx = fileIdx;
 	}
+	
 	public String getOriFileName() {
 		return oriFileName;
 	}

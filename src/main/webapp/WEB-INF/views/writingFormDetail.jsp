@@ -20,6 +20,7 @@
 			<th>가격</th>
 			<td>${dto.product_price}</td>
 		</tr>
+		<!-- 
 		<tr>
 		<c:if test="${photos.size()>0}">
 		<tr>
@@ -30,13 +31,15 @@
 				</c:forEach>				
 			</td>
 		</tr>
-		</c:if>
+		 -->
+	<!-- 	</c:if> --> 
+			<tr>
 			<th colspan="2">
-				<input type="button" value="리스트" onclick="location.href='./writingForm'"/>
-				<!-- <input type="button" value="삭제" onclick="location.href='./deleting?product_num=${dto.product_num}'"/> -->
+			<input type="button" value="리스트" onclick="location.href='./adminOrderList'"/>
 			</th>			
-		</tr>
+			</tr> 
 	</table>
 </body>
-<script></script>
+<script>
+</script>
 </html>
