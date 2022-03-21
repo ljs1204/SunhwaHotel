@@ -103,85 +103,138 @@
 
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
 						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./myReserve?num=1">예약 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">마일리지 내역 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">내 정보 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">회원정보 수정</a>
+						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./tomemberboardlist">문의 글 & 답 글</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myProfile">회원정보 수정</a>
 
 					</div>
 				</div>
 <!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
 
-<!-- 예약조회 START - SI 20220314 -->
+<!-- 예약 상세보기 START - SI 20220317 -->
 			<!-- tabContent 있어야 발동함 -->
 			<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
 				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
 						style="max-width:100% !important">
 					<form action="" method="">
-						<h4 style="color: #633e12;">예약 상세보기 - SVW8432Q</h4>
+						<h4 style="color: #633e12;">예약 상세보기 - ${result.reserve_num }</h4>
 						<hr style="border-color: #633e12;" />
 					
 					<table class="table table-bordered">
 							<tbody>
 								<tr>
 									<th scope="row">예약번호</th>
-									<td colspan="3">SVW8432Q</td>
+									<td colspan="3">${result.reserve_num }</td>
 								</tr>
 								<tr>
 									<th scope="row">기간</th>
-									<td colspan="3">20220304 - 20220306</td>
+									<td colspan="3">${result.checkindate } &nbsp;&nbsp;~&nbsp;&nbsp;  ${result.checkoutdate }</td>
 								</tr>
 								<tr>
 									<th scope="row">타입</th>
-									<td colspan="3">디럭스(더블), 프리미엄(더블), 디럭스(트윈)</td>
+									<td colspan="3">
+										<c:forEach var="ro" items="${room }" varStatus="status">
+										<!-- 베드 타입 저장( 1-트윈 / 2-더블 )할 변수 생성 -->
+										<c:if test="${ro.bed_type eq 1 }">
+											<c:set var="bed_type" value="트윈"/>
+										</c:if>
+										<c:if test="${ro.bed_type eq 2 }">
+											<c:set var="bed_type" value="더블"/>
+										</c:if>
+											
+										<!-- 만약 예약상태가 2이면 회색 처리 -->
+										<c:if test="${ro.reserve_state eq 2 }">											
+											<!-- 룸 타입별로 이름 주기 -->
+											<c:if test="${status.last eq false }">
+												<span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type }) ,</span>
+											</c:if>
+											<c:if test="${status.last eq true }">
+												<span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type })</span>
+											</c:if>
+										</c:if>
+										<c:if test="${ro.reserve_state eq 1 }">											
+											<!-- 룸 타입별로 이름 주기 -->
+											<c:if test="${status.last eq false }">
+												<span>${ro.room_type_name }룸(${bed_type }) ,</span>
+											</c:if>
+											<c:if test="${status.last eq true }">
+												<span>${ro.room_type_name }룸(${bed_type })</span>
+											</c:if>
+										</c:if>
+										
+										</c:forEach>
+									</td>
 								</tr>
 								<tr>
-									<th scope="row">인원</th>
-									<td colspan="3">3명</td>
+									<th scope="row">총 인원</th>
+									<td colspan="3">${result.adult_cnt }</td>
 								</tr>
 								<tr>
 									<th scope="row">예약자이름</th>
-									<td colspan="3">이름(name)</td>
+									<td colspan="3">${result.reserve_name }</td>
 								</tr>
 								<tr>
 									<th scope="row">전화번호</th>
-									<td colspan="3">010-0000-0000</td>
+									<td colspan="3">${result.reserve_phone }</td>
 								</tr>
 								<tr>
 									<th scope="row">이메일</th>
-									<td colspan="3">email@gmail.com</td>
+									<td colspan="3">${result.reserve_email }</td>
 								</tr>
 								<tr>
 									<th scope="row">옵션</th>
-									<td colspan="3">엑스트라베드 1, 조식 3</td>
+									<td colspan="3">엑스트라베드 ${result.extrabed_cnt}, 조식 ${result.breakfast_cnt }</td>
 								</tr>
 								<tr>
 									<th scope="row">마일리지 상품</th>
-									<td colspan="3"><a href="">와인 2, 디저트 1, 수건 1</a></td>
+									<td colspan="3">
+										<!-- 구매한 마일리지 상품 있을 때 -->
+										<c:if test="${productSize ne 0 }">
+											<!-- 20220320 마일리지 상품 리스트 -->
+											<a href="./myReserveProduct?reserve_num=${result.reserve_num }">
+												<span style="text-decoration:underline;">
+													<c:forEach var="pro" items="${product }" varStatus="status">
+														<c:if test="${status.last eq false }">
+														${pro.product_name } ${pro.cnt_by_product },
+														</c:if>
+														<c:if test="${status.last eq true}">
+															${pro.product_name } ${pro.cnt_by_product }
+														</c:if>
+													</c:forEach>											
+												</span>
+											</a>
+										</c:if>
+										<!-- 구매한 마일리지 상품 없을 때 -->
+										<c:if test="${productSize eq 0 }">
+											구매한 마일리지 상품이 없어요.
+										</c:if>
+									</td>
 								</tr>
 								<tr>
 									<th scope="row">현금 결제 금액</th>
-										<td>1,938,200</td>
+										<td>${result.pay_price }</td>
 									<th scope="row">마일리지 사용 금액</th>
-										<td>53800</td>
+										<td>${result.pay_mileage }</td>
 								</tr>
 								<tr>
 									<th scope="row">총 금액</th>
-									<td colspan="3">1,992,000</td>
+									<td colspan="3">${result.reserve_amount }</td>
 								</tr>
 							</tbody>
 						</table>
 					<div style="text-align:right;">
 						<input type="button" class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;"
-								onclick="location.href=''" value="환불신청">
+								onclick="location.href='./myReserveRefund?reserve_num=${result.reserve_num}'" value="환불신청">
+<!-- 20220319 예약 리스트의 페이징 번호를 가져와서 저장하고, '목록으로' 버튼 클릭시 해당 인덱스로 SI -->
 						<input type="button" class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;"
-								onclick="location.href='./myReserve'" value="목록으로">
+								onclick="reserveList()" value="목록으로">
 					</div>
 					</form>
 
 				</div>
 			</div>
-<!-- 예약조회 END - SI 20220314 -->	
+<!-- 예약 상세보기 END - SI 20220317 -->	
 
 
 
@@ -417,17 +470,15 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	<script src="resources/js/main.js"></script>
 </body>
 <script>
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 START - SI 20220314 */
-	var d = new Date();
+/* 20220319 목록으로 버튼 구현 SI */
+	var pagingNum = ${pagingNum};
 
-	var year = d.getFullYear();
+	console.log("돌아갈 페이지 번호 : ", pagingNum)
 	
-	$(document).ready(function(){
-		$('#useFrequency').html(year+"년 이용실적");
-		$('#useFrequency').css({'color':'#633e12'});
-	});
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 END - SI 20220314 */
-
+	function reserveList(){
+		location.href = "./myReserve?num="+pagingNum;
+	}	
+/* 20220319 목록으로 버튼 구현 SI */
 
 
 </script>

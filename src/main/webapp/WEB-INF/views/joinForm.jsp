@@ -25,10 +25,22 @@
     <!-- Theme Style -->
     <link rel="stylesheet" href="resources/css/style.css">
 	<style>
-		table, th, td{
-			border : 1px solid black;
-			border-collapse: collapse;
+		th{
+			width: 20%;
+		}
+		
+		td{
+			width: 20%;
+		}
+		#joindiv{
 			padding: 5px;
+			width: 30%;
+		    height: auto;
+		    margin: 0 auto;
+		    text-align: center;
+		    color: #333333;
+		    min-width: 500px;
+		    
 		}	
 		.noresize {
 		  resize: none;
@@ -37,6 +49,16 @@
 	     body{
 	    	height: auto !important;
 	    }
+	    
+	    input[type="button"]{
+	    	color: #fff;
+		    background-color: black !important;
+		    border-color: black !important;
+		    text-align: center;
+	    }
+	    #member_join{
+	    	margin-left: 170px;
+	    }
 	</style>
 </head>
 <body>
@@ -44,11 +66,13 @@
 		<jsp:include page="header.jsp" flush="true" />
 	</header>
 	
+	<!-- 영역 주는용 div -->
 	<div style="margin-top:200px"></div>
 		
-		
-		
-	<table>
+	<div id="joindiv">
+	<!-- 회원가입 START -->
+	<h2>Sunhwa Hotel JoinForm</h2>
+	<table class="table table-bordered">
 		<tr>
 			<th>아이디</th>
 			<td>
@@ -122,11 +146,12 @@
 		</tr>	
 		<tr>
 			<th colspan="2">
-				<input id="member_join" type="button" value="회원가입" disabled/>
+				<input id="member_join" type="button" value="회원가입" class="btn btn-primary text-white py-3 px-5 font-weight-bold" disabled/>
 			</th>
 		</tr>
 	</table>
-	
+	</div>
+	<!-- 회원가입 END -->
 	
 	<footer class="footer-section">
 	<jsp:include page="footer.jsp" flush="true" />
@@ -421,6 +446,9 @@
 		}		
 	});
 	
+	
+	
+	
 	$('#emailBtn').click(function(){
 		$('#emailCode').val();
 		if($('#emailCode').val() == certifinum){
@@ -433,6 +461,9 @@
 			alert('인증번호 확인 후 재 입력 바랍니다.');
 		}		
 	});
+	
+	
+	
 	
 	$('input[name="email"]').keyup(function(e){
 		certifinum_check = false;

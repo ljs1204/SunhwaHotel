@@ -213,14 +213,14 @@
                         <c:if test="${loginId eq null}">
                             <li><a href="about.html" class="nav-link" style="font-weight: bold;">객실 소개</a></li>
                             <li><a href="blog.html" class="nav-link" style="font-weight: bold;">고객문의</a></li>
-                            <li><a href="./myPagemilelist?orderNum=1" class="nav-link" style="font-weight: bold;">${loginId}님의 마일리지</a></li>
+                            <li><a href="./myPagemilelist?orderNum=1" class="nav-link" style="font-weight: bold;">마일리지</a></li>
                         </c:if>
                         
                         <c:if test="${loginId ne null}">
                 			<c:if test="${mem_grade ne 'admin' }">
                         	<li><a href="about.html" class="nav-link" style="font-weight: bold;">객실 소개</a></li>
                             <li><a href="blog.html" class="nav-link" style="font-weight: bold;">고객문의</a></li>
-                            <li><a href="./myPagemilelist?orderNum=1" class="nav-link" style="font-weight: bold;">${loginId}님의 마일리지</a></li>
+                            <li><a href="./myPagemilelist?orderNum=1" class="nav-link" style="font-weight: bold; font-size:15px;">${loginId}님의 마일리지</a></li>
                            	</c:if>
                         </c:if>
                         
@@ -259,7 +259,7 @@
 	
 	// 현재 스크롤
 	var x = 0;
-	console.log('현재 스크롤 위치 : ',x);
+	//console.log('현재 스크롤 위치 : ',x);
 	
 	$('body').on("wheel", function(event){
 	// deltaY obviously records vertical scroll
@@ -267,7 +267,7 @@
 	
 	// 네비 메뉴가 떠있지 않은 상태에서만 스크롤 동작
 	var x = $('body').css('overflow');
-	console.log(x);
+	//console.log(x);
 	        
 	    if(x!='hidden'){ 
 	        // 스크롤을 위로 올렸을 때
@@ -275,7 +275,7 @@
 	                $('.site-navbar').css({'display':'block'});
 	
 	                x = $('body').scrollTop();
-	                console.log('현재 스크롤 위치 : ',x);
+	                //console.log('현재 스크롤 위치 : ',x);
 	
 	                if(x > 0){
 	                }
@@ -284,7 +284,7 @@
 	        else {
 	                $('.site-navbar').css({'display':'none'});
 	                x = $('body').scrollTop();
-	                console.log('현재 스크롤 위치 : ',x);
+	                //console.log('현재 스크롤 위치 : ',x);
 	
 	                // 얼마정도 내려갔을 때는 완전 보이지 않음 => 현재는 막음
 	                // if(x>=4400){
