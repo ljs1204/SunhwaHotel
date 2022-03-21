@@ -6,6 +6,7 @@ import java.util.HashMap;
 import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.BoardDTO;
 import co.kr.hotel.dto.MypageDTO;
+import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
 
 
@@ -48,6 +49,15 @@ public interface MypageDAO {
 	ArrayList<BoardDTO> tomemberboardlist(String loginId);
 	
 	int tomemberboardwrite(HashMap<String, String> params);
+	
+	// 20220318 예약 상세보기 SI - 예약정보
+	ReserveDTO myReserveDetail(String loginId, String reserve_num, int reserve_idx);
+	// 20220318 예약 상세보기 SI - 상품정보 / 20220320 구매한 마일리지 상품 페이지도 해당 DAO 사용
+	ArrayList<ProductDTO> myReserveProduct(String reserve_num);
+	// 20220318 방 타입 쿼리 SI
+	ArrayList<ReserveDTO> myReserveRoom(String loginId, String reserve_num);
+	// 20220319 환불 신청 페이지 SI
+	ArrayList<ReserveDTO> myReserveRefund(String loginId, String reserve_num);
 
 	
 
