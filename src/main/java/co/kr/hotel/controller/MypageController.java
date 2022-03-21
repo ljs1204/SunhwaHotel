@@ -217,6 +217,7 @@ public class MypageController {
 		}
 		model.addAttribute("reserve_num", reserve_num);
 		
+		// null이어도 페이지 이동
 		return "myReserveRefund";
 	}
 	
@@ -252,7 +253,7 @@ public class MypageController {
 	// 마이페이지 - 환불리스트 유선화 START 20220314
 	@RequestMapping(value = "/mypageRefundDetail", method = RequestMethod.GET)
 	public String mypageRefundDetail(Model model, 
-			@RequestParam String reserve_num, 
+			@RequestParam String reserve_num,
 			@RequestParam int reserve_idx) {
 		logger.info("mypage2Reserve 환불현황상세 ");
 		// 최근 예약
