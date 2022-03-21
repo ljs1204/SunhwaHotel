@@ -5,8 +5,7 @@
 <mapper namespace="co.kr.hotel.dao.ManagerDAO">
 
    <select id="adOrderList" resultType="co.kr.hotel.dto.ProductDTO">
-   SELECT product_num, product_name, product_price, product_img
-       FROM product
+   	SELECT * FROM product
    </select>
 
 	<!-- 글 작성관련

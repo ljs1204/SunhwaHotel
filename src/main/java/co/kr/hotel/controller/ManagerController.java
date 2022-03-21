@@ -22,21 +22,23 @@ public class ManagerController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	 @Autowired ManagerService service;
+	@Autowired ManagerService service;
 	
 		@RequestMapping(value = "/adminOrderList", method = RequestMethod.GET)
-		public String adminOrderList(Model model) {
+		public String adminOrderList(Model model, HttpSession session) {
 			logger.info("adminOrderList 불러오기");			
 			ArrayList<ProductDTO> adOrderList = service.adOrderList();
 			logger.info("가져온 리수트 수 : {}", adOrderList.size());
 			model.addAttribute("adOrderList", adOrderList);
+			String loginId = (String)session.getAttribute("loginId");
+			
 			String page = "/adminOrderList";
 			
 			return page;
 		}
 		 
 		@RequestMapping(value = "/writingForm", method = RequestMethod.GET)
-		public String writeForm(Model model) {		
+		public String writingForm(Model model) {		
 			logger.info("writingForm 이동");
 			return "writingForm";
 		}
@@ -50,7 +52,6 @@ public class ManagerController {
 			//return "adminOrderList";
 			return page;
 		}
-		
 		
 		@RequestMapping(value = "/del", method = RequestMethod.GET)
 		public String del(Model model, HttpSession session, @RequestParam String product_num) {
@@ -82,12 +83,6 @@ public class ManagerController {
 				service.updating(params);
 			return "redirect:/";
 		}		
-		
-		
-		
-		
-		
-		
 		
 	}
 

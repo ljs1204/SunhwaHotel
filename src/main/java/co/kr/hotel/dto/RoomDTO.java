@@ -25,6 +25,8 @@ public class RoomDTO {
 	private String roomType_size;
 	private int roomType_capacity;
 	
+	private int roomCnt;
+	
 	
 	// 객실 타입테이블 (메인객실상세) END 유선화 20220311
 	
@@ -133,6 +135,12 @@ public class RoomDTO {
 	}
 	public void setRoom_capacity(int room_capacity) {
 		this.room_capacity = room_capacity;
+	}
+	public int getRoomCnt() {
+		return roomCnt;
+	}
+	public void setRoomCnt(int roomCnt) {
+		this.roomCnt = roomCnt;
 	}
 	
 	// 객실 상세정보 END 유선화 20220311 

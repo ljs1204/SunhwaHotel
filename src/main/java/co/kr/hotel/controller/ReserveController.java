@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ import com.google.gson.JsonParser;
 
 import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.ReserveDTO;
+import co.kr.hotel.dto.RoomDTO;
 import co.kr.hotel.service.ReserveService;
 
 @Controller
@@ -157,12 +159,14 @@ public class ReserveController {
 		//String userId = "seon119";
 		//params.replace("userId", userId);
 		
-		String loginId = params.get("loginId"); //세션으로 변경★
+
+		
 		
 		//객실 1 START 
 		ReserveDTO dto = new ReserveDTO();
 		dto.setMem_id(params.get("loginId"));
 		dto.setReserve_num("20220319180030"); //예약번호 만들어서 넣어야함.★
+		
 		dto.setRoom_num(params.get("room_num_1"));//객실번호 DB에서 ? ?
 		
 		String  day = "2022-03-19";
@@ -184,14 +188,41 @@ public class ReserveController {
 		}
 		dto.setAdd_requests(add);//추가요청사항
 		
+		String loginId = params.get("loginId"); //세션으로 변경★
+		// 빈 객실 가져오기 유선화 START 22.03.21
+		RoomDTO roomDto = new RoomDTO();
+		// 파라미터를 가져온다.
+		int room_tyoe = 1;
+		int bed_type = 1;
+		int roomCnt = 3;
+		roomDto.setRoom_type(room_tyoe);
+		roomDto.setBed_type(bed_type);
+		roomDto.setRoomCnt(roomCnt);
+		roomDto.setCheckindate(params.get("checkindate"));
+		roomDto.setCheckoutdate(params.get("checkoutdate"));
 		
+		ArrayList<RoomDTO> roomIdx = service.roomIdx(roomDto);
+		Iterator<RoomDTO> iterroomIdx = roomIdx.iterator();
+		RoomDTO roomDtoTwo = null;
+		while(iterroomIdx.hasNext()) {
+			
+			roomDtoTwo = iterroomIdx.next();
+			roomDtoTwo.getRoom_num();
+			logger.info("roomDtoTwo : "+roomDtoTwo.getRoom_num());
+		}
+		
+		
+		
+		logger.info("roomIdx"+roomIdx);
+		
+		// 빈 객실 가져오기 유선화 END 22.03.21
+
 		service.roomOne(dto);
 		
 		
 		int reserve_idx = dto.getReserve_idx();
 		logger.info("reserve_idx : "+reserve_idx);
-		
-		
+
 		if(reserve_idx > 0 ) { //성공 예약번호 
 			logger.info("마일리지상품 히스토리,회원 마일리지 내역 저장");
 
@@ -236,6 +267,7 @@ public class ReserveController {
 			
 			
 		}
+	
 		
 		
 		//객실 1 END

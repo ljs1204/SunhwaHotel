@@ -28,10 +28,10 @@
     </tr>
 
     	<c:if test="${adOrderList eq null || size == 0}">
-				<tr>
-					<td colspan="9">등록된 글이 없습니다.</td>
-				</tr>
-		</c:if>	
+			<tr>
+				<td colspan="9">등록된 글이 없습니다.</td>
+			</tr>
+		</c:if>		
 			<c:forEach items="${adOrderList}" var="adOrderList">
 			<tr>
 				<td>${adOrderList.product_num}</td>

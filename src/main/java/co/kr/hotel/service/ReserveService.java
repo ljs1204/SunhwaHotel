@@ -68,6 +68,11 @@ public class ReserveService {
 		MemberDTO dto = new MemberDTO();
 		return reserveDao.reservation_memInfo(loginId);
 	}
+
+	public ArrayList<RoomDTO> roomIdx(RoomDTO roomDto) {
+		// TODO Auto-generated method stub
+		return reserveDao.roomIdx(roomDto);
+	}
 	
 	
 	

@@ -19,6 +19,7 @@ public class ProductDTO {
 // 20220318 예약 상세 컬럼추가 END - SI
 	
 	
+
 	public String getProduct_num() {
 		return product_num;
 	}
@@ -45,6 +46,7 @@ public class ProductDTO {
 	public void setProduct_price(int product_price) {
 		this.product_price = product_price;
 	}
+	
 
 		
 	}	
