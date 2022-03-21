@@ -24,33 +24,40 @@ public class ManagerController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	 @Autowired ManagerService service;
+	@Autowired ManagerService service;
 	
-		@RequestMapping(value = "/adminOrderList", method = RequestMethod.GET)
-		public String adminOrderList(Model model, HttpSession session) {
-			logger.info("adminOrderList 불러오기");			
-			ArrayList<HashMap<String, String>> adOrderList = service.adOrderList();
-			logger.info("가져온 리수트 수 : {}", adOrderList.size());
-			model.addAttribute("adOrderList", adOrderList);
-			String loginId = (String)session.getAttribute("loginId");
-			String page = "/adminOrderList";
-			
-			return page;
-		} 
-		@RequestMapping(value = "/writingForm", method = RequestMethod.GET)
-		public String writeForm(Model model) {		
-			logger.info("writingForm 이동");
-			return "writingForm";
-		}
+	@RequestMapping(value = "/adminOrderList", method = RequestMethod.GET)
+	public String adminOrderList(Model model, HttpSession session) {
+		logger.info("adminOrderList 불러오기");		
 		
-		@RequestMapping(value = "/writing", method = RequestMethod.POST)
-		   public String writing(Model model, MultipartFile[] photos,
-		         @RequestParam HashMap<String, String> params) {
-		      logger.info("글쓰기 페이지 요청"+ params);
-		      logger.info("업로드 할 파일 수 : {}",photos.length);
-				service.writing(photos,params); 
-				return "redirect:/adminOrderList"; 
-		}
+		ProductDTO dto = new ProductDTO();
+		ArrayList<ProductDTO> adOrderList = service.adOrderList();
+		
+		logger.info("가져온 리수트 수 : {}", adOrderList.size());
+		model.addAttribute("adOrderList", adOrderList);
+		
+		String loginId = (String)session.getAttribute("loginId");
+		
+		String page = "/adminOrderList";
+		
+		
+		return page;
+	} 
+	@RequestMapping(value = "/writingForm", method = RequestMethod.GET)
+	public String writeForm(Model model) {		
+		logger.info("writingForm 이동");
+		return "writingForm";
+	}
+	
+	@RequestMapping(value = "/writing", method = RequestMethod.POST)
+	   public String writing(Model model, MultipartFile[] photos,
+	         @RequestParam HashMap<String, String> params) {
+	    logger.info("글쓰기 페이지 요청"+ params); // 여기까지오고 
+	    logger.info("업로드 할 파일 수 : {}",photos.length); // 이 로거를 안 찍음
+	    
+		service.writing(photos,params); // NullPointerException
+		return "redirect:/adminOrderList"; 
+	}
 
 		
 		

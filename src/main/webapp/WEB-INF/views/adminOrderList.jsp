@@ -34,9 +34,9 @@
         <th>가격</th>
     </tr>	
     	<c:if test="${adOrderList eq null || size == 0}">
-				<tr>
-					<td colspan="9">등록된 글이 없습니다.</td>
-				</tr>
+			<tr>
+				<td colspan="9">등록된 글이 없습니다.</td>
+			</tr>
 		</c:if>		
 			<c:forEach items="${adOrderList}" var="adOrderList">
 		<!-- 	<fmt:parseNumber type="number" var = "baekyuna" value="${adOrderList.product_price}" /> -->

@@ -42,7 +42,7 @@
 				<td><input type="file" name="photos" multiple="multiple"/></td>
 			</tr>			
 			<tr>
-				<tr>
+				
 				<th colspan="2">
 					<input class="btn" type="button" id = "submit" value="등록"/>
 					<input type="button" onclick="location.href='./adminOrderList'" value="취소"/>
@@ -57,7 +57,7 @@
 		var $product_num = $('input[name="product_num"]');
 		var $product_name = $('input[name="product_name"]');
 		var $product_price = $('input[name="product_price"]');
-	
+		
 		if($('input[name="product_num"]').val() == ''){
 			alert('상품번호를 입력하세요.');
 		}
