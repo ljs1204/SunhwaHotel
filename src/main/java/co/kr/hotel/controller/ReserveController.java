@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -201,6 +202,16 @@ public class ReserveController {
 		roomDto.setCheckoutdate(params.get("checkoutdate"));
 		
 		ArrayList<RoomDTO> roomIdx = service.roomIdx(roomDto);
+		Iterator<RoomDTO> iterroomIdx = roomIdx.iterator();
+		RoomDTO roomDtoTwo = null;
+		while(iterroomIdx.hasNext()) {
+			
+			roomDtoTwo = iterroomIdx.next();
+			roomDtoTwo.getRoom_num();
+			logger.info("roomDtoTwo : "+roomDtoTwo.getRoom_num());
+		}
+		
+		
 		
 		logger.info("roomIdx"+roomIdx);
 		
