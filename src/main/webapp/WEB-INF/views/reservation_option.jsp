@@ -182,7 +182,7 @@
 						  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
 						  			<input type="text" class="number" name="option${op.option_num}_cnt_${RDS.count}" value="0" readonly/>
 						            <img class="plus_${op.option_num}" src="resources/images/plusbtn.png"  alt="플러스버튼">
-						            <input type="hidden" value="${rD.number}" name="room_people_${RDS.count}"/>
+						            <input type="hidden" value="${rD.number}"/>
 						    	</div>
 				    	</div>
 				    	<br/>
@@ -271,18 +271,30 @@
             <div class="row">
               <div class="col-md-6 form-group">
                 <label class="text-black font-weight-bold" for="credit_num">신용카드번호</label>
-                <input type="text" id="credit_num" value="${memInfo.credit_num}" name="credit_num" class="form-control ">
+                <input type="text" id="credit_num" value="${memInfo.credit_num}" name="credit_num" placeholder="16자 카드번호를 입력해주세요."class="form-control ">
               </div>
               <div class="col-md-6 form-group">
                 <label class="text-black font-weight-bold" for="credit_validity">유효기간</label>
-                <input type="text" id="credit_validity" value="${memInfo.credit_validity}" name="credit_valid" class="form-control ">
+                <input type="text" id="credit_validity" value="${memInfo.credit_validity}" name="credit_valid" placeholder="YYMM" class="form-control ">
               </div>
             </div>
         
             <div class="row">
               <div class="col-md-12 form-group">
-                <label class="text-black font-weight-bold" for="credit_type">카드종류</label>
-                <input type="text" id="credit_type" value="${memInfo.credit_type}" name="credit_type"class="form-control ">
+                <label class="text-black font-weight-bold">카드종류</label><br/>
+                <select id="cardSelect">
+                	<option disabled selected>카드사를 선택하세요.</option>
+                	<option value="1">국민</option>
+                	<option value="2">카카오</option>
+                	<option value="3">신한</option>
+                	<option value="4">우리</option>
+                	<option value="5">농협</option>
+                	<option value="6">하나</option>
+                	<option value="7">기업</option>
+                </select>
+               <input type="text" id="credit_type" value="${memInfo.credit_type}" class="form-control " readonly />
+               <input type="hidden" id="credit_type_val" value="${mem_card}" name="credit_type" class="form-control "/>
+              
               </div>
             </div>
 
@@ -334,7 +346,7 @@ EMAIL:info@yourdomain.com
 			<!-- 결제금액 -->
 			<div style="float:right;">
 				<span>결제 금액 : </span>			
-				<input type="text" id="cardTotal" name="cardTotal"value="" style="border-style:none; outline:none;" readonly/>
+				<input type="text" id="cardTotal" name="cardTotal" value="" style="border-style:none; outline:none;" readonly/>
 			
 			</div>
 			
@@ -558,7 +570,28 @@ EMAIL:info@yourdomain.com
         });
 	});
 	
+/* $(document).ready(function(){
+	//카드 selectbox
+ 	$("#cardSelect").onchange(function() {
+		String text = $('#cardSelect option:selected').text();
+		console.log(text);
+		$('#credit_type').val(text);
+		$('#credit_type_val').val($('this').val());
+		
+	});
 	
+}); */
+	
+ 	/* Checkbox change event */
+ 	$('#cardSelect').change(function() {
+ 		
+ 	    console.log($('#cardSelect option:selected').text());
+		$('#credit_type').val($('#cardSelect option:selected').text());
+ 	    $('#credit_type_val').val($('#cardSelect option:selected').val());
+ 	});
+ 	
+ 	
+
 	//숫자 3자리 콤마찍기
 	
 

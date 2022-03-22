@@ -86,4 +86,27 @@
 	 <insert id="mileageSave">
 	 	INSERT INTO mileage(mem_id,mileage_price,mileage_useable) VALUES(#{param1},#{param2},#{param3});
 	 </insert>
+	 
+	<select id="mem_card"  resultType="String">
+		select bank from credit_type where credit_idx = #{param1}
+	</select>
+	
+	<select id="extrabed_price"  resultType="Int">
+		select option_price from room_option where option_num = '1'
+	</select>
+	
+	<select id="breakfast_price"  resultType="Int">
+		select option_price from room_option where option_num = '2'
+	</select>
+	
+	<select id="room_price"  resultType="Int">
+		select room_price from room where room_num = (select room_num from reserve where reserve_idx = #{param1})
+	</select>
+	
+	<insert id="roomPay">
+	 	INSERT INTO pay (reserve_idx,pay_num,credit_num,credit_validity,credit_type,pay_price,pay_mileage,amount)
+        	VALUES (#{param1},#{param2},HEX(AES_ENCRYPT(#{param3}, SHA2('a-key',512))),#{param4},#{param5},#{param6},#{param7},#{param8})
+	</insert>
+	 
+	
 </mapper>
