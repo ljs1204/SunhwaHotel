@@ -1,6 +1,7 @@
 package co.kr.hotel.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +20,26 @@ public class RoomController {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired RoomService roomservice;
-
+	
+	// 20220321 객실 리스트 보기 SI START
+	@RequestMapping(value = "/roomsList", method = RequestMethod.GET)
+	public String roomList( Model model ) {
+		logger.info("roomList 요청");
+		
+		// 방 정보 가져오기( + 사진 )
+		HashMap<String, Object> roomDto = roomservice.roomsList();
+		model.addAttribute("roomsList", roomDto.get("roomDto"));
+		model.addAttribute("roomPhotos", roomDto.get("roomPhotos"));
+		
+		
+		return "roomsList";
+	}
+	
+	
+	
 	//객실 상세정보 유선화 START 20220311 
 	@RequestMapping(value = "/roomdetail", method = RequestMethod.GET)
 	public String roomdetail( Model model,@RequestParam String room_num) {
-		
-		
-		
 		
 		logger.info("roomdetail로 요청이 들어옴 " +room_num);
 		RoomDTO roomdto = new RoomDTO();
@@ -36,9 +50,6 @@ public class RoomController {
 		
 		ArrayList<RoomDTO> roomPhotodto = roomservice.roomPhotodto(room_num);
 		model.addAttribute("roomPhotodto", roomPhotodto);
-		
-		
-		
 		
 		return "roomdetail";
 	}
