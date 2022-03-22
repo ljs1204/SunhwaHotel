@@ -146,7 +146,7 @@ public class ManagerController {
 			String page = "redirect:/";
 			
 			if(session.getAttribute("loginId")!=null) {
-				page = "redirect:/adminOrderList"; 
+				page = "redirect:/AdminMileageRegist"; 
 				int success = service.del(product_num);
 				logger.info("삭제 여부 : {}",success);
 			}
