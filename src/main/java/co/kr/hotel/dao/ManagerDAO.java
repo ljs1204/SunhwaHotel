@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import co.kr.hotel.dto.MileagePhotoDTO;
 import co.kr.hotel.dto.ProductDTO;
+import co.kr.hotel.dto.ReserveDTO;
 
 public interface ManagerDAO {
 	
@@ -17,6 +18,10 @@ public interface ManagerDAO {
 	int writing(ProductDTO dto);
 	
 	ProductDTO detailing(String product_num);
+
+	ArrayList<ReserveDTO> myReserveAllAdmin(String loginId);
+
+	ArrayList<ReserveDTO> myReservePartsAdmin(String loginId);
 	
 	}
 	/* 파일 업로드 관련

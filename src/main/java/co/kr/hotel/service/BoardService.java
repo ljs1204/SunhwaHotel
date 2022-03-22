@@ -3,6 +3,8 @@ package co.kr.hotel.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +21,16 @@ public class BoardService {
 	
 	@Autowired BoardDAO dao;
 
-	public ModelAndView detail(String board_num) {
+	public ModelAndView detail(String board_num,HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("detail");
+		mav.setViewName("AdminQnaDetail"); // jsp 변경 
+		//유선화 답글은 답글 문의글은 문의글이라고 표시 하기
+		String mem_grade= (String) session.getAttribute("mem_grade");
+		String loginId= (String) session.getAttribute("loginId");
+		
+		mav.addObject("mem_grade", mem_grade);
+		mav.addObject("loginId", loginId);
+		
 		BoardDTO dto = dao.detail(board_num);
 		mav.addObject("board", dto);		
 		return mav;
@@ -30,7 +39,7 @@ public class BoardService {
 	//리스트
 	public ModelAndView list() {		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("list");
+		mav.setViewName("AdminQnalist");
 		ArrayList<BoardDTO> list = dao.list();		
 		logger.info("리스트 갯수 : {}",list.size());
 		mav.addObject("list", list);
@@ -45,7 +54,7 @@ public class BoardService {
 	public ModelAndView writeForm(String board_num) {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("writeForm");
+		mav.setViewName("AdminQnalist");
 		BoardDTO dto = dao.detail(board_num);
 		mav.addObject("board_num" , dto);
 		return mav;

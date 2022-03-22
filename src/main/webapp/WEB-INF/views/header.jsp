@@ -226,8 +226,8 @@
                         
                         <c:if test="${loginId ne null}">
                 			<c:if test="${mem_grade eq 'admin' }">
-                           	<li><a href="./list" class="nav-link" style="font-weight: bold;">문의 리스트</a></li>
-                            <li><a href="./adminOrderList" class="nav-link" style="font-weight: bold;">마일리지 상품 리스트</a></li>
+                           	<li><a href="./AdminQnalist" class="nav-link" style="font-weight: bold;">문의 리스트</a></li>
+                            <li><a href="./AdminMileageRegist" class="nav-link" style="font-weight: bold;">마일리지 상품 리스트</a></li>
                         	</c:if>
                        	</c:if>
                         

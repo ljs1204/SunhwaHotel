@@ -31,4 +31,34 @@
 	 <delete id="del">
  		DELETE FROM product WHERE product_num = #{param1}
  	</delete>
+ 	
+ 	<!-- 관리자 회원(1) 리스트 유선화 -->
+ 	<select id="myReserveAllAdmin" resultType="co.kr.hotel.dto.ReserveDTO">
+		SELECT r.*, sum(p.amount) as reserve_amount, ro.room_type_name,r.mem_id
+		FROM (
+			SELECT *
+		    FROM reserve
+		    ORDER BY reserve_date desc, reserve_state desc
+		    LIMIT 18446744073709551615
+		) as r
+		left outer join pay p 
+		on r.reserve_idx = p.reserve_idx 
+		left outer join room ro
+		on r.room_num = ro.room_num
+			GROUP BY reserve_num
+			having mem_id = #{param1}
+			order by reserve_date desc
+	</select>
+	
+ 	<select id="myReservePartsAdmin" resultType="co.kr.hotel.dto.ReserveDTO">
+		select r.reserve_num, r.mem_id, r.reserve_state, count(*) as reserve_room_cnt
+		from reserve r 
+		group by reserve_num, reserve_state 
+		having reserve_state = 1
+	</select>
+ 	
+ 	
+ 	
+ 	
+ 	
 </mapper>

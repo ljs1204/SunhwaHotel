@@ -51,6 +51,13 @@ public class MemberController {
 			
 			session.setAttribute("mem_grade", grade);
 			model.addAttribute("login_mem_grade",grade);
+			if(grade.equals("admin")) {
+				page="redirect:/AdminQnalist";
+				logger.info("관리자 : "+grade);
+				
+			}
+			
+			
 			//로그인 session에 mem_grade저장하기 유선화 2022.03.16 START 
 		}else {
 			model.addAttribute("msg","입력하신 내용이 일치하지 않습니다.");

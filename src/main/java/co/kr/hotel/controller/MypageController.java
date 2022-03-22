@@ -68,6 +68,7 @@ public class MypageController {
 		String page = "index";
 
 		String loginId = (String) session.getAttribute("loginId");
+		
 		model.addAttribute("loginId", loginId);
 		
 		// 20220319 - 페이징 세션 확인 후 분기( 예약 상세보기에서 '목록으로' 클릭 시 ) START SI
