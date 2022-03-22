@@ -120,9 +120,10 @@
 				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
 						style="max-width:100% !important">
 					<form action="" method="">
-						<h4 style="color: #633e12;">${loginId} 님의 예약 리스트</h4>
+						<h4 style="color: #633e12;">${loginId} 님의 문의리스트</h4>
 						<hr style="border-color: #633e12;" />
 					<table class="table table-hover">
+						
 						<thead>
 							<tr>
 								<th>글번호</th>
@@ -132,36 +133,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<%-- 
-							<tr>
-								<td><a href="./reserveDetail">SVW8432Q</a></td>
-								<td>디럭스(더블) 외 2개</td>
-								<td>2022-03-06</td>
-								<td>2022-03-08</td>
-								<td>1,992,000원</td>
-								<c:choose>
-									<c:when test="">
-										<td>예약완료</td>
-									</c:when>
-									<c:when test="true">
-										<td><a href="">부분취소</a>
-									</c:when>
-									<c:when test="">
-										<td>예약취소</td>
-									</c:when>
-								</c:choose>
-							</tr>
-							<tr>
-								<td><a href="">QWASD145</a></td>
-								<td>디럭스(트윈)</td>
-								<td>2022-01-17</td>
-								<td>2022-01-18</td>
-								<td>679,000원</td>
-								<td>예약취소</td>
-							</tr>
-							 --%>
-							
-							<!-- 예약 조회 리스트 뿌리기 --> 
+						
+							<!-- 문의 조회 리스트 뿌리기 --> 
 							<c:forEach items="${tomemberboardlist}" var="tomemberboardlist">
 							<tr>
 								<td>${tomemberboardlist.board_num}</td>
@@ -178,36 +151,10 @@
 							</c:if>
 						</tbody>
 					</table>
+							<a class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;" href="./tomemberboardwriteForm">글쓰기</a>
 
 <!-- 20220317 페이징 START - SI -->
-					<div class="row" data-aos="fade">
-			          <div class="col-12">
-			            <div class="custom-pagination">
-			              <ul class="list-unstyled">
-			              	<c:if test="${prev}">
-							 <li><a href="/myReserve?num=${startPageNum - 1}">&lt;</a></li>
-							</c:if>
-							
-							<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
-							  <li class="active">
-							   <c:if test="${select != num}">
-								   <a href="./myReserve?num=${num}" style="color:#633e12 !important;">${num}</a>
-								  </c:if>    
-								  
-								  <c:if test="${select == num}">
-								   <b style="font-size: 21px; color:#633e12 !important;"><span>${num}</span></b>
-								  </c:if>
-							 </li>
-							</c:forEach>
-							
-							<c:if test="${next}">
-							 <li><a href="/myReserve?num=${endPageNum + 1}">&gt;</a></li>
-							</c:if>
-			              
-			              </ul>
-			            </div>
-			          </div>
-			        </div>
+				
 <!-- 20220317 페이징 END - SI -->					
 										
 					

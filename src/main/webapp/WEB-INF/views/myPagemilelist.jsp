@@ -105,13 +105,13 @@
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
  
+						
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
 						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve?num=1">예약 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
-						<a class="list-group-item list-group-item-action active" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
+						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./tomemberboardlist">문의 글 & 답 글</a>
+						<a class="list-group-item list-group-item-action  active" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">회원정보 수정</a>
-
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myProfile">회원정보 수정</a>
 
 <!-- 페이지 이동 없이 사용할 땐 이걸로 
 						<a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" 

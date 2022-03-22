@@ -107,11 +107,10 @@
  
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
 						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve">예약 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">문의 글 & 답 글</a>
+						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./tomemberboardlist">문의 글 & 답 글</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
-						<a class="list-group-item list-group-item-action active" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">회원정보 수정</a>
-
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
+						<a class="list-group-item list-group-item-action active" id="list-settings-list" href="./myProfile">회원정보 수정</a>
 
 <!-- 페이지 이동 없이 사용할 땐 이걸로 
 						<a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" 
@@ -219,7 +218,7 @@
 										<input type="button" id="submit" value="저장"/>
 									</th>	
 									<th colspan="2">
-										<input type="button" onclick="location.href='./myPage'" value ="목록으로"/>
+										<input type="button" onclick="location.href='./myPage'" value ="돌아가기"/>
 									</th>	
 								</tr>
 							</tbody>
