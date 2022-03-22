@@ -99,7 +99,7 @@ public class MypageController {
 			model.addAttribute("result", processAll);	// 페이징 전에 이게 result로 보내지고 있어서 그냥 이렇게..
 			model.addAttribute("size", processAll.size());
 			
-			// 20220317 페이징 10개씩 자르기 SI - START
+			// 20220317 페이징 5개씩 자르기 SI - START
 			int startPageNum = (int) result.get("startPageNum");
 			int endPageNum = (int) result.get("endPageNum");
 			int pageNum_cnt = (int) result.get("pageNum_cnt");

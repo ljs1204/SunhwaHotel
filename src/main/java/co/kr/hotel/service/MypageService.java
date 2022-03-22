@@ -135,7 +135,7 @@ public class MypageService {
 		 
 // 20220317 게시물 페이징 처리( 단위 : 5 ) END SI
 		 
-// 20220317 페이징 번호를 10개씩 나누기 START SI => 현재는 Start 1 / end 2 라서 이전, 다음 표시가 안나옴니당
+// 20220317 페이징 번호를 5개씩 나누기 START SI => 현재는 Start 1 / end 2 라서 이전, 다음 표시가 안나옴니당
 		 // 한번에 표시할 페이징 번호의 갯수
 		 int pageNum_cnt = 5;
 
