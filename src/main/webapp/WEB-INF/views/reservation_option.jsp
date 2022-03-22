@@ -150,22 +150,18 @@
 		
 		<!-- 공통 DB - 로그인/체크인/체크아웃 -->
 		<input type="hidden" value="${loginId}" name="loginId"/>
-		<input type="text" value="${checkindate}" name="checkindate"/>
-		<input type="text" value="${checkoutdate}" name="checkoutdate"/>
-		
-		<!-- 객실옵션선택창 시작-->
-		<c:forEach items="${params}" var="item">
-		<input type ="text" name = "price" value="${item.price }">
-		<input type ="text" value="${item.bedType }">
-		<input type ="text" value="${item.number }">
-		<input type ="text" value="${item.room }">
-		
+		<input type="hidden" value="${checkindate}" name="checkindate"/>
+		<input type="hidden" value="${checkoutdate}" name="checkoutdate"/>
+			
+
 	
 	
 		<c:forEach var="rD" items="${reserveData}" varStatus="RDS"> 
-			<!-- 객실별(객실번호,객실가격,인원 수) -->
-			<input type="hidden" value="${rD.room_num}" name="room_num_${RDS.count}"/>
-			<input type="hidden" value="${rD.room_price}" name="room_price_${RDS.count}"/>
+			<!-- 객실별(객실타입,침대타입,객실가격,인원 수) -->
+			<input type="hidden" value="${rD.room}" name="room_type_${RDS.count}"/>
+			<input type="hidden" value="${rD.price}" name="room_price_${RDS.count}"/>
+			<input type="hidden" value="${rD.bedType}" name="room_bed_${RDS.count}"/>
+			<input type="hidden" value="${rD.number}" name="people_${RDS.count}"/>
 			
 			<!-- 객실box -->
 			<div class="rooms"><h5>객실${RDS.count}</h5></div>
@@ -186,7 +182,7 @@
 						  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
 						  			<input type="text" class="number" name="option${op.option_num}_cnt_${RDS.count}" value="0" readonly/>
 						            <img class="plus_${op.option_num}" src="resources/images/plusbtn.png"  alt="플러스버튼">
-						            <input type="hidden" value="${rD.room_people}" name="room_people_${RDS.count}"/>
+						            <input type="hidden" value="${rD.number}" name="room_people_${RDS.count}"/>
 						    	</div>
 				    	</div>
 				    	<br/>
@@ -236,7 +232,6 @@
 		   		</c:forEach>
 			</div>
 		
-		</c:forEach>
 		</c:forEach>	
 			
 		<!-- 객실옵션선택창 끝 -->
@@ -276,18 +271,18 @@
             <div class="row">
               <div class="col-md-6 form-group">
                 <label class="text-black font-weight-bold" for="credit_num">신용카드번호</label>
-                <input type="text" id="credit_num" value="${memInfo.credit_num}" class="form-control ">
+                <input type="text" id="credit_num" value="${memInfo.credit_num}" name="credit_num" class="form-control ">
               </div>
               <div class="col-md-6 form-group">
                 <label class="text-black font-weight-bold" for="credit_validity">유효기간</label>
-                <input type="text" id="credit_validity" value="${memInfo.credit_validity}" class="form-control ">
+                <input type="text" id="credit_validity" value="${memInfo.credit_validity}" name="credit_valid" class="form-control ">
               </div>
             </div>
         
             <div class="row">
               <div class="col-md-12 form-group">
                 <label class="text-black font-weight-bold" for="credit_type">카드종류</label>
-                <input type="text" id="credit_type" value="${memInfo.credit_type}" class="form-control ">
+                <input type="text" id="credit_type" value="${memInfo.credit_type}" name="credit_type"class="form-control ">
               </div>
             </div>
 
@@ -335,15 +330,14 @@ EMAIL:info@yourdomain.com
 			</div>
 			<div class="box2">사용 할 마일리지 : <input type="text" id="useMileage" style="width:140px;"></div> --%>
 			
-			<!-- 지선결제금액 -->
-			<div style="float:right">
+			
+			<!-- 결제금액 -->
+			<div style="float:right;">
 				<span>결제 금액 : </span>			
-				<input type="text" id="cardTotal" value=""/>
+				<input type="text" id="cardTotal" name="cardTotal"value="" style="border-style:none; outline:none;" readonly/>
 			
 			</div>
 			
-			<!-- 형민결제금액 -->
-			<div class="box2" id="priceDiv" style="float:right">결제 금액 : 0원</div>
 		</div>
 		<br/>
 		<div class="btn2">
@@ -537,11 +531,9 @@ EMAIL:info@yourdomain.com
 	$(document).ready(function(){
     var $input = $(".number"); // readonly inputBox  
         $(".number").on('input', function() {
-			        	
-			var cardTotal1 = 0;
-			var cardTotal2 = 0;
-			var cardTotal3 = 0;
 			
+        	
+        	var cardTotal = 0;
 			
 			var length = ${fn:length(reserveData)}+1; 
 			console.log("length:"+length);
@@ -555,14 +547,11 @@ EMAIL:info@yourdomain.com
 					var option2 = parseInt($("input[name=optionPrice2_"+i+"]").val() * $("input[name=option2_cnt_"+i+"]").val());
 					console.log("조식 가격X수량 값: "+option2);
 					
-					//('cardTotal_'+i) = room_price+option1+option2;
 					
-					cardTotal += (room_price+option1+option2);
+					cardTotal += (room_price+option1+option2);				
+					
 				}
 				
-				console.log(cardTotal_1);
-				console.log(cardTotal_2);
-				console.log(cardTotal_3);
 				console.log("총 카드사용금액 : "+cardTotal);
 				$('#cardTotal').val(cardTotal);
  

@@ -31,4 +31,8 @@ public interface ReserveDAO {
 
 	ArrayList<RoomDTO> roomIdx(RoomDTO roomDto);
 
+	int rate(String loginId);
+
+	void mileageSave(String loginId, int mileageSave, int useableSave);
+
 }

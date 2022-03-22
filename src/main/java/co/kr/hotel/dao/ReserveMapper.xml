@@ -43,8 +43,8 @@
 	 	keyColumn="reserve_idx"
 	 	parameterType="co.kr.hotel.dto.ReserveDTO">
 	 		
-		insert into reserve (mem_id,reserve_num,room_num,reserve_date,reserve_state,checkindate,checkoutdate,adult_cnt,extrabed_cnt,breakfast_cnt,add_requests)
-		values(#{mem_id},#{reserve_num},#{room_num},#{reserve_date},#{reserve_state},#{checkindate},#{checkoutdate},#{adult_cnt},#{extrabed_cnt},#{breakfast_cnt},#{add_requests})
+		insert into reserve (mem_id,reserve_num,room_num,reserve_state,checkindate,checkoutdate,adult_cnt,extrabed_cnt,breakfast_cnt,add_requests)
+		values(#{mem_id},#{reserve_num},#{room_num},#{reserve_state},#{checkindate},#{checkoutdate},#{adult_cnt},#{extrabed_cnt},#{breakfast_cnt},#{add_requests})
 	 	
 	 </insert>
 	 
@@ -78,4 +78,12 @@
 
 	          
 	</select>
+	
+	<select id="rate"  resultType="int">
+		select save_rate from grade_type where mem_grade = (select mem_grade from member where mem_id = #{param1})
+	</select>
+	
+	 <insert id="mileageSave">
+	 	INSERT INTO mileage(mem_id,mileage_price,mileage_useable) VALUES(#{param1},#{param2},#{param3});
+	 </insert>
 </mapper>

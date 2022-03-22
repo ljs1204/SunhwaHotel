@@ -73,6 +73,15 @@ public class ReserveService {
 		// TODO Auto-generated method stub
 		return reserveDao.roomIdx(roomDto);
 	}
+
+	public int rate(String loginId) {
+		return  reserveDao.rate(loginId);
+	}
+
+	public void mileageSave(String loginId, int mileageSave, int useableSave) {
+		reserveDao.mileageSave(loginId,mileageSave,useableSave);
+		
+	}
 	
 	
 	
