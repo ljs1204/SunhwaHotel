@@ -126,6 +126,7 @@
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일자</th>
+							<th>삭제</th>
 							
 						</tr>
 						<c:forEach items="${list}" var="board">

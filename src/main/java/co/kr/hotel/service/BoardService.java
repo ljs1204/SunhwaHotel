@@ -60,6 +60,5 @@ public class BoardService {
 		return mav;
 	}
 	
-	
 	}
 

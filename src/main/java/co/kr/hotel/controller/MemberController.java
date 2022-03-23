@@ -33,7 +33,6 @@ public class MemberController {
 		return "login";
 	}
 	
-	
 	@PostMapping(value="login")
 	public String login(Model model,@RequestParam String userId, @RequestParam String userPw, HttpSession session) {
 		

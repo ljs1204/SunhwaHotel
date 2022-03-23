@@ -66,12 +66,7 @@ public class BoardController {
 		return service.list();
 	}
 	
-	
-	
-	
-	
-	
-	
+
 	
 	
 			

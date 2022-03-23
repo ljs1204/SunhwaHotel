@@ -21,9 +21,5 @@
       )VALUES(
       #{board_title},#{board_orinum},(select ifnull( max(re_num),0)+1 from board b ),2,'admin',#{board_content})
 	</insert>
-	
 
-	
-
- 	
 </mapper>

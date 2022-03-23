@@ -14,5 +14,5 @@ public interface BoardDAO {
 
 	ArrayList<BoardDTO> list();
 	
-	
+
 }
