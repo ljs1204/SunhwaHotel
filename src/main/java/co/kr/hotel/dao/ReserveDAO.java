@@ -30,6 +30,7 @@ public interface ReserveDAO {
 	MemberDTO reservation_memInfo(String loginId);
 
 	ArrayList<RoomDTO> roomIdx(RoomDTO roomDto);
+	
 
 	int rate(String loginId);
 

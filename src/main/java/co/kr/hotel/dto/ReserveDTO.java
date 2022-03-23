@@ -289,4 +289,10 @@ public class ReserveDTO {
 		this.product_cnt = product_cnt;
 	}
 	// 김승일 환불신청 END 20220319
+	
+	
+	
+	
+	
+	
 }

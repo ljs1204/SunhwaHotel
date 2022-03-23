@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="co.kr.hotel.dao.UnReserveDAO">
+
+	<select id = "beMyReserve" resultType="int">
+		SELECT COUNT(b.reserve_num)
+		,a.non_name_en
+		,a.non_email
+		FROM reserve AS b
+		INNER JOIN nonmember AS a
+		ON a.reserve_idx = b.reserve_idx			
+	</select>	
+</mapper>
