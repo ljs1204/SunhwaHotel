@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.service.ManagerService;
+import co.kr.hotel.service.ReserveService;
 
 @Controller
 public class ManagerController {
@@ -24,7 +25,7 @@ public class ManagerController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired ManagerService service;
-	
+	@Autowired ReserveService reserveservice;
 	
 	//유선화 관리자 회원 예약 정보 리스트 페이지(회원1명) START 2022.03.22
 	
@@ -34,10 +35,7 @@ public class ManagerController {
 			@RequestParam("num") int num,
 			@RequestParam("mem_id") String mem_id) {
 		logger.info("myReserve로 요청이 들어옴 ");
-
-		// 로그인 세션 확인 후 페이지 분기 - SI 20220315
 		String page = "index";
-
 		//String loginId = (String) session.getAttribute("loginId");
 		//String loginId = mem_id; // mem_id를 회원 리스트 페이지에서 받아온다  myReserveAdmin?num=1&mem_id=seon119
 		String loginId = "seon119";
@@ -105,6 +103,20 @@ public class ManagerController {
 	
 	//SI님 덕분~ 
 	//유선화 관리자 회원 예약 정보 리스트 페이지(회원1명) END 2022.03.22
+	
+	
+	@RequestMapping(value = "/AdminRoomReserveDetail", method = RequestMethod.GET)
+	public String AdminRoomReserveDetail(Model model, HttpSession session) {
+		logger.info("AdminRoomReserveDetail 불러오기");			
+		
+		String page = "AdminRoomReserveDetail";
+		ArrayList<HashMap<String, String>> product = reserveservice.reservation_product();
+		logger.info("받아온 값 확인 {}",product);
+		model.addAttribute("product",product);
+		
+		return page;
+	}
+	
 	
 	
 	

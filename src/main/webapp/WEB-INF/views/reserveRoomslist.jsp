@@ -4,6 +4,7 @@
 
 
 
+
 <!DOCTYPE HTML>
 <html>
   <head>
@@ -112,7 +113,7 @@
               </figure>
               <div class="p-3 text-center room-info">
                 <h2>${list.room_type_name} </h2>
-                <span class="text-uppercase letter-spacing-1">${list.room_price} / per night</span>
+                <span class="text-uppercase letter-spacing-1"><fmt:formatNumber value="${list.room_price}" pattern="#,### 원" /> / per night</span>
               </div>
             </a>
             <input type="radio" name="check" data-type="${list.room_type}" data-price='${list.room_price}' value = "1"<c:if test="${i.index eq 0}">checked</c:if>/> 더블
