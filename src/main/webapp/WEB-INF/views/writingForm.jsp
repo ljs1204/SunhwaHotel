@@ -41,7 +41,7 @@
 			<tr>
 				
 				<th colspan="2">
-					<input type="button" onclick="location.href='./adminOrderList'" value="취소"/>
+					<input type="button" onclick="location.href='./AdminMileageRegist'" value="취소"/>
 					<!--  <input class="btn" type="button" id = "submit" value="등록" />-->
 					<button id = "submit">등록</button>
 				</th>

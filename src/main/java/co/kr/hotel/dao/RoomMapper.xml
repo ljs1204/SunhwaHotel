@@ -6,14 +6,30 @@
 
 <mapper namespace="co.kr.hotel.dao.RoomDAO">
 
+	<!-- 객실 리스트 보기 START SI - 20220321 -->
+	<select id="roomsList" resultType="co.kr.hotel.dto.RoomDTO">
+		select *
+		from room r
+		group by room_type
+	</select>
+
+	<select id="roomsPhotos" resultType="co.kr.hotel.dto.RoomDTO">
+		select *
+		from photo r
+	</select>
+
+	<!-- 객실 리스트 보기 END SI - 20220321 -->
+
+
+
+
+
 	<!-- 객실 상세정보 START 20220311 유선화 -->
-	
 	<select id="roomlist" resultType="co.kr.hotel.dto.RoomDTO">
-		select r.room_num ,r.room_type ,r.bed_type ,r.room_size ,r.room_price ,r.room_capacity ,r.room_type_name,p.room_img ,p.photo_num ,p.photoflg
+		select r.room_num ,r.room_type ,r.bed_type ,r.room_size ,r.room_price ,r.room_capacity 
+		,r.room_type_name,p.room_img ,p.photo_num ,p.photoflg
 		from room r inner join photo p ON r.room_num =p.room_num 
 		where r.room_num = '1001' and p.photoflg=1 or r.room_num = '1007' and p.photoflg=1
-
-
 
 	</select>
 

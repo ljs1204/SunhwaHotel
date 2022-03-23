@@ -18,7 +18,8 @@
 </head>
 <body>	
 	<h2>마일리지 상품 리스트</h2>
-	<button onclick="location.href= 'writingForm'">상품등록</button>
+	<button onclick="location.href= './writingForm?loginId=${loginId}'">상품등록</button>
+	
 	<table>
     <tr>
         <th>상품번호</th>   

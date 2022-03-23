@@ -56,7 +56,7 @@ $('#submit_chk').click(function() {
 		dataType : 'JSON',
 		success : function (data) {
 			if (data.success = 1) {
-				location.href = './unMyReserveList';
+				location.href = './unMyReserveDetail';
 			}else{
 				alert('일치하지 않는 정보가 있습니다. 재 확인 후 입력바랍니다. .');
 			}

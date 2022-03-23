@@ -68,6 +68,7 @@ public class MypageController {
 		String page = "index";
 
 		String loginId = (String) session.getAttribute("loginId");
+		
 		model.addAttribute("loginId", loginId);
 		
 		// 20220319 - 페이징 세션 확인 후 분기( 예약 상세보기에서 '목록으로' 클릭 시 ) START SI
@@ -99,7 +100,7 @@ public class MypageController {
 			model.addAttribute("result", processAll);	// 페이징 전에 이게 result로 보내지고 있어서 그냥 이렇게..
 			model.addAttribute("size", processAll.size());
 			
-			// 20220317 페이징 10개씩 자르기 SI - START
+			// 20220317 페이징 5개씩 자르기 SI - START
 			int startPageNum = (int) result.get("startPageNum");
 			int endPageNum = (int) result.get("endPageNum");
 			int pageNum_cnt = (int) result.get("pageNum_cnt");
@@ -217,6 +218,7 @@ public class MypageController {
 		}
 		model.addAttribute("reserve_num", reserve_num);
 		
+		// null이어도 페이지 이동
 		return "myReserveRefund";
 	}
 	
@@ -252,7 +254,7 @@ public class MypageController {
 	// 마이페이지 - 환불리스트 유선화 START 20220314
 	@RequestMapping(value = "/mypageRefundDetail", method = RequestMethod.GET)
 	public String mypageRefundDetail(Model model, 
-			@RequestParam String reserve_num, 
+			@RequestParam String reserve_num,
 			@RequestParam int reserve_idx) {
 		logger.info("mypage2Reserve 환불현황상세 ");
 		// 최근 예약

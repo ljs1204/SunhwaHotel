@@ -75,7 +75,7 @@ public class ReserveController {
 			
 			logger.info("받아온 값 확인 {}",params);
 			
-			
+			//형민- 객실정보 03.21 합침
 			List<Map<String,Object>> dataList = new ArrayList<> ();
 			JsonArray ja = new JsonArray();
 			JsonParser jsonParser = new JsonParser(); //List를 String으로 변환
@@ -90,33 +90,18 @@ public class ReserveController {
 				 map = (Map<String,Object>) gson.fromJson(jsonObj.toString(), map.getClass());
 				 dataList.add(map);
 			   } 								
-			  model.addAttribute("params", dataList); //객실타입/객실 침타입/인원 수/가격/
-			
+			  model.addAttribute("reserveData", dataList); //객실타입/객실 침대타입/인원 수/가격
+			//객실정보 끝
 			  
-			   
-			   
 			  
-			//아이디, 객실별(객실번호, 객실가격, 인원 수), 체크인날짜, 체크아웃날짜 임의값 설정.
+			  
+			//아이디
 			String loginId = "testid";
 			model.addAttribute("loginId",loginId);
-			model.addAttribute("checkindate",20220319);
-			model.addAttribute("checkoutdate",20220320);
-			
-			ArrayList<HashMap<String, String>> reserveData = new ArrayList<HashMap<String, String>> ();
-			HashMap<String, String> roomData1 = new HashMap<String, String> ();
-			roomData1.put("room_num", "1301");//객실1에 대한 객실번호
-			roomData1.put("room_price","180000");//객실1 - 객실가격
-			roomData1.put("room_people", "2");//객실1 - 객실인원수
-			HashMap<String, String> roomData2 = new HashMap<String, String> ();
-			roomData2.put("room_num", "1302");//객실2에 대한 객실번호
-			roomData2.put("room_price","350000");//객실2 - 객실가격
-			roomData2.put("room_people", "3");//객실2 - 객실인원수
-			
-			reserveData.add(roomData1);
-			reserveData.add(roomData2);
-			
-			logger.info("넣은 reserveData 값 확인 {}",reserveData);
-			model.addAttribute("reserveData",reserveData);
+
+			//체크인날짜,체크아웃날짜
+			model.addAttribute("checkindate",dataList.get(0).get("checkin").toString()); 
+			model.addAttribute("checkoutdate",dataList.get(0).get("checkout").toString()); 
 			
 			//옵션 값 불러오기
 			ArrayList<HashMap<String, String>> option = service.reservation_option();
@@ -137,12 +122,18 @@ public class ReserveController {
 			
 			
 			//회원정보,카드정보 가져오기
-			
 			MemberDTO memberDto = new MemberDTO();
 			memberDto = service.reservation_memInfo(loginId);
-			logger.info("카드번호 : "+memberDto.getCredit_num());
-			model.addAttribute("memInfo", memberDto);
 			
+			
+			String mem_card = memberDto.getCredit_type();
+			model.addAttribute("mem_card",mem_card);
+			if(mem_card != null) {
+			String cardBank = service.mem_card(mem_card);
+			logger.info("cardBank: "+cardBank);
+			memberDto.setCredit_type(cardBank);
+			}
+			model.addAttribute("memInfo", memberDto);
 			return "reservation_option"; 
 	 }
 	
@@ -161,27 +152,30 @@ public class ReserveController {
 		//params.replace("userId", userId);
 		
 
+		String loginId = params.get("loginId"); //세션으로 변경★
+		int extrabed_price = service.extrabed_price();//엑스트라베드 가격
+		int breakfast_price = service.breakfast_price();//조식 가격
+		
+		logger.info("가격1: "+extrabed_price);
+		logger.info("가격2: "+breakfast_price);
 		
 		
 		//객실 1 START 
 		ReserveDTO dto = new ReserveDTO();
 		dto.setMem_id(params.get("loginId"));
-		dto.setReserve_num("20220319180030"); //예약번호 만들어서 넣어야함.★
 		
-		dto.setRoom_num(params.get("room_num_1"));//객실번호 DB에서 ? ?
-		
-		String  day = "2022-03-19";
-		java.sql.Date d = java.sql.Date.valueOf(day);
-		dto.setReserve_date(d);//자동으로 오늘 날짜 들어가게 변경해야함.★
+		String reserveNum = "S"+System.currentTimeMillis();
+		dto.setReserve_num(reserveNum);
 		
 		dto.setReserve_state("1");
 		dto.setCheckindate(params.get("checkindate"));
 		dto.setCheckoutdate(params.get("checkoutdate"));
-		dto.setAdult_cnt(Integer.parseInt(params.get("room_people_1")));//인원수
-		dto.setChild_cnt(Integer.parseInt("0"));
-		dto.setInfant_cnt(Integer.parseInt("0"));
-		dto.setExtrabed_cnt(Integer.parseInt(params.get("option1_cnt_1")));//엑스트라베드 수량
-		dto.setBreakfast_cnt(Integer.parseInt(params.get("option2_cnt_1")));//조식 수량
+		dto.setAdult_cnt(Integer.parseInt(params.get("people_1")));//인원수
+		
+		int extrabed_cnt = Integer.parseInt(params.get("option1_cnt_1"));//엑스트라베드 수량
+		int breakfast_cnt = Integer.parseInt(params.get("option2_cnt_1"));//조식 수량
+		dto.setExtrabed_cnt(extrabed_cnt);
+		dto.setBreakfast_cnt(breakfast_cnt);
 		
 		String add = params.get("ADD_1");
 		if(add == null) {
@@ -189,14 +183,20 @@ public class ReserveController {
 		}
 		dto.setAdd_requests(add);//추가요청사항
 		
-		String loginId = params.get("loginId"); //세션으로 변경★
+
+		
+		
+		
 		// 빈 객실 가져오기 유선화 START 22.03.21
 		RoomDTO roomDto = new RoomDTO();
 		// 파라미터를 가져온다.
-		int room_tyoe = 1;
-		int bed_type = 1;
-		int roomCnt = 3;
-		roomDto.setRoom_type(room_tyoe);
+		
+		int room_type = Integer.parseInt(params.get("room_type_1"));
+		int bed_type = Integer.parseInt(params.get("room_bed_1"));
+		int roomCnt = Integer.parseInt(params.get("people_1"));
+		
+		
+		roomDto.setRoom_type(room_type);
 		roomDto.setBed_type(bed_type);
 		roomDto.setRoomCnt(roomCnt);
 		roomDto.setCheckindate(params.get("checkindate"));
@@ -208,24 +208,30 @@ public class ReserveController {
 		while(iterroomIdx.hasNext()) {
 			
 			roomDtoTwo = iterroomIdx.next();
-			roomDtoTwo.getRoom_num();
+			String roomIdx2 = roomDtoTwo.getRoom_num();
 			logger.info("roomDtoTwo : "+roomDtoTwo.getRoom_num());
+			dto.setRoom_num(roomIdx2); //객실번호  DTO 담기
 		}
-		
-		
-		
+			
 		logger.info("roomIdx"+roomIdx);
 		
 		// 빈 객실 가져오기 유선화 END 22.03.21
-
-		service.roomOne(dto);
+		
+		
+		
+		service.roomOne(dto); //예약insert
+		
+		
+		
+		
+		
 		
 		
 		int reserve_idx = dto.getReserve_idx();
 		logger.info("reserve_idx : "+reserve_idx);
 
 		if(reserve_idx > 0 ) { //성공 예약번호 
-			logger.info("마일리지상품 히스토리,회원 마일리지 내역 저장");
+			logger.info("마일리지상품 히스토리,회원 마일리지 내역 저장 시작");
 
 			int productTotal = 0;
 			
@@ -239,10 +245,6 @@ public class ReserveController {
 					int product_cnt = Integer.parseInt(params.get("p"+i+"_cnt_1"));
 					productTotal -= product_price*product_cnt;
 					
-					logger.info("product_num : "+product_num);
-					logger.info("product_price : "+product_price);
-					logger.info("product_cnt : "+product_cnt);
-					
 					service.roomOneCart(reserve_idx,product_cnt,product_num); //마일리지 상품히스토리(cart) Insert
 
 					
@@ -250,72 +252,79 @@ public class ReserveController {
 				
 			}
 			
-			logger.info("객실 1 마일리지 총 구입금액 : "+productTotal);//mileage_price (-값)
-			int useable = service.useable(loginId);//DB 회원의 마일리지 잔액		
-			int mileage_useable = useable+productTotal;//회원 마일리지 잔액 - 객실별 상품 총 구입액 => mileage_useable
-			logger.info("남은 사용가능액 계산값 : "+mileage_useable);
-			service.buyMileageminus(loginId,productTotal,mileage_useable); //마일리지 내역 Insert : 상품 구입액만큼 차감
+			logger.info("productTotal : "+productTotal);
+			if(productTotal != 0) {
+				logger.info("객실 1 마일리지 총 구입금액 : "+productTotal);//mileage_price (-값)
+				int useable = service.useable(loginId);//DB 회원의 마일리지 잔액		
+				int mileage_useable = useable+productTotal;//회원 마일리지 잔액 - 객실별 상품 총 구입액 => mileage_useable
+				logger.info("남은 사용가능액 계산값 : "+mileage_useable);
+				service.buyMileageminus(loginId,productTotal,mileage_useable); //마일리지 내역 Insert : 상품 구입액만큼 차감
+			}
 			
 			
-			//결제번호 따로 
-			//마일리지 적립예정 금액(회원등급% * 카드 사용 금액(객실 별 기본 가격 + (옵션1 선택 가격*수량)+ (옵션2 선택가격*수량))  insert
-
-
-			
-			
-			
-			
-			
-			
+			 //객실별 결제 insert 시작	
+		     String Pay_num = "P"+System.currentTimeMillis();//결제번호
+		     String credit_num = params.get("credit_num");//카드번호
+		     int credit_validity =  Integer.parseInt(params.get("credit_valid"));
+		     String credit_type = params.get("credit_type");
+		     //룸가격 + 엑베가격*수량 + 조식가격*수량
+		     int room_price = service.room_price(reserve_idx);//룸가격
+		     int pay_price = room_price +(extrabed_price * extrabed_cnt) + (breakfast_price * breakfast_cnt);
+		     int pay_mile = Math.abs(productTotal);//(+) 마일리지 사용금액
+		     int amount = pay_price + pay_mile;
+		     
+		     service.roomPay(reserve_idx,Pay_num,credit_num,credit_validity,credit_type,pay_price,pay_mile,amount);
+		     //객실 결제 끝
+		     
+			 //회원 결제 마일리지 적립(최종가*회원등급, 객실별아님)
+				int mem_gradeRate = service.rate(loginId);//회원등급 불러오기
+				int cardTotal = Integer.parseInt(params.get("cardTotal")); //카드사용금액
+				int mileageSave = cardTotal*mem_gradeRate/100; //적립 마일리지 금액 계산값
+				int useable = service.useable(loginId); //회원 사용가능금액
+				int useableSave = useable+mileageSave; //사용가능금액 계산값
+				service.mileageSave(loginId,mileageSave,useableSave);
+			 
+				
+				
 		}
 	
 		
 		
 		//객실 1 END
 		
-		/*
+		
 		 
 		//room_num_2 가 있으면 객실2 INSERT (반복작업) _2로 바꿔준다.
-		if(params.get("room_num_2") != null) {
-			logger.info("객실2 insert 시작");
+//		if(params.get("room_type_2") != null) {
+//			
+//			logger.info("객실2 insert 시작");
+//			
+//			
+//			//객실 2 START 
+//			ReserveDTO dto2 = new ReserveDTO();
+//			dto2.setMem_id(params.get("loginId"));
+//			dto2.setReserve_num(reserveNum);
+//			
+//			dto2.setReserve_state("1");
+//			dto2.setCheckindate(params.get("checkindate"));
+//			dto2.setCheckoutdate(params.get("checkoutdate"));
+//			dto2.setAdult_cnt(Integer.parseInt(params.get("people_2")));//인원수
+//			
+//			int extrabed_cnt2 = Integer.parseInt(params.get("option1_cnt_2"));//엑스트라베드 수량
+//			int breakfast_cnt2 = Integer.parseInt(params.get("option2_cnt_2"));//조식 수량
+//			dto2.setExtrabed_cnt(extrabed_cnt2);
+//			dto2.setBreakfast_cnt(breakfast_cnt2);
+//			
+//			String add2 = params.get("ADD_2");
+//			if(add2 == null) {
+//				add2 = "없음";
+//			}
+//			dto2.setAdd_requests(add2);//추가요청사항
+//			
+//			
 			
-			//객실 2의 값 DTO에 값 설정
-			dto.setMem_id(params.get("loginId")); //객실옵션페이지 들어갈때 받아왔음
-			dto.setReserve_num("20220319180030"); //예약번호 만들어서 넣을 것
-			dto.setRoom_num(params.get("room_num_2"));//객실번호
-			dto.setReserve_date(d);//자동 처리날짜
-			dto.setReserve_state("1");
-			dto.setCheckindate(params.get("checkindate"));
-			dto.setCheckoutdate(params.get("checkoutdate"));
-			dto.setAdult_cnt(Integer.parseInt(params.get("room_people_2")));//인원수
-			dto.setChild_cnt(Integer.parseInt("0"));
-			dto.setInfant_cnt(Integer.parseInt("0"));
-			dto.setExtrabed_cnt(Integer.parseInt(params.get("extra_cnt_2")));//엑스트라베드 수량
-			dto.setBreakfast_cnt(Integer.parseInt(params.get("break_cnt_2")));//조식 수량
+
 			
-			add = params.get("ADD_2");
-			if(add == null) {
-				add = "없음";
-			}
-			dto.setAdd_requests(add);//추가요청사항
-			
-			
-			service.roomOne(dto);
-			
-			int reserve_idx2 = dto.getReserve_idx();
-			logger.info("reserve_idx2 : "+reserve_idx2);
-			
-			if(reserve_idx2 > 0 ) {
-				logger.info("요기 추가 해주기");
-				
-			}
-			
-			
-		}
-		
-		
-		
-		*/
 		
 		
 		

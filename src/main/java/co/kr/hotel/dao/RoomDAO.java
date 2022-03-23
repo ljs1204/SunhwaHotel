@@ -12,4 +12,10 @@ public interface RoomDAO {
 
 	ArrayList<RoomDTO> roomPhotodto(String room_num);
 
+	// 20220321 객실 리스트 보기 SI
+	ArrayList<RoomDTO> roomsList();
+	ArrayList<RoomDTO> roomsPhotos();
+
+	
+
 }

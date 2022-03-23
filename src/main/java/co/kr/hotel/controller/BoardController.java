@@ -2,6 +2,8 @@ package co.kr.hotel.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +27,10 @@ public class BoardController {
 	@Autowired BoardService service;
 	
 	//글쓰기
-	@RequestMapping(value = "/writeForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/AdminQnaWriteForm", method = RequestMethod.GET)
 	public String writeForm(Model model , @RequestParam HashMap<String, String> params) {
 		
-		logger.info("writeForm 이동");
+		logger.info("AdminQnaWriteForm 이동");
 		model.addAttribute("board_orinum",params.get("board_orinum").toString());
 
 		
@@ -37,7 +39,7 @@ public class BoardController {
 		
 		//유선화 END
 		
-		return "writeForm";
+		return "AdminQnaWriteForm";
 	}
 	//글쓰기 요청명 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
@@ -47,16 +49,16 @@ public class BoardController {
 		logger.info("write 답글 : {}" ,board_orinum);
 		service.write(params);
 		
-		return "redirect:/list";
+		return "redirect:/AdminQnalist";
 	}
 	//상세보기 
-	@GetMapping(value="/detail")
-	public ModelAndView detail(@RequestParam String board_num) {
+	@GetMapping(value="/AdminQnaDetail")
+	public ModelAndView detail(@RequestParam String board_num,HttpSession session) {
 		logger.info("상세보기 요청 :{} ",board_num);
-		return service.detail(board_num);
+		return service.detail(board_num,session);
 	}
 	// 2022.03.14  문의페이지 리스트 박형민
-	@GetMapping(value="/list")
+	@GetMapping(value="/AdminQnalist")
 	public ModelAndView list() {
 		
 		logger.info("리스트 요청");

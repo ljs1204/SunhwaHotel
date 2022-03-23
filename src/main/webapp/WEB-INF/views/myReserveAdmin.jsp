@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -53,21 +54,7 @@
 	}
 /* 세로 네비게이션(리스트그룹) 관련 css END - SI 20220314 */
 
-/* 컨텐츠 - 프로필 영역 css START - SI 20220314 */
-	
-    #list-home .table{
-       width: 100%;
-       height: auto;
-       text-align: center;
-       color: #333333;
-    }
-    #list-home th, #list-home td{
-       width: 40%;
-    }
-/* 컨텐츠 - 프로필 영역 css END - SI 20220314 */
-
-/* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 => 페이지 분리 */
-	/* 
+/* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 */
 	#list-reserve .table th{
 		background-color: #f1ebd6;
 		border-top: 1px solid #cdcbbe;
@@ -78,8 +65,19 @@
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 	}
-	 */
 /* 컨텐츠 - 예약 조회 영역 css END - SI 20220314 */	
+
+/* 20220317 페이징 영역 SI */
+	.custom-pagination ul li.active span{
+		background: #633e12 !important;
+	    color: #fff !important;
+	    border-radius: 50% !important;
+	}
+
+<style>
+
+
+
 
 
 </style>
@@ -104,141 +102,29 @@
 		<!-- 세로 네비게이션 바 -->
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
- 
-						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
-						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve">예약 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./tomemberboardlist">문의 글 & 답 글</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
-						<a class="list-group-item list-group-item-action  active" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myProfile">회원정보 수정</a>
 
-<!-- 페이지 이동 없이 사용할 땐 이걸로 
-						<a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" 
-						href="#list-home" role="tab" aria-controls="home">프로필</a>
-
-						<a class="list-group-item list-group-item-action" id="list-profile-list" 
-						href="./myReserve">예약 조회</a>
-
-						<a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" 
-						href="#list-messages" role="tab" aria-controls="messages">문의 글 & 답 글</a>
-
-						<a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" 
-						href="#list-miliage" role="tab" aria-controls="settings">마일리지 내역 조회</a>
-
-						<a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" 
-						href="#list-myInfo" role="tab" aria-controls="noticeWrite">내 정보 조회</a>
-
-						<a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" 
-						href="#list-myInfoEdit" role="tab" aria-controls="boardWrite">회원정보 수정</a>
- -->	
-
+						<a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
+						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="#">객실 예약 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./AdminMileageRegist">마일리지 상품 관리</a>
+						
 
 					</div>
 				</div>
 <!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
 
-<!-- 컨텐츠 영역 START - SI 20220314 -->
+<!-- 예약조회 START - SI 20220314 -->
 			<!-- tabContent 있어야 발동함 -->
 			<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
-
-				<!-- 프로필 START - SI 20220314 -->
-				<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-
-					<form action="" method="">
-						<h4 style="color: #633e12;">기본정보</h4>
-						<hr style="border-color: #633e12;" />
-
-
-						<!-- 프로필 - 유선화 20220316 -->
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<th scope="row">아이디</th>
-									<td colspan="2">${memberlist.mem_id}</td>
-								</tr>
-								<tr>
-									<th scope="row">이름(한글)</th>
-									<td colspan="2">${memberlist.mem_name_kr }</td>
-								</tr>
-								
-								<tr>
-									<th scope="row">이름(영문)</th>
-									<td colspan="2">${memberlist.mem_name_en }</td>
-								</tr>
-								
-								
-								<tr>
-									<th scope="row">생년월일</th>
-									<td colspan="2">${memberlist.mem_birth }</td>
-								</tr>
-								
-								<tr>
-									<th scope="row">이메일</th>
-									<td colspan="2">${memberlist.mem_email }</td>
-								</tr>
-								
-								<tr>
-									<th scope="row">휴대폰 번호</th>
-									<td colspan="2">${memberlist.mem_phone }</td>
-								</tr>
-								
-								<tr>
-									<th scope="row"><a href="./myPagemilelist?orderNum=1">마일리지</a></th>
-									<td colspan="2">${mypageInfo.mileage_useable}</td>
-								</tr>
-								
-							</tbody>
-						</table>
-						
-						<br />
-						<hr />
-						<br />
-
-						<h4 id="useFrequency"></h4>
-						<hr style="border-color: #633e12;" />
-
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<th scope="row">카드 번호</th>
-									<c:if test="${memberlist.credit_validity ne 0}"><td colspan="2">${memberlist.credit_num}</td></c:if>
-									<c:if test="${memberlist.credit_validity eq 0}"><td>등록된 카드정보가 없습니다</td></c:if>
-								</tr>
-								<tr>
-									<th scope="row">유효 기간</th>
-									<c:if test="${memberlist.credit_validity ne 0}"><td colspan="2">${memberlist.credit_validity}</td></c:if>
-									<c:if test="${memberlist.credit_validity eq 0}"><td>등록된 카드정가 없습니다</td></c:if>
-								</tr>
-								<tr>
-									<th scope="row">카드 종류</th>
-									<c:if test="${memberlist.credit_type eq 1}"><td colspan="2">하나카드</td></c:if>
-					           		<c:if test="${memberlist.credit_type eq 2}"><td colspan="2">국민카드</td></c:if>
-					           		<c:if test="${memberlist.credit_type eq 3}"><td colspan="2">현대카드</td></c:if>
-					           		<c:if test="${memberlist.credit_validity eq 0}"><td>등록된 카드정가 없습니다</td></c:if>
-									<c:if test="${memberlist.credit_validity eq 0}"><td>카드정보 입력하기</td></c:if>
-									
-								</tr>
-							</tbody>
-						</table>
-
-					</form>
-				</div>
-				
-					
-			</div>		
-					
-<!-- '프로필' 컨텐츠 영역 END - SI 20220314 -->
-
-
-<!-- 예약조회 START - SI 20220314 => mypage3로 분리 -->
-				<%-- <div class="col-md-10 tab-pane fade" id="list-reserve" role="tabpanel" aria-labelledby="list-profile-list"
+				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
 						style="max-width:100% !important">
 					<form action="" method="">
-						<h4 style="color: #633e12;">XXX 님의 예약 리스트</h4>
+						<h4 style="color: #633e12;">${loginId} 회원의 예약 리스트</h4>
 						<hr style="border-color: #633e12;" />
 					<table class="table table-hover">
 						<thead>
 							<tr>
+								<th>회원아이디</th>
 								<th>예약번호</th>
 								<th>객실타입</th>
 								<th>체크인</th>
@@ -248,8 +134,9 @@
 							</tr>
 						</thead>
 						<tbody>
+							<%-- 
 							<tr>
-								<td><a href="" onclick="">SVW8432Q</a></td>
+								<td><a href="./reserveDetail">SVW8432Q</a></td>
 								<td>디럭스(더블) 외 2개</td>
 								<td>2022-03-06</td>
 								<td>2022-03-08</td>
@@ -274,30 +161,101 @@
 								<td>679,000원</td>
 								<td>예약취소</td>
 							</tr>
+							 --%>
 							
-							<c:forEach var="" items="">
+							<!-- 예약 조회 리스트 뿌리기 --> 
+							<c:if test="${size ne 0 }">
+								<c:forEach var="res" items="${result }">
+									<!-- 20220315 객실 수 count ( 포함 n개 ) -->
+									<c:set var="roomCnt" value="${res.reserve_room_cnt}" />
+									
+									
+									<tr>
+										<td>${res.mem_id}</td>
+									<!-- 20220317 예약상세 / 환불상세 분기 START SI - 예약확인, 부분취소면 예약상세 || 예약취소면 환불상세 -->
+									
+									<c:choose>
+										<c:when test="${res.reserve_state eq 3 }">
+											<td><a href="mypageRefundDetail?reserve_num=${res.reserve_num}&reserve_idx=${res.reserve_idx}"
+													style="color:#633e12 !important; text-decoration:underline !important;">${res.reserve_num}</a></td>
+										</c:when>
+										<c:otherwise>
+											<td><a href="myReserveDetail?reserve_num=${res.reserve_num}&reserve_idx=${res.reserve_idx}"
+													style="color:#633e12 !important; text-decoration:underline !important;">${res.reserve_num}</a></td>
+										</c:otherwise>
+									</c:choose>
+												
+										<td>${res.room_type_name} 포함 ${roomCnt} 개</td>
+										<td>${res.checkindate}</td>
+										<td>${res.checkoutdate}</td>
+										<td>${res.reserve_amount}</td>
+										<c:choose>
+											<c:when test="${res.reserve_state eq 1}">
+												<td>예약완료</td>									
+											</c:when>
+											<c:when test="${res.reserve_state eq 2}">
+												<td><a href="" style="font-weight: 550; color:#633e12 !important; text-decoration:underline !important;">부분취소</a></td>									
+											</c:when>
+											<c:when test="${res.reserve_state eq 3}">
+												<td style="color:red;">예약취소</td>
+											</c:when>
+										</c:choose>
+									</tr>
+								</c:forEach>
+							</c:if>
+							<c:if test="${size eq 0 }">
 								<tr>
-									<td>${mychk.cafe_modtime }</td>
-									<td>${mychk.cafe_idx}</td>
-									<td>
-										<a href="./detail?idx=${mychk.cafe_idx}">${mychk.cafe_title}</a>
-									</td>
-									<td>${mychk.cafe_hit}</td>
-									<td>${mychk.cafe_likecnt }</td>
-									<td></td>
+									<td style="text-align:center;" colspan="6">예약된 내역이 없어요.</td>
 								</tr>
-							</c:forEach>
-							
+							</c:if>
 						</tbody>
 					</table>
 
-					페이징 영역!
+<!-- 20220317 페이징 START - SI -->
+					<div class="row" data-aos="fade">
+			          <div class="col-12">
+			            <div class="custom-pagination">
+			              <ul class="list-unstyled">
+			              	<c:if test="${prev}">
+							 <li><a href="/myReserveAdmin?num=${startPageNum - 1}">&lt;</a></li>
+							</c:if>
+							
+							<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
+							  <li class="active">
+							   	  <c:if test="${select != num}">
+								   <a href="./myReserveAdmin?num=${num}" style="color:#633e12 !important;">${num}</a>
+								  </c:if>
+								  
+								  <c:if test="${select == num}">
+								   <b style="font-size: 21px; color:#633e12 !important;"><span>${num}</span></b>
+								  </c:if>
+							 </li>
+							</c:forEach>
+							
+							<c:if test="${next}">
+							 <li><a href="/myReserveAdmin?num=${endPageNum + 1}">&gt;</a></li>
+							</c:if>
+			              
+			              </ul>
+			            </div>
+			          </div>
+			        </div>
+<!-- 20220317 페이징 END - SI -->					
+										
+					
 					<hr style="border-color: #633e12;" />
 					</form>
 
 				</div>
-				 --%>
+			</div>
 <!-- 예약조회 END - SI 20220314 -->	
+
+
+
+
+
+					
+					
 				
 
 				<!-- 20220314 폐기
@@ -436,9 +394,81 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 		</div>
 	</section>
 
-	<!-- footer 20220314 SI -->
-	<footer class="footer-section">
-		<jsp:include page="footer.jsp" flush="true" />
+	<footer class="section footer-section">
+		<div class="container">
+			<div class="row mb-4">
+				<div class="col-md-3 mb-5">
+					<ul class="list-unstyled link">
+						<li><a href="#">About Us</a></li>
+						<li><a href="#">Terms &amp; Conditions</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Rooms</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 mb-5">
+					<ul class="list-unstyled link">
+						<li><a href="#">The Rooms &amp; Suites</a></li>
+						<li><a href="#">About Us</a></li>
+						<li><a href="#">Contact Us</a></li>
+						<li><a href="#">Restaurant</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 mb-5 pr-md-5 contact-info">
+					<!-- <li>198 West 21th Street, <br> Suite 721 New York NY 10016</li> -->
+					<p>
+						<span class="d-block"><span class="ion-ios-location h5 mr-3 text-primary"></span>Address:</span> <span> 198 West 21th Street, <br> Suite 721 New York NY 10016
+						</span>
+					</p>
+					<p>
+						<span class="d-block"><span class="ion-ios-telephone h5 mr-3 text-primary"></span>Phone:</span> <span> (+1) 435 3533</span>
+					</p>
+					<p>
+						<span class="d-block"><span class="ion-ios-email h5 mr-3 text-primary"></span>Email:</span> <span> info@domain.com</span>
+					</p>
+				</div>
+				<div class="col-md-3 mb-5">
+					<p>Sign up for our newsletter</p>
+					<form action="#" class="footer-newsletter">
+						<div class="form-group">
+							<input type="email" class="form-control" placeholder="Email...">
+							<button type="submit" class="btn">
+								<span class="fa fa-paper-plane"></span>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="row pt-5">
+				<p class="col-md-6 text-left">
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					Copyright &copy;
+					<script>
+						document.write(new Date().getFullYear());
+					</script>
+					All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by
+					<a href="https://colorlib.com" target="_blank">Colorlib</a>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				</p>
+
+				<p class="col-md-6 text-right social">
+					<a href="#">
+						<span class="fa fa-tripadvisor"></span>
+					</a>
+					<a href="#">
+						<span class="fa fa-facebook"></span>
+					</a>
+					<a href="#">
+						<span class="fa fa-twitter"></span>
+					</a>
+					<a href="#">
+						<span class="fa fa-linkedin"></span>
+					</a>
+					<a href="#">
+						<span class="fa fa-vimeo"></span>
+					</a>
+				</p>
+			</div>
+		</div>
 	</footer>
 
 	<script src="resources/js/jquery-3.3.1.min.js"></script>
@@ -463,7 +493,7 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	var year = d.getFullYear();
 	
 	$(document).ready(function(){
-		$('#useFrequency').html(year+"년 카드정보");
+		$('#useFrequency').html(year+"년 이용실적");
 		$('#useFrequency').css({'color':'#633e12'});
 	});
 /* 올해 년도 계산해서 이용실적 앞에 적어주기 END - SI 20220314 */
@@ -472,30 +502,4 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 
 </script>
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sogo Hotel by Colorlib.com</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="author" content="" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700">
-
-    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="resources/css/animate.css">
-    <link rel="stylesheet" href="resources/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="resources/css/aos.css">
-    <link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="resources/css/jquery.timepicker.css">
-    <link rel="stylesheet" href="resources/css/fancybox.min.css">
-    
-    <link rel="stylesheet" href="resources/fonts/ionicons/resources/css/ionicons.min.css">
-    <link rel="stylesheet" href="resources/fonts/fontawesome/resources/css/font-awesome.min.css">
-
-    <!-- Theme Style -->
-    <link rel="stylesheet" href="resources/css/style.css">
-  </head>
-  <body>
- 
 </html>
