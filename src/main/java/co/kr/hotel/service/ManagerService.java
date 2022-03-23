@@ -8,12 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dao.ManagerDAO;
+import co.kr.hotel.dao.MypageDAO;
 import co.kr.hotel.dto.MemberDTO;
-import co.kr.hotel.dto.MileagePhotoDTO;
+import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
 
@@ -167,6 +167,37 @@ public class ManagerService {
 			
 			return dao.memInfo(mem_id);
 		}
+		
+
+		public ModelAndView memlist() {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("adminmemsearch");
+			ArrayList<ManagerDAO> memlist = dao.memlist();		
+			logger.info("리스트 갯수 : {}",memlist.size());
+			mav.addObject("memlist", memlist);
+			return mav;
+		}
+
+		public ModelAndView search(MemberDTO parameter) {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("adminmemsearchresult");
+			ArrayList<ManagerDAO> search = dao.search(parameter);		
+			logger.info("리스트 갯수 : {}",search.size());
+			mav.addObject("memlist", search);
+			return mav;
+	
+	}
+
+		public ModelAndView adminmilesearch(MypageDTO parameter) {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("adminmilesearch");
+			ArrayList<MypageDAO> adminmilesearch = dao.adminmilesearch(parameter);		
+			logger.info("리스트 갯수 : {}",adminmilesearch.size());
+			mav.addObject("milelist",adminmilesearch) ;
+			
+			return mav;
+		}
+
 	}
 		
 

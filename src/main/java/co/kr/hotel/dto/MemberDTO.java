@@ -28,6 +28,21 @@ public class MemberDTO {
    private int mileage_stacked;		// 누적 마일리지량
 // 20220316 회원의 올해 실적 컬럼 추가 END
 
+// 검색조건
+   private String select;
+   public String getSelect() {
+	return select;
+}
+public void setSelect(String select) {
+	this.select = select;
+}
+public String getKeyword() {
+	return keyword;
+}
+public void setKeyword(String keyword) {
+	this.keyword = keyword;
+}
+private String keyword;
    
    
    public String getMem_id() {
