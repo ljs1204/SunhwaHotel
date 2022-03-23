@@ -108,5 +108,4 @@
         	VALUES (#{param1},#{param2},HEX(AES_ENCRYPT(#{param3}, SHA2('a-key',512))),#{param4},#{param5},#{param6},#{param7},#{param8})
 	</insert>
 	 
-	
 </mapper>
