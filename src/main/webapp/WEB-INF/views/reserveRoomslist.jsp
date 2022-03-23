@@ -285,7 +285,7 @@
 		var div1Room = $("[name=rowDiv]:eq(0)").find("input[name='check']:checked").data("type")+"";
 		var div1BedType = $("[name=rowDiv]:eq(0)").find("input[name='check']:checked").val();
 		var number =  $("[name=rowDiv]:eq(0)").find("[name='number']").html();
-		var params = [{"price": div1Price , "room": div1Room , "bedType": div1BedType , "number":number , "checkin":checkin_date, "checkout":checkout_date}];
+		var params = [{"price": div1Price , "room": div1Room , "bedType": div1BedType , "number":number , "checkin":checkin_date, "checkout":checkout_date, "rowDivCnt":rowDivCnt}];
 		
 		if(rowDivCnt > 1){
 			var div1Price2 = $("[name=rowDiv]:eq(1)").find("input[name='check1']:checked").data("price");
