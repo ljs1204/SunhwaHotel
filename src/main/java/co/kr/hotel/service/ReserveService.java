@@ -72,6 +72,7 @@ public class ReserveService {
 		return reserveDao.roomIdx(roomDto);
 	}
 
+
 	public int rate(String loginId) {
 		return  reserveDao.rate(loginId);
 	}

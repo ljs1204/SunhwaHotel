@@ -57,7 +57,17 @@
 		having reserve_state = 1
 	</select>
  	
+ 		<select id="memlist" resultType="co.kr.hotel.dto.MemberDTO">
+ 		select * from member 
+ 	</select>
  	
+ 	<select id="search" parameterType='co.kr.hotel.dto.MemberDTO' resultType="co.kr.hotel.dto.MemberDTO">
+ 		select * from member where ${select} = #{keyword}
+ 	</select>
+ 	
+ 	<select id="adminmilesearch" parameterType='co.kr.hotel.dto.MypageDTO' resultType="co.kr.hotel.dto.MypageDTO">
+ 		select * from mileage where mem_id=#{mem_id} order by mileage_idx desc
+ 		</select>
  	
  	
  	

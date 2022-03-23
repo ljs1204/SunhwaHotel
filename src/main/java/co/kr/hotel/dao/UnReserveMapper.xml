@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="co.kr.hotel.dao.UnReserveDAO">
+	
+	<select id="beMyReserve" resultType="co.kr.hotel.dto.ReserveDTO">
+	SELECT r.reserve_num, r.checkindate, r.checkoutdate, m.non_name_kr as reserve_name, m.non_phone as reserve_phone, m.non_email as reserve_email,
+	sum(r.adult_cnt) as adult_cnt, sum(r.extrabed_cnt) as extrabed_cnt, sum(r.breakfast_cnt) as breakfast_cnt, 
+	sum(p.pay_price) as pay_price, sum(p.amount) as reserve_amount
+	FROM reserve r 
+	left outer join nonmember m ON r.reserve_idx = m.reserve_idx
+	left outer join pay p on m.reserve_idx =p.reserve_idx	
+	WHERE r.reserve_num = #{param1} 
+	</select>
+		
+	<select id="unBeMyReserve" resultType="co.kr.hotel.dto.ReserveDTO">
+		select r.reserve_idx, r.reserve_num, r.reserve_state, ro.room_type, ro.room_num, ro.room_type_name, ro.bed_type
+		from reserve r
+			left outer join room ro
+			on r.room_num = ro.room_num 
+		where r.reserve_num = #{param1};
+	</select>
+</mapper>
