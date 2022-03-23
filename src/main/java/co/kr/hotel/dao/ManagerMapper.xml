@@ -57,8 +57,15 @@
 		having reserve_state = 1
 	</select>
  	
- 	
- 	
+ 	<!-- 관리자 기능 - 회원 정보 보기 SI -->
+ 	<select id="memInfo" resultType="co.kr.hotel.dto.MemberDTO">
+ 		select *
+		from mileage mi 
+		inner join `member` m 
+		on mi.mem_id = m.mem_id 
+		where mi.mem_id = #{param1}
+		order by mi.mileage_date desc limit 1
+ 	</select>
  	
  	
 </mapper>

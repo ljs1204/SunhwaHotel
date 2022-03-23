@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dao.ManagerDAO;
+import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.MileagePhotoDTO;
 import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
@@ -160,5 +161,16 @@ public class ManagerService {
 			 
 			return result;	
 		}
+
+	// 20220323 멤버 정보 확인 SI
+		public MemberDTO memInfo(String mem_id) {
+			
+			return dao.memInfo(mem_id);
+		}
 	}
 		
+
+
+
+
+

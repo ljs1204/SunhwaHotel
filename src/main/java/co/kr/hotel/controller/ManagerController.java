@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.service.ManagerService;
@@ -170,6 +171,18 @@ public class ManagerController {
 				service.updating(params);
 			return "redirect:/";
 		}		
+		
+		@RequestMapping(value = "/AdminMemInfo", method = RequestMethod.POST)
+		public String updating(Model model, @RequestParam String mem_id) {
+				
+			MemberDTO result = service.memInfo(mem_id);
+			model.addAttribute("result", result);
+				
+			return "AdminMemInfo";
+		}	
+		
+		
+		
 		
 	}
 
