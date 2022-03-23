@@ -196,27 +196,6 @@
 						<textarea placeholder="문의하실 사항이 있으시면 입력해주십시오." name="ADD_${RDS.count}"> </textarea>
 					</div>
 				</div>
-				<br/><hr/><br/>
-				
-			  	<c:forEach var="p" items="${product}" varStatus="pnum">	
-			  	<div class="list">
-			  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
-			  		<p>	${p.product_name}</p>
-			  		<p>	<fmt:formatNumber value="${p.product_price}" pattern="#,###"/>마일리지</p>
-			  		<input type="hidden" value="${p.product_num}" name="product${pnum.count}_${RDS.count}"/>
-			  		<input type="hidden" value="${p.product_price}"/>
-	
-					<input type="checkbox" class="checkbox">선택하기
-					
-					<div class="button2" style="margin-top: 10px; display:none;">
-						<img class="minus2" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-			            <input type="text" class="number2" value="0" name="p${pnum.count}_cnt_${RDS.count}"  onchange="valueChange()" readonly/>
-			            <img class="plus2" src="resources/images/plusbtn.png"  alt="플러스버튼">
-		            </div>
-		            
-		            <br/>
-		        </div>
-		   		</c:forEach>
 			</div>
 		
 		</c:forEach>	
@@ -228,27 +207,27 @@
 			<div class="row">
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="name_en">이름(영문)</label>
-                  <input type="text" id="name_en" value="${memInfo.mem_name_en}" class="form-control" readonly>
+                  <input type="text" id="name_en" class="form-control" >
                 </div>
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="name_kr">이름(국문)</label>
-                  <input type="text" id="name_kr" value="${memInfo.mem_name_kr}" class="form-control" readonly>
+                  <input type="text" id="name_kr" class="form-control" onkeyup="onlyKorFunc(t)">
                 </div>
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="checkin">체크인 날짜</label>
-                  <input type="text" id="checkin" value="${checkindate}" class="form-control" readonly>
+                  <input type="text" id="checkin" class="form-control" readonly>
                 </div>
                <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="checkout">체크아웃 날짜</label>
-                  <input type="text" id="checkout" value="${checkoutdate}" class="form-control" readonly>
+                  <input type="text" id="checkout" class="form-control" readonly>
                 </div>
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="phone">연락처</label>
-                  <input type="text" id="phone" value="${memInfo.mem_phone}" class="form-control" readonly>
+                  <input type="text" id="phone" class="form-control" onkeyup='removeChar(event)' maxlength=11/>
                 </div>
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="email">Email</label>
-                  <input type="email" id="email" value="${memInfo.mem_email}" class="form-control" readonly>
+                  <input type="email" id="email" class="form-control">
                 </div>
             </div>
 		
@@ -258,11 +237,11 @@
             <div class="row">
               <div class="col-md-6 form-group">
                 <label class="text-black font-weight-bold" for="credit_num">신용카드번호</label>
-                <input type="text" id="credit_num" value="${memInfo.credit_num}" onkeyup='removeChar(event)' name="credit_num" placeholder="16자 카드번호를 입력해주세요."class="form-control ">
+                <input type="text" id="credit_num" onkeyup='removeChar(event)' name="credit_num" placeholder="16자 카드번호를 입력해주세요."class="form-control ">
               </div>
               <div class="col-md-6 form-group">
                 <label class="text-black font-weight-bold" for="credit_validity">유효기간</label>
-                <input type="text" id="credit_validity" value="${memInfo.credit_validity}" onkeyup='removeChar(event)' name="credit_valid" placeholder="YYMM" class="form-control ">
+                <input type="text" id="credit_validity" onkeyup='removeChar(event)' name="credit_valid" placeholder="YYMM" class="form-control ">
               </div>
             </div>
         
@@ -279,18 +258,12 @@
                 	<option value="6">하나</option>
                 	<option value="7">기업</option>
                 </select>
-               <input type="text" id="credit_type" value="${memInfo.credit_type}" name="creditType" class="form-control " readonly />
-               <input type="hidden" id="credit_type_val" value="${mem_card}" name="credit_type" class="form-control "/>
+               <input type="text" id="credit_type" name="creditType" class="form-control " readonly />
+               <input type="hidden" id="credit_type_val" name="credit_type" class="form-control "/>
               
               </div>
             </div>
 
-
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <input type="button" id="cardSave" value="카드정보 저장하기" class="btn btn-primary text-white py-3 px-5 font-weight-bold"/>
-              </div>
-            </div>
 
         </div>
 		
@@ -320,16 +293,6 @@
 		</div>
 		
 		<!-- 결제금액/버튼 시작 -->
-		<div class="box">
-			<div class="box2">
-			<span>회원님의 마일리지 :</span>
-			<span id="useable"><fmt:formatNumber value="${useable}" pattern="#,###"/></span>
-			<input type="hidden" id="useable2" value="${useable}"/>
-			<span>원</span>
-			</div>
-			
-			<div class="box2" id="mPrice"style="float:right">마일리지상품 총 금액 : 0원</div>
-		</div>
 		<div class="box">	
 			<!-- 결제금액 -->
 			<div style="float:right;">
@@ -403,23 +366,6 @@
 		$(this).next().val(num);
 	});
 	
-	//마일리지 수량 - 버튼
-	$('.minus2').click(function(){
-	    var one =  $(this).next().val();
-	    var num = parseInt(one);
-	    num--;
-	
-	    if(num<=0){
-	    num = 0;
-	    $(this).parent().css('display', 'none'); 
-	    $(this).parent().prev().prop("checked", false); 
-	    };
-	    
-		$(this).next().val(num);
-	});
-	
-	
-	
 	//엑베/조식 옵션 수량 + 버튼
 	$('.plus_1').click(function(){
 	    var num = $(this).prev().val();
@@ -443,71 +389,6 @@
 	    }
 	    $(this).prev().val(num);
 	});
-	
-	
-	
-	//마일리지 수량 + 버튼
-	$('.plus2').click(function(){
-	    var one = $(this).prev().val();
-	    var num = parseInt(one);
-	    num++;
-	    
-	    $(this).prev().val(num); 
-	});
-
-	
-	//마일리지 상품 수량 변경시 함수 START
-	//선택한 마일리지상품의 금액X수량 계산하여 마일리지상품 총 금액에 나타내기
-	$(document).ready(function(){
-	    var $input = $(".number2"); // readonly inputBox  
-	        $(".number2").on('input', function() {
-	        	
-	        	var mTotalPrice = 0;
-	        	console.log('수량변경됨');
-	        		
-	        	$('input:checkbox:checked').each(function(){ 
-	        			
-	       			var checkPrice = $(this).prev().val();//체크한 상품의 가격
-	       			var check_cnt = $(this).next().find('.number2').val();//체크한 상품의 수량
-	       			//console.log(checkPrice);
-	       			console.log("cnt: "+check_cnt);
-	       			
-	       			var mTotal = checkPrice*check_cnt;
-	       			console.log("개별가: "+mTotal);
-	       			mTotalPrice += parseInt(mTotal);
-	       			
-	       			console.log("총 합계: "+mTotalPrice);
-	       			
-		       			if($('#useable2').val() < mTotalPrice){ //회원의 마일리지보다 마일리지 총 금액이 큰 경우 
-		       				alert('회원님의 마일리지를 초과할 수 없습니다.');
-		       				$('input:checkbox:checked').prop("checked", false);
-		       				$('.button2').css('display', 'none'); //버튼 비활성화
-		       				$('.number2').val(0);//수량 초기화
-		       				mTotalPrice = 0;
-		       			}
-	       		});
-       	
-     			$("#mPrice").html("마일리지상품 총 금액 : "+amountComma(mTotalPrice)+"원");	
-     			
-			});
-       	
-	        	
-	});
-	// 밑에 함수 구현(없으면 안됨)
-	(function ($) {
-	        var originalVal = $.fn.val;
-	        $.fn.val = function (value) {
-	            var res = originalVal.apply(this, arguments);
-	     
-	            if (this.is('input:text') && arguments.length >= 1) {
-	                // this is input type=text setter
-	                this.trigger("input");
-	            }
-	     
-	            return res;
-	        };
-	    })(jQuery);
-	//마일리지 상품 수량 변경시 함수 END
 	
  
 	//페이지 들어올때 총 결제금액 기본값
@@ -592,65 +473,30 @@
         else
             event.target.value = event.target.value.replace(/[^0-9]/g, "");
     }
-
- 
- 	//카드번호 회원정보에 저장 cardSave
- 	$("#cardSave").click(function(){
- 		console.log('카드정보 저장 시작');
-		var $c_num = $('#credit_num');
-		var $c_valid = $('#credit_validity');
-		var $c_type = $('#credit_type_val');
-		var $loginId = $('#loginId');
-		
-		if($c_num.val() == ''){
-			alert('카드번호를 입력해주세요.');
-			$c_num.focus();
-		}else if($c_num.val().length != 16){
-			alert('카드번호 16자로 입력바랍니다.');
-			$c_num.focus();
-		}else if($c_valid.val() == ''){
-			alert('카드 유효기간을 입력하세요.');
-			$c_valid.focus();
-		}else if($c_valid.val().length != 4){
-			alert('유효기간은 YYMM으로 입력바랍니다.');
-			$c_valid.focus();
-		}else if($c_type.val() == ''){
-			alert('카드사를 선택하세요.');
-			$c_type.focus();
-		}else{
-			console.log('카드정보 전송 시작');
-			
-			var param = {'c_num':$c_num.val(),'c_valid':$c_valid.val(),'c_type':$c_type.val(),'loginId':$loginId.val()};
-			
-			console.log(param);
-			
-			$.ajax({
-				type:'POST',
-				url:'cardSave',
-				data:param,
-				dataType:'JSON',
-				success:function(data){
-					console.log(data);
-					if(data.success == 1){
-						alert('카드정보를 회원정보에 저장했습니다.');
-					}else{
-						alert('카드정보 저장 실패했습니다. 다시 시도해주세요.');
-						
-					}
-				},
-				error:function(e){
-					console.log(e);
-					alert('서버에 문제가 발생했습니다. 고객센터에 문의해주세요.');
-				}
-			});
-			
-		}
-		
- 	});
 	
  	//폼 제출시 검사
  	function Checkform() {
- 		if( frm.credit_num.value == "" ){
+ 		if(frm.name_en.value == ""){
+ 			frm.credit_num.focus();
+ 			alert("이름(영문)을 입력해 주십시오.");
+ 			return false;
+ 		}else if(frm.name_kr.value == "" ){
+ 			frm.name_kr.focus();
+ 			alert("이름(국문)을 입력해 주십시오.");
+ 			return false;
+ 		}else if(frm.phone.value == "" ){
+ 			frm.phone.focus();
+ 			alert("연락처를 입력해 주십시오.");
+ 			return false;
+ 		}else if(frm.email.value == "" ){
+ 			frm.email.focus();
+ 			alert("이메일을 입력해 주십시오.");
+ 			return false;
+ 		}
+ 		
+ 		
+ 		
+ 		else if(frm.credit_num.value == "" ){
  			frm.credit_num.focus();
  			alert("카드번호를 입력해 주십시오.");
  			return false;
@@ -675,15 +521,28 @@
  	}
 
  	
-	// 숫자 3자리 콤마찍기
-	// 변환 함수
+	// 숫자 3자리 콤마
 	function amountComma(price){
 		var comma = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		
 		return comma;
 	}
 
+	
+	//한글만 입력 가능
+	$(function(){
+	       $("#name_kr").keyup(function (event) {
+	            regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+	            v = $(this).val();
+	            if (regexp.test(v)) {
+	                alert("한글만 입력가능 합니다.");
+	                $(this).val(v.replace(regexp, ''));
+	            }
+	        });
+	});
 
+	//영어만 입력 가능
+	
 	
 </script>
 

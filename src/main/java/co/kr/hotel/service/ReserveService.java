@@ -68,7 +68,7 @@ public class ReserveService {
 		return reserveDao.reservation_memInfo(loginId);
 	}
 
-	public ArrayList<RoomDTO> roomIdx(RoomDTO roomDto) {
+	public String roomIdx(RoomDTO roomDto) {
 		return reserveDao.roomIdx(roomDto);
 	}
 
@@ -101,6 +101,16 @@ public class ReserveService {
 			int pay_mile, int amount) {
 		reserveDao.roomPay(reserve_idx,pay_num,credit_num,credit_validity,credit_type,pay_price,pay_mile,amount);
 	}
+
+	public HashMap<String, Object> cardSave(HashMap<String, String> param) {
+		HashMap<String, Object> map = new HashMap<String, Object>(); 
+		
+		int row = reserveDao.cardSave(param);
+		map.put("success",row);
+		return map;
+	}
+
+
 
 
 	

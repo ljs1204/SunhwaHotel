@@ -67,7 +67,7 @@
 	</select>
 	
 	
-	<select id="roomIdx" resultType="co.kr.hotel.dto.RoomDTO">
+	<select id="roomIdx" resultType="String">
 			
 		SELECT r.room_num FROM room r 
 			WHERE r.room_num not in 
@@ -107,6 +107,10 @@
 	 	INSERT INTO pay (reserve_idx,pay_num,credit_num,credit_validity,credit_type,pay_price,pay_mileage,amount)
         	VALUES (#{param1},#{param2},HEX(AES_ENCRYPT(#{param3}, SHA2('a-key',512))),#{param4},#{param5},#{param6},#{param7},#{param8})
 	</insert>
-	 
+	
+	<insert id="cardSave" parameterType="hashmap">
+		update member set credit_num=HEX(AES_ENCRYPT(#{c_num}, SHA2('a-key',512))),credit_validity=#{c_valid},credit_type=#{c_type} where mem_id = #{loginId}
+	</insert>
+	
 	
 </mapper>
