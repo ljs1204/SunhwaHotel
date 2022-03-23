@@ -35,8 +35,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 
-
-
 </head>
 <style>
 /* 세로 네비게이션(리스트그룹) 관련 css START - SI 20220314 */
@@ -54,26 +52,25 @@
 	}
 /* 세로 네비게이션(리스트그룹) 관련 css END - SI 20220314 */
 
-/* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 */
+/* 컨텐츠 - 예약 상세보기 영역 css START - SI 20220314 */
 	#list-reserve .table th{
 		background-color: #f1ebd6;
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 		color: #633e12 !important;
+		width: 20%;
 	}
 	#list-reserve .table tr{
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 	}
-/* 컨텐츠 - 예약 조회 영역 css END - SI 20220314 */	
-
-/* 20220317 페이징 영역 SI */
-	.custom-pagination ul li.active span{
-		background: #633e12 !important;
-	    color: #fff !important;
-	    border-radius: 50% !important;
+	.focu:hover{
+		background-color:#633e12 !important;
+		color:white !important;
 	}
+/* 컨텐츠 - 예약 상세보기 영역 css END - SI 20220314 */	
 
+<style>
 
 
 
@@ -101,152 +98,105 @@
 		<!-- 세로 네비게이션 바 -->
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
-
-						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
 						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./myReserve?num=1">예약 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./tomemberboardlist">문의 글 & 답 글</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myProfile">회원정보 수정</a>
-
 					</div>
 				</div>
 <!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
 
-<!-- 예약조회 START - SI 20220314 -->
+<!-- 예약 상세보기 START - SI 20220317 -->
 			<!-- tabContent 있어야 발동함 -->
 			<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
 				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
 						style="max-width:100% !important">
 					<form action="" method="">
-						<h4 style="color: #633e12;">${loginId} 님의 예약 리스트</h4>
+						<h4 style="color: #633e12;">예약 상세보기 - ${dto.reserve_num }</h4>
 						<hr style="border-color: #633e12;" />
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>예약번호</th>
-								<th>객실타입</th>
-								<th>체크인</th>
-								<th>체크아웃</th>
-								<th>가격</th>
-								<th>예약상태</th>
-							</tr>
-						</thead>
-						<tbody>
-							
-							<!-- 예약 조회 리스트 뿌리기 --> 
-							<c:if test="${size ne 0 }">
-								<c:forEach var="res" items="${result }">
-									<!-- 20220315 객실 수 count ( 포함 n개 ) -->
-									<c:set var="roomCnt" value="${res.reserve_room_cnt}" />
-									<tr>
-									<!-- 20220317 예약상세 / 환불상세 분기 START SI - 예약확인, 부분취소면 예약상세 || 예약취소면 환불상세 -->
-									<c:choose>
-										<c:when test="${res.reserve_state eq 3 }">
-											<td><a href="mypageRefundDetail?reserve_num=${res.reserve_num}&reserve_idx=${res.reserve_idx}"
-													style="color:#633e12 !important; text-decoration:underline !important;">${res.reserve_num}</a></td>
-										</c:when>
-										<c:otherwise>
-											<td><a href="myReserveDetail?reserve_num=${res.reserve_num}&reserve_idx=${res.reserve_idx}"
-													style="color:#633e12 !important; text-decoration:underline !important;">${res.reserve_num}</a></td>
-										</c:otherwise>
-									</c:choose>
-												
-												
-										<td>${res.room_type_name} 포함 ${roomCnt} 개</td>
-										<td>${res.checkindate}</td>
-										<td>${res.checkoutdate}</td>
-										<td>${res.reserve_amount}</td>
-										<c:choose>
-											<c:when test="${res.reserve_state eq 1}">
-												<td>예약완료</td>									
-											</c:when>
-											<c:when test="${res.reserve_state eq 2}">
-												<td><a href="" style="font-weight: 550; color:#633e12 !important; text-decoration:underline !important;">부분취소</a></td>									
-											</c:when>
-											<c:when test="${res.reserve_state eq 3}">
-												<td style="color:red;">예약취소</td>
-											</c:when>
-										</c:choose>
-									</tr>
-								</c:forEach>
-							</c:if>
-							<c:if test="${size eq 0 }">
+					
+					<table class="table table-bordered">
+							<tbody>
 								<tr>
-									<td style="text-align:center;" colspan="6">예약된 내역이 없어요.</td>
+									<th scope="row">예약번호</th>
+									<td colspan="3">${dto.reserve_num}</td>
+									<!-- 모델에서 넣어주는 이름을 넣어라 -->
 								</tr>
-							</c:if>
-						</tbody>
-					</table>
-
-<!-- 20220317 페이징 START - SI -->
-					<div class="row" data-aos="fade">
-			          <div class="col-12">
-			            <div class="custom-pagination">
-			              <ul class="list-unstyled">
-			              	<c:if test="${prev}">
-							 <li><a href="/myReserve?num=${startPageNum - 1}">&lt;</a></li>
-							</c:if>
-							
-							<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
-							  <li class="active">
-							   <c:if test="${select != num}">
-								   <a href="./myReserve?num=${num}" style="color:#633e12 !important;">${num}</a>
-								  </c:if>    
-								  
-								  <c:if test="${select == num}">
-								   <b style="font-size: 21px; color:#633e12 !important;"><span>${num}</span></b>
-								  </c:if>
-							 </li>
-							</c:forEach>
-							
-							<c:if test="${next}">
-							 <li><a href="/myReserve?num=${endPageNum + 1}">&gt;</a></li>
-							</c:if>
-			              
-			              </ul>
-			            </div>
-			          </div>
-			        </div>
-<!-- 20220317 페이징 END - SI -->					
-										
-					
-					<hr style="border-color: #633e12;" />
-					</form>
-
-				</div>
-			</div>
-<!-- 예약조회 END - SI 20220314 -->	
-
-
-
-
-
-					
-					
-				
-
-				<!-- 20220314 폐기
-				<div class="col-md-5" data-aos="fade-up" data-aos-delay="200">
-					<div class="row">
-						<div class="col-md-10 ml-auto contact-info">
-							<p>
-								<span class="d-block">Address:</span> <span class="text-black"> 98 West 21th Street, Suite 721 New York NY 10016</span>
-							</p>
-							<p>
-								<span class="d-block">Phone:</span> <span class="text-black"> (+1) 435 3533</span>
-							</p>
-							<p>
-								<span class="d-block">Email:</span> <span class="text-black"> info@yourdomain.com</span>
-							</p>
-						</div>
+								<tr>
+									<th scope="row">기간</th>
+									<td colspan="3">${dto.checkindate} &nbsp;&nbsp;~&nbsp;&nbsp;  ${dto.checkoutdate }</td>
+								</tr>
+								<tr>
+									<th scope="row">타입</th>
+									<td colspan="3">
+										<c:forEach var="ro" items="${roomDTO}" varStatus="status">
+										<!-- 베드 타입 저장( 1-트윈 / 2-더블 )할 변수 생성 -->
+										<c:if test="${ro.bed_type eq 1 }">
+											<c:set var="bed_type" value="트윈"/>
+										</c:if>
+										<c:if test="${ro.bed_type eq 2 }">
+											<c:set var="bed_type" value="더블"/>
+										</c:if>
+											
+										<!-- 만약 예약상태가 2이면 회색 처리 -->
+										<c:if test="${ro.reserve_state eq 2 }">											
+											<!-- 룸 타입별로 이름 주기 -->
+											<c:if test="${status.last eq false }">
+												<span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type }) ,</span>
+											</c:if>
+											<c:if test="${status.last eq true }">
+												<span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type })</span>
+											</c:if>
+										</c:if>
+										<c:if test="${ro.reserve_state eq 1 }">											
+											<!-- 룸 타입별로 이름 주기 -->
+											<c:if test="${status.last eq false }">
+												<span>${ro.room_type_name }룸(${bed_type }) ,</span>
+											</c:if>
+											<c:if test="${status.last eq true }">
+												<span>${ro.room_type_name }룸(${bed_type })</span>
+											</c:if>
+										</c:if>										
+										</c:forEach>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">총 인원</th>
+									<td colspan="3">${dto.adult_cnt }</td>
+								</tr>
+								<tr>
+									<th scope="row">이름(영문)</th>
+									<td colspan="3">${dto.reserve_name }</td>
+								</tr>
+								<tr>
+									<th scope="row">전화번호</th>
+									<td colspan="3">${dto.reserve_phone }</td>
+								</tr>
+								<tr>
+									<th scope="row">이메일</th>
+									<td colspan="3">${dto.reserve_email }</td>
+								</tr>
+								<tr>
+									<th scope="row">옵션</th>
+									<td colspan="3">엑스트라베드 ${dto.extrabed_cnt}, 조식 ${dto.breakfast_cnt }</td>
+								</tr>
+								<tr>
+									<th scope="row">현금 결제 금액</th>
+										<td>${dto.pay_price }</td>
+								</tr>
+								<tr>
+									<th scope="row">총 금액</th>
+									<td colspan="3">${dto.reserve_amount }</td>
+								</tr>
+							</tbody>
+						</table>
+					<div style="text-align:right;">
+						<input type="button" class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;"
+								onclick="location.href='./myReserveRefund?reserve_num=${result.reserve_num}'" value="환불신청">
+<!-- 20220319 예약 리스트의 페이징 번호를 가져와서 저장하고, '목록으로' 버튼 클릭시 해당 인덱스로 SI -->
+						<input type="button" class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;"
+								onclick="reserveList()" value="목록으로">
 					</div>
+					</form>
 				</div>
-				 -->
-			</div>
-		</div>
 	</section>
-
 	<section class="section testimonial-section bg-light">
 		<div class="container">
 			<div class="row justify-content-center text-center mb-5">
@@ -259,8 +209,7 @@
 
 					<div class="testimonial text-center slider-item">
 						<div class="author-image mb-3">
-							<img src="resources/images/
-person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+							<img src="resources/images/person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 						</div>
 						<blockquote>
 
@@ -273,8 +222,7 @@ person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 
 					<div class="testimonial text-center slider-item">
 						<div class="author-image mb-3">
-							<img src="resources/images/
-person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+							<img src="resources/images/person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 						</div>
 						<blockquote>
 							<p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
@@ -286,8 +234,7 @@ person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 
 					<div class="testimonial text-center slider-item">
 						<div class="author-image mb-3">
-							<img src="resources/images/
-person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+							<img src="resources/images/person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 						</div>
 						<blockquote>
 
@@ -346,8 +293,6 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 
 		</div>
 	</section>
-
-
 
 	<section class="section bg-image overlay" style="background-image: url(' resources/ images/ hero_4.jpg ');">
 		<div class="container">
@@ -455,19 +400,15 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	<script src="resources/js/main.js"></script>
 </body>
 <script>
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 START - SI 20220314 */
-	var d = new Date();
+/* 20220319 목록으로 버튼 구현 SI 
+	var pagingNum = ${pagingNum};
 
-	var year = d.getFullYear();
+	console.log("돌아갈 페이지 번호 : ", pagingNum)
 	
-	$(document).ready(function(){
-		$('#useFrequency').html(year+"년 이용실적");
-		$('#useFrequency').css({'color':'#633e12'});
-	});
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 END - SI 20220314 */
-
-
+	function reserveList(){
+		location.href = "./myReserve?num="+pagingNum;
+	}	
+20220319 목록으로 버튼 구현 SI */
 
 </script>
-
 </html>

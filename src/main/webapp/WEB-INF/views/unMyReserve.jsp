@@ -18,6 +18,7 @@
 </head>
 <body>
 <h2>비 회원 예약조회</h2>
+	<form action="beMyReserve" method="get">
 	<table>
 			<tr>
 				<th>예약번호</th>
@@ -37,13 +38,15 @@
 			<tr>			
 				<th colspan="2">
 					<input type="button" onclick="location.href='./'" value="취소"/>
-					<input type = "button" id = "submit_chk" value = "확인"/>
+					<button>저장</button>
 				</th>
 			</tr>
 		</table>
+		</form>
 </body>
 <script>	
-$('#submit_chk').click(function() {
+/* 
+ $('#submit_chk').click(function() {
 	var reserve_num = $('#reserve_num').val();
 	var non_name_en = $('#non_name_en').val();	
 	var non_email = $('#non_email').val();	
@@ -66,5 +69,6 @@ $('#submit_chk').click(function() {
 		}
 	});
 }); 	
+*/
 </script>
 </html>
