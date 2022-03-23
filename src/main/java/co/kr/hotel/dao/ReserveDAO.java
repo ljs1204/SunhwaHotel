@@ -29,8 +29,7 @@ public interface ReserveDAO {
 
 	MemberDTO reservation_memInfo(String loginId);
 
-	ArrayList<RoomDTO> roomIdx(RoomDTO roomDto);
-	
+	String roomIdx(RoomDTO roomDto);
 
 	int rate(String loginId);
 
@@ -46,6 +45,9 @@ public interface ReserveDAO {
 
 	void roomPay(int reserve_idx, String pay_num, String credit_num, int credit_validity, String credit_type, int pay_price,
 			int pay_mile, int amount);
+
+	int cardSave(HashMap<String, String> param);
+
 
 
 }
