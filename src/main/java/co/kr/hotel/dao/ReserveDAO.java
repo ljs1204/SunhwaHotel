@@ -35,4 +35,16 @@ public interface ReserveDAO {
 
 	void mileageSave(String loginId, int mileageSave, int useableSave);
 
+	String mem_card(String mem_card);
+
+	int extrabed_price();
+
+	int breakfast_price();
+
+	int room_price(int reserve_idx);
+
+	void roomPay(int reserve_idx, String pay_num, String credit_num, int credit_validity, String credit_type, int pay_price,
+			int pay_mile, int amount);
+
+
 }

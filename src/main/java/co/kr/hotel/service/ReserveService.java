@@ -65,12 +65,10 @@ public class ReserveService {
 	}
 
 	public MemberDTO reservation_memInfo(String loginId) {
-		MemberDTO dto = new MemberDTO();
 		return reserveDao.reservation_memInfo(loginId);
 	}
 
 	public ArrayList<RoomDTO> roomIdx(RoomDTO roomDto) {
-		// TODO Auto-generated method stub
 		return reserveDao.roomIdx(roomDto);
 	}
 
@@ -82,6 +80,29 @@ public class ReserveService {
 		reserveDao.mileageSave(loginId,mileageSave,useableSave);
 		
 	}
+
+	public String mem_card(String mem_card) {
+		return reserveDao.mem_card(mem_card);
+	}
+
+	public int extrabed_price() {
+		return reserveDao.extrabed_price();
+	}
+
+	public int breakfast_price() {
+		return  reserveDao.breakfast_price();
+	}
+
+	public int room_price(int reserve_idx) {
+		return reserveDao.room_price(reserve_idx);
+	}
+
+	public void roomPay(int reserve_idx, String pay_num, String credit_num, int credit_validity, String credit_type, int pay_price,
+			int pay_mile, int amount) {
+		reserveDao.roomPay(reserve_idx,pay_num,credit_num,credit_validity,credit_type,pay_price,pay_mile,amount);
+	}
+
+
 	
 	
 	
