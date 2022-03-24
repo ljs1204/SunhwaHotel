@@ -483,6 +483,16 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	<script src="resources/js/main.js"></script>
 </body>
 <script>
+
+var userId = "${sessionScope.loginId}";
+console.log(userId);
+if (userId == "") {
+	console.log(userId);
+	location.href="logout";
+}
+
+
+
 /* 올해 년도 계산해서 이용실적 앞에 적어주기 START - SI 20220314 */
 	var d = new Date();
 

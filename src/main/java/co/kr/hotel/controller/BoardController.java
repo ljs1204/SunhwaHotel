@@ -64,9 +64,11 @@ public class BoardController {
 
 	// 2022.03.14 문의페이지 리스트 박형민
 	@GetMapping(value = "/AdminQnalist")
-	public String list(Model model,@RequestParam(value = "orderNum") int orderNum) {
+	public String list(Model model,@RequestParam(value = "orderNum") int orderNum,HttpSession session) {
 
 		// adminQnA 리스트 페이징 START 이지선 20220324
+		String userId= (String) session.getAttribute("userId");
+		model.addAttribute("userId", userId);
 		
 		 PageDto adminPage = new PageDto(); adminPage.setNum(orderNum);
 		 adminPage.setCount(service.count());
