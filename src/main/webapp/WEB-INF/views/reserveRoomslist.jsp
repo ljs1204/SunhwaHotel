@@ -106,7 +106,7 @@
          <div class="row" id="rowDiv" name="rowDiv">
           
         <c:forEach items="${roomReservelist}" var="list" varStatus="i">
-          <div class="col-md-6 col-lg-4 mb-5" id='roomList' data-aos="fade-up">
+          <div class="col-md-3 col-lg-3 mb-3" id='roomList' data-aos="fade-up">
             <a href="roomdetail?room_num=${list.room_num}" class="room">
               <figure class="img-wrap">
                 <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3">

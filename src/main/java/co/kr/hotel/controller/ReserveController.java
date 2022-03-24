@@ -312,7 +312,7 @@ public class ReserveController {
 		
 		
 		
-		return "reserveresult";
+		return "reserveResult";
 	}
 
 
@@ -324,6 +324,17 @@ public class ReserveController {
 		
 		return "doReservation";
 	}
+	
+	@RequestMapping(value = "/reserveResult", method = RequestMethod.GET)
+	public String reserveResult(Model model,HttpSession session) {
+		logger.info("reserveResult 요청");
+		//예약 불러오기
+		
+		return "reserveResult";
+	}
+	
+	
+	
 	
 	
 	@RequestMapping(value = "/cardSave", method = RequestMethod.POST)
