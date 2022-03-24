@@ -21,6 +21,7 @@ import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.service.ManagerService;
+import co.kr.hotel.service.MypageService;
 import co.kr.hotel.service.ReserveService;
 
 @Controller
@@ -30,6 +31,7 @@ public class ManagerController {
 	
 	@Autowired ManagerService service;
 	@Autowired ReserveService reserveservice;
+	@Autowired MypageService mypageService;
 	
 	//유선화 관리자 회원 예약 정보 리스트 페이지(회원1명) START 2022.03.22
 	
@@ -109,18 +111,18 @@ public class ManagerController {
 	//유선화 관리자 회원 예약 정보 리스트 페이지(회원1명) END 2022.03.22
 	
 	
-	@RequestMapping(value = "/AdminRoomReserveDetail", method = RequestMethod.GET)
-	public String AdminRoomReserveDetail(Model model, HttpSession session) {
-		logger.info("AdminRoomReserveDetail 불러오기");
-		
-		String page = "AdminRoomReserveDetail";
-		ArrayList<HashMap<String, String>> product = reserveservice.reservation_product();
-		logger.info("받아온 값 확인 {}",product);
-		model.addAttribute("product",product);
-		
-		
-		return page;
-	}
+//	@RequestMapping(value = "/AdminRoomReserveDetail", method = RequestMethod.GET)
+//	public String AdminRoomReserveDetail(Model model, HttpSession session) {
+//		logger.info("AdminRoomReserveDetail 불러오기");
+//		
+//		String page = "AdminRoomReserveDetail";
+//		ArrayList<HashMap<String, String>> product = reserveservice.reservation_product();
+//		logger.info("받아온 값 확인 {}",product);
+//		model.addAttribute("product",product);
+//		
+//		
+//		return page;
+//	}
 	
 		@RequestMapping(value = "/AdminMileageRegist", method = RequestMethod.GET)
 		public String adminOrderList(Model model, HttpSession session) {
@@ -213,5 +215,52 @@ public class ManagerController {
 		logger.info("마일리지 조회 id : " +parameter.getMem_id());
 		return service.adminmilesearch(parameter);
 	}
+	
+	@RequestMapping(value = "/AdminRoomReserveDetail", method = RequestMethod.GET)
+	public String AdminRoomReserveDetail(
+			Model model, 
+			@RequestParam String reserve_num,
+			@RequestParam int reserve_idx,
+			@RequestParam String mem_id,
+			HttpSession session) {
+		
+		String page = "AdminRoomReserveDetail";
+		ArrayList<HashMap<String, String>> product = reserveservice.reservation_product();
+		logger.info("받아온 값 확인 {}",product);
+		logger.info("받아온 reserve_num값 확인 {}",reserve_num);
+		
+		model.addAttribute("product",product);
+		
+
+		logger.info("AdminRoomReserveDetail 요청");
+
+	// 메인페이지 요청 세션검사 추가 START - SI 20220314
+		String loginId = (String) session.getAttribute("loginId");
+		
+		if (loginId != null) {
+			model.addAttribute("loginId", loginId);
+		}
+	// 메인페이지 요청 세션검사 추가 END - SI 20220314
+
+	// 20220318 예약 상세보기 구현 - SI
+		// 서비스에서 받은 HashMap 데이터 추출해서 model에 넘겨주기
+		HashMap<String, Object> result = mypageService.myReserveDetail(loginId, reserve_num, reserve_idx);
+		model.addAttribute("result", result.get("reserveDTO"));
+		model.addAttribute("product", result.get("productDTO"));
+		model.addAttribute("room", result.get("roomTypeName"));
+		
+		// 마일리지 상품 구매가 없을 때 처리를 위해 size 전송
+		ArrayList<ProductDTO> prod = (ArrayList<ProductDTO>) result.get("productDTO");
+		model.addAttribute("productSize", prod.size());
+		
+	// 20220319 페이징번호 가져오기 => 목록을 부를 때 세션에 pagingNum 저장 후 상세보기에서 사용
+		int pagingNum = (int) session.getAttribute("pagingNum");
+		model.addAttribute("pagingNum", pagingNum);
+	// 20220319 페이징번호 가져오기 END	
+		
+		return page;
+	}
+	
+	
 }
 

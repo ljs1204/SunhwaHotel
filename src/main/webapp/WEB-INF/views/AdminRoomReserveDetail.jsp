@@ -128,6 +128,7 @@
 			                <div class="col-md-4 form-group">
 			                  <label class="text-black font-weight-bold" for="name">객실1</label>
 			                  <a href="roomdetail?room_num=1001"><input type="text" id="name" class="form-control " readonly value="1001"></a>
+			                  
 			                </div>
 			                <div class="col-md-4 form-group">
 			                  <label class="text-black font-weight-bold" for="phone">객실2</label>
@@ -143,7 +144,8 @@
 			              
 			                <div class="col-md-12 form-group">
 			                  <label class="text-black font-weight-bold" for="name">예약번호</label>
-			                  <input type="text" id="name" class="form-control " readonly>
+			                  <input type="text" id="name" class="form-control " value="${result.reserve_num }" readonly>
+			                  ${result.reserve_num }
 			                </div>
 			                
 			              </div>
@@ -151,11 +153,11 @@
 			              <div class="row">
 			                <div class="col-md-6 form-group">
 			                  <label class="text-black font-weight-bold" for="checkin_date">체크인</label>
-			                  <input type="text" id="checkin_date" class="form-control">
+			                  <input type="text" id="name" class="form-control" readonly>
 			                </div>
 			                <div class="col-md-6 form-group">
 			                  <label class="text-black font-weight-bold" for="checkout_date">체크아웃</label>
-			                  <input type="text" id="checkout_date"class="form-control">
+			                  <input type="text" id="name"class="form-control" readonly>
 			                </div>
 			              </div>
 			              
@@ -176,25 +178,52 @@
 			              </div>
 			              <div class="row">
 			              
-			                <div class="col-md-4 form-group">
+			                <div class="col-md-3 form-group">
 			                  <label class="text-black font-weight-bold" for="name">엑베수량</label>
 			                  <input type="text" id="name" class="form-control " readonly>
 			                </div>
-			                <div class="col-md-4 form-group">
+			                <div class="col-md-3 form-group">
 			                  <label class="text-black font-weight-bold" for="phone">조식수량</label>
 			                  <input type="text" id="phone" class="form-control " readonly>
 			                </div>
-			                <div class="col-md-4 form-group">
+			                <c:forEach var="ro" items="${room }" varStatus="status">
+							<!-- 베드 타입 저장( 1-트윈 / 2-더블 )할 변수 생성 -->
+							<c:if test="${ro.bed_type eq 1 }">
+								<c:set var="bed_type" value="트윈"/>
+							</c:if>
+							<c:if test="${ro.bed_type eq 2 }">
+								<c:set var="bed_type" value="더블"/>
+							</c:if>
+			                <!-- 만약 예약상태가 2이면 회색 처리 -->
+							<%-- <c:if test="${ro.reserve_state eq 2 }">											
+								<!-- 룸 타입별로 이름 주기 -->
+								<c:if test="${status.last eq false }">
+									<span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type }) ,</span>
+								</c:if>
+								<c:if test="${status.last eq true }">
+									<span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type })</span>
+								</c:if>
+							</c:if> --%>
+			                <div class="col-md-3 form-group">
 			                  <label class="text-black font-weight-bold" for="phone">객실타입</label>
-			                  <input type="text" id="phone" class="form-control " readonly>
+			                  <c:if test="${status.last eq false }">
+			                  <span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type }) ,</span>
+			                  </c:if>
+			                  <c:if test="${status.last eq true }">
+			                  <span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type })</span>
+			                  </c:if>
+			                  
 			                </div>
-			              </div>
-			              <div class="row">
 			              
-			                <div class="col-md-4 form-group">
+			                <div class="col-md-3 form-group">
 			                  <label class="text-black font-weight-bold" for="name">침대타입</label>
 			                  <input type="text" id="name" class="form-control " readonly>
 			                </div>
+			                </c:forEach>
+			              </div>
+			              <div class="row">
+			                
+			                
 			                <div class="col-md-4 form-group">
 			                  <label class="text-black font-weight-bold" for="phone">예약상태</label>
 			                  <input type="text" id="phone" class="form-control " readonly>
@@ -235,7 +264,7 @@
 			              
 			              <c:forEach var="p" items="${product}" varStatus="pnum">	
 			              <div class="list">
-					  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
+					  		<img class="img" src="resources/photo/${p.product_img}" alt="상품이미지"/>
 					  		<p>	${p.product_name}</p>
 					  		<p>	${p.product_price}마일리지</p>
 					  		<input type="hidden" value="${p.product_num}" name="product${pnum.count}_${RDS.count}"/>

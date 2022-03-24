@@ -23,7 +23,7 @@
 		</tr>
 		<c:forEach items="${memlist}" var="memlist">
 			<tr>
-				<td>${memlist.mem_id}</td>
+				<a href="./"><td>${memlist.mem_id}</td></a>
 				<td>${memlist.mem_name_kr}</td>
 				<td>${memlist.mem_name_en}</td>
 				<td>${memlist.mem_birth}</td>

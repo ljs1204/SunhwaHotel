@@ -44,7 +44,7 @@
       <div class="container">
         <div class="row site-hero-inner justify-content-center align-items-center">
           <div class="col-md-10 text-center" data-aos="fade">
-            <h1 class="heading mb-3">Rooms</h1>
+            <h1 class="heading mb-3">객실 예약하기</h1>
             <ul class="custom-breadcrumbs mb-4">
               <li><a href="index.html">Home</a></li>
               <li>&bullet;</li>
@@ -97,19 +97,31 @@
         </div>
       </div>
     </section>
-
+ <section class="section" style="padding : 2em 0 ">
+ 		<div id="roomContainer" class="container">
+	    <button class="btn btn-outline-white-primary py-3 text-black px-5" id="pButton">객실 추가하기</button> <button class="btn btn-outline-white-primary py-3 text-black px-5" id="mButton" >객실 삭제하기</button>
+	    </div>
+ </section>
     
     <section class="section">
-    <button id="pButton">+</button> <button id="mButton" >-</button>
+	    
+	    
+	    
         <div id="roomContainer" class="container">
         
          <div class="row" id="rowDiv" name="rowDiv">
+		    
           
         <c:forEach items="${roomReservelist}" var="list" varStatus="i">
           <div class="col-md-3 col-lg-3 mb-3" id='roomList' data-aos="fade-up">
-            <a href="roomdetail?room_num=${list.room_num}" class="room">
+          <c:if test="${list.room_type eq 1}"><a href="roomdetail?room_num=1001" class="room"></c:if>
+          <c:if test="${list.room_type eq 2}"><a href="roomdetail?room_num=1003" class="room"></c:if>
+          <c:if test="${list.room_type eq 3}"><a href="roomdetail?room_num=1005" class="room"></c:if>
+          <c:if test="${list.room_type eq 4}"><a href="roomdetail?room_num=1007" class="room"></c:if>
+        	 
               <figure class="img-wrap">
                 <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3">
+                
               </figure>
               <div class="p-3 text-center room-info">
                 <h2>${list.room_type_name} </h2>
@@ -121,43 +133,50 @@
           </div>
         
         </c:forEach>
+        
+        <div id="roomContainer" class="container">
   		 	<div class="button" style="margin-top: 10px; ">
+  		 	인원 수 : 
 				<img class="minus" name="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
 	            <div class="number" name ="number" style="display: inline">1</div>
 	            <img class="plus" name="plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
             </div>
-        
+        </div>
 
 
         </div>
       </div>
     </section>
-     <button type="button" id="reserveBtn">예약하기</button>
-      <a href="reservation_option">이동하기</a>
+    <section class="section" style="padding : 2em 0 ">
+		<div id="roomContainer" class="container">
+		<button class="btn btn-outline-white-primary py-3 text-black px-5" type="button" id="reserveBtn">예약하기</button>
+	  	</div>
+ 	</section>
+     
     <section class="section bg-light">
 
       <div class="container">
         <div class="row justify-content-center text-center mb-5">
           <div class="col-md-7">
             <h2 class="heading" data-aos="fade">Great Offers</h2>
-            <p data-aos="fade">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <p data-aos="fade">선화호텔의 최고의 객실</p>
           </div>
         </div>
       
         <div class="site-block-half d-block d-lg-flex bg-white" data-aos="fade" data-aos-delay="100">
-          <a href="#" class="image d-block bg-image-2" style="background-image: url('resources/images/img_1.jpg');"></a>
+          <a href="./roomdetail?room_num=1001" class="image d-block bg-image-2" style="background-image: url('resources/images/디럭스1.png');"></a>
           <div class="text">
-            <span class="d-block mb-4"><span class="display-4 text-primary">$199</span> <span class="text-uppercase letter-spacing-2">/ per night</span> </span>
-            <h2 class="mb-4">Family Room</h2>
+            <span class="d-block mb-4"><span class="display-4 text-primary">9만원~</span> <span class="text-uppercase letter-spacing-2">/ per night</span> </span>
+            <h2 class="mb-4">Dirux Room</h2>
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
             <p><a href="#" class="btn btn-primary text-white">Book Now</a></p>
           </div>
         </div>
         <div class="site-block-half d-block d-lg-flex bg-white" data-aos="fade" data-aos-delay="200">
-          <a href="#" class="image d-block bg-image-2 order-2" style="background-image: url('resources/images/img_2.jpg');"></a>
+          <a href="./roomdetail?room_num=1007" class="image d-block bg-image-2 order-2" style="background-image: url('resources/images/스위트1.png');"></a>
           <div class="text order-1">
-            <span class="d-block mb-4"><span class="display-4 text-primary">$299</span> <span class="text-uppercase letter-spacing-2">/ per night</span> </span>
-            <h2 class="mb-4">Presidential Room</h2>
+            <span class="d-block mb-4"><span class="display-4 text-primary">137만원~</span> <span class="text-uppercase letter-spacing-2">/ per night</span> </span>
+            <h2 class="mb-4">Sweet Room</h2>
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
             <p><a href="#" class="btn btn-primary text-white">Book Now</a></p>
           </div>

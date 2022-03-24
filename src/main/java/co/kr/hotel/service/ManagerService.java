@@ -171,10 +171,11 @@ public class ManagerService {
 
 		public ModelAndView memlist() {
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("adminmemsearch");
+			mav.setViewName("adminmemsearch"); //adminmemsearch.jsp
 			ArrayList<ManagerDAO> memlist = dao.memlist();		
 			logger.info("리스트 갯수 : {}",memlist.size());
 			mav.addObject("memlist", memlist);
+			
 			return mav;
 		}
 
