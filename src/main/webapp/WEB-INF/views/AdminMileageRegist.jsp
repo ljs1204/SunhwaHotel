@@ -41,13 +41,13 @@
 <style>
 /* 세로 네비게이션(리스트그룹) 관련 css START - SI 20220314 */
 	.list-group-item.active {
-		background-color: #98cade !important;
+		background-color: #f1e3c4 !important;
 		/* border: 1px solid #f1ebd6 !important; */
 		color: #633e12 !important;
 		font-weight: bold;
 	}
 	.list-group-item {
-		font-size: 14px;
+		font-size: 12px;
 		font-family: Helvetica;
 		border: 1px solid #f1ebd6 !important;
 		padding-right: 10px !important;

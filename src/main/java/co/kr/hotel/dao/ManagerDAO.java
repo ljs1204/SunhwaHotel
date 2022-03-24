@@ -3,7 +3,9 @@ package co.kr.hotel.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.MileagePhotoDTO;
+import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
 
@@ -22,6 +24,16 @@ public interface ManagerDAO {
 	ArrayList<ReserveDTO> myReserveAllAdmin(String loginId);
 
 	ArrayList<ReserveDTO> myReservePartsAdmin(String loginId);
+
+// 20220323 회원 정보 보기
+	MemberDTO memInfo(String mem_id);
+	
+	ArrayList<ManagerDAO> memlist();
+
+	ArrayList<ManagerDAO> search(MemberDTO parameter);
+
+	ArrayList<MypageDAO> adminmilesearch(MypageDTO parameter);
+
 	
 	}
 	/* 파일 업로드 관련

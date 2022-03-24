@@ -57,7 +57,27 @@
 		having reserve_state = 1
 	</select>
  	
+ 	<!-- 관리자 기능 - 회원 정보 보기 SI -->
+ 	<select id="memInfo" resultType="co.kr.hotel.dto.MemberDTO">
+ 		select *
+		from mileage mi 
+		inner join `member` m 
+		on mi.mem_id = m.mem_id 
+		where mi.mem_id = #{param1}
+		order by mi.mileage_date desc limit 1
+ 	</select>
  	
+ 		<select id="memlist" resultType="co.kr.hotel.dto.MemberDTO">
+ 		select * from member 
+ 	</select>
+ 	
+ 	<select id="search" parameterType='co.kr.hotel.dto.MemberDTO' resultType="co.kr.hotel.dto.MemberDTO">
+ 		select * from member where ${select} = #{keyword}
+ 	</select>
+ 	
+ 	<select id="adminmilesearch" parameterType='co.kr.hotel.dto.MypageDTO' resultType="co.kr.hotel.dto.MypageDTO">
+ 		select * from mileage where mem_id=#{mem_id} order by mileage_idx desc
+ 		</select>
  	
  	
  	

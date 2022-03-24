@@ -10,10 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import co.kr.hotel.dto.MemberDTO;
+import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.service.ManagerService;
@@ -181,5 +185,33 @@ public class ManagerController {
 			return "redirect:/";
 		}		
 		
+		@RequestMapping(value = "/AdminMemInfo", method = RequestMethod.POST)
+		public String updating(Model model, @RequestParam String mem_id) {
+				
+			MemberDTO result = service.memInfo(mem_id);
+			model.addAttribute("result", result);
+				
+			return "AdminMemInfo";
+		}	
+		
+		
+		@GetMapping(value="/memlist")
+		public ModelAndView memlist()
+	            {
+			return service.memlist();
+		}
+		
+	@GetMapping(value="/search")
+		public ModelAndView search(Model model,MemberDTO parameter){
+			logger.info(parameter.getKeyword());
+			logger.info(parameter.getSelect());
+			return service.search(parameter);
+		}
+		
+	@GetMapping(value="/adminmilesearch")
+	public ModelAndView adminmilesearch(Model model,MypageDTO parameter){
+		logger.info("마일리지 조회 id : " +parameter.getMem_id());
+		return service.adminmilesearch(parameter);
 	}
+}
 
