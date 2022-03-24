@@ -1,5 +1,10 @@
 package co.kr.hotel.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dto.MemberDTO;
@@ -145,11 +152,36 @@ public class ManagerController {
 		}
 		
 		@RequestMapping(value = "/writing", method = RequestMethod.POST)
-		public String writing(Model model, @RequestParam HashMap<String, String> params) {	
-			logger.info("writing 요청 : {}",params);			
+		public String writing(Model model, MultipartFile[] photos,@RequestParam HashMap<String, String> params) {	
+			logger.info("writing 요청 : {}",params);
+	
+			
+			
+			for(MultipartFile photo : photos) {
+				try {
+					String oriFileName = photo.getOriginalFilename();//원본 파일명 추출
+
+					byte[] bytes = photo.getBytes();
+					
+					Path path = Paths.get("C:/photo/"+oriFileName); //경로설정
+					Files.write(path, bytes);
+					logger.info(oriFileName+" SAVE OK!");
+					params.put("product_img", oriFileName);
+					service.writing(params);//DB에 저장한 파일명을 기록
+					Thread.sleep(1);//파일 중복 피하기위함
+					
+						
+					}catch (Exception e) {
+					System.out.println(e.toString());
+					e.printStackTrace();
+					}
+			}
+			
+			
+			
 			String page = "redirect:/AdminMileageRegist"; 
 			
-			service.writing(params);
+			//service.writing(params);
 			//return "adminOrderList";
 			return page;
 		}

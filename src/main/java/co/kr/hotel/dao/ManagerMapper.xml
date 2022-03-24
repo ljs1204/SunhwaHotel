@@ -20,8 +20,8 @@
 	-->
 	<!-- 마일리지 상품 등록 글쓰기 페이지 -->
 	<insert id="writing" parameterType="hashmap">
-		INSERT INTO product(product_num, product_name, product_price)
-		VALUES(#{product_num},#{product_name},#{product_price})
+		INSERT INTO product(product_num, product_name, product_img,product_price)
+		VALUES(#{product_num},#{product_name},#{product_img},#{product_price})
 	</insert>
 	
 	<select id="detailing" resultType="co.kr.hotel.dto.ProductDTO">

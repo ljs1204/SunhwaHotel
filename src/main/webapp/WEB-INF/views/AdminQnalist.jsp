@@ -142,7 +142,39 @@
 					</table>
 
 <!-- 20220317 페이징 START - SI -->
-					
+					<!-- 페이징 이지선 start 20220324 -->
+					<div class="row" data-aos="fade">
+			          <div class="col-12">
+			            <div class="custom-pagination">
+			              <ul class="list-unstyled">
+			              
+			              <c:if test="${listPage.prev}">
+			                <li class="active"><a href="myPagemilelist?orderNum=${listPage.startPageNum - 1}">&lt;</a></li>
+			              </c:if>
+		                  <c:forEach begin="${listPage.startPageNum}" end="${listPage.endPageNum}" var="num">
+						      <c:if test="${listNum == num}"> 
+							      <li class="active">
+							      	<span>${num}</span>
+							      </li>
+						      </c:if>
+						      <c:if test="${listNum != num}">
+							      <li>
+							      	<a href="AdminQnalist?orderNum=${num}">${num}</a>
+							      </li>			     
+						      </c:if>    		
+					      </c:forEach>
+			              <c:if test="${milelistPage.next}">
+					      	<li>
+					      		<a href="AdminQnalist?orderNum=${listPage.endPageNum + 1}">&gt;</a>
+					      	</li>
+					      </c:if>
+			               
+			              </ul>
+			            </div>
+			          </div>
+			        </div>
+						<!-- 페이징 유선화 end 20220324 -->
+
 <!-- 20220317 페이징 END - SI -->					
 										
 					
