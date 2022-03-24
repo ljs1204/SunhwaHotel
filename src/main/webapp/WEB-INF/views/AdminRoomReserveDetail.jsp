@@ -41,13 +41,13 @@
 <style>
 /* 세로 네비게이션(리스트그룹) 관련 css START - SI 20220314 */
 	.list-group-item.active {
-		background-color: #f1e3c4 !important;
+		background-color: #98cade !important;
 		/* border: 1px solid #f1ebd6 !important; */
 		color: #633e12 !important;
 		font-weight: bold;
 	}
 	.list-group-item {
-		font-size: 12px;
+		font-size: 14px;
 		font-family: Helvetica;
 		border: 1px solid #f1ebd6 !important;
 		padding-right: 10px !important;
@@ -56,7 +56,7 @@
 
 /* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 */
 	#list-reserve .table th{
-		background-color: #f1e3c4;
+		background-color: #98cade;
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 		color: #633e12 !important;
@@ -104,9 +104,8 @@
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
 
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
-						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./myReserveAdmin?num=1&mem_id=seon119">객실 예약 정보 리스트</a>
-						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./AdminRoomReserveDetail">객실 상세 임시 ~ </a>
-						
+						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserveAdmin?num=1&mem_id=seon119">객실 예약 정보 리스트</a>
+						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./AdminRoomReserveDetail">객실 상세 임시 ~ </a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./AdminMileageRegist">마일리지 상품 관리</a>
 						
@@ -119,35 +118,155 @@
 			<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
 				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
 						style="max-width:100% !important">
-					<form action="" method="">
-						<h4 style="color: #633e12;">${loginId}님 어서오세요 문의 관리 페이지입니다.</h4>
-						<hr style="border-color: #633e12;" />
-					<table class="table table-hover">
-						<tr>
-							<th>글번호</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>작성일자</th>
-							
-						</tr>
-						<c:forEach items="${list}" var="board">
-							<tr>
-								<td>${board.board_num}</td>
-								<!--  <td><a href="detail?board_num=${board.board_num}">${board.board_title}</a></td>-->
-								<td><a href="AdminQnaDetail?board_num=${board.board_num}">${board.board_title}</a></td>
-								<td>${board.mem_id}</td>
-								<td>${board.reg_datetime}</td>
-							</tr>
-						</c:forEach>
-					</table>
-
-<!-- 20220317 페이징 START - SI -->
 					
-<!-- 20220317 페이징 END - SI -->					
-										
+						<h4 style="color: #633e12;">${loginId}님 어서오세요. 객실 예약 상세보기 페이지 입니다</h4>
+						<hr style="border-color: #633e12;" />
+						<form action="#" method="post" class="bg-white p-md-5 p-4 mb-5 border">
+			              
+			              <div class="row">
+			              
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="name">객실1</label>
+			                  <a href="roomdetail?room_num=1001"><input type="text" id="name" class="form-control " readonly value="1001"></a>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="phone">객실2</label>
+			                  <a href="roomdetail?room_num=1003"><input type="text" id="name" class="form-control " readonly value="1003"></a>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="phone">객실3</label>
+			                  <a href="roomdetail?room_num=1007"><input type="text" id="name" class="form-control " readonly value="1007"></a>
+			                </div>
+			              </div>
+			              
+			              <div class="row">
+			              
+			                <div class="col-md-12 form-group">
+			                  <label class="text-black font-weight-bold" for="name">예약번호</label>
+			                  <input type="text" id="name" class="form-control " readonly>
+			                </div>
+			                
+			              </div>
+			              
+			              <div class="row">
+			                <div class="col-md-6 form-group">
+			                  <label class="text-black font-weight-bold" for="checkin_date">체크인</label>
+			                  <input type="text" id="checkin_date" class="form-control">
+			                </div>
+			                <div class="col-md-6 form-group">
+			                  <label class="text-black font-weight-bold" for="checkout_date">체크아웃</label>
+			                  <input type="text" id="checkout_date"class="form-control">
+			                </div>
+			              </div>
+			              
+			              <div class="row">
+			              
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="name">인원 수</label>
+			                  <input type="text" id="name" class="form-control " readonly>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="phone">고객 이름</label>
+			                  <a href="#"><input type="text" id="phone" class="form-control " readonly></a>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="phone">고객 이메일</label>
+			                  <input type="text" id="phone" class="form-control " readonly>
+			                </div>
+			              </div>
+			              <div class="row">
+			              
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="name">엑베수량</label>
+			                  <input type="text" id="name" class="form-control " readonly>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="phone">조식수량</label>
+			                  <input type="text" id="phone" class="form-control " readonly>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="phone">객실타입</label>
+			                  <input type="text" id="phone" class="form-control " readonly>
+			                </div>
+			              </div>
+			              <div class="row">
+			              
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="name">침대타입</label>
+			                  <input type="text" id="name" class="form-control " readonly>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="phone">예약상태</label>
+			                  <input type="text" id="phone" class="form-control " readonly>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="phone">마일리지 상품 총액</label>
+			                  <input type="text" id="phone" class="form-control " readonly>
+			                </div>
+			              </div>
+			              <div class="row">
+			              
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="name">카드사용금액</label>
+			                  <input type="text" id="name" class="form-control " readonly>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="phone">마일리지 사용 금액</label>
+			                  <input type="text" id="phone" class="form-control " readonly>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                  <label class="text-black font-weight-bold" for="phone">총 가격</label>
+			                  <input type="text" id="phone" class="form-control " readonly>
+			                </div>
+			              </div>
+			              
+			              
+			              
+			              
+			
+			              <div class="row mb-4">
+			                <div class="col-md-12 form-group">
+			                  <label class="text-black font-weight-bold" for="message">추가요청사항</label>
+			                  <textarea name="message" id="message" class="form-control " readonly cols="30" rows="8"></textarea>
+			                </div>
+			              </div>
+			               
+			              <div class="row">
+			              
+			              <c:forEach var="p" items="${product}" varStatus="pnum">	
+			              <div class="list">
+					  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
+					  		<p>	${p.product_name}</p>
+					  		<p>	${p.product_price}마일리지</p>
+					  		<input type="hidden" value="${p.product_num}" name="product${pnum.count}_${RDS.count}"/>
+					  		<input type="hidden" value="${p.product_price}"/>
+							
+							<div class="button2" style="margin-top: 10px; display:none;">
+								<img class="minus2" src="resources/images/minusbtn.png"  alt="마이너스버튼">
+					            <input type="text" class="number2" value="0" name="p${pnum.count}_cnt_${RDS.count}"  onchange="valueChange()" readonly/>
+					            <img class="plus2" src="resources/images/plusbtn.png"  alt="플러스버튼">
+				            </div>
+				            
+				            <br/>
+				          </div>
+				          </c:forEach>
+				          
+			              </div>
+			              
+			              <div class="row">
+			                <div class="col-md-6 form-group">
+			                  <input type="submit" value="예약취소" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
+			                </div>
+			                <div class="col-md-6 form-group">
+			                  <input type="submit" value="일정으로" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
+			                </div>
+			              </div>
+			             
+			              
+			            </form>							
 					
 					<hr style="border-color: #633e12;" />
-					</form>
+					
 
 				</div>
 			</div>

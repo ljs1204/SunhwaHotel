@@ -104,7 +104,7 @@
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
 
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
-						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="#">객실 예약 정보 리스트</a>
+						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./myReserveAdmin?num=1&mem_id=seon119">객실 예약 정보 리스트</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./AdminMileageRegist">마일리지 상품 관리</a>
 						

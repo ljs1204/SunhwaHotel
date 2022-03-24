@@ -41,38 +41,36 @@
 <style>
 /* 세로 네비게이션(리스트그룹) 관련 css START - SI 20220314 */
 	.list-group-item.active {
-		background-color: #f1e3c4 !important;
+		background-color: #f1ebd6 !important;
 		/* border: 1px solid #f1ebd6 !important; */
 		color: #633e12 !important;
 		font-weight: bold;
 	}
 	.list-group-item {
-		font-size: 12px;
+		font-size: 14px;
 		font-family: Helvetica;
 		border: 1px solid #f1ebd6 !important;
 		padding-right: 10px !important;
 	}
 /* 세로 네비게이션(리스트그룹) 관련 css END - SI 20220314 */
 
-/* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 */
+/* 컨텐츠 - 예약 상세보기 영역 css START - SI 20220314 */
 	#list-reserve .table th{
-		background-color: #f1e3c4;
+		background-color: #f1ebd6;
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 		color: #633e12 !important;
+		width: 20%;
 	}
 	#list-reserve .table tr{
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 	}
-/* 컨텐츠 - 예약 조회 영역 css END - SI 20220314 */	
-
-/* 20220317 페이징 영역 SI */
-	.custom-pagination ul li.active span{
-		background: #633e12 !important;
-	    color: #fff !important;
-	    border-radius: 50% !important;
+	.focu:hover{
+		background-color:#633e12 !important;
+		color:white !important;
 	}
+/* 컨텐츠 - 예약 상세보기 영역 css END - SI 20220314 */	
 
 <style>
 
@@ -102,56 +100,62 @@
 		<!-- 세로 네비게이션 바 -->
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
+					
+						<a class="list-group-item list-group-item-action active" id="list-home-list" href="">회원 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-profile-list" href="">객실 예약 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-messages-list" href="">회원 문의 관리</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="">마일리지 상품 관리</a>
 
-						<a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
-						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./myReserveAdmin?num=1&mem_id=seon119">객실 예약 정보 리스트</a>
-						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./AdminRoomReserveDetail">객실 상세 임시 ~ </a>
-						
-						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./AdminMileageRegist">마일리지 상품 관리</a>
-						
 					</div>
 				</div>
 <!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
 
-<!-- 예약조회 START - SI 20220314 -->
+<!-- 회원 정보 보기 START - SI 20220322 -->
 			<!-- tabContent 있어야 발동함 -->
 			<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
 				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
 						style="max-width:100% !important">
 					<form action="" method="">
-						<h4 style="color: #633e12;">${loginId}님 어서오세요 문의 관리 페이지입니다.</h4>
+						<h4 style="color: #633e12;">회원 정보 - ${result.mem_id }</h4>
 						<hr style="border-color: #633e12;" />
-					<table class="table table-hover">
-						<tr>
-							<th>글번호</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>작성일자</th>
-							
-						</tr>
-						<c:forEach items="${list}" var="board">
-							<tr>
-								<td>${board.board_num}</td>
-								<!--  <td><a href="detail?board_num=${board.board_num}">${board.board_title}</a></td>-->
-								<td><a href="AdminQnaDetail?board_num=${board.board_num}">${board.board_title}</a></td>
-								<td>${board.mem_id}</td>
-								<td>${board.reg_datetime}</td>
-							</tr>
-						</c:forEach>
-					</table>
-
-<!-- 20220317 페이징 START - SI -->
 					
-<!-- 20220317 페이징 END - SI -->					
-										
-					
-					<hr style="border-color: #633e12;" />
+					<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th scope="row">아이디</th>
+									<td colspan="3">${result.mem_id }</td>
+								</tr>
+								<tr>
+									<th scope="row">이름(영문)</th>
+									<td colspan="3">${result.mem_name_en}</td>
+								</tr>
+								<tr>
+									<th scope="row">이름(한글)</th>
+									<td colspan="3">${result.mem_name_kr }</td>
+								</tr>
+								<tr>
+									<th scope="row">연락처</th>
+									<td colspan="3">${result.mem_phone }</td>
+								</tr>
+								<tr>
+									<th scope="row">이메일</th>
+									<td colspan="3">${result.mem_email }</td>
+								</tr>
+								<tr>
+									<th scope="row">사용가능 마일리지</th>
+									<td colspan="3">${result.mileage_useable }</td>
+								</tr>
+							</tbody>
+						</table>
+					<div style="text-align:right;">
+						<!-- 20220319 취소는 뒤로가기와 같음 SI -->
+						<input type="button" class="btn btn-outline-warning focu" style="color: #633e12; border-color: #633e12;" onclick="window.history.back()" value="목록으로">
+					</div>
 					</form>
 
 				</div>
 			</div>
-<!-- 예약조회 END - SI 20220314 -->	
+<!-- 회원 정보보기 END - SI 20220317 -->	
 
 
 
@@ -194,8 +198,7 @@
 
 					<div class="testimonial text-center slider-item">
 						<div class="author-image mb-3">
-							<img src="resources/images/
-person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+							<img src="resources/images/person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 						</div>
 						<blockquote>
 
@@ -208,8 +211,7 @@ person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 
 					<div class="testimonial text-center slider-item">
 						<div class="author-image mb-3">
-							<img src="resources/images/
-person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+							<img src="resources/images/person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 						</div>
 						<blockquote>
 							<p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
@@ -221,8 +223,7 @@ person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 
 					<div class="testimonial text-center slider-item">
 						<div class="author-image mb-3">
-							<img src="resources/images/
-person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+							<img src="resources/images/person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 						</div>
 						<blockquote>
 
@@ -390,17 +391,15 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	<script src="resources/js/main.js"></script>
 </body>
 <script>
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 START - SI 20220314 */
-	var d = new Date();
+/* 20220319 목록으로 버튼 구현 SI */
+	var pagingNum = ${pagingNum};
 
-	var year = d.getFullYear();
+	console.log("돌아갈 페이지 번호 : ", pagingNum)
 	
-	$(document).ready(function(){
-		$('#useFrequency').html(year+"년 이용실적");
-		$('#useFrequency').css({'color':'#633e12'});
-	});
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 END - SI 20220314 */
-
+	function reserveList(){
+		location.href = "./myReserve?num="+pagingNum;
+	}	
+/* 20220319 목록으로 버튼 구현 SI */
 
 
 </script>

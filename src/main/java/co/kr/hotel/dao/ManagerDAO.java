@@ -25,6 +25,9 @@ public interface ManagerDAO {
 
 	ArrayList<ReserveDTO> myReservePartsAdmin(String loginId);
 
+// 20220323 회원 정보 보기
+	MemberDTO memInfo(String mem_id);
+	
 	ArrayList<ManagerDAO> memlist();
 
 	ArrayList<ManagerDAO> search(MemberDTO parameter);

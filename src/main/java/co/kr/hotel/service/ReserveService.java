@@ -111,6 +111,11 @@ public class ReserveService {
 		return map;
 	}
 
+	public void nonMem(String nmem_code, int reserve_idx, String email, String phone, String name_en, String name_kr) {
+
+		reserveDao.nonMem(nmem_code,reserve_idx,email,phone,name_en,name_kr);
+	}
+
 
 
 
