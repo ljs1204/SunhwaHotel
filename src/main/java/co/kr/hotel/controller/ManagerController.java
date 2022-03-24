@@ -107,18 +107,16 @@ public class ManagerController {
 	
 	@RequestMapping(value = "/AdminRoomReserveDetail", method = RequestMethod.GET)
 	public String AdminRoomReserveDetail(Model model, HttpSession session) {
-		logger.info("AdminRoomReserveDetail 불러오기");			
+		logger.info("AdminRoomReserveDetail 불러오기");
 		
 		String page = "AdminRoomReserveDetail";
 		ArrayList<HashMap<String, String>> product = reserveservice.reservation_product();
 		logger.info("받아온 값 확인 {}",product);
 		model.addAttribute("product",product);
 		
+		
 		return page;
 	}
-	
-	
-	
 	
 		@RequestMapping(value = "/AdminMileageRegist", method = RequestMethod.GET)
 		public String adminOrderList(Model model, HttpSession session) {

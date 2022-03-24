@@ -232,14 +232,14 @@
 			              </div>
 			               
 			              <div class="row">
+			              
+			              <c:forEach var="p" items="${product}" varStatus="pnum">	
 			              <div class="list">
 					  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
 					  		<p>	${p.product_name}</p>
 					  		<p>	${p.product_price}마일리지</p>
 					  		<input type="hidden" value="${p.product_num}" name="product${pnum.count}_${RDS.count}"/>
 					  		<input type="hidden" value="${p.product_price}"/>
-			
-							<input type="checkbox" class="checkbox">선택하기
 							
 							<div class="button2" style="margin-top: 10px; display:none;">
 								<img class="minus2" src="resources/images/minusbtn.png"  alt="마이너스버튼">
@@ -249,6 +249,8 @@
 				            
 				            <br/>
 				          </div>
+				          </c:forEach>
+				          
 			              </div>
 			              
 			              <div class="row">

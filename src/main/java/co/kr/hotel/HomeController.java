@@ -69,8 +69,9 @@ public class HomeController {
 		String msg = null;
 		msg = "소아는 인원 선택에서 제외하셔야합니다. 예약하시겠습니까?";
 		
-		
 		//오늘 날짜,체크인 체크아웃 비교하기 start
+		//날짜 월 비교 START 22.03.23
+		
 		LocalDate dateInformat = LocalDate.parse(checkin_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		LocalDate dateoutformat = LocalDate.parse(checkout_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		LocalDate now = LocalDate.now();
@@ -79,15 +80,16 @@ public class HomeController {
 		LocalDate nowformat = LocalDate.parse(formatedNow, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		logger.info("dateInformat : " +dateInformat);
 		logger.info("dateoutformat : " +dateoutformat);
+		logger.info("dateInformat MM : " +dateInformat.getMonthValue());
+		logger.info("dateoutformat MM : " +dateoutformat.getMonthValue());
+		int dateInformatMM = dateInformat.getMonthValue();
+		int dateoutformatMM = dateoutformat.getMonthValue();
+		
 		//객실 예약 리스트 START 20220311 유선화
 		// toRooms
 		ArrayList<RoomDTO> roomReservelist = reserveService.toReservelist(checkin_date,checkout_date,cnt);
 		logger.info("roomReservelist"+roomReservelist);
 		model.addAttribute("roomReservelist",roomReservelist);
-		
-		
-		
-		
 		
 		//객실 예약 리스트 END 20220311 유선화
 			
@@ -97,26 +99,34 @@ public class HomeController {
 		
 		logger.info("compare : "+ compare);
 		
-		if( compare >-1 && compareinnow > -1 && comparoutenow > -1) {
+		if(dateInformatMM <= dateoutformatMM) { // 월 비교 
+			if( compare >-1 && compareinnow > -1 && comparoutenow > -1) { // 날짜 비교 
+				model.addAttribute("msg2","날짜를 다시 선택해 주세요");
+				page = "index";
+				msg = "";
+				model.addAttribute("msg",msg);
+			}else if(compareinnow > -1){
+				model.addAttribute("msg2","당일예약 및 지난 날짜는 선택할 수 없습니다.");
+				page = "index";
+				msg = "";
+				model.addAttribute("msg",msg);
+			}else if(comparoutenow > -1){
+				model.addAttribute("msg2","당일예약 및 지난 날짜는 선택할 수 없습니다.");
+				page = "index";
+				msg = "";
+				model.addAttribute("msg",msg);
+			}else {
+				if(cnt > 0) {
+					model.addAttribute("msg",msg);
+				}
+			}
+		}else {
 			model.addAttribute("msg2","날짜를 다시 선택해 주세요");
 			page = "index";
 			msg = "";
 			model.addAttribute("msg",msg);
-		}else if(compareinnow > -1){
-			model.addAttribute("msg2","당일예약 및 지난 날짜는 선택할 수 없습니다.");
-			page = "index";
-			msg = "";
-			model.addAttribute("msg",msg);
-		}else if(comparoutenow > -1){
-			model.addAttribute("msg2","당일예약 및 지난 날짜는 선택할 수 없습니다.");
-			page = "index";
-			msg = "";
-			model.addAttribute("msg",msg);
-		}else {
-			if(cnt > 0) {
-				model.addAttribute("msg",msg);
-			}
 		}
+		
 		//오늘 날짜,체크인 체크아웃 비교하기 end
 		
 		model.addAttribute("checkin_date",dto.getCheckindate()); 
