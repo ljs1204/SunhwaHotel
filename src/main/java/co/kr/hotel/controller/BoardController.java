@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,9 +67,12 @@ public class BoardController {
 		return service.list();
 	}
 	
-
-	
-	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String delete(Model model, @RequestParam String board_num) {		
+		logger.info("삭제요청 : {}",board_num);		
+		service.delete(board_num);		
+		return "redirect:/";
+	}
 			
 			
 }

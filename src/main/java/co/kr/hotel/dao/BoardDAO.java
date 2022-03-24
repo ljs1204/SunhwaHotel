@@ -14,5 +14,7 @@ public interface BoardDAO {
 
 	ArrayList<BoardDTO> list();
 	
+	int delete(String board_num);
+	
 
 }

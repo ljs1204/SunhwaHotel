@@ -60,5 +60,9 @@ public class BoardService {
 		return mav;
 	}
 	
-	}
+	public void delete(String board_num) {		
+		int success = dao.delete(board_num);
+		logger.info("삭제 완료 여부 : "+success);
+	}	
+}
 
