@@ -198,6 +198,13 @@ public class ManagerService {
 			return mav;
 		}
 
+// 20220324 달력 데이터 - SI
+		public ArrayList<ReserveDTO> reserveListGet() {
+			
+			
+			return dao.reserveListGet();
+		}
+
 	}
 		
 

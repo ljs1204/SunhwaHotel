@@ -34,6 +34,9 @@ public interface ManagerDAO {
 
 	ArrayList<MypageDAO> adminmilesearch(MypageDTO parameter);
 
+// 20220324 달력 데이터 SI
+	ArrayList<ReserveDTO> reserveListGet();
+
 	
 	}
 	/* 파일 업로드 관련

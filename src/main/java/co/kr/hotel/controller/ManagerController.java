@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dto.MemberDTO;
@@ -203,5 +204,36 @@ public class ManagerController {
 		logger.info("마일리지 조회 id : " +parameter.getMem_id());
 		return service.adminmilesearch(parameter);
 	}
+
+	
+// 20220324	모든 예약 정보 보기 SI( Calender ) START
+	@RequestMapping(value = "/AdminReserveList", method = RequestMethod.GET)
+	public String AdminReserveList(Model model) {
+		logger.info("페이지 접속");
+			
+		//MemberDTO result = service.memInfo(mem_id);
+		//model.addAttribute("result", result);
+			
+		return "AdminReserveList";
+	}	
+	
+	
+	
+	@RequestMapping(value = "/reserveListGet", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> reserveListGet(Model model) {
+		//logger.info("잘 왔나용");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<ReserveDTO> result = service.reserveListGet();
+		map.put("res", result);
+		
+		//logger.info("요기 확인"+result.get(0).getReserve_num());
+		
+		return map;
+	}	
+	
+// 20220324	모든 예약 정보 보기 SI( Calender ) END
+	
 }
 
