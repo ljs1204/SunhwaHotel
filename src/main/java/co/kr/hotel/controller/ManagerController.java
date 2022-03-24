@@ -155,7 +155,7 @@ public class ManagerController {
 		}
 		
 		@RequestMapping(value = "/writing", method = RequestMethod.POST)
-		public String writing(Model model, MultipartFile[] photos,@RequestParam HashMap<String, String> params) {	
+		public String writing(Model model,HttpSession session,MultipartFile[] photos,@RequestParam HashMap<String, String> params) {	
 			logger.info("writing 요청 : {}",params);
 	
 			
@@ -297,7 +297,7 @@ public class ManagerController {
 	
 // 20220324	모든 예약 정보 보기 SI( Calender ) START
 	@RequestMapping(value = "/AdminReserveList", method = RequestMethod.GET)
-	public String AdminReserveList(Model model) {
+	public String AdminReserveList(Model model, HttpSession session) {
 		logger.info("페이지 접속");
 			
 		//MemberDTO result = service.memInfo(mem_id);
