@@ -229,13 +229,13 @@ public class ManagerController {
 			return "AdminMemInfo";
 		}	
 		
-		
+	/*	
 		@GetMapping(value="/memlist")
 		public ModelAndView memlist()
 	            {
 			return service.memlist();
 		}
-		
+	 */
 	@GetMapping(value="/search")
 		public ModelAndView search(Model model,MemberDTO parameter){
 			logger.info(parameter.getKeyword());
@@ -324,6 +324,33 @@ public class ManagerController {
 	
 // 20220324	모든 예약 정보 보기 SI( Calender ) END
 
-	
+	@RequestMapping(value = "/memlist", method = RequestMethod.GET)
+    public String memlist(Model model , @RequestParam String currpage) {      
+       logger.info("memlist 요청");
+       
+       String page = "/";
+       int currPage = Integer.parseInt(currpage);	//호출을 요청할 페이지
+       logger.info("currPage 선언");
+		int pagePerCnt = 10; //한 페이지당 몇개씩? 10개씩
+		
+			//1.총 패이지 갯수인 range가 필요함
+			int range = service.memlist_rangecall(currPage,pagePerCnt);
+			
+			//2.리스트가 필요함(10개밖에 안들어있음)
+			ArrayList<HashMap<String, String>> listCall = service.memlist_listCall(currPage,pagePerCnt);
+			model.addAttribute("pages",range);
+			model.addAttribute("memlist",listCall);
+			model.addAttribute("nowpage",currpage);
+			logger.info("listcall : {}" , listCall);
+			logger.info("currPage : {}" , currPage);
+			logger.info("pagePerCnt : {} ", pagePerCnt);
+			logger.info("range : {} " , range);
+			
+			page = "adminmemsearch";			
+
+		return page;
+       
+      
+   }
 }
 

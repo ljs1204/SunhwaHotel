@@ -72,7 +72,7 @@
  	</select>
  	
  	<select id="search" parameterType='co.kr.hotel.dto.MemberDTO' resultType="co.kr.hotel.dto.MemberDTO">
- 		select * from member where ${select} = #{keyword}
+ 		select * from member where ${select} LIKE '%${keyword}%'
  	</select>
  	
  	<select id="adminmilesearch" parameterType='co.kr.hotel.dto.MypageDTO' resultType="co.kr.hotel.dto.MypageDTO">
@@ -96,6 +96,14 @@
 		) and reserve_state = 1 
 		group by reserve_num
  	</select>
+ 	
+ 	<select id="memlist_allCount" resultType="int">
+	select count(mem_id) from member
+	</select>
+	
+	<select id="memlist_listCall" resultType="hashmap">
+		SELECT * FROM member LIMIT 10 offset #{param2}
+	</select>
  	
  	
 </mapper>

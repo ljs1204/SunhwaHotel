@@ -170,7 +170,7 @@
                             
                             <c:if test="${loginId ne null}">
                 				<c:if test="${mem_grade eq 'admin' }">
-                            		<li><a href="index.html" class="nav-link">&nbsp;회원 정보</a></li>
+                            		<li><a href="memlist?currpage=1" class="nav-link">&nbsp;회원 정보</a></li>
                             		<li><a href="./AdminReserveList" class="nav-link">&nbsp;객실 예약 정보</a></li>
                                 </c:if>
                             </c:if>	

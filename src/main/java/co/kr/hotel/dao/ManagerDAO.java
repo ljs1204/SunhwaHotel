@@ -28,7 +28,6 @@ public interface ManagerDAO {
 // 20220323 회원 정보 보기
 	MemberDTO memInfo(String mem_id);
 	
-	ArrayList<ManagerDAO> memlist();
 
 	ArrayList<ManagerDAO> search(MemberDTO parameter);
 
@@ -37,6 +36,11 @@ public interface ManagerDAO {
 // 20220324 달력 데이터 SI
 	ArrayList<ReserveDTO> reserveListGet();
 
+	ArrayList<HashMap<String, String>> memlist_listCall(int pagePerCnt, int offset);
+
+	int memlist_allCount();
+
+	ArrayList<HashMap<String, String>> memlist();
 	
 	}
 	/* 파일 업로드 관련
