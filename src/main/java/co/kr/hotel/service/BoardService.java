@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dao.BoardDAO;
 import co.kr.hotel.dto.BoardDTO;
+import co.kr.hotel.dto.MemberDTO;
+import co.kr.hotel.dto.PageDto;
 
 @Service
 public class BoardService {
@@ -58,6 +60,18 @@ public class BoardService {
 		BoardDTO dto = dao.detail(board_num);
 		mav.addObject("board_num" , dto);
 		return mav;
+	}
+
+	public int count() {
+		// TODO Auto-generated method stub
+		return dao.count();
+	}
+
+	public ArrayList<BoardDTO> listInfo(int displayPost, int postNum) {
+		PageDto dto = new PageDto();
+		dto.setPostNum(postNum);
+		dto.setDisplayPost(displayPost);
+		return dao.listInfo(displayPost,postNum);
 	}
 	
 	

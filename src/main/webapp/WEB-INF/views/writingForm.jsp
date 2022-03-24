@@ -10,14 +10,40 @@
 			border : 1px solid black;
 			border-collapse: collapse;
 			padding: 5px;
-			width: 400px;
+			width: 500px;
 			height: 80px;
 			background-color: beige;
-		}			
+		}
+		#box{
+			margin: 0 auto;
+			width: 500px;
+            min-width:500px;
+            max-width: 50%;
+            text-align:center;
+		}
+		input[type="text"]{
+			width: 300px;
+		}
+		th{
+			text-align: center !important;
+		}
+		button,input[type="button"]{
+			background-color:black;
+			color:white;
+		}
+			
 	</style>
 </head>
 <body>
-<h2>마일리지 상품 등록</h2>
+	<!-- 헤더 추가 -->
+	<header class="site-header">
+		<jsp:include page="header.jsp" flush="true" />
+	</header>
+	<!-- END head -->
+
+	<div style="margin-top:200px;"></div>
+	<div id="box">
+	<h2>마일리지 상품 등록</h2>
 	<form action="writing" method="post" enctype="multipart/form-data">
 	<!--  <form action="writing" method="post"> -->
 		<table>
@@ -33,14 +59,14 @@
 				<th>가격</th>
 				<td><input type="text" name="product_price"/></td>
 			</tr>
-			<!-- <tr>
-			 	<th>사진</th>
-				<td><input type="file" name="photos" multiple="multiple"/></td>
+			<tr>
+			<th>사진</th>
+				<td><input type="file" name="photos"/></td>
 			</tr>	
-			 -->		
+			 		
 			<tr>
 				
-				<th colspan="2">
+				<th colspan="2" style="">
 					<input type="button" onclick="location.href='./AdminMileageRegist'" value="취소"/>
 					<!--  <input class="btn" type="button" id = "submit" value="등록" />-->
 					<button id = "submit">등록</button>
@@ -48,6 +74,14 @@
 			</tr>
 		</table>
 	</form>
+	</div>
+	<div style="margin-bottom:200px;"></div>
+	
+		<footer class="footer-section">
+	<jsp:include page="footer.jsp" flush="true" />
+	</footer>
+	
+	
 </body>
 <script>	
 	
