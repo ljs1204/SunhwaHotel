@@ -142,23 +142,6 @@ public class ReserveController {
 			model.addAttribute("product",product);
 			
 			
-			/*
-			 * //회원님의 마일리지 불러오기 int useable = service.useable(loginId);
-			 * model.addAttribute("useable", useable);
-			 * 
-			 * 
-			 * //회원정보,카드정보 가져오기 MemberDTO memberDto = new MemberDTO(); memberDto =
-			 * service.reservation_memInfo(loginId);
-			 */
-			
-			/*
-			 * String mem_card = memberDto.getCredit_type();
-			 * model.addAttribute("mem_card",mem_card); if(mem_card != null) { String
-			 * cardBank = service.mem_card(mem_card); logger.info("cardBank: "+cardBank);
-			 * memberDto.setCredit_type(cardBank); } model.addAttribute("memInfo",
-			 * memberDto);
-			 */
-			
 			return page; 
 	 }
 	
@@ -167,7 +150,7 @@ public class ReserveController {
 	 
 	 
 	 
-	//예약 옵션/결제 선택 후 예약 요청  START
+	//회원 예약 요청  START
 	@Transactional
 	@RequestMapping(value = "/toReserveOrder", method = RequestMethod.POST)
 		public String toReserveOrder(Model model, HttpSession session,
@@ -194,7 +177,7 @@ public class ReserveController {
 		model.addAttribute("loginId", loginId);
 		model.addAttribute("reserveNum", reserveNum);
 		
-		int r = 0;
+		int r = 1;
 		//객실 수 만큼 반복
 		for (r = 1; r <= roomCnt; r++) {
 			//객실별
@@ -292,11 +275,13 @@ public class ReserveController {
 			     service.roomPay(reserve_idx,Pay_num,credit_num,credit_validity,credit_type,pay_price,pay_mile,amount);
 			     //객실 결제 끝
 
-			}//reserve num 이 있다면..
+			}
 			
-		}//for문
-
-		if(r == roomCnt) {
+		}
+		
+		logger.info("r : "+r);
+		logger.info("roomCnt : "+roomCnt);
+		if(r > roomCnt) {
 			//회원 결제 마일리지 적립(최종가*회원등급, 객실별아님)
 			int mem_gradeRate = service.rate(loginId);//회원등급 불러오기
 			int cardTotal = Integer.parseInt(params.get("cardTotal")); //카드사용금액
@@ -312,7 +297,7 @@ public class ReserveController {
 		
 		
 		
-		return "reserveresult";
+		return "reserveResult";
 	}
 
 
@@ -324,6 +309,17 @@ public class ReserveController {
 		
 		return "doReservation";
 	}
+	
+	@RequestMapping(value = "/reserveResult", method = RequestMethod.GET)
+	public String reserveResult(Model model,HttpSession session) {
+		logger.info("reserveResult 요청");
+		//예약 불러오기
+		
+		return "reserveResult";
+	}
+	
+	
+	
 	
 	
 	@RequestMapping(value = "/cardSave", method = RequestMethod.POST)
@@ -337,7 +333,121 @@ public class ReserveController {
 	
 
 
+	//비회원 예약 요청  START 0324
+	@Transactional
+	@RequestMapping(value = "/toReserveOrder_non", method = RequestMethod.POST)
+		public String toReserveOrder_non(Model model, HttpSession session,
+				@RequestParam Map<String, String> params) {
+		logger.info("toReserveOrder_non 요청 : {}",params);
+		
+		
+		//공통
+		int extrabed_price = service.extrabed_price();//엑스트라베드 가격
+		int breakfast_price = service.breakfast_price();//조식 가격
+		int roomCnt=  (int) Double.parseDouble(params.get("rowDivCnt"));//1,2,3
+		logger.info("객실 수 확인 :"+roomCnt);
+		
+		ReserveDTO dto = new ReserveDTO();
+		dto.setMem_id("비회원");
+		
+		String reserveNum = "S"+System.currentTimeMillis();
+		dto.setReserve_num(reserveNum);
+		dto.setReserve_state("1");
+		dto.setCheckindate(params.get("checkindate"));
+		dto.setCheckoutdate(params.get("checkoutdate"));
+		logger.info("예약번호"+reserveNum);
+		model.addAttribute("loginId", "비회원");
+		model.addAttribute("reserveNum", reserveNum);
+		
+		int r = 1;
+		//객실 수 만큼 반복
+		for (r = 1; r <= roomCnt; r++) {
+			//객실별
+			dto.setAdult_cnt(Integer.parseInt(params.get("people_"+r)));//인원수
+			int extrabed_cnt = Integer.parseInt(params.get("option1_cnt_"+r));//엑스트라베드 수량
+			int breakfast_cnt = Integer.parseInt(params.get("option2_cnt_"+r));//조식 수량
+			dto.setExtrabed_cnt(extrabed_cnt);
+			dto.setBreakfast_cnt(breakfast_cnt);
+			
+			String add = params.get("ADD_"+r);
+			if(add == null) {
+				add = "없음";
+			}
+			dto.setAdd_requests(add);//추가요청사항
+			
+			logger.info("객실"+r+"인원 수 :"+dto.getAdult_cnt());
+			
+			
+			// 빈 객실 가져오기 유선화 START 22.03.21
+			RoomDTO roomDto = new RoomDTO();
+			
+			
+			//객실별
+			int room_type = Integer.parseInt(params.get("room_type_"+r));
+			int bed_type = Integer.parseInt(params.get("room_bed_"+r));
+			//int roomCnt = 1; //인원수가아니라 객실이 몇개인지 확인하는 값
+			logger.info("룸타입"+r+":"+room_type);
+			
+			roomDto.setRoom_type(room_type);
+			roomDto.setBed_type(bed_type);
+			roomDto.setRoomCnt(1);//이 값으로 limit값 
+			roomDto.setCheckindate(params.get("checkindate"));
+			roomDto.setCheckoutdate(params.get("checkoutdate"));
+			
+			String roomIdx = service.roomIdx(roomDto); 
+			dto.setRoom_num(roomIdx); //객실번호  DTO 담기
+			logger.info("roomIdx"+r+":"+roomIdx);
+			
+			
+			// 빈 객실 가져오기 유선화 END 22.03.21
+			
+			service.roomOne(dto); //예약insert
+			
+			int reserve_idx = dto.getReserve_idx();
+			String room_num = dto.getRoom_num();
+			logger.info("reserve_idx : "+reserve_idx);
+			logger.info("room_num : "+room_num);
+			model.addAttribute("reserve_idx", reserve_idx);
+		
+			
+			if(reserve_idx > 0 ) { //성공 예약번호 
+
+				//객실별 결제 insert 시작	
+			     String Pay_num = "P"+System.currentTimeMillis();//결제번호
+			     String credit_num = params.get("credit_num");//카드번호
+			     int credit_validity =  Integer.parseInt(params.get("credit_valid"));
+			     String credit_type = params.get("credit_type");
+			     //룸가격 + 엑베가격*수량 + 조식가격*수량
+			     int room_price = service.room_price(reserve_idx);//룸가격
+			     int pay_price = room_price +(extrabed_price * extrabed_cnt) + (breakfast_price * breakfast_cnt);
+			     int pay_mile = 0;
+			     int amount = pay_price;
+			     
+			     service.roomPay(reserve_idx,Pay_num,credit_num,credit_validity,credit_type,pay_price,pay_mile,amount);
+			    //객실 결제 끝
+			    
+			     
+			    //비회원 정보 저장
+			     String nmem_code = "N"+System.currentTimeMillis();//비회원 코드
+			     String email = params.get("email");
+			     String phone = params.get("phone");
+			     String name_en = params.get("name_en");
+			     String name_kr = params.get("name_kr");
+			     
+			     service.nonMem(nmem_code,reserve_idx,email,phone,name_en,name_kr);
+			     
+			}
+		}
+
+		
+		//예약 요청  END
 	
+		
+		
+		
+		
+		return "reserveResult";
+	}
 	
 	
 	

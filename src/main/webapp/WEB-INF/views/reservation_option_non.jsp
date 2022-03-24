@@ -144,7 +144,7 @@
 	
 	
 	
-	<form name="frm" action="toReserveOrder" method="POST" onSubmit="return Checkform()">
+	<form name="frm" action="toReserveOrder_non" method="POST" onSubmit="return Checkform()">
 	
 		<div style="margin-top:200px"></div>
 		
@@ -207,27 +207,30 @@
 			<div class="row">
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="name_en">이름(영문)</label>
-                  <input type="text" id="name_en" class="form-control" >
+                  <input type="text" id="name_en" name="name_en"  style="IME-MODE: disabled" placeholder="ex)Honggildong" class="form-control" >
                 </div>
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="name_kr">이름(국문)</label>
-                  <input type="text" id="name_kr" class="form-control" onkeyup="onlyKorFunc(t)">
+                  <input type="text" id="name_kr" name="name_kr" placeholder="ex)홍길동" class="form-control" onkeyup="onlyKorFunc(t)">
                 </div>
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="checkin">체크인 날짜</label>
-                  <input type="text" id="checkin" class="form-control" readonly>
+                  <input type="text" id="checkin" value="${checkindate}" class="form-control" readonly>
                 </div>
                <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="checkout">체크아웃 날짜</label>
-                  <input type="text" id="checkout" class="form-control" readonly>
+                  <input type="text" id="checkout" value="${checkoutdate}" class="form-control" readonly>
                 </div>
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="phone">연락처</label>
-                  <input type="text" id="phone" class="form-control" onkeyup='removeChar(event)' maxlength=11/>
+                  <input type="text" id="phone" name="phone" class="form-control" placeholder="ex)01012341234" onkeyup='removeChar(event)' maxlength=11/>
                 </div>
                 <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="email">Email</label>
-                  <input type="email" id="email" class="form-control">
+                  <label class="text-black font-weight-bold" for="email">Email</label><br/>
+                  <input type="email" id="email" name="email" placeholder="ex)email@naver.com" class="form-control" style="width:88%; display:inline;">
+				  <input type="button" id="certify" style="display:inline; background: black; color: white;" value="인증"/><br/>
+	  			  <input type="hidden" id="emailCode" style="width:88%; placeholder="인증코드를 입력해주세요."/>
+				  <input type="hidden" id="emailBtn" style="background: black; color: white;"value="확인"/>
                 </div>
             </div>
 		
@@ -273,10 +276,10 @@
 
 제1장 총칙
 제1조(목적)
-이 약관은 (주)선화호텔가 운영하는 모두투어 닷컴 사이버 몰(이하 "당사"이라 한다)에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리•의무 및 책임사항을 규정함을 목적으로 합니다.
+이 약관은 (주)선화호텔가 운영하는 호텔사이트(이하 "당사"이라 한다)에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 한다)를 이용함에 있어 호텔과 이용자의 권리•의무 및 책임사항을 규정함을 목적으로 합니다.
 ※「PC통신, 모바일 무선 등을 이용하는 전자거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다.」
 제2조(정의)
-① "당사"란 (주)선화호텔가 재화 또는 용역(이하 "재화 등"이라 함)을 이용자에게 제공하기 위하여 컴퓨터 등 정보통신설비를 이용하여 재화 등을 거래할 수 있도록 설정한 가상의 영업장을 말하며, 아울러 사이버 몰을 운영하는 사업자의 의미로도 사용합니다.
+① "당사"란 (주)선화호텔가 재화 또는 용역(이하 "재화 등"이라 함)을 이용자에게 제공하기 위하여 컴퓨터 등 정보통신설비를 이용하여 재화 등을 거래할 수 있도록 설정한 가상의 영업장을 말하며, 아울러 호텔을 운영하는 사업자의 의미로도 사용합니다.
 ② "이용자"란 "당사"홈페이지에 접속하여 이 약관에 따라 "당사"가 제공하는 서비스를 받는 회원 및 비회원을 말합니다.
 ③ "회원"이라 함은 "당사"에 개인정보를 제공하여 회원등록을 한 자로서, "당사"의 정보를 지속적으로 제공받으며, "당사"가 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.
 ④ "비회원"이라 함은 회원에 가입하지 않고 "당사"가 제공하는 서비스를 이용하는 자를 말합니다.
@@ -443,6 +446,20 @@
         });
 	});
 	
+	(function ($) {
+        var originalVal = $.fn.val;
+        $.fn.val = function (value) {
+            var res = originalVal.apply(this, arguments);
+     
+            if (this.is('input:text') && arguments.length >= 1) {
+                // this is input type=text setter
+                this.trigger("input");
+            }
+     
+            return res;
+        };
+    })(jQuery);
+	
 	
  	//카드사 변경 selectbox
  	$('#cardSelect').change(function() {
@@ -492,11 +509,7 @@
  			frm.email.focus();
  			alert("이메일을 입력해 주십시오.");
  			return false;
- 		}
- 		
- 		
- 		
- 		else if(frm.credit_num.value == "" ){
+ 		}else if(frm.credit_num.value == "" ){
  			frm.credit_num.focus();
  			alert("카드번호를 입력해 주십시오.");
  			return false;
@@ -516,7 +529,11 @@
 			alert('유효기간은 YYMM으로 입력바랍니다.');
 			frm.credit_valid.focus();
 			return false;
-		}
+		}else if(certifinum_check == false){
+ 			alert("이메일 인증을 해주세요.");
+ 			frm.email.focus();
+ 			return false;
+ 		}
  		
  	}
 
@@ -542,6 +559,124 @@
 	});
 
 	//영어만 입력 가능
+	$("#name_en").keyup(function(event){
+	if (!(event.keyCode >=37 && event.keyCode<=40)) {
+		var inputVal = $(this).val();
+		$(this).val(inputVal.replace(/[^a-z]/gi,''));
+		}
+	});
+	
+	
+	var certifinum_check = false; //이메일 인증 완료시 True
+	
+	
+	//유효기간
+	$('#credit_validity').keyup(function(){
+			
+			var card = $('#credit_validity').val();
+			var year = card.substring(0,2);
+			var month = card.substring(2,4);
+			
+			if(month>12){
+				alert("유효기간을 다시 확인바랍니다.");
+				$('#credit_validity').val('');
+			}
+
+	
+	
+			
+	});
+	
+	
+	//이메일 인증
+    random();
+    
+    function random(){
+        // clearInterval(time);
+        //var cnt = 11;
+        
+        console.log('난수번호');
+        randomNum = Math.floor(Math.random()*1000000);
+        certifinum = randomNum;
+    };	
+	
+    
+    
+    
+	$('#certify').click(function(){
+		var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+		var chkemail = $('input[name="email"]').val();
+		
+		console.log(chkemail);
+		
+		
+		if(chkemail == ''){
+			alert('이메일을 입력해주세요.');
+		}else if(chkemail.match(regExp) == null){ 
+		      alert("이메일 주소가 유효하지 않습니다"); 
+		      $("#email").focus(); 
+		}else{
+			
+			$.ajax({
+				url:'emailcheck',
+				type:'get',
+				data:{
+					email:chkemail
+				},
+				dataType:'JSON',
+				success:function(data){
+					var msg = "";
+				 	
+					if(data.emailChecked){
+						alert('이미 사용중인 이메일 입니다.');
+						$('input[name="email"]').val('');
+						
+					}else{
+						alert('이메일로 인증번호를 발송했습니다.');
+						$('input[name="email"]').attr('readonly', true);
+						$('#emailCode').attr('type','text');
+						$('#emailBtn').attr('type','button');
+						
+						//이메일 인증
+						random();				
+						win = window.open('emailPage','최신식 구글 메일','width=800,height=600');					
+					}
+					
+				},
+				error:function(e){
+					console.log('에러');
+					console.log(e)
+				}
+			});
+			
+		}
+		
+		
+	});
+	
+	
+	$('#emailBtn').click(function(){
+		$('#emailCode').val();
+		if($('#emailCode').val() == certifinum){
+			certifinum_check = true;
+			alert('이메일 인증을 성공하였습니다.');
+			$('#emailCode').attr('type','hidden');
+			$('#emailBtn').attr('type','hidden');
+		} else {
+			certifinum_check = false;
+			alert('인증번호 확인 후 재 입력 바랍니다.');
+		}		
+	});
+	
+	
+	
+	
+	$('input[name="email"]').keyup(function(e){
+		certifinum_check = false;
+	});	
+	
+	
 	
 	
 </script>

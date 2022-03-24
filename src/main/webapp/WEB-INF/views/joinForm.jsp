@@ -96,23 +96,23 @@
 		</tr>
 		<tr>
 			<th>이름(국문)</th>
-			<td><input type="text" name="mem_name_kr" placeholder="ex)홍길동"/></td>
+			<td><input type="text" id="name_kr"name="mem_name_kr" onkeyup="onlyKorFunc(t)" placeholder="ex)홍길동"/></td>
 		</tr>
 		<tr>
 			<th>이름(영문)</th>
-			<td><input type="text" name="mem_name_en" placeholder="ex)Honggildong"/></td>
+			<td><input type="text" id="name_en" name="mem_name_en" placeholder="ex)Honggildong"/></td>
 		</tr>
 		<tr>
 			<th>생년월일</th>
 			<td>
-				<input type="text" id="birth" name ="mem_birth" placeholder="ex)19990101"/>
+				<input type="text" id="birth" name ="mem_birth"  maxlength=8 placeholder="ex)19990101"/>
 				<p id="birthmsg"></p>
 			</td>
 		</tr>
 		<tr>
 			<th>휴대폰 번호</th>
 			<td>
-				<input type="text" name="mem_phone" placeholder="ex)010-1234-1234"/>
+				<input type="text" name="mem_phone"  maxlength=11 placeholder="ex)01012341234"/>
 			</td>
 		</tr>
 		<tr>
@@ -277,8 +277,13 @@
 	$('#certify').click(function(){
 		var chkemail = $('input[name="mem_email"]').val();
 		
+		var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		
+		
 		if(chkemail == ''){
 			alert('이메일을 입력해주세요.');	
+		}else if(chkemail.match(regExp) == null){ 
+		    alert("이메일 주소가 유효하지 않습니다"); 
 		}else{
 			
 			$.ajax({
@@ -465,9 +470,31 @@
 	
 	
 	
-	$('input[name="email"]').keyup(function(e){
+	$('input[name="mem_email"]').keyup(function(e){
 		certifinum_check = false;
 	});	
+	
+	//한글만 입력 가능
+	$(function(){
+	       $("#name_kr").keyup(function (event) {
+	            regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+	            v = $(this).val();
+	            if (regexp.test(v)) {
+	                alert("한글만 입력가능 합니다.");
+	                $(this).val(v.replace(regexp, ''));
+	            }
+	        });
+	});
+	
+	
+	$("#name_en").keyup(function(event){
+		if (!(event.keyCode >=37 && event.keyCode<=40)) {
+			var inputVal = $(this).val();
+			$(this).val(inputVal.replace(/[^a-z]/gi,''));
+			}
+	});
+	
+	
 
 </script>
 </html>

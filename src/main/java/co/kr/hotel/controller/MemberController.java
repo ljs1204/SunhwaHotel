@@ -52,7 +52,7 @@ public class MemberController {
 			session.setAttribute("mem_grade", grade);
 			model.addAttribute("login_mem_grade",grade);
 			if(grade.equals("admin")) {
-				page="redirect:/AdminQnalist";
+				page="redirect:/AdminQnalist?orderNum=1";
 				logger.info("관리자 : "+grade);
 				
 			}

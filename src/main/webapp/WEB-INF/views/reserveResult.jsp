@@ -121,11 +121,11 @@
       <div class="container">
         <div class="row site-hero-inner justify-content-center align-items-center">
           <div class="col-md-10 text-center" data-aos="fade">
-            <h1 class="heading mb-3">Reservation Form</h1>
+            <h1 class="heading mb-3">선화호텔<br/> 환영합니다</h1>
             <ul class="custom-breadcrumbs mb-4">
               <li><a href="./">Home</a></li>
               <li>&bullet;</li>
-              <li>Reservation</li>
+              <li>ReserveResult</li>
             </ul>
           </div>
         </div>
@@ -138,218 +138,44 @@
       </a>
     </section>
     <!-- END section -->
-	
-	
-	
-	
-	
-	
-	<form name="frm" action="toReserveOrder" method="POST" onSubmit="return Checkform()">
-	
-		<div style="margin-top:200px"></div>
-		
-		<!-- 공통 DB - 로그인/체크인/체크아웃 -->
-		<input type="hidden" value="${loginId}" id="loginId" name="loginId"/>
-		<input type="hidden" value="${checkindate}" name="checkindate"/>
-		<input type="hidden" value="${checkoutdate}" name="checkoutdate"/>
-		<input type="hidden" value="${rowDivCnt}" name="rowDivCnt"/>	
-
-	
-	
-		<c:forEach var="rD" items="${reserveData}" varStatus="RDS"> 
-			<!-- 객실별(객실타입,침대타입,객실가격,인원 수) -->
-			<input type="hidden" value="${rD.room}" name="room_type_${RDS.count}"/>
-			<input type="hidden" value="${rD.price}" name="room_price_${RDS.count}"/>
-			<input type="hidden" value="${rD.bedType}" name="room_bed_${RDS.count}"/>
-			<input type="hidden" value="${rD.number}" name="people_${RDS.count}"/>
-						
-			<!-- 객실box -->
-			<div class="rooms"><h5>객실${RDS.count}</h5></div>
-			<div class="box">
-				<div class="top">
-					<div class="optionplus">					
-						<p>옵션 사항</p>
-						
-						<!-- 엑베/조식/추가요청 옵션 -->
-				    	<c:forEach var="op" items="${option}">
-				    		
-				    		<div style="display:flow-root;">
-							  	<div style="float:left">${op.option_name} /  <fmt:formatNumber value="${op.option_price}" pattern="#,###"/> 원 </div>
-			
-					    		<input type="hidden" value="${op.option_price}" name="optionPrice${op.option_num}_${RDS.count}"/>
-					    		
-						    	<div style="float:right">
-						  			<img class="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-						  			<input type="text" class="number" name="option${op.option_num}_cnt_${RDS.count}" value="0" readonly/>
-						            <img class="plus_${op.option_num}" src="resources/images/plusbtn.png"  alt="플러스버튼">
-						            <input type="hidden" value="${rD.number}"/>
-						    	</div>
-				    	</div>
-				    	<br/>
-				    	</c:forEach>
-				        <br/>
-				    	
-					</div>
-					
-					<div id="addmemo">
-						<p>추가요청사항</p>
-						<textarea placeholder="문의하실 사항이 있으시면 입력해주십시오." name="ADD_${RDS.count}"> </textarea>
-					</div>
-				</div>
-				<br/><hr/><br/>
-				
-			  	<c:forEach var="p" items="${product}" varStatus="pnum">	
-			  	<div class="list">
-			  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
-			  		<p>	${p.product_name}</p>
-			  		<p>	<fmt:formatNumber value="${p.product_price}" pattern="#,###"/>마일리지</p>
-			  		<input type="hidden" value="${p.product_num}" name="product${pnum.count}_${RDS.count}"/>
-			  		<input type="hidden" value="${p.product_price}"/>
-	
-					<input type="checkbox" class="checkbox">선택하기
-					
-					<div class="button2" style="margin-top: 10px; display:none;">
-						<img class="minus2" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-			            <input type="text" class="number2" value="0" name="p${pnum.count}_cnt_${RDS.count}"  onchange="valueChange()" readonly/>
-			            <img class="plus2" src="resources/images/plusbtn.png"  alt="플러스버튼">
-		            </div>
-		            
-		            <br/>
-		        </div>
-		   		</c:forEach>
-			</div>
-		
-		</c:forEach>	
-			
-		<!-- 객실옵션선택창 끝 -->
-		
-		<!-- 회원정보 및 카드 정보 -->
-		<div class="box">
-			<div class="row">
-                <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="name_en">이름(영문)</label>
-                  <input type="text" id="name_en" value="${memInfo.mem_name_en}" class="form-control" readonly>
+	<section class="section contact-section" id="next">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
+            
+            <form action="#" method="post" class="bg-white p-md-5 p-4 mb-5 border">
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label class="text-black font-weight-bold" for="name">예약이 완료되었습니다</label>
                 </div>
-                <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="name_kr">이름(국문)</label>
-                  <input type="text" id="name_kr" value="${memInfo.mem_name_kr}" class="form-control" readonly>
+                <div class="col-md-12 form-group">
+                  <label class="text-black font-weight-bold" for="phone">${loginId}님의 예약번호입니다</label>
+                  <input type="text" id="phone" value="${reserveNum}" class="form-control" readonly />
                 </div>
-                <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="checkin">체크인 날짜</label>
-                  <input type="text" id="checkin" value="${checkindate}" class="form-control" readonly>
+                <c:if test="${loginId eq '비회원'}">
+                <div class="col-md-12 form-group">
+                
+                  <label class="text-black font-weight-bold" for="phone">예약번호를 다시 확인하고 싶으시면 비회원 예약 조회를 하셔야 합니다</label>
+                  
+                  
                 </div>
-               <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="checkout">체크아웃 날짜</label>
-                  <input type="text" id="checkout" value="${checkoutdate}" class="form-control" readonly>
-                </div>
-                <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="phone">연락처</label>
-                  <input type="text" id="phone" value="${memInfo.mem_phone}" class="form-control" readonly>
-                </div>
-                <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="email">Email</label>
-                  <input type="email" id="email" value="${memInfo.mem_email}" class="form-control" readonly>
-                </div>
-            </div>
-		
-		</div>
-		
-		<div class="box">
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <label class="text-black font-weight-bold" for="credit_num">신용카드번호</label>
-                <input type="text" id="credit_num" value="${memInfo.credit_num}" onkeyup='removeChar(event)' name="credit_num" placeholder="16자 카드번호를 입력해주세요."class="form-control ">
+                
+                </c:if>
+               
+                
               </div>
-              <div class="col-md-6 form-group">
-                <label class="text-black font-weight-bold" for="credit_validity">유효기간</label>
-                <input type="text" id="credit_validity" value="${memInfo.credit_validity}" onkeyup='removeChar(event)' name="credit_valid" placeholder="YYMM" class="form-control ">
-              </div>
-            </div>
-        
-            <div class="row">
-              <div class="col-md-12 form-group">
-                <label class="text-black font-weight-bold">카드종류</label><br/>
-                <select id="cardSelect">
-                	<option disabled selected>카드사를 선택하세요.</option>
-                	<option value="1">국민</option>
-                	<option value="2">카카오</option>
-                	<option value="3">신한</option>
-                	<option value="4">우리</option>
-                	<option value="5">농협</option>
-                	<option value="6">하나</option>
-                	<option value="7">기업</option>
-                </select>
-               <input type="text" id="credit_type" value="${memInfo.credit_type}" name="creditType" class="form-control " readonly />
-               <input type="hidden" id="credit_type_val" value="${mem_card}" name="credit_type" class="form-control "/>
-              
-              </div>
-            </div>
+          		<a href="./">Home</a>
+            </form>
 
-
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <input type="button" id="cardSave" value="카드정보 저장하기" class="btn btn-primary text-white py-3 px-5 font-weight-bold"/>
-              </div>
-            </div>
-
+          </div>
+          
         </div>
-		
-		<div class="box">
-			<textarea style="width:100%; height:100px;">
-개인정보수집 이용에 대한 규정
-
-제1장 총칙
-제1조(목적)
-이 약관은 (주)선화호텔가 운영하는 호텔사이트(이하 "당사"이라 한다)에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 한다)를 이용함에 있어 호텔과 이용자의 권리•의무 및 책임사항을 규정함을 목적으로 합니다.
-※「PC통신, 모바일 무선 등을 이용하는 전자거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다.」
-제2조(정의)
-① "당사"란 (주)선화호텔가 재화 또는 용역(이하 "재화 등"이라 함)을 이용자에게 제공하기 위하여 컴퓨터 등 정보통신설비를 이용하여 재화 등을 거래할 수 있도록 설정한 가상의 영업장을 말하며, 아울러 호텔을 운영하는 사업자의 의미로도 사용합니다.
-② "이용자"란 "당사"홈페이지에 접속하여 이 약관에 따라 "당사"가 제공하는 서비스를 받는 회원 및 비회원을 말합니다.
-③ "회원"이라 함은 "당사"에 개인정보를 제공하여 회원등록을 한 자로서, "당사"의 정보를 지속적으로 제공받으며, "당사"가 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.
-④ "비회원"이라 함은 회원에 가입하지 않고 "당사"가 제공하는 서비스를 이용하는 자를 말합니다.
-제3조(약관의 명시와 개정)
-① "당사"는 이 약관의 내용과 상호 및 대표자 성명, 영업소 소재지, 주소(소비자의 불만을 처리할 수 있는 곳의 주소를 포함), 전화번호, 모사전송번호, 전자우편주소, 사업자등록번호, 통신판매업신고번호, 개인정보관리책임자 등을 이용자가 쉽게 알 수 있도록 “당사” 홈페이지의 초기 서비스화면(전면)에 게시합니다. 다만 약관의 내용은 이용자가 연결화면을 통하여 볼 수 있도록 할 수 있습니다.
-② "당사"는 이용자가 약관에 동의하기에 앞서 약관에 정하여져 있는 내용 중 청약철회•배송책임•환불조건 등과 같은 중요한 내용을 이용자가 이해할 수 있도록 별도의 연결화면 또는 팝업화면 등을 제공하여 이용자의 확인을 구하여야 합니다.
-③ "당사"는 전자상거래등에서의소비자보호에관한법률, 약관의규제에관한법률, 전자거래기본법, 전자서명법, 정보통신망이용촉진등에 관한법률, 방문판매등에관한법률, 소비자보호법 등 관련법을 위배하지 않는 범위에서 이 약관을 개정할 수 있습니다
-④ "당사"가 약관을 개정할 경우에는 적용일자 및 개정사유를 명시하여 현행 약관과 함께 “당사”홈페이지의 초기화면에 그 적용일자 7일 이전부터 적용일자 전일까지 공지합니다. 다만, 이용자에게 불리하게 약관내용을 변경하는 경우에는 최소한 30일 이전의 유예기간을 두고 공지합니다. 이 경우 "당사"는 개정 전 내용과 개정 후 내용을 명확하게 비교하여 이용자가 알기 쉽도록 표시합니다.
-⑤ "당사"가 약관을 개정할 경우에는 그 개정약관은 적용일자 이후에 체결되는 계약에만 적용되고 그 이전에 이미 체결된 계약에 대해서는 개정 전의 약관조항이 그대로 적용됩니다. 다만 이미 계약을 체결한 이용자가 개정약관 조항의 적용을 받기를 원하는 뜻을 제3항에 의한 개정 약관의 공지기간 내에 "당사"에 송신하여 동의를 받은 경우에는 개정약관 조항이 적용됩니다.
-⑥ 이 약관에서 정하지 아니한 사항과 이 약관의 해석에 관하여는 전자상거래등에서의소비자보호에관한법률, 약관의규제등에관한법률, 정부가 제정한 전자상거래 등에서의 소비자보호지침 및 관계법령 또는 상 관례에 따릅니다.
-			</textarea><br/>
-			<input type="checkbox" id="agree">동의하시겠습니까?
-			<p>* 비동의시 결제가 불가능합니다.</p>
-		</div>
-		
-		<!-- 결제금액/버튼 시작 -->
-		<div class="box">
-			<div class="box2">
-			<span>회원님의 마일리지 :</span>
-			<span id="useable"><fmt:formatNumber value="${useable}" pattern="#,###"/></span>
-			<input type="hidden" id="useable2" value="${useable}"/>
-			<span>원</span>
-			</div>
-			
-			<div class="box2" id="mPrice"style="float:right">마일리지상품 총 금액 : 0원</div>
-		</div>
-		<div class="box">	
-			<!-- 결제금액 -->
-			<div style="float:right;">
-				<span>결제 금액 : </span>			
-				<input type="text" class="cardTotal" value="" style="border-style:none; outline:none;" readonly/>
-				<input type="hidden" id="cardTotal" name="cardTotal" value="" style="border-style:none; outline:none;" readonly/>
-			</div>
-			
-		</div>
-		<br/>
-		<div class="btn2">
-	        <div class="col-md-6 form-group">
-	            <input type="button" onclick="history.back(-1)" value="돌아가기" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
-	        </div>
-	        <div class="col-md-6 form-group">
-	            <input type="submit" id="goPay" value="결제하기" class="btn btn-primary text-white py-3 px-5 font-weight-bold" disabled/>
-	        </div>
-		</div>
-	</form>
-	<!-- 결제금액/버튼 끝 -->
+      </div>
+    </section>
+	
+	
+	
+	
 	
 	<footer class="footer-section">
 		<jsp:include page="footer.jsp" flush="true" />

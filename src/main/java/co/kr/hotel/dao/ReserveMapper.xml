@@ -8,19 +8,30 @@
 
 
 	<select id="toReservelist" resultType="co.kr.hotel.dto.RoomDTO">
-	
-		SELECT distinct r.room_num,r.room_type, r.room_price, r.room_type_name,p.room_img FROM room r inner join photo p ON r.room_num = p.room_num 
+		
+		select distinct r.room_type, r.room_price, r.room_type_name,p.room_img
+		FROM room r inner join photo p ON r.room_num = p.room_num 
 		WHERE r.room_num not in 
-		(select room_num from reserve
+		(select room_num from reserve 
 		WHERE checkindate  BETWEEN #{param1} AND #{param2} OR
 		checkoutdate  BETWEEN #{param1} AND #{param2} OR
 		(checkindate  &gt;= #{param1} AND checkoutdate  &lt;= #{param2}) and reserve_state = 1) 
-		and 
-		(room_img = '디럭스1.png' and bed_type = 1 
+		union all
+		select distinct r.room_type, r.room_price, r.room_type_name,p.room_img
+		from
+		(
+			select *
+			from reserve 
+			WHERE checkindate  BETWEEN #{param1} AND #{param2} OR
+		checkoutdate  BETWEEN #{param1} AND #{param2} OR
+		(checkindate  &gt;= #{param1} AND checkoutdate  &lt;= #{param2})
+		) as r1 inner join room r on r.room_num = r1.room_num  inner join photo p ON r.room_num = p.room_num 
+		where room_img = '디럭스1.png' and bed_type = 1 
 		or room_img = '프리미어1.png' and bed_type = 1 
 		or room_img = '패밀리1.png' and bed_type = 1 
-		or room_img = '스위트1.png' and bed_type = 1)
-		order by r.room_type,p.room_img;
+		or room_img = '스위트1.png' and bed_type = 1 and reserve_state not in (1) 
+		order by room_type;
+		
 	</select>
 
 	
@@ -69,12 +80,25 @@
 	
 	<select id="roomIdx" resultType="String">
 			
-		SELECT r.room_num FROM room r 
-			WHERE r.room_num not in 
-			(select room_num from reserve 
+		SELECT r.room_num 
+		FROM room r 
+		WHERE r.room_num not in 
+		(select room_num from reserve 
+		WHERE checkindate  BETWEEN #{checkindate} AND #{checkoutdate} OR
+		checkoutdate  BETWEEN #{checkindate} AND #{checkoutdate} OR
+		(checkindate  &gt; #{checkindate} AND checkoutdate  &lt; #{checkoutdate})and reserve_state = 1) and r.room_type = #{room_type} and r.bed_type = #{bed_type} 
+		union all
+		select r.room_num
+		from
+		(
+			select *
+			from reserve 
 			WHERE checkindate  BETWEEN #{checkindate} AND #{checkoutdate} OR
 			checkoutdate  BETWEEN #{checkindate} AND #{checkoutdate} OR
-			(checkindate  &gt; #{checkindate} AND checkoutdate  &lt; #{checkoutdate})and reserve_state = 1) and r.room_type = #{room_type} and r.bed_type = #{bed_type} order by r.room_num limit #{roomCnt}
+			(checkindate  &gt; #{checkindate} AND checkoutdate  &lt; #{checkoutdate})
+		) as r1 inner join room r on r.room_num = r1.room_num
+		where reserve_state not in (1) 
+		order by room_num limit 1
 
 	          
 	</select>
@@ -110,6 +134,10 @@
 
 	<insert id="cardSave" parameterType="hashmap">
 		update member set credit_num=HEX(AES_ENCRYPT(#{c_num}, SHA2('a-key',512))),credit_validity=#{c_valid},credit_type=#{c_type} where mem_id = #{loginId}
+	</insert>
+	
+	<insert id="nonMem">
+		insert into nonmember values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6})
 	</insert>
 	
 </mapper>
