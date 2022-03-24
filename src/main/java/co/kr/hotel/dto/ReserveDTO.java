@@ -217,6 +217,11 @@ public class ReserveDTO {
 	private int product_cnt;
 	// 김승일 환불신청 END 20220319
 	
+	// 관리자 예약조회 20220325
+	private String product_img;
+	private String product_price;
+	
+	
 	// 김승일 예약리스트 START 20220315
 	public int getReserve_amount() {
 		return reserve_amount;
@@ -304,7 +309,21 @@ public class ReserveDTO {
 	}
 	// 김승일 환불신청 END 20220319
 	
-	//
+	// 관리자 예약조회
+	public String getProduct_img() {
+		return product_img;
+	}
+	public void setProduct_img(String product_img) {
+		this.product_img = product_img;
+	}
+	public String getProduct_price() {
+		return product_price;
+	}
+	public void setProduct_price(String product_price) {
+		this.product_price = product_price;
+	}
+	
+	
 	
 	
 	

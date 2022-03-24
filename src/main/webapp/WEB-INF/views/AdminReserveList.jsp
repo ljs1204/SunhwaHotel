@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
       buttonIcons: true, // show the prev/next text
       weekNumbers: true,
       navLinks: true, // can click day/week names to navigate views
-      editable: true,
+      editable: false,	// 드래그 막기
 
       // more 버튼 누르면 밑으로 나오는 거
       dayMaxEvents: true, // allow "more" link when too many events
@@ -61,13 +61,13 @@ document.addEventListener('DOMContentLoaded', function() {
       			  // JSON(hashmap구조) 안의 res라는 index 번호에 arrayList니까 이렇게 찍는다
       			  //console.log(data.res[0].mem_id);
       			  
-      			  // json 객체는 javascript 방식으로 foreach 불가
+      			  // 1. json 객체는 javascript 방식으로 foreach 불가
       			  /* res.forEach( function(data, index){
       				 console.log('element', index, data); 
       			  }); */
       			  
       			  /* 
-      			  // json 객체 foreach 방법( 이중배열구조라서 이중 for )
+      			  // 2. json 객체 foreach 방법( 이중배열구조라서 이중 for )
       			  for(key in data){
       				  var set = data[key];
       				  for(key in set){
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
  					*/      	
  					
  					
-      			  // 아니면 제이쿼리 $.each문으로 사용( 얘도 하나하나 데이터에 접근하려면 이중 for )
+      			  // 3. 아니면 제이쿼리 $.each문으로 사용( 얘도 하나하나 데이터에 접근하려면 이중 for )
       			  $.each(data, function (index, array){
       				 //console.log(array);
       				 $.each(array, function(index, elem){
@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
       							title: elem.mem_id+'-'+elem.reserve_num,
       							start: elem.checkindate,
       							end: elem.checkoutdate,
+      							groupId: elem.mem_id,		// id 속성 쓰려고 추가(ref : https://fullcalendar.io/docs/event-object)
       							color: '#3a87ad'
       						 });
       					 }else{
@@ -94,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
       							title: elem.mem_name_kr+'-'+elem.reserve_num,
       							start: elem.checkindate,
       							end: elem.checkoutdate,
+      							groupId: elem.mem_id,
       							color: '#2e3b58'
       						 });
       					 }
@@ -110,12 +112,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
      // 일정을 클릭하면 일어나는 이벤트
         eventClick: function(elem){
-      	  console.log(elem.event.title);
+      	  //console.log(elem.event.groupId);	        // mem_id는 groupId로 받았음
       	  var dTitle = elem.event.title;
-      	  var href = dTitle.split('-');
-      	  console.log(href[1]);
+      	  var dId = elem.event.groupId;
+      	  var href = dTitle.split('-');					// title에서 예약번호 잘라내기
+      	  //console.log(href[1]);						// 예약번호
       	  
-      	  location.href='AdminRoomReserveDetail?reserve_num='+href[1]+'&reserve_idx=4';
+      	  //console.log('AdminRoomReserveDetail?reserve_num='+href[1]+'&mem_id='+elem.event.groupId);
+      	  location.href='AdminRoomReserveDetail?reserve_num='+href[1]+'&reserve_idx=4'+'&mem_id='+dId;
         },
     	
     	

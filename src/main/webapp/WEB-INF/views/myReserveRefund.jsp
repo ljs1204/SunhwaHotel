@@ -70,10 +70,6 @@
 	border-bottom: 1px solid #cdcbbe;
 }
 
-.focu:hover {
-	background-color: #633e12 !important;
-	color: white !important;
-}
 /* 컨텐츠 - 예약 상세보기 영역 css END - SI 20220314 */
 
 /* 안내문 CSS START */
