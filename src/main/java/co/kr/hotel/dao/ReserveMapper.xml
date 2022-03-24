@@ -123,4 +123,8 @@
 		update member set credit_num=HEX(AES_ENCRYPT(#{c_num}, SHA2('a-key',512))),credit_validity=#{c_valid},credit_type=#{c_type} where mem_id = #{loginId}
 	</insert>
 	
+	<insert id="nonMem">
+		insert into nonmember values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6})
+	</insert>
+	
 </mapper>

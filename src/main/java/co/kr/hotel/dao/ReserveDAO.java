@@ -48,6 +48,8 @@ public interface ReserveDAO {
 
 	int cardSave(HashMap<String, String> param);
 
+	void nonMem(String nmem_code, int reserve_idx, String email, String phone, String name_en, String name_kr);
+
 
 
 }

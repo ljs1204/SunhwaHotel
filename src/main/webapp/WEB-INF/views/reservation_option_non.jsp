@@ -144,7 +144,7 @@
 	
 	
 	
-	<form name="frm" action="toReserveOrder" method="POST" onSubmit="return Checkform()">
+	<form name="frm" action="toReserveOrder_non" method="POST" onSubmit="return Checkform()">
 	
 		<div style="margin-top:200px"></div>
 		
@@ -207,27 +207,27 @@
 			<div class="row">
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="name_en">이름(영문)</label>
-                  <input type="text" id="name_en" class="form-control" >
+                  <input type="text" id="name_en" name="name_en" class="form-control" >
                 </div>
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="name_kr">이름(국문)</label>
-                  <input type="text" id="name_kr" class="form-control" onkeyup="onlyKorFunc(t)">
+                  <input type="text" id="name_kr" name="name_kr" class="form-control" onkeyup="onlyKorFunc(t)">
                 </div>
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="checkin">체크인 날짜</label>
-                  <input type="text" id="checkin" class="form-control" readonly>
+                  <input type="text" id="checkin" value="${checkindate}" class="form-control" readonly>
                 </div>
                <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="checkout">체크아웃 날짜</label>
-                  <input type="text" id="checkout" class="form-control" readonly>
+                  <input type="text" id="checkout" value="${checkoutdate}" class="form-control" readonly>
                 </div>
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="phone">연락처</label>
-                  <input type="text" id="phone" class="form-control" onkeyup='removeChar(event)' maxlength=11/>
+                  <input type="text" id="phone" name="phone" class="form-control" onkeyup='removeChar(event)' maxlength=11/>
                 </div>
                 <div class="col-md-6 form-group">
                   <label class="text-black font-weight-bold" for="email">Email</label>
-                  <input type="email" id="email" class="form-control">
+                  <input type="email" id="email" name="email" class="form-control">
                 </div>
             </div>
 		
@@ -443,6 +443,20 @@
         });
 	});
 	
+	(function ($) {
+        var originalVal = $.fn.val;
+        $.fn.val = function (value) {
+            var res = originalVal.apply(this, arguments);
+     
+            if (this.is('input:text') && arguments.length >= 1) {
+                // this is input type=text setter
+                this.trigger("input");
+            }
+     
+            return res;
+        };
+    })(jQuery);
+	
 	
  	//카드사 변경 selectbox
  	$('#cardSelect').change(function() {
@@ -492,11 +506,7 @@
  			frm.email.focus();
  			alert("이메일을 입력해 주십시오.");
  			return false;
- 		}
- 		
- 		
- 		
- 		else if(frm.credit_num.value == "" ){
+ 		}else if(frm.credit_num.value == "" ){
  			frm.credit_num.focus();
  			alert("카드번호를 입력해 주십시오.");
  			return false;
