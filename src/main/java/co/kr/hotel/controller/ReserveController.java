@@ -446,7 +446,7 @@ public class ReserveController {
 		
 		
 		
-		return "reserveresult";
+		return "reserveResult";
 	}
 	
 	

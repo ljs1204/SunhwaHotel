@@ -149,14 +149,14 @@
                   <label class="text-black font-weight-bold" for="name">예약이 완료되었습니다</label>
                 </div>
                 <div class="col-md-12 form-group">
-                  <label class="text-black font-weight-bold" for="phone">${loginId}회원님의 예약번호입니다</label>
+                  <label class="text-black font-weight-bold" for="phone">${loginId}님의 예약번호입니다</label>
                   <input type="text" id="phone" value="${reserveNum}" class="form-control" readonly />
                 </div>
                 <c:if test="${loginId eq '비회원'}">
                 <div class="col-md-12 form-group">
-                  <label class="text-black font-weight-bold" for="phone">예약번호입니다</label>
-                  <label class="text-black font-weight-bold" for="phone">조회를 다시 확인하고 싶으시면 비회원 예약 조회를 하셔야 합니다</label>
-                  <input type="text" id="phone" value="${reserveNum}" class="form-control" readonly />
+                
+                  <label class="text-black font-weight-bold" for="phone">예약번호를 다시 확인하고 싶으시면 비회원 예약 조회를 하셔야 합니다</label>
+                  
                   
                 </div>
                 

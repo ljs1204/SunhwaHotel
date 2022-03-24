@@ -80,12 +80,25 @@
 	
 	<select id="roomIdx" resultType="String">
 			
-		SELECT r.room_num FROM room r 
-			WHERE r.room_num not in 
-			(select room_num from reserve 
+		SELECT r.room_num 
+		FROM room r 
+		WHERE r.room_num not in 
+		(select room_num from reserve 
+		WHERE checkindate  BETWEEN #{checkindate} AND #{checkoutdate} OR
+		checkoutdate  BETWEEN #{checkindate} AND #{checkoutdate} OR
+		(checkindate  &gt; #{checkindate} AND checkoutdate  &lt; #{checkoutdate})and reserve_state = 1) and r.room_type = #{room_type} and r.bed_type = #{bed_type} 
+		union all
+		select r.room_num
+		from
+		(
+			select *
+			from reserve 
 			WHERE checkindate  BETWEEN #{checkindate} AND #{checkoutdate} OR
 			checkoutdate  BETWEEN #{checkindate} AND #{checkoutdate} OR
-			(checkindate  &gt; #{checkindate} AND checkoutdate  &lt; #{checkoutdate})and reserve_state = 1) and r.room_type = #{room_type} and r.bed_type = #{bed_type} order by r.room_num limit #{roomCnt}
+			(checkindate  &gt; #{checkindate} AND checkoutdate  &lt; #{checkoutdate})
+		) as r1 inner join room r on r.room_num = r1.room_num
+		where reserve_state not in (1) 
+		order by room_num limit 1
 
 	          
 	</select>
