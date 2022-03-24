@@ -48,11 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
       // more 버튼 누르면 밑으로 나오는 거
       dayMaxEvents: true, // allow "more" link when too many events
       
-      // 일정을 클릭하면 일어나는 이벤트
-      eventClick: function(elem){
-    	  //console.log('일정 클릭시', elem.event.title);
-      },
-      
       // 실제 데이터 연결부분 => 읽기 전용이므로 수정이 필요하면 메소드를 이용한다.)
       events: function(info, successCallback, failureCallback){
       	  var url = 'reserveListGet';
@@ -71,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
       				 console.log('element', index, data); 
       			  }); */
       			  
+      			  /* 
       			  // json 객체 foreach 방법( 이중배열구조라서 이중 for )
       			  for(key in data){
       				  var set = data[key];
@@ -78,7 +74,9 @@ document.addEventListener('DOMContentLoaded', function() {
       					  //console.log(set[key]);
       				  }
       			  }
-      			  
+ 					*/      	
+ 					
+ 					
       			  // 아니면 제이쿼리 $.each문으로 사용( 얘도 하나하나 데이터에 접근하려면 이중 for )
       			  $.each(data, function (index, array){
       				 //console.log(array);
@@ -86,29 +84,39 @@ document.addEventListener('DOMContentLoaded', function() {
       					 //console.log(elem);
       					 if(elem.mem_id=='비회원'){
       						 events.push({
-      							title: elem.reserve_num+'-'+elem.mem_id,
+      							title: elem.mem_id+'-'+elem.reserve_num,
       							start: elem.checkindate,
       							end: elem.checkoutdate,
-      							color: '#3788d9'
+      							color: '#3a87ad'
       						 });
       					 }else{
       						events.push({
-      							title: elem.reserve_num+'-'+elem.mem_name_kr,
+      							title: elem.mem_name_kr+'-'+elem.reserve_num,
       							start: elem.checkindate,
       							end: elem.checkoutdate,
-      							color: '#6c56c8'
+      							color: '#2e3b58'
       						 });
       					 }
       				 });
       				 
       				 
-      				 // 이게 그려주는 역할?
+      				 // 이게 그려주는 역할!
       				 successCallback(events);
       			  }); 
       			  
       		  }
       	  })
-        }
+        },
+        
+     // 일정을 클릭하면 일어나는 이벤트
+        eventClick: function(elem){
+      	  console.log(elem.event.title);
+      	  var dTitle = elem.event.title;
+      	  var href = dTitle.split('-');
+      	  console.log(href[1]);
+      	  
+      	  location.href='AdminRoomReserveDetail?reserve_num='+href[1]+'&reserve_idx=4';
+        },
     	
     	
       
@@ -307,9 +315,9 @@ body {
 
 	<div id='top'>
 
-		Locales:
+	Locale :
 		<select id='locale-selector'></select>
-
+		<button onclick="location.href='./'">HOME</button>
 	</div>
 
 	<div id='calendar'></div>
