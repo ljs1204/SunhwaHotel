@@ -98,7 +98,7 @@
       </div>
     </section>
  <section class="section" style="padding : 2em 0 ">
- 		<div id="Containers" class="container">
+ 		<div id="roombutton" class="container">
 	    <button class="btn btn-outline-white-primary py-3 text-black px-5" id="pButton">객실 추가하기</button> <button class="btn btn-outline-white-primary py-3 text-black px-5" id="mButton" >객실 삭제하기</button>
 	    </div>
  </section>
@@ -114,10 +114,10 @@
           
         <c:forEach items="${roomReservelist}" var="list" varStatus="i">
           <div class="col-md-3 col-lg-3 mb-3" id='roomList' data-aos="fade-up">
-          <c:if test="${list.room_type eq 1}"><a href="roomdetail?room_num=1001" class="room"></c:if>
-          <c:if test="${list.room_type eq 2}"><a href="roomdetail?room_num=1003" class="room"></c:if>
-          <c:if test="${list.room_type eq 3}"><a href="roomdetail?room_num=1005" class="room"></c:if>
-          <c:if test="${list.room_type eq 4}"><a href="roomdetail?room_num=1007" class="room"></c:if>
+          <c:if test="${list.room_type eq 1}"><a href="roomdetail?room_num=1001" class="room"></a></c:if>
+          <c:if test="${list.room_type eq 2}"><a href="roomdetail?room_num=1003" class="room"></a></c:if>
+          <c:if test="${list.room_type eq 3}"><a href="roomdetail?room_num=1005" class="room"></a></c:if>
+          <c:if test="${list.room_type eq 4}"><a href="roomdetail?room_num=1007" class="room"></a></c:if>
         	 
               <figure class="img-wrap">
                 <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3">
@@ -127,14 +127,13 @@
                 <h2>${list.room_type_name} </h2>
                 <span class="text-uppercase letter-spacing-1"><fmt:formatNumber value="${list.room_price}" pattern="#,### 원" /> / per night</span>
               </div>
-            </a>
             <input type="radio" name="check" data-type="${list.room_type}" data-price='${list.room_price}' value = "1"<c:if test="${i.index eq 0}">checked</c:if>/> 더블
             <input type="radio" name="check" data-type="${list.room_type}" data-price='${list.room_price}' value = "2"/> 트윈
           </div>
         
         </c:forEach>
         
-        <div id="roomContainer" class="container">
+        <div id="people" class="container">
   		 	<div class="button" style="margin-top: 10px; ">
   		 	인원 수 : 
 				<img class="minus" name="minus" src="resources/images/minusbtn.png"  alt="마이너스버튼">

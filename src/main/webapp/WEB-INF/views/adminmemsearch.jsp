@@ -63,7 +63,7 @@
    var startpage = "${nowpage}";
    startpage = startpage*1;
    var totalpage = "${pages}";
-   totalpage = (totalpage*1) -1 ;  	   
+   totalpage = (totalpage*1) ;  	   
 $('#pagination').twbsPagination({
     startPage : startpage,
     totalPages : totalpage,
