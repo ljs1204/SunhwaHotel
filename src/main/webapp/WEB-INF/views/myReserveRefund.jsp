@@ -704,6 +704,23 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 </body>
 
 <script>
+	// 방 상태 가져오기
+	var firstRoom = "${first[0].reserve_state}"
+	var secondRoom = "${second[0].reserve_state}"
+	var thirdRoom = "${third[0].reserve_state}";
+
+	console.log(firstRoom, secondRoom, thirdRoom);
+
+	// 방 예약 상태가 1인 것들의 개수를 세서 저장해놓고
+	var rooms = [firstRoom, secondRoom, thirdRoom];
+	let roomsCount = rooms.reduce((cnt, element) => cnt + ('1' === element), 0);
+	console.log(roomsCount);
+	
+	// 환불 신청할 때 해당 개수와 비교해준다( 개수가 같으면 예약완전취소고, 다르면 부분취소다 )
+		
+	
+	
+	
 // 20220319 환불할 때 사용할 배열 초기화( 환불할 idx 들어감 )
 	var refundIdx = [];		// idx
 
@@ -810,7 +827,7 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 		console.log(dateGap);
 		
 		
-	// 2. 환불 여부 판단 & 환불 금액 계산
+		// 2. 환불 여부 판단 & 환불 금액 계산
 		var refundPrice = 0;	// 최종 환불액
 	
 		if(dateGap >= 7){							// 7일보다 전
@@ -848,8 +865,22 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	// 3. 환불 금액 확인 & 환불 진행( 환불가 : refundPrice / 환불순번 : refundIdx(배열) )
 		if(refundIdx.length > 0){
 			confirm(amountComma(refundPrice) + '원 환불이 가능합니다. 정말 환불하시겠습니까?');
+			// 배열 쪼개기
+			var param1 = refundIdx[0];
+			var param2 = refundIdx[1];
+			var param3 = refundIdx[2];
+			console.log(param1, param2, param3);
+			
+			
+			if(roomsCount == refundIdx.length){
+				// 완전 취소
+				location.href="./reFund?reserve_idx1="+param1+"&reserve_idx2="+param2+"&reserve_idx3="+param3+"&refundCategory="+3;
+			}else{
+				// 부분취소
+				location.href="./reFund?reserve_idx1="+param1+"&reserve_idx2="+param2+"&reserve_idx3="+param3+"&refundCategory="+2;
+			}
 		}else{
-			alert('객실을 선택해주셔서 환불진행이 가능합니다.');
+			alert('객실을 선택해주셔야 환불진행이 가능합니다.');
 		}	
 	}
 /* 20220319 환불  */
@@ -890,7 +921,7 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 		return comma;
 	}
 /* 20220319 금액 콤마 찍기 SI */
- 
+/*  
 function checkboxArr() {
     var checkArr = [];     //  배열 초기화
     $("input[name='test_check']:checked").each(function(i)) {
@@ -905,8 +936,7 @@ function checkboxArr() {
             valueArrTest: checkArr
         }
     });
-}
-
+} */
 </script>
 
 </html>
