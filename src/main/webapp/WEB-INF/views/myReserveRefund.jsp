@@ -122,21 +122,6 @@
 						<div class="col-md-12 infom" style="padding-left: 0px;">ⓘ 환불 신청할 객실을 마우스로 클릭하고 아래 '환불' 버튼을 누르세요.</div>
 						<br>
 	
-							
-						<tr>
-							<td>객실1</td>
-							<th>타입</th>
-							<th>인원</th>
-							<th>옵션</th>
-							<th>마일리지 상품</th>
-							<th>금액</th>
-						</tr>
-	
-	
-	
-	
-	
-	
 						<!-- 첫 번째 객실 -->
 						<c:if test="${firstSize ne 0 }">
 							<!-- 만약 예약상태가 2(취소) 면 프론트 처리 -->
@@ -145,7 +130,7 @@
 									<!-- 체크박스 비활성 -->
 									<div class="form-check icheck-sunflower" style="padding-left: 0px;">
 										<span style="font-size: 20px; font-weight: 550; font-family: Helvetica; padding: 4px; color: #633e12; border-radius: 0.5rem;">객실 3</span>
-										<input class="form-check-input" type="checkbox" value="" id="defaultCheck1" style="margin-left: 0.5rem; zoom: 1.4; margin-bottom: 0.5rem;" disabled>
+										<input class="form-check-input" name = "test_check" type="checkbox" value=" ${first[0].reserve_idx }" id="defaultCheck1" style="margin-left: 0.5rem; zoom: 1.4; margin-bottom: 0.5rem;" disabled>
 										<!-- <label class="form-check-label" for="defaultCheck1">
 									Default checkbox
 								  </label> -->
@@ -672,6 +657,9 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 					Copyright &copy;
 					<script>
 						document.write(new Date().getFullYear());
+						
+						
+						
 					</script>
 					All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by
 					<a href="https://colorlib.com" target="_blank">Colorlib</a>
@@ -859,9 +847,9 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 		
 	// 3. 환불 금액 확인 & 환불 진행( 환불가 : refundPrice / 환불순번 : refundIdx(배열) )
 		if(refundIdx.length > 0){
-			confirm(amountComma(refundPrice) + '원 환불이 가능합니다. 정말 환불하나요?');
+			confirm(amountComma(refundPrice) + '원 환불이 가능합니다. 정말 환불하시겠습니까?');
 		}else{
-			alert('선택해야 환불이 가능하죠');
+			alert('객실을 선택해주셔서 환불진행이 가능합니다.');
 		}	
 	}
 /* 20220319 환불  */
@@ -902,6 +890,22 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 		return comma;
 	}
 /* 20220319 금액 콤마 찍기 SI */
+ 
+function checkboxArr() {
+    var checkArr = [];     //  배열 초기화
+    $("input[name='test_check']:checked").each(function(i)) {
+        checkArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+    }
+ 
+    $.ajax({
+        url: 'test_check'
+        , type: 'post'
+        , dataType: 'text'
+        , data: {
+            valueArrTest: checkArr
+        }
+    });
+}
 
 </script>
 
