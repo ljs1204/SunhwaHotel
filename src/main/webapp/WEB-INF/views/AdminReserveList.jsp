@@ -25,6 +25,22 @@
 
 <script>
 
+var userId = "${sessionScope.loginId}";
+console.log(userId);
+if (userId == "") {
+	console.log(userId);
+	location.href="logout";
+}
+
+
+var grade = "${sessionScope.grade}";
+console.log(grade);
+if (grade != "admin") {
+	console.log(grade);
+	location.href="logout";
+}
+
+
 // 수정버전
 document.addEventListener('DOMContentLoaded', function() {
 	// locales-all.js에 사용할 수 있는 언어들 있음

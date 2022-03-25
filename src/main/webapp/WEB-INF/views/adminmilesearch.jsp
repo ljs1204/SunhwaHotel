@@ -344,6 +344,24 @@
 	<script src="resources/js/main.js"></script>
 </body>
 <script>
+
+
+var userId = "${sessionScope.loginId}";
+console.log(userId);
+if (userId == "") {
+	console.log(userId);
+	location.href="logout";
+}
+
+
+var grade = "${sessionScope.grade}";
+console.log(grade);
+if (grade != "admin") {
+	console.log(grade);
+	location.href="logout";
+}
+
+
 /* 올해 년도 계산해서 이용실적 앞에 적어주기 START - SI 20220314 */
 	var d = new Date();
 

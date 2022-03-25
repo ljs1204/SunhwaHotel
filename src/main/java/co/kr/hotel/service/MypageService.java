@@ -319,10 +319,10 @@ public class MypageService {
 			reserveIdx = reserveIter.getReserve_idx();
 			
 			// 3-13. while의 마지막 루프땐 무조건 put
-			cnt += 1;
 			if(cnt == size) {
 				result.put(mapKey, reserveRoom);
 			}
+			cnt += 1;
 		}
 		
 		return result;
