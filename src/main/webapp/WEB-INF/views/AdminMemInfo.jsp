@@ -385,6 +385,22 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	<script src="resources/js/main.js"></script>
 </body>
 <script>
+
+var userId = "${sessionScope.loginId}";
+console.log(userId);
+if (userId == "") {
+	console.log(userId);
+	location.href="logout";
+}
+
+
+var grade = "${sessionScope.grade}";
+console.log(grade);
+if (grade != "admin") {
+	console.log(grade);
+	location.href="logout";
+}
+
 /* 20220319 목록으로 버튼 구현 SI */
 	var pagingNum = ${pagingNum};
 

@@ -262,7 +262,9 @@ public class ManagerController {
 		String page = "AdminRoomReserveDetail";
 		
 		// 파라미터 확인
-		logger.info("요기서 확인"+ reserve_num, reserve_idx, mem_id);
+		logger.info("reserve_num 확인"+ reserve_num);
+		logger.info("reserve_idx 확인" +reserve_idx);
+		logger.info("mem_id 확인"+ mem_id);
 						
 		
 	/* 관리자 확인 로직 들어가야함! */
@@ -299,6 +301,7 @@ public class ManagerController {
 	// 근데 사이즈 비교 전에는 우선 null 비교가 들어가야한다.
 	if(first != null) {
 		model.addAttribute("firstSize", first.size());
+		logger.info("first : "+ first.size());
 		model.addAttribute("first", first);
 		logger.info("첫번째 : {}", first.size());
 	}

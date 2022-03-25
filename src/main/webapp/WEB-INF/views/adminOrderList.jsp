@@ -44,5 +44,21 @@
 		</table>	
 </body>
 <script>
+var userId = "${sessionScope.loginId}";
+console.log(userId);
+if (userId == "") {
+	console.log(userId);
+	location.href="logout";
+}
+
+
+var grade = "${sessionScope.grade}";
+console.log(grade);
+if (grade != "admin") {
+	console.log(grade);
+	location.href="logout";
+}
+
+
 </script>
 </html>

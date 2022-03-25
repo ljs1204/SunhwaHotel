@@ -60,6 +60,21 @@
 </body>
 </html>
 <script>
+var userId = "${sessionScope.loginId}";
+console.log(userId);
+if (userId == "") {
+	console.log(userId);
+	location.href="logout";
+}
+
+
+var grade = "${sessionScope.grade}";
+console.log(grade);
+if (grade != "admin") {
+	console.log(grade);
+	location.href="logout";
+}
+
    var startpage = "${nowpage}";
    startpage = startpage*1;
    var totalpage = "${pages}";

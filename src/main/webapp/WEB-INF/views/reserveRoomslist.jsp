@@ -225,14 +225,15 @@
     <script src="resources/js/main.js"></script>
   </body>
   <script>
-
+  
+  
 	var index = 0;
 	var msg = "${msg}";
 	
 	if(msg != ""){
 		alert(msg);
 	}
-	
+  
 	$("#pButton").click(function(){
 		if($("[name=rowDiv]").length == 3){
 			alert("더 이상 추가할 수 없습니다.");

@@ -226,15 +226,19 @@
 								<div class="row">
 									<div class="col-md-4 form-group">
 										<label class="text-black font-weight-bold" for="name">카드 사용 금액</label>
-										<input type="text" id="name" class="form-control" value="${first[0].pay_price }" readonly>
+										
+										<span id="name" class="form-control"><fmt:formatNumber value="${first[0].pay_price }" pattern="#,### 원" /></span>
 									</div>
 									<div class="col-md-4 form-group">
 										<label class="text-black font-weight-bold" for="phone">마일리지 사용 금액</label>
-										<input type="text" id="phone" class="form-control" value="${first[0].pay_mileage }" readonly>
+										
+										<span id="name" class="form-control"><fmt:formatNumber value="${first[0].pay_mileage }" pattern="#,###" /></span>
 									</div>
 									<div class="col-md-4 form-group">
 										<label class="text-black font-weight-bold" for="phone">총 가격</label>
-										<input type="text" id="phone" class="form-control" value="${first[0].amount }" readonly>
+										
+										<span id="name" class="form-control"><fmt:formatNumber value="${first[0].amount }" pattern="#,### 원" /></span>
+										
 									</div>
 								</div>
 
@@ -253,15 +257,17 @@
 								<div class="row">
 									<c:if test="${first[0].product_num ne null }">
 										<c:forEach var="first" items="${first}" varStatus="stat">
-											<div class="list">
-												<img class="img" src="resources/mileage/${first.product_img}.png" alt="상품이미지" style="width: 150px; height: 120px;" />
-												<p style="color: black;">${first.product_name}X${first.product_cnt }</p>
-												<p style="color: black;">${first.product_price}마일리지</p>
+											<div class="col-md-3 col-lg-3 aos-init aos-animate" style="text-align: center;">
+												<img class="img" src="resources/mileage/${first.product_img}.png" alt="상품이미지" style="width: 150px; height: 120px; text-align: center;" />
+												<p style="color: black; text-align: center;">${first.product_name}</p>
+												<p style="color: black; text-align: center;">${first.product_cnt } 개</p>
+												<p style="color: black; text-align: center;">${first.product_price}마일리지</p>
 												<input type="hidden" value="${first.product_num}" name="product${stat.count}" />
 												<input type="hidden" value="${first.product_price}" />
 
 												<br />
 											</div>
+											
 										</c:forEach>
 									</c:if>
 									<c:if test="${first[0].product_num eq null }">
@@ -354,15 +360,19 @@
 								<div class="row">
 									<div class="col-md-4 form-group">
 										<label class="text-black font-weight-bold" for="name">카드 사용 금액</label>
-										<input type="text" id="name" class="form-control" value="${second[0].pay_price }" readonly>
+										
+										<span id="name" class="form-control"><fmt:formatNumber value="${second[0].pay_price }" pattern="#,### 원" /></span>
 									</div>
 									<div class="col-md-4 form-group">
 										<label class="text-black font-weight-bold" for="phone">마일리지 사용 금액</label>
-										<input type="text" id="phone" class="form-control" value="${second[0].pay_mileage }" readonly>
+										
+										<span id="name" class="form-control"><fmt:formatNumber value="${second[0].pay_mileage }" pattern="#,### " /></span>
+										
 									</div>
 									<div class="col-md-4 form-group">
 										<label class="text-black font-weight-bold" for="phone">총 가격</label>
-										<input type="text" id="phone" class="form-control" value="${second[0].amount }" readonly>
+									
+										<span id="name" class="form-control"><fmt:formatNumber value="${second[0].amount }" pattern="#,### 원" /></span>
 									</div>
 								</div>
 
@@ -381,9 +391,10 @@
 								<div class="row">
 									<c:if test="${second[0].product_num ne null }">
 										<c:forEach var="second" items="${second}" varStatus="stat">
-											<div class="list">
+											<div class="col-md-3 col-lg-3 aos-init aos-animate" style="text-align: center;">
 												<img class="img" src="resources/mileage/${second.product_img}.png" alt="상품이미지" style="width: 150px; height: 120px;" />
-												<p style="color: black;">${second.product_name}X${second.product_cnt }</p>
+												<p style="color: black;">${second.product_name}</p>
+												<p style="color: black;">${second.product_cnt } 개</p>
 												<p style="color: black;">${second.product_price}마일리지</p>
 												<input type="hidden" value="${second.product_num}" name="product${stat.count}" />
 												<input type="hidden" value="${second.product_price}" />
@@ -481,7 +492,8 @@
 								<div class="row">
 									<div class="col-md-4 form-group">
 										<label class="text-black font-weight-bold" for="name">카드 사용 금액</label>
-										<input type="text" id="name" class="form-control" value="${third[0].pay_price }" readonly>
+										<%-- <input type="text" id="name" class="form-control" value="${third[0].pay_price }" readonly> --%>
+										<span id="name" class="form-control"><fmt:formatNumber value="${third[0].pay_price }" pattern="#,### 원" /></span>
 									</div>
 									<div class="col-md-4 form-group">
 										<label class="text-black font-weight-bold" for="phone">마일리지 사용 금액</label>
@@ -508,9 +520,10 @@
 								<div class="row">
 									<c:if test="${third[0].product_num ne null }">
 										<c:forEach var="third" items="${third}" varStatus="stat">
-											<div class="list">
+											<div class="col-md-3 col-lg-3 aos-init aos-animate" style="text-align: center;">
 												<img class="img" src="resources/mileage/${third.product_img}.png" alt="상품이미지" style="width: 150px; height: 120px;" />
-												<p style="color: black;">${third.product_name}X${third.product_cnt }</p>
+												<p style="color: black;">${third.product_name}</p>
+												<p style="color: black;">${third.product_cnt } 개</p>
 												<p style="color: black;">${third.product_price}마일리지</p>
 												<input type="hidden" value="${third.product_num}" name="product${stat.count}" />
 												<input type="hidden" value="${third.product_price}" />
@@ -779,6 +792,23 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	<script src="resources/js/main.js"></script>
 </body>
 <script>
+
+var userId = "${sessionScope.loginId}";
+console.log(userId);
+if (userId == "") {
+	console.log(userId);
+	location.href="logout";
+}
+
+
+var grade = "${sessionScope.grade}";
+console.log(grade);
+if (grade != "admin") {
+	console.log(grade);
+	location.href="logout";
+}
+
+
 	/* 올해 년도 계산해서 이용실적 앞에 적어주기 START - SI 20220314 */
 	var d = new Date();
 
