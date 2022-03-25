@@ -2,6 +2,7 @@ package co.kr.hotel.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
@@ -60,18 +61,33 @@ public class BoardController {
 	}
 	// 2022.03.14  문의페이지 리스트 박형민
 	@GetMapping(value="/AdminQnalist")
-	public ModelAndView list() {
-		
-		logger.info("리스트 요청");
-		
+	public ModelAndView list() {		
+		logger.info("리스트 요청");		
 		return service.list();
 	}
+	
+	@RequestMapping(value = "/AdminQnalist")
+	public ModelAndView list(HttpServletRequest request) throws Exception {
+	    
+		ModelAndView mv = new ModelAndView();
+		
+	    HttpSession session = request.getSession();
+	    String name = (String) session.getAttribute("ssVar");
+	    
+	    name = "세션값 변경";
+	    session.setAttribute("ssVar", name);
+	    mv.setViewName("/test/test");
+	        
+	    return mv;
+	}
+	
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(Model model, @RequestParam String board_num) {		
 		logger.info("삭제요청 : {}",board_num);		
-		service.delete(board_num);		
-		return "redirect:/";
+		service.delete(board_num);
+		logger.info("삭제요청2 : {}",board_num);	
+		return "redirect:/AdminQnalist";
 	}
 			
 			

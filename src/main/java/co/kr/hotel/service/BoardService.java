@@ -36,7 +36,7 @@ public class BoardService {
 		return mav;
 	}
 	
-	//리스트
+	//리스트 
 	public ModelAndView list() {		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("AdminQnalist");
@@ -45,6 +45,8 @@ public class BoardService {
 		mav.addObject("list", list);
 		return mav;
 	}
+
+
 	//글쓰기 
 	public void write(HashMap<String, String> params) {
 		int row = dao.write(params);
@@ -63,6 +65,8 @@ public class BoardService {
 	public void delete(String board_num) {		
 		int success = dao.delete(board_num);
 		logger.info("삭제 완료 여부 : "+success);
-	}	
-}
+	}
+
+
+	}
 

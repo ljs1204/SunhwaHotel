@@ -373,7 +373,6 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 						if(yn){
 							location.href='./delete?board_num=${board.board_num}';
 						}
-						
 					}
 					
 						document.write(new Date().getFullYear());
