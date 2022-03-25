@@ -22,4 +22,5 @@
 			on r.room_num = ro.room_num 
 		where r.reserve_num = #{param1};
 	</select>
+	
 </mapper>
