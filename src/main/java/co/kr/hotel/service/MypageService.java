@@ -280,8 +280,10 @@ public class MypageService {
 		ReserveDTO reserveIter = null;										// iterator에서 사용할 한줄 받을 DTO 
 		ArrayList<ReserveDTO> reserveRoom = new ArrayList<ReserveDTO>();	// 객실별로 잘라서 담을 ArrayList( Hashmap의 values )
 		String mapKey = "first";											// hashmap의 키 값
+
 		int cnt = 0;														// while문 마지막 루프 확인할 변수
-		int size = reserveDTO.size() - 1;										// 현재 쿼리문의 rows 수
+		int size = reserveDTO.size()-1;										// 현재 쿼리문의 rows 수( index랑 맞추려고 -1 )
+
 		
 		// 3-2. 예약순번을 가지고 있는 Int 변수 초기화
 		int reserveIdx = 0;
@@ -317,6 +319,7 @@ public class MypageService {
 			}
 			// 3-5. Int 변수에 현재 예약순번 저장( 다음 회차때 비교할 값 )
 			reserveIdx = reserveIter.getReserve_idx();
+			//logger.info("size 확인 : {}", reserveIter.getProduct_name());
 			
 			// 3-13. while의 마지막 루프땐 무조건 put
 			if(cnt == size) {
@@ -324,6 +327,7 @@ public class MypageService {
 			}
 			cnt += 1;
 		}
+		
 		
 		return result;
 	}

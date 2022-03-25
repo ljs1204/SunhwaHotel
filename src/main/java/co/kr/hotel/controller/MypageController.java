@@ -196,25 +196,23 @@ public class MypageController {
 		ArrayList<ReserveDTO> second = (ArrayList<ReserveDTO>) result.get("second");
 		ArrayList<ReserveDTO> third = (ArrayList<ReserveDTO>) result.get("third");
 			
-		// 확인
-		//logger.info("첫번째 : {}", first.size());
-		//logger.info("두번째 : {}", second.size());
-		//logger.info("세번째 : {}", third.size());
-		
 		// model에 각 ArrayList 담기
 		// List의 사이즈 비교하는 방법 두가지 : list.size()>0 / list.isEmpty()
 		// 근데 사이즈 비교 전에는 우선 null 비교가 들어가야한다.
 		if(first != null) {
 			model.addAttribute("firstSize", first.size());
 			model.addAttribute("first", first);
+			logger.info("첫번째 : {}", first.size());
 		}
 		if(second != null) {
 			model.addAttribute("secondSize", second.size());
 			model.addAttribute("second", second);
+			logger.info("두번째 : {}", second.size());
 		}
 		if(third != null) {
 			model.addAttribute("thirdtSize", third.size());
 			model.addAttribute("third", third);
+			logger.info("세번째 : {}", third.size());
 		}
 		model.addAttribute("reserve_num", reserve_num);
 		
@@ -313,7 +311,7 @@ public class MypageController {
 		
 		return "redirect:/tomemberboardlist";
 	}
-	//상세보기 
+	//상세보기 7
 	@GetMapping(value="/tomemberboarddetail")
 	public ModelAndView tomemberboarddetail(@RequestParam String board_num) {
 		logger.info("상세보기 요청 :{} ",board_num);
@@ -424,6 +422,7 @@ public class MypageController {
 		
 		
 	//마이페이지 회원리스트 유선화 END 2022.03.16
+	
 		
 		
 		

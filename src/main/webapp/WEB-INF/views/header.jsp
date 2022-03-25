@@ -210,14 +210,14 @@
                         <!-- 20220314 로그인 상태에 따라 회원/비대면, ID에 따라 관리자 구분 START -->
                         <c:if test="${loginId eq null}">
                             <li><a href="./roomsList" class="nav-link" style="font-weight: bold;">객실 소개</a></li>
-                            <li><a href="blog.html" class="nav-link" style="font-weight: bold;">고객문의</a></li>
+                            <li><a href="./tomemberboardlist" class="nav-link" style="font-weight: bold;">고객문의</a></li>
                             <li><a href="./myPagemilelist?orderNum=1" class="nav-link" style="font-weight: bold;">마일리지</a></li>
                         </c:if>
                         
                         <c:if test="${loginId ne null}">
                 			<c:if test="${mem_grade ne 'admin' }">
                         	<li><a href="./roomsList" class="nav-link" style="font-weight: bold;">객실 소개</a></li>
-                            <li><a href="blog.html" class="nav-link" style="font-weight: bold;">고객문의</a></li>
+                            <li><a href="./tomemberboardlist" class="nav-link" style="font-weight: bold;">고객문의</a></li>
                             <li><a href="./myPagemilelist?orderNum=1" class="nav-link" style="font-weight: bold; font-size:15px;">${loginId}님의 마일리지</a></li>
                            	</c:if>
                         </c:if>
@@ -227,8 +227,7 @@
                            	<li><a href="./AdminQnalist?orderNum=1" class="nav-link" style="font-weight: bold;">문의 리스트</a></li>
                             <li><a href="./AdminMileageRegist" class="nav-link" style="font-weight: bold;">마일리지 상품 리스트</a></li>
                         	</c:if>
-                       	</c:if>
-                        
+                       	</c:if>                       
                         <!-- 20220314 로그인 상태에 따라 회원/비대면, ID에 따라 관리자 구분 START -->
                         </ul>
                     </nav>
