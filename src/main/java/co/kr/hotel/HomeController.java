@@ -82,16 +82,10 @@ public class HomeController {
 		logger.info("dateoutformat : " +dateoutformat);
 		logger.info("dateInformat MM : " +dateInformat.getMonthValue());
 		logger.info("dateoutformat MM : " +dateoutformat.getMonthValue());
+		
 		int dateInformatMM = dateInformat.getMonthValue();
 		int dateoutformatMM = dateoutformat.getMonthValue();
 		
-		//객실 예약 리스트 START 20220311 유선화
-		// toRooms
-		ArrayList<RoomDTO> roomReservelist = reserveService.toReservelist(checkin_date,checkout_date,cnt);
-		logger.info("roomReservelist"+roomReservelist);
-		model.addAttribute("roomReservelist",roomReservelist);
-		
-		//객실 예약 리스트 END 20220311 유선화
 			
 		int compare = dateInformat.compareTo(dateoutformat);
 		int compareinnow = nowformat.compareTo(dateInformat);
@@ -99,9 +93,18 @@ public class HomeController {
 		
 		logger.info("compare : "+ compare);
 		
+		
+		if(checkin_date.equals("") || checkout_date.equals("") ) {
+			page = "index";
+			logger.info("equals()");
+		}
+		
+
+		//오늘 날짜,체크인 체크아웃 비교하기 end
 		if(dateInformatMM <= dateoutformatMM) { // 월 비교 
-			if( compare >-1 && compareinnow > -1 && comparoutenow > -1) { // 날짜 비교 
+			if( compare >-1) { // 날짜 비교 
 				model.addAttribute("msg2","날짜를 다시 선택해 주세요");
+				logger.info("compare >-1 : "+ compare);
 				page = "index";
 				msg = "";
 				model.addAttribute("msg",msg);
@@ -120,14 +123,20 @@ public class HomeController {
 					model.addAttribute("msg",msg);
 				}
 			}
+		
 		}else {
 			model.addAttribute("msg2","날짜를 다시 선택해 주세요");
 			page = "index";
 			msg = "";
 			model.addAttribute("msg",msg);
 		}
+		//객실 예약 리스트 START 20220311 유선화
+		// toRooms
+		ArrayList<RoomDTO> roomReservelist = reserveService.toReservelist(checkin_date,checkout_date,cnt);
+		logger.info("roomReservelist"+roomReservelist);
+		model.addAttribute("roomReservelist",roomReservelist);
 		
-		//오늘 날짜,체크인 체크아웃 비교하기 end
+		//객실 예약 리스트 END 20220311 유선화
 		
 		model.addAttribute("checkin_date",dto.getCheckindate()); 
 		model.addAttribute("checkout_date",dto.getCheckoutdate());

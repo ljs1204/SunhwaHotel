@@ -153,16 +153,14 @@
                             <!-- 20220311 반응형으로 작아졌을땐 안보이게 하는 class non-display 추가 -->
                             <!-- 20220314 로그인 상태에 따라 회원/비대면, ID에 따라 관리자 구분 START -->
                             <c:if test="${loginId eq null}">
-                            	<li><a href="index.html" class="nav-link"><img class="non-display"
-                                    	    src="resources/images/icon/search.png" style="width:25px;">&nbsp;선화호텔 소개</a></li>
-                           		<li><a href="index.html" class="nav-link"><img class="non-display"
+                            	
+                           		<li><a href="./" class="nav-link"><img class="non-display"
                                         	src="resources//images/icon/booking.png" style="width:25px">&nbsp;선화호텔 예약</a></li>
                             </c:if>
                             <c:if test="${loginId ne null}">
                 				<c:if test="${mem_grade ne 'admin' }">
-                					<li><a href="index.html" class="nav-link"><img class="non-display"
-                                    	    src="resources/images/icon/search.png" style="width:25px;">&nbsp;선화호텔 소개</a></li>
-                           			<li><a href="index.html" class="nav-link"><img class="non-display"
+                					
+                           			<li><a href="./" class="nav-link"><img class="non-display"
                                         	src="resources//images/icon/booking.png" style="width:25px">&nbsp;선화호텔 예약</a></li>
                 				</c:if>
                 			</c:if>
