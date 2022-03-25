@@ -41,7 +41,7 @@
 <style>
 /* 세로 네비게이션(리스트그룹) 관련 css START - SI 20220314 */
 	.list-group-item.active {
-		background-color: #98cade !important;
+		background-color: #f1e3c4 !important;
 		/* border: 1px solid #f1ebd6 !important; */
 		color: #633e12 !important;
 		font-weight: bold;
@@ -56,7 +56,7 @@
 
 /* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 */
 	#list-reserve .table th{
-		background-color: #98cade;
+		background-color: #f1e3c4;
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 		color: #633e12 !important;
@@ -102,12 +102,10 @@
 		<!-- 세로 네비게이션 바 -->
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
-
-						<a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
-						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="#">객실 예약 정보 리스트</a>
-						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
+						<a class="list-group-item list-group-item-action" id="list-home-list" href="./memlist?currpage=1">회원 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./AdminReserveList">객실 예약 정보 리스트</a>
+						<a class="list-group-item list-group-item-action active" id="list-messages-list" href="./AdminQnalist?orderNum=1">회원 문의 관리</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./AdminMileageRegist">마일리지 상품 관리</a>
-						
 
 					</div>
 				</div>
@@ -155,11 +153,9 @@
 								placeholder="내용을 입력해주세요."></textarea></td>	-->		
 											
 							</tr>
-							<input type="button" onclick="location.href='./AdminQnaWriteForm?board_orinum=${board.board_orinum}'" value="글쓰기"/>
-							
-							<a href="./AdminQnaWriteForm?board_orinum=${board.board_orinum}">글쓰기</a>
-							
 						</table>
+						<input type="button" onclick="location.href='./AdminQnaWriteForm?board_orinum=${board.board_orinum}'" class="btn btn-primary btn-block text-white" value="글쓰기"/>
+						
 
 <!-- 20220317 페이징 START - SI -->
 					
