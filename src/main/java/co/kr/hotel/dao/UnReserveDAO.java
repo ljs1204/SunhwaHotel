@@ -14,5 +14,4 @@ public interface UnReserveDAO {
 	/*룸 정보를 가져오는 쿼리*/
 	ArrayList<ReserveDTO> unBeMyReserve(String reserve_num, String non_name_en, String non_email);
 	
-	
 }

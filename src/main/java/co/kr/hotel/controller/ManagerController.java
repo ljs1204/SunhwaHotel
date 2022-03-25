@@ -28,6 +28,7 @@ import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
+import co.kr.hotel.dto.RoomDTO;
 import co.kr.hotel.service.ManagerService;
 import co.kr.hotel.service.MypageService;
 import co.kr.hotel.service.ReserveService;
@@ -249,6 +250,7 @@ public class ManagerController {
 		return service.adminmilesearch(parameter);
 	}
 	
+// 20220325 예약 상세보기(관리자) - SI
 	@RequestMapping(value = "/AdminRoomReserveDetail", method = RequestMethod.GET)
 	public String AdminRoomReserveDetail(
 			Model model, 
@@ -258,26 +260,18 @@ public class ManagerController {
 			HttpSession session) {
 		
 		String page = "AdminRoomReserveDetail";
-		ArrayList<HashMap<String, String>> product = reserveservice.reservation_product();
-		logger.info("받아온 값 확인 {}",product);
-		logger.info("받아온 reserve_num값 확인 {}",reserve_num);
 		
-		model.addAttribute("product",product);
+		// 파라미터 확인
+		logger.info("요기서 확인"+ reserve_num, reserve_idx, mem_id);
+						
 		
-
-		logger.info("AdminRoomReserveDetail 요청");
-
-	// 메인페이지 요청 세션검사 추가 START - SI 20220314
-		String loginId = (String) session.getAttribute("loginId");
+	/* 관리자 확인 로직 들어가야함! */
 		
-		if (loginId != null) {
-			model.addAttribute("loginId", loginId);
-		}
-	// 메인페이지 요청 세션검사 추가 END - SI 20220314
-
+			
+		
 	// 20220318 예약 상세보기 구현 - SI
 		// 서비스에서 받은 HashMap 데이터 추출해서 model에 넘겨주기
-		HashMap<String, Object> result = mypageService.myReserveDetail(loginId, reserve_num, reserve_idx);
+		HashMap<String, Object> result = mypageService.myReserveDetail(mem_id, reserve_num, reserve_idx);
 		model.addAttribute("result", result.get("reserveDTO"));
 		model.addAttribute("product", result.get("productDTO"));
 		model.addAttribute("room", result.get("roomTypeName"));
@@ -285,12 +279,44 @@ public class ManagerController {
 		// 마일리지 상품 구매가 없을 때 처리를 위해 size 전송
 		ArrayList<ProductDTO> prod = (ArrayList<ProductDTO>) result.get("productDTO");
 		model.addAttribute("productSize", prod.size());
+
+	// 20220325 방 갯수 model
+		ArrayList<RoomDTO> roomCnt = (ArrayList<RoomDTO>) result.get("roomTypeName");
+		model.addAttribute("roomCnt",roomCnt.size());
+		logger.info("roomCnt"+ roomCnt.size());
+	
 		
-	// 20220319 페이징번호 가져오기 => 목록을 부를 때 세션에 pagingNum 저장 후 상세보기에서 사용
-		int pagingNum = (int) session.getAttribute("pagingNum");
-		model.addAttribute("pagingNum", pagingNum);
-	// 20220319 페이징번호 가져오기 END	
+	// 20220325 방 별 정보 model
+	HashMap<String, Object> result2 = mypageService.myReserveRefund(mem_id, reserve_num);
+
+	// 받아온 hashMap ArrayList로 자르기
+	ArrayList<ReserveDTO> first = (ArrayList<ReserveDTO>) result2.get("first");
+	ArrayList<ReserveDTO> second = (ArrayList<ReserveDTO>) result2.get("second");
+	ArrayList<ReserveDTO> third = (ArrayList<ReserveDTO>) result2.get("third");
 		
+	// 확인
+	//logger.info("첫번째 : {}", first.size());
+	//logger.info("두번째 : {}", second.size());
+	//logger.info("세번째 : {}", third.size());
+	
+	// model에 각 ArrayList 담기
+	// List의 사이즈 비교하는 방법 두가지 : list.size()>0 / list.isEmpty()
+	// 근데 사이즈 비교 전에는 우선 null 비교가 들어가야한다.
+	if(first != null) {
+		model.addAttribute("firstSize", first.size());
+		model.addAttribute("first", first);
+	}
+	if(second != null) {
+		model.addAttribute("secondSize", second.size());
+		model.addAttribute("second", second);
+	}
+	if(third != null) {
+		model.addAttribute("thirdtSize", third.size());
+		model.addAttribute("third", third);
+	}
+	//model.addAttribute("reserve_num", reserve_num);
+		
+				
 		return page;
 	}
 	

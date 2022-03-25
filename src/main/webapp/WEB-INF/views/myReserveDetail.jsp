@@ -72,7 +72,12 @@
 	}
 /* 컨텐츠 - 예약 상세보기 영역 css END - SI 20220314 */	
 
-<style>
+.focu:hover {
+	background-color: #633e12 !important;
+	color: white !important;
+}
+
+</style>
 
 
 

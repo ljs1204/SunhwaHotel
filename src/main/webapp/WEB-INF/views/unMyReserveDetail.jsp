@@ -163,6 +163,7 @@
 								</tr>
 								<tr>
 									<th scope="row">이름(영문)</th>
+									<!-- <td colspan="3">${dto.reserve_name }</td> -->
 									<td colspan="3">${dto.reserve_name }</td>
 								</tr>
 								<tr>

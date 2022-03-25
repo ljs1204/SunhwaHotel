@@ -161,7 +161,8 @@
 <!-- 20220319 환불 신청 페이지 SI - START -->
 	<select id = "myReserveRefund" resultType="co.kr.hotel.dto.ReserveDTO">
 		select r.reserve_idx, r.reserve_state, ro.bed_type, ro.room_type_name, r.adult_cnt, r.extrabed_cnt, 
-				r.breakfast_cnt, p.pay_price, p.amount, c.product_num, pr.product_name, c.product_cnt, r.checkindate
+				r.breakfast_cnt, p.pay_price, p.pay_mileage, p.amount, c.product_num, pr.product_name, c.product_cnt, r.checkindate,
+				pr.product_img, pr.product_price
 		from reserve r
 			left outer join room ro 
 				on r.room_num = ro.room_num

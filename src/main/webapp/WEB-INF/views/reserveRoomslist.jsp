@@ -98,7 +98,7 @@
       </div>
     </section>
  <section class="section" style="padding : 2em 0 ">
- 		<div id="roomContainer" class="container">
+ 		<div id="Containers" class="container">
 	    <button class="btn btn-outline-white-primary py-3 text-black px-5" id="pButton">객실 추가하기</button> <button class="btn btn-outline-white-primary py-3 text-black px-5" id="mButton" >객실 삭제하기</button>
 	    </div>
  </section>

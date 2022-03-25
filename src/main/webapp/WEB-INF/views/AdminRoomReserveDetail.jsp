@@ -40,46 +40,46 @@
 </head>
 <style>
 /* 세로 네비게이션(리스트그룹) 관련 css START - SI 20220314 */
-	.list-group-item.active {
-		background-color: #98cade !important;
-		/* border: 1px solid #f1ebd6 !important; */
-		color: #633e12 !important;
-		font-weight: bold;
-	}
-	.list-group-item {
-		font-size: 14px;
-		font-family: Helvetica;
-		border: 1px solid #f1ebd6 !important;
-		padding-right: 10px !important;
-	}
+.list-group-item.active {
+	background-color: #98cade !important;
+	/* border: 1px solid #f1ebd6 !important; */
+	color: #633e12 !important;
+	font-weight: bold;
+}
+
+.list-group-item {
+	font-size: 14px;
+	font-family: Helvetica;
+	border: 1px solid #f1ebd6 !important;
+	padding-right: 10px !important;
+}
 /* 세로 네비게이션(리스트그룹) 관련 css END - SI 20220314 */
 
 /* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 */
-	#list-reserve .table th{
-		background-color: #98cade;
-		border-top: 1px solid #cdcbbe;
-		border-bottom: 1px solid #cdcbbe;
-		color: #633e12 !important;
-	}
-	#list-reserve .table tr{
-		border-top: 1px solid #cdcbbe;
-		border-bottom: 1px solid #cdcbbe;
-	}
-/* 컨텐츠 - 예약 조회 영역 css END - SI 20220314 */	
+#list-reserve .table th {
+	background-color: #98cade;
+	border-top: 1px solid #cdcbbe;
+	border-bottom: 1px solid #cdcbbe;
+	color: #633e12 !important;
+}
+
+#list-reserve .table tr {
+	border-top: 1px solid #cdcbbe;
+	border-bottom: 1px solid #cdcbbe;
+}
+/* 컨텐츠 - 예약 조회 영역 css END - SI 20220314 */
 
 /* 20220317 페이징 영역 SI */
-	.custom-pagination ul li.active span{
-		background: #633e12 !important;
-	    color: #fff !important;
-	    border-radius: 50% !important;
-	}
+.custom-pagination ul li.active span {
+	background: #633e12 !important;
+	color: #fff !important;
+	border-radius: 50% !important;
+}
 
-<style>
-
-
-
-
-
+.focu:hover {
+	background-color: #633e12 !important;
+	color: white !important;
+}
 </style>
 <body>
 
@@ -90,7 +90,7 @@
 	<!-- END head -->
 
 
-<!-- 마이페이지 세로 네비게이션 추가 START - SI 20220314 -->
+	<!-- 마이페이지 세로 네비게이션 추가 START - SI 20220314 -->
 	<section class="section contact-section" id="next">
 		<!-- 칸 띄우기 용 div -->
 		<div style="height: 75px; display: block;"></div>
@@ -99,7 +99,7 @@
 		<div class="container">
 			<div class="row">
 
-		<!-- 세로 네비게이션 바 -->
+				<!-- 세로 네비게이션 바 -->
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
 
@@ -108,206 +108,447 @@
 						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./AdminRoomReserveDetail">객실 상세 임시 ~ </a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./AdminMileageRegist">마일리지 상품 관리</a>
-						
+
 					</div>
 				</div>
-<!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
+				<!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
 
-<!-- 예약조회 START - SI 20220314 -->
-			<!-- tabContent 있어야 발동함 -->
-			<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
-				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
-						style="max-width:100% !important">
-					
-						<h4 style="color: #633e12;">${loginId}님 어서오세요. 객실 예약 상세보기 페이지 입니다</h4>
+
+
+				<!-- 예약 상세보기(관리자) START - SI 20220325 -->
+				<!-- 예약 상세보기 페이지 가로 네비게이션 START -->
+				<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
+					<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list" style="max-width: 100% !important">
+
+						<h4 style="color: #633e12;">예약 상세보기 - ${result.reserve_num }</h4>
 						<hr style="border-color: #633e12;" />
-						<form action="#" method="post" class="bg-white p-md-5 p-4 mb-5 border">
-			              
-			              <div class="row">
-			              
-			                <div class="col-md-4 form-group">
-			                  <label class="text-black font-weight-bold" for="name">객실1</label>
-			                  <a href="roomdetail?room_num=1001"><input type="text" id="name" class="form-control " readonly value="1001"></a>
-			                  
-			                </div>
-			                <div class="col-md-4 form-group">
-			                  <label class="text-black font-weight-bold" for="phone">객실2</label>
-			                  <a href="roomdetail?room_num=1003"><input type="text" id="name" class="form-control " readonly value="1003"></a>
-			                </div>
-			                <div class="col-md-4 form-group">
-			                  <label class="text-black font-weight-bold" for="phone">객실3</label>
-			                  <a href="roomdetail?room_num=1007"><input type="text" id="name" class="form-control " readonly value="1007"></a>
-			                </div>
-			              </div>
-			              
-			              <div class="row">
-			              
-			                <div class="col-md-12 form-group">
-			                  <label class="text-black font-weight-bold" for="name">예약번호</label>
-			                  <input type="text" id="name" class="form-control " value="${result.reserve_num }" readonly>
-			                  ${result.reserve_num }
-			                </div>
-			                
-			              </div>
-			              
-			              <div class="row">
-			                <div class="col-md-6 form-group">
-			                  <label class="text-black font-weight-bold" for="checkin_date">체크인</label>
-			                  <input type="text" id="name" class="form-control" readonly>
-			                </div>
-			                <div class="col-md-6 form-group">
-			                  <label class="text-black font-weight-bold" for="checkout_date">체크아웃</label>
-			                  <input type="text" id="name"class="form-control" readonly>
-			                </div>
-			              </div>
-			              
-			              <div class="row">
-			              
-			                <div class="col-md-4 form-group">
-			                  <label class="text-black font-weight-bold" for="name">인원 수</label>
-			                  <input type="text" id="name" class="form-control " readonly>
-			                </div>
-			                <div class="col-md-4 form-group">
-			                  <label class="text-black font-weight-bold" for="phone">고객 이름</label>
-			                  <a href="#"><input type="text" id="phone" class="form-control " readonly></a>
-			                </div>
-			                <div class="col-md-4 form-group">
-			                  <label class="text-black font-weight-bold" for="phone">고객 이메일</label>
-			                  <input type="text" id="phone" class="form-control " readonly>
-			                </div>
-			              </div>
-			              <div class="row">
-			              
-			                <div class="col-md-3 form-group">
-			                  <label class="text-black font-weight-bold" for="name">엑베수량</label>
-			                  <input type="text" id="name" class="form-control " readonly>
-			                </div>
-			                <div class="col-md-3 form-group">
-			                  <label class="text-black font-weight-bold" for="phone">조식수량</label>
-			                  <input type="text" id="phone" class="form-control " readonly>
-			                </div>
-			                <c:forEach var="ro" items="${room }" varStatus="status">
-							<!-- 베드 타입 저장( 1-트윈 / 2-더블 )할 변수 생성 -->
-							<c:if test="${ro.bed_type eq 1 }">
-								<c:set var="bed_type" value="트윈"/>
-							</c:if>
-							<c:if test="${ro.bed_type eq 2 }">
-								<c:set var="bed_type" value="더블"/>
-							</c:if>
-			                <!-- 만약 예약상태가 2이면 회색 처리 -->
-							<%-- <c:if test="${ro.reserve_state eq 2 }">											
-								<!-- 룸 타입별로 이름 주기 -->
-								<c:if test="${status.last eq false }">
-									<span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type }) ,</span>
+
+						<nav>
+							<div class="nav nav-tabs" id="nav-tab" role="tablist" style="text-align: center;">
+								<!-- 해당 예약번호의 room수에 따라 상단 네비게이션 메뉴 분기 -->
+								<c:if test="${roomCnt eq 1 }">
+									<a class="col-md-12 nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">${room[0].room_num } 호실</a>
 								</c:if>
-								<c:if test="${status.last eq true }">
-									<span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type })</span>
+								<c:if test="${roomCnt eq 2}">
+									<a class="col-md-6 nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">${room[0].room_num } 호실</a>
+									<a class="col-md-6 nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">${room[1].room_num } 호실</a>
 								</c:if>
-							</c:if> --%>
-			                <div class="col-md-3 form-group">
-			                  <label class="text-black font-weight-bold" for="phone">객실타입</label>
-			                  <c:if test="${status.last eq false }">
-			                  <span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type }) ,</span>
-			                  </c:if>
-			                  <c:if test="${status.last eq true }">
-			                  <span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type })</span>
-			                  </c:if>
-			                  
-			                </div>
-			              
-			                <div class="col-md-3 form-group">
-			                  <label class="text-black font-weight-bold" for="name">침대타입</label>
-			                  <input type="text" id="name" class="form-control " readonly>
-			                </div>
-			                </c:forEach>
-			              </div>
-			              <div class="row">
-			                
-			                
-			                <div class="col-md-4 form-group">
-			                  <label class="text-black font-weight-bold" for="phone">예약상태</label>
-			                  <input type="text" id="phone" class="form-control " readonly>
-			                </div>
-			                <div class="col-md-4 form-group">
-			                  <label class="text-black font-weight-bold" for="phone">마일리지 상품 총액</label>
-			                  <input type="text" id="phone" class="form-control " readonly>
-			                </div>
-			              </div>
-			              <div class="row">
-			              
-			                <div class="col-md-4 form-group">
-			                  <label class="text-black font-weight-bold" for="name">카드사용금액</label>
-			                  <input type="text" id="name" class="form-control " readonly>
-			                </div>
-			                <div class="col-md-4 form-group">
-			                  <label class="text-black font-weight-bold" for="phone">마일리지 사용 금액</label>
-			                  <input type="text" id="phone" class="form-control " readonly>
-			                </div>
-			                <div class="col-md-4 form-group">
-			                  <label class="text-black font-weight-bold" for="phone">총 가격</label>
-			                  <input type="text" id="phone" class="form-control " readonly>
-			                </div>
-			              </div>
-			              
-			              
-			              
-			              
-			
-			              <div class="row mb-4">
-			                <div class="col-md-12 form-group">
-			                  <label class="text-black font-weight-bold" for="message">추가요청사항</label>
-			                  <textarea name="message" id="message" class="form-control " readonly cols="30" rows="8"></textarea>
-			                </div>
-			              </div>
-			               
-			              <div class="row">
-			              
-			              <c:forEach var="p" items="${product}" varStatus="pnum">	
-			              <div class="list">
-					  		<img class="img" src="resources/photo/${p.product_img}" alt="상품이미지"/>
-					  		<p>	${p.product_name}</p>
-					  		<p>	${p.product_price}마일리지</p>
-					  		<input type="hidden" value="${p.product_num}" name="product${pnum.count}_${RDS.count}"/>
-					  		<input type="hidden" value="${p.product_price}"/>
+								<c:if test="${roomCnt eq 3 }">
+									<a class="col-md-4 nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">${room[0].room_num } 호실</a>
+									<a class="col-md-4 nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">${room[1].room_num } 호실</a>
+									<a class="col-md-4 nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">${room[2].room_num } 호실</a>
+								</c:if>
+							</div>
+						</nav>
+						<!-- 예약 상세보기 페이지 가로 네비게이션 END -->
+
+						<!-- 예약 상세보기 컨텐츠 START : 첫 번째, 두 번째, 세 번째 방 모두 만들어 놓고 네비게이션의 방 개수에 따라 다르게 출력 -->
+						<div class="tab-content" id="nav-tabContent">
 							
-							<div class="button2" style="margin-top: 10px; display:none;">
-								<img class="minus2" src="resources/images/minusbtn.png"  alt="마이너스버튼">
-					            <input type="text" class="number2" value="0" name="p${pnum.count}_cnt_${RDS.count}"  onchange="valueChange()" readonly/>
-					            <img class="plus2" src="resources/images/plusbtn.png"  alt="플러스버튼">
-				            </div>
-				            
-				            <br/>
-				          </div>
-				          </c:forEach>
-				          
-			              </div>
-			              
-			              <div class="row">
-			                <div class="col-md-6 form-group">
-			                  <input type="submit" value="예약취소" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
-			                </div>
-			                <div class="col-md-6 form-group">
-			                  <input type="submit" value="일정으로" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
-			                </div>
-			              </div>
-			             
-			              
-			            </form>							
-					
-					<hr style="border-color: #633e12;" />
-					
+							
+							
+							
+							<!-- 첫 번째 방 -->
+							<div class="tab-pane fade show active border-bottom border-left border-right" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="padding: 0 5% 0 5%;">
+								<br /> <br />
 
+								<!-- row 1 - 예약 상태 / 체크인 / 체크아웃 -->
+								<div class="row">
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">예약 상태</label>
+										<c:if test="${first[0].reserve_state eq 1 }">
+											<input type="text" id="phone" class="form-control" value="예약완료" readonly>
+										</c:if>
+										<c:if test="${first[0].reserve_state eq 2 }">
+											<input style="background-color: pink" type="text" id="phone" class="form-control" value="예약취소" readonly>
+										</c:if>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="checkin_date">체크인</label>
+										<input type="text" id="name" class="form-control" value="${result.checkindate }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="checkout_date">체크아웃</label>
+										<input type="text" id="name" class="form-control" value="${result.checkoutdate }" readonly>
+									</div>
+								</div>
+
+
+								<!-- row 2 - 인원수 / 고객이름 / 이메일 -->
+								<div class="row">
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="name">인원 수</label>
+										<input type="text" id="name" class="form-control " value="${first[0].adult_cnt }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">예약자 이름</label>
+										<a href="#">
+											<input type="text" id="phone" class="form-control" value="${result.reserve_name }" readonly>
+										</a>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">고객 이메일</label>
+										<input type="text" id="phone" class="form-control" value="${result.reserve_email }" readonly>
+									</div>
+								</div>
+
+
+								<!-- row 3 - 엑스트라베드 / 조식 / 객실,침대 타입 -->
+								<div class="row">
+
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="name">엑스트라 베드 수량</label>
+										<input type="text" id="name" class="form-control" value="${first[0].extrabed_cnt }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">조식 수량</label>
+										<input type="text" id="phone" class="form-control" value="${first[0].breakfast_cnt }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">객실(침대) 타입</label>
+
+										<!-- 베드 타입 저장( 1-트윈 / 2-더블 )할 변수 생성 -->
+										<c:if test="${first[0].bed_type eq 1 }">
+											<c:set var="bed_type" value="트윈" />
+										</c:if>
+										<c:if test="${first[0].bed_type eq 2 }">
+											<c:set var="bed_type" value="더블" />
+										</c:if>
+										<input type="text" id="phone" class="form-control" value="${first[0].room_type_name }(${bed_type })" readonly>
+									</div>
+								</div>
+
+								<!-- row 4 - 예약상태(첫 줄로) / 마일리지 상품 총액(폐기) -->
+								<!-- <div class="row">
+								</div> -->
+
+								<!-- row 5 - 카드 사용 금액 / 마일리지 사용 금액 / 총 금액 -->
+								<div class="row">
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="name">카드 사용 금액</label>
+										<input type="text" id="name" class="form-control" value="${first[0].pay_price }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">마일리지 사용 금액</label>
+										<input type="text" id="phone" class="form-control" value="${first[0].pay_mileage }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">총 가격</label>
+										<input type="text" id="phone" class="form-control" value="${first[0].amount }" readonly>
+									</div>
+								</div>
+
+								<!-- row 6 - 추가 요청 사항 -->
+								<div class="row mb-4">
+									<div class="col-md-12 form-group">
+										<label class="text-black font-weight-bold" for="message">추가 요청 사항</label>
+										<textarea name="message" id="message" class="form-control " readonly cols="30" rows="8"></textarea>
+									</div>
+								</div>
+
+								<hr />
+								<br />
+
+								<!-- row 7 - 마일리지 상품 -->
+								<div class="row">
+									<c:if test="${first[0].product_num ne null }">
+										<c:forEach var="first" items="${first}" varStatus="stat">
+											<div class="list">
+												<img class="img" src="resources/mileage/${first.product_img}.png" alt="상품이미지" style="width: 150px; height: 120px;" />
+												<p style="color: black;">${first.product_name}X${first.product_cnt }</p>
+												<p style="color: black;">${first.product_price}마일리지</p>
+												<input type="hidden" value="${first.product_num}" name="product${stat.count}" />
+												<input type="hidden" value="${first.product_price}" />
+
+												<br />
+											</div>
+										</c:forEach>
+									</c:if>
+									<c:if test="${first[0].product_num eq null }">
+										<span style="margin-bottom: 10px;">구매한 마일리지 상품이 없습니다.</span>
+									</c:if>
+								</div>
+							</div>
+							<!-- 첫 번째 방 END -->
+
+
+
+
+
+
+							<!-- 두 번째 방 -->
+							<div class="tab-pane fade border-bottom border-left border-right" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="padding: 0 5% 0 5%;">
+								<br /> <br />
+
+								<!-- row 1 - 예약 상태 / 체크인 / 체크아웃 -->
+								<div class="row">
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">예약 상태</label>
+										<c:if test="${second[0].reserve_state eq 1 }">
+											<input type="text" id="phone" class="form-control" value="예약완료" readonly>
+										</c:if>
+										<c:if test="${second[0].reserve_state eq 2 }">
+											<input style="background-color: pink" type="text" id="phone" class="form-control" value="예약취소" readonly>
+										</c:if>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="checkin_date">체크인</label>
+										<input type="text" id="name" class="form-control" value="${result.checkindate }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="checkout_date">체크아웃</label>
+										<input type="text" id="name" class="form-control" value="${result.checkoutdate }" readonly>
+									</div>
+								</div>
+
+
+								<!-- row 2 - 인원수 / 고객이름 / 이메일 -->
+								<div class="row">
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="name">인원 수</label>
+										<input type="text" id="name" class="form-control " value="${second[0].adult_cnt }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">예약자 이름</label>
+										<a href="#">
+											<input type="text" id="phone" class="form-control" value="${result.reserve_name }" readonly>
+										</a>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">고객 이메일</label>
+										<input type="text" id="phone" class="form-control" value="${result.reserve_email }" readonly>
+									</div>
+								</div>
+
+
+								<!-- row 3 - 엑스트라베드 / 조식 / 객실,침대 타입 -->
+								<div class="row">
+
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="name">엑스트라 베드 수량</label>
+										<input type="text" id="name" class="form-control" value="${second[0].extrabed_cnt }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">조식 수량</label>
+										<input type="text" id="phone" class="form-control" value="${second[0].breakfast_cnt }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">객실(침대) 타입</label>
+
+										<!-- 베드 타입 저장( 1-트윈 / 2-더블 )할 변수 생성 -->
+										<c:if test="${second[0].bed_type eq 1 }">
+											<c:set var="bed_type" value="트윈" />
+										</c:if>
+										<c:if test="${second[0].bed_type eq 2 }">
+											<c:set var="bed_type" value="더블" />
+										</c:if>
+										<input type="text" id="phone" class="form-control" value="${second[0].room_type_name }(${bed_type })" readonly>
+									</div>
+								</div>
+
+								<!-- row 4 - 예약상태(첫 줄로) / 마일리지 상품 총액(폐기) -->
+								<!-- <div class="row">
+								</div> -->
+
+								<!-- row 5 - 카드 사용 금액 / 마일리지 사용 금액 / 총 금액 -->
+								<div class="row">
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="name">카드 사용 금액</label>
+										<input type="text" id="name" class="form-control" value="${second[0].pay_price }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">마일리지 사용 금액</label>
+										<input type="text" id="phone" class="form-control" value="${second[0].pay_mileage }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">총 가격</label>
+										<input type="text" id="phone" class="form-control" value="${second[0].amount }" readonly>
+									</div>
+								</div>
+
+								<!-- row 6 - 추가 요청 사항 -->
+								<div class="row mb-4">
+									<div class="col-md-12 form-group">
+										<label class="text-black font-weight-bold" for="message">추가 요청 사항</label>
+										<textarea name="message" id="message" class="form-control " readonly cols="30" rows="8"></textarea>
+									</div>
+								</div>
+
+								<hr />
+								<br />
+
+								<!-- row 7 - 마일리지 상품 -->
+								<div class="row">
+									<c:if test="${second[0].product_num ne null }">
+										<c:forEach var="second" items="${second}" varStatus="stat">
+											<div class="list">
+												<img class="img" src="resources/mileage/${second.product_img}.png" alt="상품이미지" style="width: 150px; height: 120px;" />
+												<p style="color: black;">${second.product_name}X${second.product_cnt }</p>
+												<p style="color: black;">${second.product_price}마일리지</p>
+												<input type="hidden" value="${second.product_num}" name="product${stat.count}" />
+												<input type="hidden" value="${second.product_price}" />
+
+												<br />
+											</div>
+										</c:forEach>
+									</c:if>
+									<c:if test="${second[0].product_num eq null }">
+										<span style="margin-bottom: 10px;">구매한 마일리지 상품이 없습니다.</span>
+									</c:if>
+								</div>
+							</div>
+							<!-- 두 번째 방 END -->
+
+
+
+
+
+							<!-- 세 번째 방 -->
+							<div class="tab-pane fade border-bottom border-left border-right" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="padding: 0 5% 0 5%;">
+								<br /> <br />
+
+								<!-- row 1 - 예약 상태 / 체크인 / 체크아웃 -->
+								<div class="row">
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">예약 상태</label>
+										<c:if test="${third[0].reserve_state eq 1 }">
+											<input type="text" id="phone" class="form-control" value="예약완료" readonly>
+										</c:if>
+										<c:if test="${third[0].reserve_state eq 2 }">
+											<input style="background-color: pink" type="text" id="phone" class="form-control" value="예약취소" readonly>
+										</c:if>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="checkin_date">체크인</label>
+										<input type="text" id="name" class="form-control" value="${result.checkindate }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="checkout_date">체크아웃</label>
+										<input type="text" id="name" class="form-control" value="${result.checkoutdate }" readonly>
+									</div>
+								</div>
+
+
+								<!-- row 2 - 인원수 / 고객이름 / 이메일 -->
+								<div class="row">
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="name">인원 수</label>
+										<input type="text" id="name" class="form-control " value="${third[0].adult_cnt }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">예약자 이름</label>
+										<a href="#">
+											<input type="text" id="phone" class="form-control" value="${result.reserve_name }" readonly>
+										</a>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">고객 이메일</label>
+										<input type="text" id="phone" class="form-control" value="${result.reserve_email }" readonly>
+									</div>
+								</div>
+
+
+								<!-- row 3 - 엑스트라베드 / 조식 / 객실,침대 타입 -->
+								<div class="row">
+
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="name">엑스트라 베드 수량</label>
+										<input type="text" id="name" class="form-control" value="${third[0].extrabed_cnt }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">조식 수량</label>
+										<input type="text" id="phone" class="form-control" value="${third[0].breakfast_cnt }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">객실(침대) 타입</label>
+
+										<!-- 베드 타입 저장( 1-트윈 / 2-더블 )할 변수 생성 -->
+										<c:if test="${third[0].bed_type eq 1 }">
+											<c:set var="bed_type" value="트윈" />
+										</c:if>
+										<c:if test="${third[0].bed_type eq 2 }">
+											<c:set var="bed_type" value="더블" />
+										</c:if>
+										<input type="text" id="phone" class="form-control" value="${third[0].room_type_name }(${bed_type })" readonly>
+									</div>
+								</div>
+
+								<!-- row 4 - 예약상태(첫 줄로) / 마일리지 상품 총액(폐기) -->
+								<!-- <div class="row">
+								</div> -->
+
+								<!-- row 5 - 카드 사용 금액 / 마일리지 사용 금액 / 총 금액 -->
+								<div class="row">
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="name">카드 사용 금액</label>
+										<input type="text" id="name" class="form-control" value="${third[0].pay_price }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">마일리지 사용 금액</label>
+										<input type="text" id="phone" class="form-control" value="${third[0].pay_mileage }" readonly>
+									</div>
+									<div class="col-md-4 form-group">
+										<label class="text-black font-weight-bold" for="phone">총 가격</label>
+										<input type="text" id="phone" class="form-control" value="${third[0].amount }" readonly>
+									</div>
+								</div>
+
+								<!-- row 6 - 추가 요청 사항 -->
+								<div class="row mb-4">
+									<div class="col-md-12 form-group">
+										<label class="text-black font-weight-bold" for="message">추가 요청 사항</label>
+										<textarea name="message" id="message" class="form-control " readonly cols="30" rows="8"></textarea>
+									</div>
+								</div>
+
+								<hr />
+								<br />
+
+								<!-- row 7 - 마일리지 상품 -->
+								<div class="row">
+									<c:if test="${third[0].product_num ne null }">
+										<c:forEach var="third" items="${third}" varStatus="stat">
+											<div class="list">
+												<img class="img" src="resources/mileage/${third.product_img}.png" alt="상품이미지" style="width: 150px; height: 120px;" />
+												<p style="color: black;">${third.product_name}X${third.product_cnt }</p>
+												<p style="color: black;">${third.product_price}마일리지</p>
+												<input type="hidden" value="${third.product_num}" name="product${stat.count}" />
+												<input type="hidden" value="${third.product_price}" />
+
+												<br />
+											</div>
+										</c:forEach>
+									</c:if>
+									<c:if test="${third[0].product_num eq null }">
+										<span style="margin-bottom: 10px;">구매한 마일리지 상품이 없습니다.</span>
+									</c:if>
+								</div>
+
+							</div>
+						</div>
+
+
+
+
+						<hr style="border-color: #633e12;" />
+
+						<div style="text-align: right;">
+							<input type="button" class="btn btn-outline-warning focu" style="color: #633e12; border-color: #633e12;" onclick="refund()" value="예약취소">
+							<!-- 20220319 취소는 뒤로가기와 같음 SI -->
+							<input type="button" class="btn btn-outline-warning focu" style="color: #633e12; border-color: #633e12;" onclick="window.history.back()" value="일정으로">
+						</div>
+
+					</div>
 				</div>
-			</div>
-<!-- 예약조회 END - SI 20220314 -->	
+				<!-- 예약 상세보기(관리자) SI - 20220325 -->
 
 
 
 
 
-					
-					
-				
+
+
+
 
 				<!-- 20220314 폐기
 				<div class="col-md-5" data-aos="fade-up" data-aos-delay="200">
@@ -538,19 +779,18 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	<script src="resources/js/main.js"></script>
 </body>
 <script>
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 START - SI 20220314 */
+	/* 올해 년도 계산해서 이용실적 앞에 적어주기 START - SI 20220314 */
 	var d = new Date();
 
 	var year = d.getFullYear();
-	
-	$(document).ready(function(){
-		$('#useFrequency').html(year+"년 이용실적");
-		$('#useFrequency').css({'color':'#633e12'});
+
+	$(document).ready(function() {
+		$('#useFrequency').html(year + "년 이용실적");
+		$('#useFrequency').css({
+			'color' : '#633e12'
+		});
 	});
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 END - SI 20220314 */
-
-
-
+	/* 올해 년도 계산해서 이용실적 앞에 적어주기 END - SI 20220314 */
 </script>
 
 </html>
