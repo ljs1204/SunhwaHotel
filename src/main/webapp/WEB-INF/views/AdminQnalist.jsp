@@ -103,11 +103,10 @@
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
 
-						<a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
-						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./myReserveAdmin?num=1&mem_id=seon119">객실 예약 정보 리스트</a>
-						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./AdminRoomReserveDetail">객실 상세 임시 ~ </a>
-						
-						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
+						<a class="list-group-item list-group-item-action" id="list-home-list" href="./memlist?currpage=1">회원 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./AdminReserveList">객실 예약 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./AdminRoomReserveDetail?reserve_num=S1648088420652&reserve_idx=142">객실 상세 임시 ~ </a>
+						<a class="list-group-item list-group-item-action active" id="list-messages-list" href="./AdminQnalist?orderNum=1">회원 문의 관리</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./AdminMileageRegist">마일리지 상품 관리</a>
 						
 					</div>
@@ -142,7 +141,39 @@
 					</table>
 
 <!-- 20220317 페이징 START - SI -->
-					
+					<!-- 페이징 이지선 start 20220324 -->
+					<div class="row" data-aos="fade">
+			          <div class="col-12">
+			            <div class="custom-pagination">
+			              <ul class="list-unstyled">
+			              
+			              <c:if test="${listPage.prev}">
+			                <li class="active"><a href="myPagemilelist?orderNum=${listPage.startPageNum - 1}">&lt;</a></li>
+			              </c:if>
+		                  <c:forEach begin="${listPage.startPageNum}" end="${listPage.endPageNum}" var="num">
+						      <c:if test="${listNum == num}"> 
+							      <li class="active">
+							      	<span>${num}</span>
+							      </li>
+						      </c:if>
+						      <c:if test="${listNum != num}">
+							      <li>
+							      	<a href="AdminQnalist?orderNum=${num}">${num}</a>
+							      </li>			     
+						      </c:if>    		
+					      </c:forEach>
+			              <c:if test="${milelistPage.next}">
+					      	<li>
+					      		<a href="AdminQnalist?orderNum=${listPage.endPageNum + 1}">&gt;</a>
+					      	</li>
+					      </c:if>
+			               
+			              </ul>
+			            </div>
+			          </div>
+			        </div>
+						<!-- 페이징 유선화 end 20220324 -->
+
 <!-- 20220317 페이징 END - SI -->					
 										
 					
@@ -389,6 +420,25 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	<script src="resources/js/main.js"></script>
 </body>
 <script>
+
+
+
+var userId = "${sessionScope.loginId}";
+console.log(userId);
+if (userId == "") {
+	console.log(userId);
+	location.href="logout";
+}
+
+
+var grade = "${sessionScope.grade}";
+console.log(grade);
+if (grade != "admin") {
+	console.log(grade);
+	location.href="logout";
+}
+
+
 /* 올해 년도 계산해서 이용실적 앞에 적어주기 START - SI 20220314 */
 	var d = new Date();
 

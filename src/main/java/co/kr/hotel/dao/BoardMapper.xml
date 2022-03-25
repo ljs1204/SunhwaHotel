@@ -22,7 +22,19 @@
       #{board_title},#{board_orinum},(select ifnull( max(re_num),0)+1 from board b ),2,'admin',#{board_content})
 	</insert>
 	
+
 	<delete id="delete">
 		DELETE FROM board WHERE board_num = #{param1}
 	</delete>	
+	
+	<select id="count" resultType="int">
+		select count(*) from board
+	</select>
+	
+	<select id="listInfo" parameterType="co.kr.hotel.dto.PageDto" resultType="co.kr.hotel.dto.BoardDTO">
+	 	SELECT board_num, board_title, mem_id, reg_datetime FROM board
+	 	ORDER BY board_orinum DESC , re_num asc
+	 	limit #{param1}, #{param2}
+	</select> 
+ 
 </mapper>

@@ -3,12 +3,14 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 	<title>Insert title here</title>
-	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="resources/js/jquery.twbsPagination.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -31,6 +33,15 @@
 				<td>${memlist.mem_grade}</td>
 			</tr>
 		</c:forEach>
+		<tr>
+			<td colspan="3" id="paging">
+	            <div class="container">                           
+	               <nav aria-label="Page navigation" style="text-align:center">
+	                  <ul class="pagination" id="pagination"></ul>
+	               </nav>               
+	            </div>
+			</td>
+		</tr>
 	</table>
 <form name="search" action="search">
  
@@ -43,8 +54,27 @@
     <input type ="text" name ="keyword">
     <input type ="submit" value="검색">
   
-</form>
-	
+		
 
+</form>
 </body>
 </html>
+<script>
+   var startpage = "${nowpage}";
+   startpage = startpage*1;
+   var totalpage = "${pages}";
+   totalpage = (totalpage*1) -1 ;  	   
+$('#pagination').twbsPagination({
+    startPage : startpage,
+    totalPages : totalpage,
+    visiblePages : 5,
+    onPageClick:function(evt,page){
+       console.log(evt);
+       console.log(page);
+       if("${nowpage}" != page) {
+          location.href="./memlist"+"?currpage="+page;         
+       }
+    }
+ 
+ });
+</script>

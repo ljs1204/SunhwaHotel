@@ -81,7 +81,7 @@
     <!-- 헤더 -->
     <header class="site-navbar site-navbar-target" role="banner" style="position: fixed; display:block; border-top-width:0px; border-bottom-width:0px">
         <!-- 20220311 새로운 navbar 로그인 / 회원가입 / 예약 확인 부분 추가, z-index=3 으로 기존 navbar 보다 위로 올라오게 -->
-        <div class="container">
+        <div class="container" style="max-width: 1400px" >
             <div class="row align-items-center position-relative"
                 style="height:20px; position:absolute; top: 5px; z-index:3;">
                 <div class="col-lg-4"></div>
@@ -143,7 +143,7 @@
         </div>
 
         <!-- 기존 navbar -->
-        <div class="container">
+        <div class="container " style="max-width: 1400px">
             <div class="row align-items-center position-relative">
 
                 <!-- 로고 왼쪽 메뉴 -->
@@ -170,8 +170,8 @@
                             
                             <c:if test="${loginId ne null}">
                 				<c:if test="${mem_grade eq 'admin' }">
-                            		<li><a href="index.html" class="nav-link">&nbsp;회원 정보</a></li>
-                            		<li><a href="index.html" class="nav-link">&nbsp;객실 예약 정보</a></li>
+                            		<li><a href="memlist?currpage=1" class="nav-link">&nbsp;회원 정보</a></li>
+                            		<li><a href="./AdminReserveList" class="nav-link">&nbsp;객실 예약 정보</a></li>
                                 </c:if>
                             </c:if>	
                             <!-- 20220314 로그인 상태에 따라 회원/비대면, ID에 따라 관리자 구분 END -->
@@ -226,7 +226,7 @@
                         
                         <c:if test="${loginId ne null}">
                 			<c:if test="${mem_grade eq 'admin' }">
-                           	<li><a href="./AdminQnalist" class="nav-link" style="font-weight: bold;">문의 리스트</a></li>
+                           	<li><a href="./AdminQnalist?orderNum=1" class="nav-link" style="font-weight: bold;">문의 리스트</a></li>
                             <li><a href="./AdminMileageRegist" class="nav-link" style="font-weight: bold;">마일리지 상품 리스트</a></li>
                         	</c:if>
                        	</c:if>

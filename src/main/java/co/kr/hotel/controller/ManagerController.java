@@ -1,5 +1,10 @@
 package co.kr.hotel.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,13 +19,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.MypageDTO;
 import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
+import co.kr.hotel.dto.RoomDTO;
 import co.kr.hotel.service.ManagerService;
+import co.kr.hotel.service.MypageService;
 import co.kr.hotel.service.ReserveService;
 
 @Controller
@@ -30,6 +40,7 @@ public class ManagerController {
 	
 	@Autowired ManagerService service;
 	@Autowired ReserveService reserveservice;
+	@Autowired MypageService mypageService;
 	
 	//유선화 관리자 회원 예약 정보 리스트 페이지(회원1명) START 2022.03.22
 	
@@ -109,18 +120,18 @@ public class ManagerController {
 	//유선화 관리자 회원 예약 정보 리스트 페이지(회원1명) END 2022.03.22
 	
 	
-	@RequestMapping(value = "/AdminRoomReserveDetail", method = RequestMethod.GET)
-	public String AdminRoomReserveDetail(Model model, HttpSession session) {
-		logger.info("AdminRoomReserveDetail 불러오기");
-		
-		String page = "AdminRoomReserveDetail";
-		ArrayList<HashMap<String, String>> product = reserveservice.reservation_product();
-		logger.info("받아온 값 확인 {}",product);
-		model.addAttribute("product",product);
-		
-		
-		return page;
-	}
+//	@RequestMapping(value = "/AdminRoomReserveDetail", method = RequestMethod.GET)
+//	public String AdminRoomReserveDetail(Model model, HttpSession session) {
+//		logger.info("AdminRoomReserveDetail 불러오기");
+//		
+//		String page = "AdminRoomReserveDetail";
+//		ArrayList<HashMap<String, String>> product = reserveservice.reservation_product();
+//		logger.info("받아온 값 확인 {}",product);
+//		model.addAttribute("product",product);
+//		
+//		
+//		return page;
+//	}
 	
 		@RequestMapping(value = "/AdminMileageRegist", method = RequestMethod.GET)
 		public String adminOrderList(Model model, HttpSession session) {
@@ -145,11 +156,36 @@ public class ManagerController {
 		}
 		
 		@RequestMapping(value = "/writing", method = RequestMethod.POST)
-		public String writing(Model model, @RequestParam HashMap<String, String> params) {	
-			logger.info("writing 요청 : {}",params);			
+		public String writing(Model model,HttpSession session,MultipartFile[] photos,@RequestParam HashMap<String, String> params) {	
+			logger.info("writing 요청 : {}",params);
+	
+			
+			
+			for(MultipartFile photo : photos) {
+				try {
+					String oriFileName = photo.getOriginalFilename();//원본 파일명 추출
+
+					byte[] bytes = photo.getBytes();
+					
+					Path path = Paths.get("C:/photo/"+oriFileName); //경로설정
+					Files.write(path, bytes);
+					logger.info(oriFileName+" SAVE OK!");
+					params.put("product_img", oriFileName);
+					service.writing(params);//DB에 저장한 파일명을 기록
+					Thread.sleep(1);//파일 중복 피하기위함
+					
+						
+					}catch (Exception e) {
+					System.out.println(e.toString());
+					e.printStackTrace();
+					}
+			}
+			
+			
+			
 			String page = "redirect:/AdminMileageRegist"; 
 			
-			service.writing(params);
+			//service.writing(params);
 			//return "adminOrderList";
 			return page;
 		}
@@ -194,13 +230,13 @@ public class ManagerController {
 			return "AdminMemInfo";
 		}	
 		
-		
+	/*	
 		@GetMapping(value="/memlist")
 		public ModelAndView memlist()
 	            {
 			return service.memlist();
 		}
-		
+	 */
 	@GetMapping(value="/search")
 		public ModelAndView search(Model model,MemberDTO parameter){
 			logger.info(parameter.getKeyword());
@@ -213,5 +249,134 @@ public class ManagerController {
 		logger.info("마일리지 조회 id : " +parameter.getMem_id());
 		return service.adminmilesearch(parameter);
 	}
+	
+// 20220325 예약 상세보기(관리자) - SI
+	@RequestMapping(value = "/AdminRoomReserveDetail", method = RequestMethod.GET)
+	public String AdminRoomReserveDetail(
+			Model model, 
+			@RequestParam String reserve_num,
+			@RequestParam int reserve_idx,
+			@RequestParam String mem_id,
+			HttpSession session) {
+		
+		String page = "AdminRoomReserveDetail";
+		
+		// 파라미터 확인
+		logger.info("요기서 확인"+ reserve_num, reserve_idx, mem_id);
+						
+		
+	/* 관리자 확인 로직 들어가야함! */
+		
+			
+		
+	// 20220318 예약 상세보기 구현 - SI
+		// 서비스에서 받은 HashMap 데이터 추출해서 model에 넘겨주기
+		HashMap<String, Object> result = mypageService.myReserveDetail(mem_id, reserve_num, reserve_idx);
+		model.addAttribute("result", result.get("reserveDTO"));
+		model.addAttribute("product", result.get("productDTO"));
+		model.addAttribute("room", result.get("roomTypeName"));
+		
+		// 마일리지 상품 구매가 없을 때 처리를 위해 size 전송
+		ArrayList<ProductDTO> prod = (ArrayList<ProductDTO>) result.get("productDTO");
+		model.addAttribute("productSize", prod.size());
+
+	// 20220325 방 갯수 model
+		ArrayList<RoomDTO> roomCnt = (ArrayList<RoomDTO>) result.get("roomTypeName");
+		model.addAttribute("roomCnt",roomCnt.size());
+		logger.info("roomCnt"+ roomCnt.size());
+	
+		
+	// 20220325 방 별 정보 model
+	HashMap<String, Object> result2 = mypageService.myReserveRefund(mem_id, reserve_num);
+
+	// 받아온 hashMap ArrayList로 자르기
+	ArrayList<ReserveDTO> first = (ArrayList<ReserveDTO>) result2.get("first");
+	ArrayList<ReserveDTO> second = (ArrayList<ReserveDTO>) result2.get("second");
+	ArrayList<ReserveDTO> third = (ArrayList<ReserveDTO>) result2.get("third");
+		
+	// 확인
+	//logger.info("첫번째 : {}", first.size());
+	//logger.info("두번째 : {}", second.size());
+	//logger.info("세번째 : {}", third.size());
+	
+	// model에 각 ArrayList 담기
+	// List의 사이즈 비교하는 방법 두가지 : list.size()>0 / list.isEmpty()
+	// 근데 사이즈 비교 전에는 우선 null 비교가 들어가야한다.
+	if(first != null) {
+		model.addAttribute("firstSize", first.size());
+		model.addAttribute("first", first);
+	}
+	if(second != null) {
+		model.addAttribute("secondSize", second.size());
+		model.addAttribute("second", second);
+	}
+	if(third != null) {
+		model.addAttribute("thirdtSize", third.size());
+		model.addAttribute("third", third);
+	}
+	//model.addAttribute("reserve_num", reserve_num);
+		
+				
+		return page;
+	}
+	
+	
+// 20220324	모든 예약 정보 보기 SI( Calender ) START
+	@RequestMapping(value = "/AdminReserveList", method = RequestMethod.GET)
+	public String AdminReserveList(Model model, HttpSession session) {
+		logger.info("페이지 접속");
+			
+		//MemberDTO result = service.memInfo(mem_id);
+		//model.addAttribute("result", result);
+			
+		return "AdminReserveList";
+	}	
+	
+	
+	
+	@RequestMapping(value = "/reserveListGet", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> reserveListGet(Model model) {
+		//logger.info("잘 왔나용");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<ReserveDTO> result = service.reserveListGet();
+		map.put("res", result);
+		
+		//logger.info("요기 확인"+result.get(0).getReserve_num());
+		
+		return map;
+	}	
+	
+// 20220324	모든 예약 정보 보기 SI( Calender ) END
+
+	@RequestMapping(value = "/memlist", method = RequestMethod.GET)
+    public String memlist(Model model , @RequestParam String currpage) {      
+       logger.info("memlist 요청");
+       
+       String page = "/";
+       int currPage = Integer.parseInt(currpage);	//호출을 요청할 페이지
+       logger.info("currPage 선언");
+		int pagePerCnt = 10; //한 페이지당 몇개씩? 10개씩
+		
+			//1.총 패이지 갯수인 range가 필요함
+			int range = service.memlist_rangecall(currPage,pagePerCnt);
+			
+			//2.리스트가 필요함(10개밖에 안들어있음)
+			ArrayList<HashMap<String, String>> listCall = service.memlist_listCall(currPage,pagePerCnt);
+			model.addAttribute("pages",range);
+			model.addAttribute("memlist",listCall);
+			model.addAttribute("nowpage",currpage);
+			logger.info("listcall : {}" , listCall);
+			logger.info("currPage : {}" , currPage);
+			logger.info("pagePerCnt : {} ", pagePerCnt);
+			logger.info("range : {} " , range);
+			
+			page = "adminmemsearch";			
+
+		return page;
+       
+      
+   }
 }
 

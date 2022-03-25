@@ -168,16 +168,17 @@ public class ManagerService {
 			return dao.memInfo(mem_id);
 		}
 		
-
+/*
 		public ModelAndView memlist() {
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("adminmemsearch");
+			mav.setViewName("adminmemsearch"); //adminmemsearch.jsp
 			ArrayList<ManagerDAO> memlist = dao.memlist();		
 			logger.info("리스트 갯수 : {}",memlist.size());
 			mav.addObject("memlist", memlist);
+			
 			return mav;
 		}
-
+*/
 		public ModelAndView search(MemberDTO parameter) {
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("adminmemsearchresult");
@@ -198,6 +199,40 @@ public class ManagerService {
 			return mav;
 		}
 
+// 20220324 달력 데이터 - SI
+		public ArrayList<ReserveDTO> reserveListGet() {
+			
+			
+			return dao.reserveListGet();
+		}
+		
+		public ArrayList<HashMap<String, String>> memlist_listCall(int currPage, int pagePerCnt) {
+			int offset = (currPage -1)* pagePerCnt - 1;//DB에 요청할 인덱스 번호임 , 1:0-9, 2:10-19 이런식으로해야함
+			logger.info("currpage : {}" , currPage);
+			if(offset < 0) {
+				offset = 0;
+			}
+			
+			logger.info("offset : {}" , offset);
+			ArrayList<HashMap<String, String>> listCall = dao.memlist_listCall(pagePerCnt,offset);
+			logger.info("listcall 쿼리문 실행");
+			
+			return listCall;
+		}
+		public int memlist_rangecall(int currPage, int pagePerCnt) {
+			int totalCount = dao.memlist_allCount(); // 일단 테이블 글이 몇개인지? 
+			logger.info("totalCount : {}" , totalCount);
+			
+			int range = totalCount%pagePerCnt > 0 ? (totalCount/pagePerCnt) + 1 : (totalCount/pagePerCnt);//만들 수 있는 페이지의 갯수
+			logger.info("range : {}" , range);
+
+			return range;
+		}
+
+		public ArrayList<HashMap<String, String>> memlist() {
+
+		     return dao.memlist();
+		  }
 	}
 		
 

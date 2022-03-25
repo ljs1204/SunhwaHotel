@@ -207,6 +207,8 @@ public class ReserveDTO {
 	//private String room_num;			// "
 	private int bed_type;
 	//private int pay_price;
+	private String mem_name_en;
+	private String mem_name_kr;
 	// 김승일 예약상세 END 20220318
 	
 	// 김승일 환불신청 START 20220319
@@ -214,6 +216,11 @@ public class ReserveDTO {
 	private String product_name;
 	private int product_cnt;
 	// 김승일 환불신청 END 20220319
+	
+	// 관리자 예약조회 20220325
+	private String product_img;
+	private String product_price;
+	
 	
 	// 김승일 예약리스트 START 20220315
 	public int getReserve_amount() {
@@ -266,6 +273,18 @@ public class ReserveDTO {
 	}
 	public void setBed_type(int bed_type) {
 		this.bed_type = bed_type;
+	}
+	public String getMem_name_en() {
+		return mem_name_en;
+	}
+	public void setMem_name_en(String mem_name_en) {
+		this.mem_name_en = mem_name_en;
+	}
+	public String getMem_name_kr() {
+		return mem_name_kr;
+	}
+	public void setMem_name_kr(String mem_name_kr) {
+		this.mem_name_kr = mem_name_kr;
 	}
 	// 김승일 예약상세 END 20220318	
 
@@ -329,8 +348,20 @@ public class ReserveDTO {
 		this.non_name_kr = non_name_kr;
 	}
 	
-	
-	
+	// 관리자 예약조회
+	public String getProduct_img() {
+		return product_img;
+	}
+	public void setProduct_img(String product_img) {
+		this.product_img = product_img;
+	}
+	public String getProduct_price() {
+		return product_price;
+	}
+	public void setProduct_price(String product_price) {
+		this.product_price = product_price;
+	}
+
 	
 	
 	

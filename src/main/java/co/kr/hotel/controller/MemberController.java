@@ -51,7 +51,7 @@ public class MemberController {
 			session.setAttribute("mem_grade", grade);
 			model.addAttribute("login_mem_grade",grade);
 			if(grade.equals("admin")) {
-				page="redirect:/AdminQnalist";
+				page="redirect:/AdminQnalist?orderNum=1";
 				logger.info("관리자 : "+grade);
 				
 			}
@@ -61,7 +61,12 @@ public class MemberController {
 		}else {
 			model.addAttribute("msg","입력하신 내용이 일치하지 않습니다.");
 		}
+		
 		String id = (String)session.getAttribute("loginId");
+		String grade = (String)session.getAttribute("mem_grade");
+		session.setAttribute("grade", grade);
+		session.setAttribute("loginId", id);
+		logger.info("로그인 세션 처리 확인"+ id);
 		logger.info("로그인한아이디: "+id);
 		return page;
 	}

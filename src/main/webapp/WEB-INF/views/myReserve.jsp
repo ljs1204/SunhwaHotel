@@ -214,7 +214,7 @@
 			            <div class="custom-pagination">
 			              <ul class="list-unstyled">
 			              	<c:if test="${prev}">
-							 <li><a href="/myReserve?num=${startPageNum - 1}">&lt;</a></li>
+							 <li><a href="./myReserve?num=${startPageNum - 1}">&lt;</a></li>
 							</c:if>
 							
 							<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
@@ -230,7 +230,7 @@
 							</c:forEach>
 							
 							<c:if test="${next}">
-							 <li><a href="/myReserve?num=${endPageNum + 1}">&gt;</a></li>
+							 <li><a href="./myReserve?num=${endPageNum + 1}">&gt;</a></li>
 							</c:if>
 			              
 			              </ul>
