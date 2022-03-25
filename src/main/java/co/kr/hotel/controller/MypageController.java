@@ -313,7 +313,7 @@ public class MypageController {
 		
 		return "redirect:/tomemberboardlist";
 	}
-	//상세보기 
+	//상세보기 7
 	@GetMapping(value="/tomemberboarddetail")
 	public ModelAndView tomemberboarddetail(@RequestParam String board_num) {
 		logger.info("상세보기 요청 :{} ",board_num);
@@ -424,6 +424,7 @@ public class MypageController {
 		
 		
 	//마이페이지 회원리스트 유선화 END 2022.03.16
+	
 		
 		
 		

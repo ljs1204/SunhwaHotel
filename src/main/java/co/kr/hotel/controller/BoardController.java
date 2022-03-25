@@ -93,5 +93,7 @@ public class BoardController {
 		//return service.list();
 		return "AdminQnalist";
 	}
+	
+	
 
 }

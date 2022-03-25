@@ -121,7 +121,22 @@
 
 						<div class="col-md-12 infom" style="padding-left: 0px;">ⓘ 환불 신청할 객실을 마우스로 클릭하고 아래 '환불' 버튼을 누르세요.</div>
 						<br>
-
+	
+							
+						<tr>
+							<td>객실1</td>
+							<th>타입</th>
+							<th>인원</th>
+							<th>옵션</th>
+							<th>마일리지 상품</th>
+							<th>금액</th>
+						</tr>
+	
+	
+	
+	
+	
+	
 						<!-- 첫 번째 객실 -->
 						<c:if test="${firstSize ne 0 }">
 							<!-- 만약 예약상태가 2(취소) 면 프론트 처리 -->
