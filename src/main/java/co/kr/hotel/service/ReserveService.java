@@ -116,6 +116,11 @@ public class ReserveService {
 		reserveDao.nonMem(nmem_code,reserve_idx,email,phone,name_en,name_kr);
 	}
 
+	public ArrayList<RoomDTO> nulroom(String checkin_date, String checkout_date) {
+		// TODO Auto-generated method stub
+		return reserveDao.nulroom(checkin_date,checkout_date);
+	}
+
 
 
 

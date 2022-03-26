@@ -50,6 +50,8 @@ public interface ReserveDAO {
 
 	void nonMem(String nmem_code, int reserve_idx, String email, String phone, String name_en, String name_kr);
 
+	ArrayList<RoomDTO> nulroom(String checkin_date, String checkout_date);
+
 
 
 }
