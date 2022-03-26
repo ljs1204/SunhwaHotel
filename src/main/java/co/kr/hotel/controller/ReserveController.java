@@ -1,6 +1,7 @@
 package co.kr.hotel.controller;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -450,6 +451,31 @@ public class ReserveController {
 		return "reserveResult";
 	}
 	
+	@RequestMapping(value = "/reFund", method = RequestMethod.GET)
+	public String refund(Model model, HttpSession session,
+			@RequestParam String reserve_idx1,
+			@RequestParam(required=false) String reserve_idx2,
+			@RequestParam(required=false) String reserve_idx3,
+			@RequestParam(required=true) String refundCategory
+			) throws ParseException {
+		
+		logger.info("환불 시작 : "+ reserve_idx1 + reserve_idx2 + reserve_idx3);
+		// 아이디 확인( 회원/비회원 구분 )
+		String loginId = (String) session.getAttribute("loginId");
+		if(loginId != null) {
+			//회원
+			service.reFund(reserve_idx1, reserve_idx2, reserve_idx3, loginId, refundCategory);
+		}else {
+			//비회원
+			service.reFund(reserve_idx1, reserve_idx2, reserve_idx3, "비회원", refundCategory);
+		}
+		
+		
+		
+		
+		
+		return null;
+	}
 	
 	
 	

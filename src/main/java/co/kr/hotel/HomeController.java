@@ -181,6 +181,7 @@ public class HomeController {
 					// 아니면 무조건 0 을 보냄 int i = 0 을 초기화 하고 
 					// 만약 room_T1_B12_cnt 가 0보다 크면 id= 1or2or3or4 아니면 0임
 					result_size1 = result.size();
+					logger.info("result_size1 : "+result_size1);
 					if(result_size1 > 0) {
 						logger.info("result_size1 : "+result_size1);
 						id = 1;
@@ -205,6 +206,7 @@ public class HomeController {
 					logger.info("룸타입 2 베드타입 2 총 합: "+result.size());
 					
 					result_size2 = result.size()-result_size1 ;
+					logger.info("result_size2 : "+result_size2);
 					if(result_size2 > 0) {
 						logger.info("result_size2 : "+result_size2);
 						id = 2;
@@ -229,6 +231,7 @@ public class HomeController {
 					logger.info("룸타입 3 베드타입 2 총 합: "+result.size());
 					
 					result_size3 = result.size()- result_size1 - result_size2 ;
+					logger.info("result_size3 : "+result_size3);
 					if(result_size3 > 0) {
 						logger.info("result_size3 : "+result_size3);
 						id = 3;
@@ -254,6 +257,7 @@ public class HomeController {
 					model.addAttribute("room_Type4_Bed1&2_cnt", result.size());
 					
 					result_size4 = result.size()- result_size1 - result_size2 - result_size3;
+					logger.info("result_size4 : "+result_size4);
 					if(result_size4 > 0) {
 						logger.info("result_size4 : "+result_size4);
 						id = 4;

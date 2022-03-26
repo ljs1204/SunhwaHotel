@@ -160,4 +160,67 @@
 		insert into nonmember values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6})
 	</insert>
 	
+<!-- 20220325 환불! -->
+	<!-- 예약T - 부분 취소일 때 -->	
+	<insert id="refundParts">
+		insert 
+		into reserve(mem_id, reserve_num, room_num, reserve_state, checkindate, checkoutdate, adult_cnt, extrabed_cnt, breakfast_cnt, add_requests)
+		select mem_id , reserve_num , room_num , (CASE reserve_state WHEN 1 THEN 2 end) as reserve_state, checkindate , checkoutdate , adult_cnt , extrabed_cnt , breakfast_cnt, add_requests 
+		from reserve r 
+		where mem_id = #{param4} and reserve_idx in (#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<!-- 예약T - 완전 취소일 때 -->
+	<insert id="refundAll">
+		insert 
+		into reserve(mem_id, reserve_num, room_num, reserve_state, checkindate, checkoutdate, adult_cnt, extrabed_cnt, breakfast_cnt, add_requests)
+		select mem_id , reserve_num , room_num , (CASE reserve_state WHEN 1 THEN 3 end) as reserve_state, checkindate , checkoutdate , adult_cnt , extrabed_cnt , breakfast_cnt, add_requests 
+		from reserve r 
+		where mem_id = #{param4} and reserve_idx in (#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<!-- 예약에 대한 가격 불러오기 -->
+	<select id="priceAll" resultType="co.kr.hotel.dto.ReserveDTO">
+		select *
+		from reserve r
+		inner join pay p 
+		on r.reserve_idx = p.reserve_idx 
+		where r.reserve_idx in (#{param1}, #{param2}, #{param3})
+	</select>
+	
+	
+	
+	<!-- 결제T - 부분 취소일 때 -> 예약 순번이 같은 것 select, pay_state 변경하고 amount 음수값으로 만들어서 insert -->
+	<insert id="refundPayParts">
+		insert 
+		into pay(reserve_idx, pay_num, credit_num, pay_state, credit_validity, credit_type, pay_price , pay_mileage , amount) 
+		select reserve_idx, pay_num, credit_num, (CASE pay_state WHEN 1 THEN 2 end), credit_validity, credit_type, pay_price , pay_mileage , amount*(-1)
+		from pay p 
+		where reserve_idx in (#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<!-- 결제T - 완전 취소일 때  -->
+	<insert id="refundPayAll">
+		insert 
+		into pay(reserve_idx, pay_num, credit_num, pay_state, credit_validity, credit_type, pay_price , pay_mileage , amount) 
+		select reserve_idx, pay_num, credit_num, (CASE pay_state WHEN 1 THEN 3 end), credit_validity, credit_type, pay_price , pay_mileage , amount*(-1)
+		from pay p 
+		where reserve_idx in (#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<insert id="refundCart">
+		insert 
+		into cart (product_num, reserve_idx, product_cnt)
+		select product_num, reserve_idx, product_cnt*(-1)  
+		from cart c 
+		where reserve_idx in (#{param1}, #{param2}, #{param3}) 
+	</insert>
+	
 </mapper>
+
+
+
+
+
+
+
