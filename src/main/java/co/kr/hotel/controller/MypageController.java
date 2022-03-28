@@ -309,7 +309,7 @@ public class MypageController {
 		
 		mypageService.tomemberboardwrite(params);
 		
-		return "redirect:/tomemberboardlist";
+		return "redirect:/tomemberboardlist?currpage=1";
 	}
 	//상세보기 7
 	@GetMapping(value="/tomemberboarddetail")

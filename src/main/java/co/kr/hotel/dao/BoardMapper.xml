@@ -9,7 +9,7 @@
 	</select>
 		   
 	<select id="list" resultType="co.kr.hotel.dto.BoardDTO">
-		SELECT board_num, board_title, mem_id, reg_datetime FROM board
+		SELECT board_num, board_title, mem_id, reg_datetime ,re_num FROM board
 			ORDER BY board_orinum DESC , re_num asc
 	</select>
 		
@@ -32,7 +32,7 @@
 	</select>
 	
 	<select id="listInfo" parameterType="co.kr.hotel.dto.PageDto" resultType="co.kr.hotel.dto.BoardDTO">
-	 	SELECT board_num, board_title, mem_id, reg_datetime FROM board
+	 	SELECT board_num, board_title, mem_id, reg_datetime,re_num FROM board
 	 	ORDER BY board_orinum DESC , re_num asc
 	 	limit #{param1}, #{param2}
 	</select> 

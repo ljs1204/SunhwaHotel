@@ -106,8 +106,8 @@
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
  
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
-						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve">예약 조회</a>
-						<a class="list-group-item list-group-item-action active" id="list-messages-list" href="./tomemberboardlist">문의 글 & 답 글</a>
+						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve?num=1">예약 조회</a>
+						<a class="list-group-item list-group-item-action active" id="list-messages-list" href="./tomemberboardlist?currpage=1">문의 글 & 답 글</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myProfile">회원정보 수정</a>
@@ -148,7 +148,7 @@
 									<th colspan="2">
 										<input type="submit"class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;" value="등록"/>
 										<!-- <input type="submit" onclick="location.href='./list'" value="등록"/> -->
-										<input type="button" class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;"onclick="location.href='./tomemberboardlist'" value="취소"/>
+										<input type="button" class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;"onclick="location.href='./tomemberboardlist?currpage=1'" value="취소"/>
 									</th>
 								</tr>
 							</tbody>

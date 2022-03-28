@@ -138,7 +138,14 @@
 							<c:forEach items="${tomemberboardlist}" var="tomemberboardlist">
 							<tr>
 								<td>${tomemberboardlist.board_num}</td>
+								<c:choose>
+								<c:when test="${tomemberboardlist.re_num eq null}">
 								<td><a href="tomemberboarddetail?board_num=${tomemberboardlist.board_num}">${tomemberboardlist.board_title}</a></td>
+								</c:when>
+								<c:otherwise>
+								<td><a href="tomemberboarddetail?board_num=${tomemberboardlist.board_num}">RE)${tomemberboardlist.board_title}</a></td>
+								</c:otherwise>
+								</c:choose>
 								<td>${tomemberboardlist.mem_id}</td>
 								<td>${tomemberboardlist.reg_datetime}</td>
 							</tr>

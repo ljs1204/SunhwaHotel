@@ -132,7 +132,14 @@
 							<tr>
 								<td>${board.board_num}</td>
 								<!--  <td><a href="detail?board_num=${board.board_num}">${board.board_title}</a></td>-->
+								<c:choose>
+								<c:when test="${board.re_num eq null}">
 								<td><a href="AdminQnaDetail?board_num=${board.board_num}">${board.board_title}</a></td>
+								</c:when>
+								<c:otherwise>
+								<td><a href="AdminQnaDetail?board_num=${board.board_num}">&nbsp&nbsp&nbsp└RE)${board.board_title}</a></td>
+								</c:otherwise>
+								</c:choose>
 								<td>${board.mem_id}</td>
 								<td>${board.reg_datetime}</td>
 							</tr>
