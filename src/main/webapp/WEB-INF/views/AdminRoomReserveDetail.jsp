@@ -41,7 +41,7 @@
 <style>
 /* 세로 네비게이션(리스트그룹) 관련 css START - SI 20220314 */
 .list-group-item.active {
-	background-color: #98cade !important;
+	background-color: #f1e3c4 !important;
 	/* border: 1px solid #f1ebd6 !important; */
 	color: #633e12 !important;
 	font-weight: bold;
@@ -57,7 +57,7 @@
 
 /* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 */
 #list-reserve .table th {
-	background-color: #98cade;
+	background-color: #f1e3c4;
 	border-top: 1px solid #cdcbbe;
 	border-bottom: 1px solid #cdcbbe;
 	color: #633e12 !important;
@@ -103,18 +103,18 @@
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
 
-						<a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
-						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserveAdmin?num=1&mem_id=seon119">객실 예약 정보 리스트</a>
-						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./AdminRoomReserveDetail">객실 상세 임시 ~ </a>
-						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
+						<a class="list-group-item list-group-item-action" id="list-home-list" href="./memlist?currpage=1">회원 정보 리스트</a>
+						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./AdminReserveList">객실 예약 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist?orderNum=1">회원 문의 관리</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./AdminMileageRegist">마일리지 상품 관리</a>
+						
 
 					</div>
 				</div>
 				<!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
 
 
-
+<!-- myReserveAdmin?num=1&mem_id=seon119 -->
 				<!-- 예약 상세보기(관리자) START - SI 20220325 -->
 				<!-- 예약 상세보기 페이지 가로 네비게이션 START -->
 				<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">

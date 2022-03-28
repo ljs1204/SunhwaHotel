@@ -40,7 +40,7 @@
 		<div class="container">
 			<div class="row site-hero-inner justify-content-center align-items-center">
 				<div class="col-md-10 text-center" data-aos="fade">
-					<h1 class="heading mb-3">${roomdetaillist.room_type_name}룸의상세정보 보깅</h1>
+					<h1 class="heading mb-3">선화 호텔의 ${roomdetaillist.room_type_name} ROOM</h1>
 					<ul class="custom-breadcrumbs mb-4">
 						<li><a href="index.html">Home</a></li>
 						<li>&bullet;</li>

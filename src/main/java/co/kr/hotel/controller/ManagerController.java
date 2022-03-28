@@ -54,7 +54,7 @@ public class ManagerController {
 		String page = "index";
 		//String loginId = (String) session.getAttribute("loginId");
 		//String loginId = mem_id; // mem_id를 회원 리스트 페이지에서 받아온다  myReserveAdmin?num=1&mem_id=seon119
-		String loginId = "seon119";
+		String loginId = mem_id;
 		model.addAttribute("loginId", loginId);
 		
 		// 20220319 - 페이징 세션 확인 후 분기( 예약 상세보기에서 '목록으로' 클릭 시 ) START SI
