@@ -882,7 +882,7 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 		}else{
 			alert('객실을 선택해주셔야 환불진행이 가능합니다.');
 		}	
-	}
+}
 /* 20220319 환불  */
 		
 	
