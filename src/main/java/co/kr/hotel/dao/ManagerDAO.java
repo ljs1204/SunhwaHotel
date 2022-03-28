@@ -36,9 +36,9 @@ public interface ManagerDAO {
 // 20220324 달력 데이터 SI
 	ArrayList<ReserveDTO> reserveListGet();
 
-	ArrayList<HashMap<String, String>> memlist_listCall(int pagePerCnt, int offset);
+	ArrayList<HashMap<String, String>> memlist_listCall(MemberDTO parameter);
 
-	int memlist_allCount();
+	int memlist_allCount(MemberDTO parameter);
 
 	ArrayList<HashMap<String, String>> memlist();
 	

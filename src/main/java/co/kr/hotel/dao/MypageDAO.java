@@ -58,6 +58,8 @@ public interface MypageDAO {
 	ArrayList<ReserveDTO> myReserveRoom(String loginId, String reserve_num);
 	// 20220319 환불 신청 페이지 SI
 	ArrayList<ReserveDTO> myReserveRefund(String loginId, String reserve_num);
+	ArrayList<HashMap<String, String>> boardlist_listCall(MemberDTO parameter);
+	int boardlist_allCount(MemberDTO parameter);
 
 	
 
