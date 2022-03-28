@@ -217,7 +217,7 @@
                         <c:if test="${loginId ne null}">
                 			<c:if test="${mem_grade ne 'admin' }">
                         	<li><a href="./roomsList" class="nav-link" style="font-weight: bold;">객실 소개</a></li>
-                            <li><a href="./tomemberboardlist" class="nav-link" style="font-weight: bold;">고객문의</a></li>
+                            <li><a href="./tomemberboardlist?currpage=1" class="nav-link" style="font-weight: bold;">고객문의</a></li>
                             <li><a href="./myPagemilelist?orderNum=1" class="nav-link" style="font-weight: bold; font-size:15px;">${loginId}님의 마일리지</a></li>
                            	</c:if>
                         </c:if>

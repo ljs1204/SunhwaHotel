@@ -187,15 +187,6 @@ public class MypageService {
 		return mav;
 	}
 	
-	//리스트
-	public ModelAndView tomemberboardlist(String loginId) {		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("tomemberboardlist");
-		ArrayList<BoardDTO> tomemberboardlist = mypageDao.tomemberboardlist(loginId);		
-		logger.info("리스트 갯수 : {}",tomemberboardlist.size());
-		mav.addObject("tomemberboardlist", tomemberboardlist);
-		return mav;
-	}
 
 
 	public ArrayList<MypageDTO> myPagemilelist(String loginId) {
@@ -341,6 +332,51 @@ public class MypageService {
 	}
 
 // 20220320 구매한 마일리지 상품 확인 페이지 END - SI
+
+/*	
+	//리스트
+	public ModelAndView tomemberboardlist(String loginId) {		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("tomemberboardlist");
+		ArrayList<BoardDTO> tomemberboardlist = mypageDao.tomemberboardlist(loginId);		
+		logger.info("리스트 갯수 : {}",tomemberboardlist.size());
+		mav.addObject("tomemberboardlist", tomemberboardlist);
+		return mav;
+	}
+	*/
+	public ArrayList<HashMap<String, String>> boardlist_listCall(MemberDTO parameter) {
+		String loginId = parameter.getLoginId();
+		int currPage = parameter.getCurrpage();
+		int pagePerCnt = parameter.getPagePerCnt();
+		
+		int offset = (currPage -1)* pagePerCnt - 1;//DB에 요청할 인덱스 번호임 , 1:0-9, 2:10-19 이런식으로해야함
+		logger.info("currpage : {}" , currPage);
+		if(offset < 0) {
+			offset = 0;
+		}
+		
+		parameter.setLoginId(loginId);
+		parameter.setOffset(offset);
+		logger.info("offset : {}" , offset);
+		logger.info("loginId : {} ", loginId);
+		ArrayList<HashMap<String, String>> listCall = mypageDao.boardlist_listCall(parameter);
+		logger.info("listcall 쿼리문 실행");
+		
+		return listCall;
+	}
+	public int boardlist_rangecall(MemberDTO parameter) {
+		int totalCount = mypageDao.boardlist_allCount(parameter); // 일단 테이블 글이 몇개인지? 
+		/*
+		  logger.info("totalCount : {}" , totalCount);
+		  
+		  int range = totalCount%pagePerCnt > 0 ? (totalCount/pagePerCnt) + 1 :
+		  (totalCount/pagePerCnt);//만들 수 있는 페이지의 갯수 logger.info("range : {}" , range);
+		 */
+		String total = String.valueOf(totalCount);
+		logger.info(total);
+
+		return totalCount;
+	}
 
 	
 }

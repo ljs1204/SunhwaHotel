@@ -102,7 +102,10 @@
 	    <button class="btn btn-outline-white-primary py-3 text-black px-5" id="pButton">객실 추가하기</button> <button class="btn btn-outline-white-primary py-3 text-black px-5" id="mButton" >객실 삭제하기</button>
 	    </div>
  </section>
-    
+    ${room_T1_B12_cnt}
+    ${room_T2_B12_cnt}
+    ${room_T3_B12_cnt}
+    ${room_T4_B12_cnt}
     <section class="section">
 	    
 	    
@@ -113,12 +116,13 @@
 		    
           
         <c:forEach items="${roomReservelist}" var="list" varStatus="i">
+        
           <div class="col-md-3 col-lg-3 mb-3" id='roomList' data-aos="fade-up">
-          <c:if test="${list.room_type eq 1}"><a href="roomdetail?room_num=1001" class="room"></a></c:if>
-          <c:if test="${list.room_type eq 2}"><a href="roomdetail?room_num=1003" class="room"></a></c:if>
-          <c:if test="${list.room_type eq 3}"><a href="roomdetail?room_num=1005" class="room"></a></c:if>
-          <c:if test="${list.room_type eq 4}"><a href="roomdetail?room_num=1007" class="room"></a></c:if>
-        	 
+          <c:if test="${list.room_type eq room_T1_B12_cnt}"><a href="roomdetail?room_num=1001" class="room">디럭스룸 상세보기</a></c:if>
+          <c:if test="${list.room_type eq room_T2_B12_cnt}"><a href="roomdetail?room_num=1003" class="room">프리미어룸 상세보기</a></c:if>
+          <c:if test="${list.room_type eq room_T3_B12_cnt}"><a href="roomdetail?room_num=1005" class="room">패밀리룸 상세보기</a></c:if>
+          <c:if test="${list.room_type eq room_T4_B12_cnt}"><a href="roomdetail?room_num=1007" class="room">스위트룸 상세보기</a></c:if>
+        	
               <figure class="img-wrap">
                 <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3">
                 
@@ -127,7 +131,9 @@
                 <h2>${list.room_type_name} </h2>
                 <span class="text-uppercase letter-spacing-1"><fmt:formatNumber value="${list.room_price}" pattern="#,### 원" /> / per night</span>
               </div>
+       
             <input type="radio" name="check" data-type="${list.room_type}" data-price='${list.room_price}' value = "1"<c:if test="${i.index eq 0}">checked</c:if>/> 더블
+        
             <input type="radio" name="check" data-type="${list.room_type}" data-price='${list.room_price}' value = "2"/> 트윈
           </div>
         

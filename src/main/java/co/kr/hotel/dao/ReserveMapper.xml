@@ -8,30 +8,50 @@
 
 
 	<select id="toReservelist" resultType="co.kr.hotel.dto.RoomDTO">
-		
-		select distinct r.room_type, r.room_price, r.room_type_name,p.room_img
-		FROM room r inner join photo p ON r.room_num = p.room_num 
-		WHERE r.room_num not in 
-		(select room_num from reserve 
+			
+	select distinct r.room_type,r.bed_type , r.room_price, r.room_type_name,p.room_img 
+	FROM room r inner join photo p ON r.room_num = p.room_num 
+	WHERE r.room_num not in 
+	(select room_num from reserve 
+	WHERE checkindate  BETWEEN #{param1} AND #{param2} OR
+	checkoutdate  BETWEEN #{param1} AND #{param2} OR
+	(checkindate  &lt;= #{param1} AND checkoutdate  &gt;= #{param2}) and reserve_state = 1)
+	union
+	select distinct r.room_type,r.bed_type , r.room_price, r.room_type_name,p.room_img 
+	from
+	(
+		select *
+		from reserve 
 		WHERE checkindate  BETWEEN #{param1} AND #{param2} OR
-		checkoutdate  BETWEEN #{param1} AND #{param2} OR
-		(checkindate  &gt;= #{param1} AND checkoutdate  &lt;= #{param2}) and reserve_state = 1) 
-		union all
-		select distinct r.room_type, r.room_price, r.room_type_name,p.room_img
-		from
-		(
-			select *
-			from reserve 
-			WHERE checkindate  BETWEEN #{param1} AND #{param2} OR
-		checkoutdate  BETWEEN #{param1} AND #{param2} OR
-		(checkindate  &gt;= #{param1} AND checkoutdate  &lt;= #{param2})
-		) as r1 inner join room r on r.room_num = r1.room_num  inner join photo p ON r.room_num = p.room_num 
-		where room_img = '디럭스1.png' and bed_type = 1 
-		or room_img = '2.png' and bed_type = 1 
-		or room_img = '3.png' and bed_type = 1 
-		or room_img = '스위트1.png' and bed_type = 1 and reserve_state not in (1) 
-		order by room_type;
+	checkoutdate  BETWEEN #{param1} AND #{param2} OR
+	(checkindate  &lt;= #{param1} AND checkoutdate &gt;= #{param2}) 
+	) as r1 inner join room r on r.room_num = r1.room_num  inner join photo p ON r.room_num = p.room_num 
+	where reserve_state not in (1) 
+	order by room_type;
+			
 		
+	</select>
+
+	<select id="nulroom" resultType="co.kr.hotel.dto.RoomDTO"> 
+	select distinct r.room_type,bed_type 
+	FROM room r 
+	WHERE r.room_num not in 
+	(select room_num from reserve 
+	WHERE checkindate  BETWEEN #{param1} AND #{param2} OR
+			checkoutdate  BETWEEN #{param1} AND #{param2} OR
+			(checkindate  &gt;= #{param1} AND checkoutdate  &lt;= #{param2}) and reserve_state = 1)
+	union all
+	select r.room_type,bed_type 
+	from
+	(
+		select *
+		from reserve 
+		WHERE checkindate  BETWEEN #{param1} AND #{param2} OR
+			checkoutdate  BETWEEN #{param1} AND #{param2} OR
+			(checkindate &gt;= #{param1} AND checkoutdate  &lt;= #{param2})
+	) as r1 inner join room r on r.room_num = r1.room_num
+	where reserve_state not in (1) 
+	order by room_type
 	</select>
 
 	

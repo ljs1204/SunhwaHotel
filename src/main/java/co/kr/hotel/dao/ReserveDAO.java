@@ -50,6 +50,10 @@ public interface ReserveDAO {
 
 	void nonMem(String nmem_code, int reserve_idx, String email, String phone, String name_en, String name_kr);
 
+
+	ArrayList<RoomDTO> nulroom(String checkin_date, String checkout_date);
+
+
 // 환불	
 	// 1. 예약 테이블 insert
 	int refundParts(String reserve_idx1, String reserve_idx2, String reserve_idx3, String loginId);		// 부분취소
@@ -64,7 +68,5 @@ public interface ReserveDAO {
 	
 	//refundCart
 	int refundCart(String reserve_idx1, String reserve_idx2, String reserve_idx3);
-
-	
 
 }

@@ -12,8 +12,16 @@ public class MypageDTO {
 	private String board_title;
 	private String board_content;
 	private String reg_datetime;
+	private String mem_gread;
 	
-	
+	public String getMem_gread() {
+		return mem_gread;
+	}
+	public void setMem_gread(String mem_gread) {
+		this.mem_gread = mem_gread;
+	}
+
+
 	//마이페이지 마일리지 조회 유선화 2022.03.15 START 
 	private int mileage_useable;
 	private int mileage_price;

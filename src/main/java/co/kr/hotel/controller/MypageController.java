@@ -317,29 +317,6 @@ public class MypageController {
 		logger.info("상세보기 요청 :{} ",board_num);
 		return mypageService.tomemberboarddetail(board_num);
 	}
-	// 2022.03.14  문의페이지 리스트 박형민
-			@GetMapping(value="/tomemberboardlist")
-			public ModelAndView tomemberboardlist(HttpSession session) {
-				
-				String loginId = (String) session.getAttribute("loginId");
-				// 유선화 문의 리스트 세션처리 하기
-				String mem_grade = (String) session.getAttribute("mem_grade");
-				
-				ModelAndView v = null;
-				//if(loginId != null && mem_grade != "admin") {
-					
-					v = mypageService.tomemberboardlist(loginId);
-				//}
-				
-				ModelAndView mv = new ModelAndView();
-				mv.addObject("loginId" , loginId);
-				
-				logger.info("login id : {}", loginId);	
-				
-				logger.info("리스트 요청");
-				
-				return v;
-			}
 	
 
 	//마이페이지 마일리지리스트 유선화 START 2022.03.15
@@ -347,17 +324,23 @@ public class MypageController {
 		
 	@RequestMapping(value = "/myPagemilelist", method = RequestMethod.GET)
 	public String myPagemymilelist(Model model, HttpSession session,
-			@RequestParam(value="orderNum") int orderNum
+			@RequestParam(value="orderNum") int orderNum ,MemberDTO memDto
 			) {
 		logger.info("myPagemilelist 마이페이지 마일리지 조회 페이지 ");
 		String page = "index";
 		
 		String loginId = (String) session.getAttribute("loginId");
+		
+		if(memDto.getMem_id() != null && !memDto.getMem_id().equals("")) {
+			loginId = memDto.getMem_id();
+		}
 		logger.info("loginId : "+loginId);
 		
 		if (loginId != null) {
 			page = "myPagemilelist";	
 		}
+		
+		String memgrade = (String)session.getAttribute("mem_grade");
 		
 		ArrayList<MypageDTO> mypageDto = mypageService.myPagemilelist(loginId);
 		model.addAttribute("myPagemilelist" , mypageDto);
@@ -376,11 +359,8 @@ public class MypageController {
 		MypageDTO mypagedto = new MypageDTO();
 		mypagedto = mypageService.mypagedto(loginId);
 		model.addAttribute("mypageInfo", mypagedto);
-		
-		
-		
-		
-		
+		model.addAttribute("memgrade", memgrade);
+				
 		return page;
 	}
 		
@@ -422,7 +402,71 @@ public class MypageController {
 		
 		
 	//마이페이지 회원리스트 유선화 END 2022.03.16
+	/*
+	// 2022.03.14  문의페이지 리스트 박형민
+	@GetMapping(value="/tomemberboardlist")
+	public ModelAndView tomemberboardlist(HttpSession session) {
+		
+		String loginId = (String) session.getAttribute("loginId");
+		// 유선화 문의 리스트 세션처리 하기
+		String mem_grade = (String) session.getAttribute("mem_grade");
+		
+		ModelAndView v = null;
+		//if(loginId != null && mem_grade != "admin") {
+		
+		v = mypageService.tomemberboardlist(loginId);
+		//}
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("loginId" , loginId);
+		
+		logger.info("login id : {}", loginId);	
+		
+		logger.info("리스트 요청");
+		
+		return v;
+	}
+	*/
 	
+	@RequestMapping(value = "/tomemberboardlist", method = RequestMethod.GET)
+    public String tomemberboardlist(Model model , @RequestParam int currpage, MemberDTO parameter , HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		logger.info("loginId : "+loginId);
+		
+       logger.info("memlist 요청");
+       
+       String page = "/";
+      	//호출을 요청할 페이지
+       logger.info("currPage 선언");
+		int pagePerCnt = 10; //한 페이지당 몇개씩? 10개씩
+		parameter.setLoginId(loginId);
+		parameter.setCurrpage(currpage);
+		parameter.setPagePerCnt(pagePerCnt);
+		//1.총 패이지 갯수인 range가 필요함
+		int range = mypageService.boardlist_rangecall(parameter);
+		PageDto adminPage = new PageDto();
+		adminPage.setNum(currpage);
+		adminPage.setCount(range);
+		model.addAttribute("listPage", adminPage);//페이징처리
+		model.addAttribute("listNum", currpage);//페이징처리
+		//2.리스트가 필요함(10개밖에 안들어있음)
+		ArrayList<HashMap<String, String>> listCall = mypageService.boardlist_listCall(parameter);
+		model.addAttribute("pages",range);
+		model.addAttribute("tomemberboardlist",listCall);
+		model.addAttribute("nowpage",currpage);
+		model.addAttribute("parameter",parameter);
+		model.addAttribute("loginId", loginId);
+		logger.info("listcall : {}" , listCall);
+		logger.info("currPage : {}" , currpage);
+		logger.info("pagePerCnt : {} ", pagePerCnt);
+		logger.info("range : {} " , range);
+		
+			page = "tomemberboardlist";			
+
+		return page;
+       
+      
+   }
 		
 		
 		

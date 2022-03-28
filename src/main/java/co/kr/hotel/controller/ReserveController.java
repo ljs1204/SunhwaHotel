@@ -346,6 +346,7 @@ public class ReserveController {
 		int extrabed_price = service.extrabed_price();//엑스트라베드 가격
 		int breakfast_price = service.breakfast_price();//조식 가격
 		int roomCnt=  (int) Double.parseDouble(params.get("rowDivCnt"));//1,2,3
+		
 		logger.info("객실 수 확인 :"+roomCnt);
 		
 		ReserveDTO dto = new ReserveDTO();

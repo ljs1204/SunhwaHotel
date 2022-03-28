@@ -123,6 +123,13 @@ public class ReserveService {
 		reserveDao.nonMem(nmem_code,reserve_idx,email,phone,name_en,name_kr);
 	}
 
+	public ArrayList<RoomDTO> nulroom(String checkin_date, String checkout_date) {
+		// TODO Auto-generated method stub
+		return reserveDao.nulroom(checkin_date,checkout_date);
+	}
+
+
+
 // 환불 20220325
 	public void reFund(String reserve_idx1, String reserve_idx2, String reserve_idx3, String loginId, String refundCategory) throws ParseException {
 	// 1. reserve 테이블에 insert
@@ -242,7 +249,6 @@ public class ReserveService {
 		
 		}
 	}
-	
 	
 	
 	//객실 옵션 페이지 이지선 END 220315

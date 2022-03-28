@@ -2,6 +2,8 @@ package co.kr.hotel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpSession;
 
@@ -48,8 +50,12 @@ public class HomeController {
 		
 		return "index";
 	}
+	int id = 0 ;
+	int result_size1 = 0;
+	int result_size2= 0;
+	int result_size3 = 0;
+	int result_size4 = 0;
 	
-
 	@RequestMapping(value = "/toReserve", method = RequestMethod.POST) 
 	public String toReserve(Model model,HttpSession session,@RequestParam String checkin_date
 			,@RequestParam String checkout_date,@RequestParam int cnt) {
@@ -135,6 +141,140 @@ public class HomeController {
 		ArrayList<RoomDTO> roomReservelist = reserveService.toReservelist(checkin_date,checkout_date,cnt);
 		logger.info("roomReservelist"+roomReservelist);
 		model.addAttribute("roomReservelist",roomReservelist);
+		
+		ArrayList<RoomDTO> nulroom = reserveService.nulroom(checkin_date,checkout_date);
+		logger.info("nulroom"+nulroom);
+		model.addAttribute("nulroom",nulroom);
+		
+		// iterator로 예약 할 수 있는 객실리스트 뿌리기  START 유선화 22.03.36
+		// 룸타입 1 베드타입 1,2 --> 각각 size를 계산해서 0보다 클때만<c:if>로 보여주기 
+		// 룸타입 2 베드타입 1,2 
+		// 룸타입 3 베드타입 1,2
+		// 룸타입 4 베드타입 1,2
+		
+				
+		HashMap<String, Object> result = new HashMap<String, Object>();	
+		
+		Iterator<RoomDTO> iter = nulroom.iterator();					// iterator
+		RoomDTO reserveIter = null;										// iterator에서 사용할 한줄 받을 DTO 
+		
+		while (iter.hasNext()) {
+			// iterator로 next() 하며 한개씩 확인
+			reserveIter = iter.next();
+			// 룸타입 1 베드타입 1,2 getRoom_type이 1이고 베드타입이 1,2 인데이터 수 계산해서 hashMap에 넣기 
+			logger.info("Room_type : "+reserveIter.getRoom_type());
+			logger.info("Bed_type : "+reserveIter.getBed_type());
+			if(reserveIter.getRoom_type() == 1) {
+				result.put("roomType_1", reserveIter.getRoom_type());
+				result.size();
+				logger.info("룸타입 1 : "+result.size());
+				if(reserveIter.getBed_type() == 1) {
+					result.put("roomType_1_1", reserveIter.getBed_type());
+					
+					logger.info("룸타입 1 베드타입 1 : "+result.size());
+				}
+				if(reserveIter.getBed_type() == 2) {
+					result.put("roomType_1_2", reserveIter.getBed_type());
+					result.size();
+					logger.info("룸타입 1 베드타입 2 총 합: "+result.size());
+					// 만약 룸타입이1인게 0보다 크면 1 을 model에 보내고
+					// 아니면 무조건 0 을 보냄 int i = 0 을 초기화 하고 
+					// 만약 room_T1_B12_cnt 가 0보다 크면 id= 1or2or3or4 아니면 0임
+					result_size1 = result.size();
+					logger.info("result_size1 : "+result_size1);
+					if(result_size1 > 0) {
+						logger.info("result_size1 : "+result_size1);
+						id = 1;
+					}
+					
+					model.addAttribute("room_T1_B12_cnt", id);
+				}
+				
+			}
+			if(reserveIter.getRoom_type() == 2) {
+				result.put("roomType_2", reserveIter.getRoom_type());
+				result.size();
+				logger.info("룸타입 2 : "+result.size());
+				if(reserveIter.getBed_type() == 1) {
+					result.put("roomType_2_1", reserveIter.getBed_type());
+					result.size();
+					logger.info("룸타입 2 베드타입 1 : "+result.size());
+				}
+				if(reserveIter.getBed_type() == 2) {
+					result.put("roomType_2_2", reserveIter.getBed_type());
+					result.size();
+					logger.info("룸타입 2 베드타입 2 총 합: "+result.size());
+					
+					result_size2 = result.size()-result_size1 ;
+					logger.info("result_size2 : "+result_size2);
+					if(result_size2 > 0) {
+						logger.info("result_size2 : "+result_size2);
+						id = 2;
+					}
+					
+					model.addAttribute("room_T2_B12_cnt", id);
+				}
+				
+			}
+			if(reserveIter.getRoom_type() == 3) {
+				result.put("roomType_3", reserveIter.getRoom_type());
+				result.size();
+				logger.info("룸타입 3 : "+result.size());
+				if(reserveIter.getBed_type() == 1) {
+					result.put("roomType_3_1", reserveIter.getBed_type());
+					result.size();
+					logger.info("룸타입 3 베드타입 1 : "+result.size());
+				}
+				if(reserveIter.getBed_type() == 2) {
+					result.put("roomType_3_2", reserveIter.getBed_type());
+					result.size();
+					logger.info("룸타입 3 베드타입 2 총 합: "+result.size());
+					
+					result_size3 = result.size()- result_size1 - result_size2 ;
+					logger.info("result_size3 : "+result_size3);
+					if(result_size3 > 0) {
+						logger.info("result_size3 : "+result_size3);
+						id = 3;
+					}
+					
+					model.addAttribute("room_T3_B12_cnt", id);
+				}
+				
+			}
+			if(reserveIter.getRoom_type() == 4) {
+				result.put("roomType_4", reserveIter.getRoom_type());
+				result.size();
+				logger.info("룸타입 4 : "+result.size());
+				if(reserveIter.getBed_type() == 1) {
+					result.put("roomType_4_1", reserveIter.getBed_type());
+					result.size();
+					logger.info("룸타입 4 베드타입 1 : "+result.size());
+				}
+				if(reserveIter.getBed_type() == 2) {
+					result.put("roomType_4_2", reserveIter.getBed_type());
+					result.size();
+					logger.info("룸타입 4 베드타입 2 총 합: "+result.size());
+					model.addAttribute("room_Type4_Bed1&2_cnt", result.size());
+					
+					result_size4 = result.size()- result_size1 - result_size2 - result_size3;
+					logger.info("result_size4 : "+result_size4);
+					if(result_size4 > 0) {
+						logger.info("result_size4 : "+result_size4);
+						id = 4;
+					}
+					
+					model.addAttribute("room_T4_B12_cnt", id);
+					
+				}
+				
+			}
+			
+		}
+		
+		
+		
+		// iterator로 예약 할 수 있는 객실리스트 뿌리기  END 유선화 22.03.36
+		
 		
 		//객실 예약 리스트 END 20220311 유선화
 		

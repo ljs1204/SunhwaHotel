@@ -30,7 +30,37 @@ public class MemberDTO {
 
 // 검색조건
    private String select;
-   public String getSelect() {
+   private String keyword;
+   int currpage;
+   int pagePerCnt;
+   int offset;
+   String loginId;
+   
+   public String getLoginId() {
+	return loginId;
+}
+public void setLoginId(String loginId) {
+	this.loginId = loginId;
+}
+public int getOffset() {
+	return offset;
+}
+public void setOffset(int offset) {
+	this.offset = offset;
+}
+public int getCurrpage() {
+	return currpage;
+}
+public void setCurrpage(int currpage) {
+	this.currpage = currpage;
+}
+public int getPagePerCnt() {
+	return pagePerCnt;
+}
+public void setPagePerCnt(int pagePerCnt) {
+	this.pagePerCnt = pagePerCnt;
+}
+public String getSelect() {
 	return select;
 }
 public void setSelect(String select) {
@@ -42,7 +72,7 @@ public String getKeyword() {
 public void setKeyword(String keyword) {
 	this.keyword = keyword;
 }
-private String keyword;
+
    
    
    public String getMem_id() {

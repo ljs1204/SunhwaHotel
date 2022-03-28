@@ -105,7 +105,7 @@
 
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
 						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve?num=1">예약 조회</a>
-						<a class="list-group-item list-group-item-action active" id="list-messages-list" href="./tomemberboardlist">문의 글 & 답 글</a>
+						<a class="list-group-item list-group-item-action active" id="list-messages-list" href="./tomemberboardlist?currpage=1">문의 글 & 답 글</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myProfile">회원정보 수정</a>
@@ -154,7 +154,36 @@
 							<a class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;" href="./tomemberboardwriteForm">글쓰기</a>
 
 <!-- 20220317 페이징 START - SI -->
-				
+				<div class="row" data-aos="fade">
+			          <div class="col-12">
+			            <div class="custom-pagination">
+			              <ul class="list-unstyled">
+			              
+			              <c:if test="${listPage.prev}">
+			                <li class="active"><a href="./tomemberboardlist?currpage=${listPage.startPageNum - 1}&&select=${parameter.select}&&keyword=${parameter.keyword }">&lt;</a></li>
+			              </c:if>
+		                  <c:forEach begin="${listPage.startPageNum}" end="${listPage.endPageNum}" var="num">
+						      <c:if test="${listNum == num}"> 
+							      <li class="active">
+							      	<span>${num}</span>
+							      </li>
+						      </c:if>
+						      <c:if test="${listNum != num}">
+							      <li>
+							      	<a href="./tomemberboardlist?currpage=${num}&&select=${parameter.select}&&keyword=${parameter.keyword }">${num}</a>
+							      </li>			     
+						      </c:if>    		
+					      </c:forEach>
+			              <c:if test="${milelistPage.next}">
+					      	<li>
+					      		<a href="./tomemberboardlist?currpage=${listPage.endPageNum + 1}&&select=${parameter.select}&&keyword=${parameter.keyword }">&gt;</a>
+					      	</li>
+					      </c:if>
+			               
+			              </ul>
+			            </div>
+			          </div>
+			        </div>
 <!-- 20220317 페이징 END - SI -->					
 										
 					

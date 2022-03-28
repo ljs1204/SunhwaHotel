@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.kr.hotel.dto.MemberDTO;
 import co.kr.hotel.dto.MypageDTO;
+import co.kr.hotel.dto.PageDto;
 import co.kr.hotel.dto.ProductDTO;
 import co.kr.hotel.dto.ReserveDTO;
 import co.kr.hotel.dto.RoomDTO;
@@ -352,27 +353,33 @@ public class ManagerController {
 // 20220324	모든 예약 정보 보기 SI( Calender ) END
 
 	@RequestMapping(value = "/memlist", method = RequestMethod.GET)
-    public String memlist(Model model , @RequestParam String currpage) {      
+    public String memlist(Model model , @RequestParam int currpage, MemberDTO parameter) {      
        logger.info("memlist 요청");
        
        String page = "/";
-       int currPage = Integer.parseInt(currpage);	//호출을 요청할 페이지
+      	//호출을 요청할 페이지
        logger.info("currPage 선언");
 		int pagePerCnt = 10; //한 페이지당 몇개씩? 10개씩
+		parameter.setCurrpage(currpage);
+		parameter.setPagePerCnt(pagePerCnt);
+		//1.총 패이지 갯수인 range가 필요함
+		int range = service.memlist_rangecall(parameter);
+		PageDto adminPage = new PageDto();
+		adminPage.setNum(currpage);
+		adminPage.setCount(range);
+		model.addAttribute("listPage", adminPage);//페이징처리
+		model.addAttribute("listNum", currpage);//페이징처리
+		//2.리스트가 필요함(10개밖에 안들어있음)
+		ArrayList<HashMap<String, String>> listCall = service.memlist_listCall(parameter);
+		model.addAttribute("pages",range);
+		model.addAttribute("memlist",listCall);
+		model.addAttribute("nowpage",currpage);
+		model.addAttribute("parameter",parameter);
+		logger.info("listcall : {}" , listCall);
+		logger.info("currPage : {}" , currpage);
+		logger.info("pagePerCnt : {} ", pagePerCnt);
+		logger.info("range : {} " , range);
 		
-			//1.총 패이지 갯수인 range가 필요함
-			int range = service.memlist_rangecall(currPage,pagePerCnt);
-			
-			//2.리스트가 필요함(10개밖에 안들어있음)
-			ArrayList<HashMap<String, String>> listCall = service.memlist_listCall(currPage,pagePerCnt);
-			model.addAttribute("pages",range);
-			model.addAttribute("memlist",listCall);
-			model.addAttribute("nowpage",currpage);
-			logger.info("listcall : {}" , listCall);
-			logger.info("currPage : {}" , currPage);
-			logger.info("pagePerCnt : {} ", pagePerCnt);
-			logger.info("range : {} " , range);
-			
 			page = "adminmemsearch";			
 
 		return page;

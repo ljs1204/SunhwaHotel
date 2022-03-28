@@ -97,12 +97,23 @@
 		group by reserve_num
  	</select>
  	
- 	<select id="memlist_allCount" resultType="int">
-	select count(mem_id) from member
+ 	<select id="memlist_allCount" parameterType='co.kr.hotel.dto.MemberDTO' resultType="int">
+	select count(mem_id) 
+	  from member	
+	 WHERE 1=1
+ 	      <if test="select != null and select != ''">
+ 	         AND ${select} LIKE '%${keyword}%' 
+ 	      </if>	
 	</select>
 	
-	<select id="memlist_listCall" resultType="hashmap">
-		SELECT * FROM member LIMIT 10 offset #{param2}
+	<select id="memlist_listCall" parameterType='co.kr.hotel.dto.MemberDTO' resultType="hashmap">
+		SELECT * 
+		  FROM member
+		 WHERE 1=1
+		 	   <if test="select != null and select != ''">
+		 	       AND ${select} LIKE '%${keyword}%' 
+		 	   </if>		   
+		 LIMIT 10 offset #{offset}
 	</select>
  	
  	
