@@ -80,7 +80,7 @@ public class BoardService {
 		int success = dao.delete(board_num);
 		logger.info("삭제 완료 여부 : "+success);
 	}
-
+	
 
 	}
 

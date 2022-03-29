@@ -148,15 +148,14 @@
 							<tr>
 								<th>내용</th>
 								<td>${board.board_content}</td>
-								
 							<!-- <td><textarea name="board_content"				
 								style= "width:500px;height:200px;font-size:12px;" 
 								placeholder="내용을 입력해주세요."></textarea></td>	-->		
 											
 							</tr>
 						</table>
-						<input type="button" onclick="location.href='./AdminQnaWriteForm?board_orinum=${board.board_orinum}'" class="btn btn-primary btn-block text-white" value="글쓰기"/>
-						
+						<input type="button" onclick="location.href='./AdminQnaWriteForm?board_orinum=${board.board_orinum}'" class="btn btn-primary btn-block text-white" value="글쓰기" style="width: 1000px"/>
+						<input type="button" onclick="del()" class="btn btn-primary btn-block text-white" value="삭제" style="width: 100px"/>	
 
 <!-- 20220317 페이징 START - SI -->
 					
@@ -363,14 +362,16 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 					Copyright &copy;
 					<script>
-					function dele(){
+				
+					function del(){
 						var yn = confirm("정말 이 글을 삭제 하시겠습니까?");
 						
 						if(yn){
 							location.href='./delete?board_num=${board.board_num}';
 						}
+						
 					}
-					
+					 
 						document.write(new Date().getFullYear());
 					</script>
 					All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by
