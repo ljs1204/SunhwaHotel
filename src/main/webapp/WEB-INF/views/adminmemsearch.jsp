@@ -127,16 +127,18 @@
 							<th>생년월일</th>
 							<th>이메일</th>
 							<th>회원등급</th>
-							<th>마일리지 내역 조회<th>
+							<th>예약 내역 조회</th>
+							<th>마일리지 내역 조회</th>
 						</tr>
 						<c:forEach items="${memlist}" var="memlist">
 							<tr>
-								<td><a href="./myReserveAdmin?num=1&mem_id=${memlist.mem_id}">${memlist.mem_id}</a></td>
+								<td>${memlist.mem_id}</td>
 								<td>${memlist.mem_name_kr}</td>
 								<td>${memlist.mem_name_en}</td>
 								<td>${memlist.mem_birth}</td>
 								<td>${memlist.mem_email}</td>
 								<td>${memlist.mem_grade}</td>
+								<td><button class="btn btn-outline-secondary" id="button-addon2" onclick="location.href='myReserveAdmin?num=1&mem_id=${memlist.mem_id}'">예약 내역 조회</button></td>
 								<td><button class="btn btn-outline-secondary" id="button-addon2" onclick="location.href='myPagemilelist?mem_id=${memlist.mem_id}&&orderNum=1'">마일리지내역조회</button></td>
 							</tr>
 						</c:forEach>					
