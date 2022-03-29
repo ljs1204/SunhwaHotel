@@ -136,9 +136,13 @@
 								</tr>   
 					            <tr> 
 									<td id="title">카드종류</td>
-					           		<c:if test="${payInfo.credit_type eq 1}"><td>하나카드</td></c:if>
-					           		<c:if test="${payInfo.credit_type eq 2}"><td>국민카드</td></c:if>
-					           		<c:if test="${payInfo.credit_type eq 3}"><td>현대카드</td></c:if>
+					           		<c:if test="${payInfo.credit_type eq 1}"><td>국민카드</td></c:if>
+					           		<c:if test="${payInfo.credit_type eq 2}"><td>카카오카드</td></c:if>
+					           		<c:if test="${payInfo.credit_type eq 3}"><td>신한카드</td></c:if>
+					           		<c:if test="${payInfo.credit_type eq 4}"><td>우리카드</td></c:if>
+					           		<c:if test="${payInfo.credit_type eq 5}"><td>농협카드</td></c:if>
+					           		<c:if test="${payInfo.credit_type eq 6}"><td>하나카드</td></c:if>
+					           		<c:if test="${payInfo.credit_type eq 7}"><td>농협카드</td></c:if>
 					            </tr>                               
 					            <tr>
 					            	<td id="title">신청날짜</td>          
