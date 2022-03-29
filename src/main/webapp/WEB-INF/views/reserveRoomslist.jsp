@@ -12,7 +12,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Sogo Hotel by Colorlib.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700">
@@ -65,7 +64,7 @@
     <section class="section pb-4">
       <div class="container">
        
-        <div class="row check-availabilty" id="next">
+        <div  id="next">
           <div class="block-32" data-aos="fade-up" data-aos-offset="-200">
 
           	<form action="toReserve" method="post">
@@ -73,17 +72,17 @@
            	
               <div class="row">
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
-                  <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
+                  <label for="" class="font-weight-bold text-black">Check In</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkin_date" class="form-control" value="${checkin_date}" readonly/>
+                    <input type="text" id="checkin_date" class="form-control" value="${checkin_date}" />
                   </div>
                 </div>
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkout_date" class="form-control" value="${checkout_date}" disable/>
+                    <input type="text" id="checkout_date" class="form-control" value="${checkout_date}"/>
                   </div>
                 </div>
               
@@ -102,10 +101,6 @@
 	    <button class="btn btn-outline-white-primary py-3 text-black px-5" id="pButton">객실 추가하기</button> <button class="btn btn-outline-white-primary py-3 text-black px-5" id="mButton" >객실 삭제하기</button>
 	    </div>
  </section>
-    ${room_T1_B12_cnt}
-    ${room_T2_B12_cnt}
-    ${room_T3_B12_cnt}
-    ${room_T4_B12_cnt}
     <section class="section">
 	    
 	    
@@ -123,8 +118,11 @@
           <c:if test="${list.room_type eq 4}"><a href="roomdetail?room_num=1007" target=”_blank” class="room">스위트룸 상세보기</a> </c:if>
         	
               <figure class="img-wrap">
-              
-                <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3">
+              <c:if test="${list.room_type eq 1}"><a href="roomdetail?room_num=1001" target=”_blank” class="room"> <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3"></a></c:if>
+          <c:if test="${list.room_type eq 2}"><a href="roomdetail?room_num=1003" target=”_blank” class="room"> <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3"></a></c:if>
+          <c:if test="${list.room_type eq 3}"><a href="roomdetail?room_num=1005" target=”_blank” class="room"> <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3"></a></c:if>
+          <c:if test="${list.room_type eq 4}"><a href="roomdetail?room_num=1007" target=”_blank” class="room"> <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3"></a> </c:if>
+               
                 
               </figure>
               <div class="p-3 text-center room-info">
@@ -338,6 +336,8 @@
 		$("#moveForm").submit();
 	});
   
+	$("#next").find("input").prop("disabled",true);
+
   </script>
   
   
