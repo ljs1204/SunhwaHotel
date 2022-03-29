@@ -58,13 +58,14 @@ public class HomeController {
 	
 	@RequestMapping(value = "/toReserve", method = RequestMethod.POST) 
 	public String toReserve(Model model,HttpSession session,@RequestParam String checkin_date
-			,@RequestParam String checkout_date,@RequestParam int cnt) {
+			,@RequestParam String checkout_date) {
 		
 		String page = "reserveRoomslist";
 		
 		logger.info("toReserve로 요청이 들어옴 ");
 		logger.info("checkin_date : " +checkin_date);
 		logger.info("checkout_date : "+checkout_date);
+		int cnt = 1;
 		logger.info("cnt : "+cnt);
 		
 		ReserveDTO dto = new ReserveDTO();

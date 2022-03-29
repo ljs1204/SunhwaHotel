@@ -244,7 +244,8 @@
 	SELECT count(*) 
  	FROM BOARD B JOIN `MEMBER` M ON B.MEM_ID = M.MEM_ID 
  	WHERE B.MEM_ID = #{loginId} 
-    OR (MEM_GRADE ='ADMIN' AND BOARD_ORINUM	IN (SELECT BOARD_ORINUM FROM BOARD where mem_id = #{loginId})) ;		
+    OR (MEM_GRADE ='ADMIN' AND BOARD_ORINUM	IN (SELECT BOARD_ORINUM FROM BOARD where mem_id = #{loginId}))
+    	
 	
 	</select>
 	
@@ -253,7 +254,7 @@
 		FROM board b JOIN `member` m ON b.mem_id = m.mem_id 
 		WHERE B.MEM_ID = #{loginId} 
     OR (MEM_GRADE ='ADMIN' AND BOARD_ORINUM	IN (SELECT BOARD_ORINUM FROM BOARD where mem_id = #{loginId}))
-	LIMIT 10 offset #{offset}
+	order by board_orinum desc , re_num asc LIMIT 10 offset #{offset}
 	
 	</select>
 

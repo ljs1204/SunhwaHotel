@@ -76,14 +76,14 @@
                   <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkin_date" class="form-control" value="${checkin_date}"/>
+                    <input type="text" id="checkin_date" class="form-control" value="${checkin_date}" readonly/>
                   </div>
                 </div>
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkout_date" class="form-control" value="${checkout_date}"/>
+                    <input type="text" id="checkout_date" class="form-control" value="${checkout_date}" disable/>
                   </div>
                 </div>
               
@@ -116,12 +116,11 @@
 		    
           
         <c:forEach items="${roomReservelist}" var="list" varStatus="i">
-        
           <div class="col-md-3 col-lg-3 mb-3" id='roomList' data-aos="fade-up">
-          <c:if test="${list.room_type eq room_T1_B12_cnt}"><a href="roomdetail?room_num=1001" class="room">디럭스룸 상세보기</a></c:if>
-          <c:if test="${list.room_type eq room_T2_B12_cnt}"><a href="roomdetail?room_num=1003" class="room">프리미어룸 상세보기</a></c:if>
-          <c:if test="${list.room_type eq room_T3_B12_cnt}"><a href="roomdetail?room_num=1005" class="room">패밀리룸 상세보기</a></c:if>
-          <c:if test="${list.room_type eq room_T4_B12_cnt}"><a href="roomdetail?room_num=1007" class="room">스위트룸 상세보기</a></c:if>
+          <c:if test="${list.room_type eq room_T1_B12_cnt}"><a href="roomdetail?room_num=1001" target=”_blank” class="room">디럭스룸 상세보기</a></c:if>
+          <c:if test="${list.room_type eq room_T2_B12_cnt}"><a href="roomdetail?room_num=1003" target=”_blank” class="room">프리미어룸 상세보기</a></c:if>
+          <c:if test="${list.room_type eq room_T3_B12_cnt}"><a href="roomdetail?room_num=1005" target=”_blank” class="room">패밀리룸 상세보기</a></c:if>
+          <c:if test="${list.room_type eq room_T4_B12_cnt}"><a href="roomdetail?room_num=1007" target=”_blank” class="room">스위트룸 상세보기</a> </c:if>
         	
               <figure class="img-wrap">
                 <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3">
@@ -131,12 +130,15 @@
                 <h2>${list.room_type_name} </h2>
                 <span class="text-uppercase letter-spacing-1"><fmt:formatNumber value="${list.room_price}" pattern="#,### 원" /> / per night</span>
               </div>
-       
+       		<c:choose>
+       		<c:when test="${list.bed_type eq 1}">
             <input type="radio" name="check" data-type="${list.room_type}" data-price='${list.room_price}' value = "1"<c:if test="${i.index eq 0}">checked</c:if>/> 더블
-        
-            <input type="radio" name="check" data-type="${list.room_type}" data-price='${list.room_price}' value = "2"/> 트윈
+       		</c:when>
+			<c:otherwise>
+            <input type="radio" name="check" data-type="${list.room_type}" data-price='${list.room_price}' value = "2"<c:if test="${i.index eq 0}">checked</c:if>/> 트윈
+			</c:otherwise>       		
+       		</c:choose>
           </div>
-        
         </c:forEach>
         
         <div id="people" class="container">
@@ -147,7 +149,6 @@
 	            <img class="plus" name="plus" src="resources/images/plusbtn.png"  alt="플러스버튼">
             </div>
         </div>
-
 
         </div>
       </div>

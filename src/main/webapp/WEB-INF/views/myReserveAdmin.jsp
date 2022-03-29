@@ -103,10 +103,17 @@
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
 
+<<<<<<< HEAD
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
 						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./myReserveAdmin?num=1&mem_id=seon119">객실 예약 정보 리스트</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./adminOrderList">마일리지 상품 관리</a>
+=======
+						<a class="list-group-item list-group-item-action active" id="list-home-list" href="./memlist?currpage=1">회원 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./AdminReserveList">객실 예약 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist?orderNum=1">회원 문의 관리</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./AdminMileageRegist">마일리지 상품 관리</a>
+>>>>>>> d1bbfbf73ffc39e56d494115ba500a00f58c6190
 						
 
 					</div>
@@ -134,34 +141,6 @@
 							</tr>
 						</thead>
 						<tbody>
-							<%-- 
-							<tr>
-								<td><a href="./reserveDetail">SVW8432Q</a></td>
-								<td>디럭스(더블) 외 2개</td>
-								<td>2022-03-06</td>
-								<td>2022-03-08</td>
-								<td>1,992,000원</td>
-								<c:choose>
-									<c:when test="">
-										<td>예약완료</td>
-									</c:when>
-									<c:when test="true">
-										<td><a href="">부분취소</a>
-									</c:when>
-									<c:when test="">
-										<td>예약취소</td>
-									</c:when>
-								</c:choose>
-							</tr>
-							<tr>
-								<td><a href="">QWASD145</a></td>
-								<td>디럭스(트윈)</td>
-								<td>2022-01-17</td>
-								<td>2022-01-18</td>
-								<td>679,000원</td>
-								<td>예약취소</td>
-							</tr>
-							 --%>
 							
 							<!-- 예약 조회 리스트 뿌리기 --> 
 							<c:if test="${size ne 0 }">

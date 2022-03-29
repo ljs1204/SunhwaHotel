@@ -89,7 +89,7 @@
 									</div>
 									<input type="text" id="checkout_date" class="form-control" autocomplete="off" name="checkout_date" />
 								</div>
-							</div>
+							</div><!-- 
 							<div class="col-md-6 mb-3 mb-md-0 col-lg-3">
 								<div class="row">
 
@@ -101,7 +101,7 @@
 											</div>
 											<select name="cnt" id="children" class="form-control">
 												<option value="1">1</option>
-												<option value="2">2</option>
+												<option selected value="2">2</option>
 												<option value="3">3</option>
 											</select>
 										</div>
@@ -109,7 +109,7 @@
 
 								</div>
 
-							</div>
+							</div> -->
 
 							<div class="col-md-6 col-lg-3 align-self-end">
 								<button class="btn btn-primary btn-block text-white" id="mainCheckBtn" onclick="checkdate()">Check Availabilty</button>

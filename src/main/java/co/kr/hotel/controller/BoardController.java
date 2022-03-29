@@ -54,7 +54,7 @@ public class BoardController {
 		logger.info("write 답글 : {}", board_orinum);
 		service.write(params);
 
-		return "redirect:/AdminQnalist";
+		return "redirect:/AdminQnalist?orderNum=1";
 	}
 
 	// 상세보기
@@ -86,7 +86,6 @@ public class BoardController {
 		 model.addAttribute("list", qnalist);
 		 model.addAttribute("listPage", adminPage);//페이징처리
 		 model.addAttribute("listNum", orderNum);//페이징처리
-		 
 		// adminQnA 리스트 페이징 END
 		 
 		logger.info("리스트 요청");
