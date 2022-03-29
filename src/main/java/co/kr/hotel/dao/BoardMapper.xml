@@ -25,7 +25,7 @@
 
 	<delete id="delete">
 		DELETE FROM board WHERE board_num = #{param1}
-	</delete>	
+	</delete>
 	
 	<select id="count" resultType="int">
 		select count(*) from board

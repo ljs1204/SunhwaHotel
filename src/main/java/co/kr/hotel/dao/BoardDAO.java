@@ -18,8 +18,7 @@ public interface BoardDAO {
 	int count();
 
 	ArrayList<BoardDTO> listInfo(int displayPost, int postNum);
-	
+
 	int delete(String board_num);
-	
 
 }
