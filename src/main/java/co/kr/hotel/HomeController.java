@@ -50,7 +50,7 @@ public class HomeController {
 		
 		return "index";
 	}
-	int id = 0 ;
+	int id = 0;
 	int result_size1 = 0;
 	int result_size2= 0;
 	int result_size3 = 0;

@@ -38,7 +38,7 @@
 			<tr>			
 				<th colspan="2">
 					<input type="button" onclick="location.href='./'" value="취소"/>
-					<button>저장</button>
+					<button>확인</button>
 				</th>
 			</tr>
 		</table>

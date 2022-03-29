@@ -134,7 +134,7 @@ public class ManagerController {
 //		return page;
 //	}
 	
-		@RequestMapping(value = "/AdminMileageRegist", method = RequestMethod.GET)
+		@RequestMapping(value = "/adminOrderList", method = RequestMethod.GET)
 		public String adminOrderList(Model model, HttpSession session) {
 			logger.info("adminOrderList 불러오기");			
 			ArrayList<ProductDTO> adOrderList = service.adOrderList();
@@ -142,7 +142,7 @@ public class ManagerController {
 			model.addAttribute("adOrderList", adOrderList);
 			String loginId = (String)session.getAttribute("loginId");
 			model.addAttribute("loginId", loginId);
-			String page = "AdminMileageRegist";
+			String page = "adminOrderList";
 			
 			return page;
 		}
@@ -155,13 +155,11 @@ public class ManagerController {
 			
 			return "writingForm";
 		}
-		
+		/*
 		@RequestMapping(value = "/writing", method = RequestMethod.POST)
 		public String writing(Model model,HttpSession session,MultipartFile[] photos,@RequestParam HashMap<String, String> params) {	
 			logger.info("writing 요청 : {}",params);
 	
-			
-			
 			for(MultipartFile photo : photos) {
 				try {
 					String oriFileName = photo.getOriginalFilename();//원본 파일명 추출
@@ -182,14 +180,21 @@ public class ManagerController {
 					}
 			}
 			
+			//String page = "redirect:/adminOrderList"; 
 			
-			
-			String page = "redirect:/AdminMileageRegist"; 
-			
-			//service.writing(params);
-			//return "adminOrderList";
-			return page;
+			service.writing(params);
+			return "adminOrderList";
+			//return page;
+		}	
+			*/
+		
+		@RequestMapping(value = "/writing", method = RequestMethod.POST)
+		public String writing(Model model, @RequestParam HashMap<String, String> params) {		
+			logger.info("write 요청 : {}",params);
+			service.writing(params);
+			return "redirect:/adminOrderList";
 		}
+		
 		
 		@RequestMapping(value = "/del", method = RequestMethod.GET)
 		public String del(Model model, HttpSession session, @RequestParam String product_num) {
@@ -197,7 +202,7 @@ public class ManagerController {
 			String page = "redirect:/";
 			
 			if(session.getAttribute("loginId")!=null) {
-				page = "redirect:/AdminMileageRegist"; 
+				page = "redirect:/adminOrderList"; 
 				int success = service.del(product_num);
 				logger.info("삭제 여부 : {}",success);
 			}

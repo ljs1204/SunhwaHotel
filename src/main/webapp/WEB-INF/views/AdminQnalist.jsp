@@ -106,7 +106,7 @@
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="./memlist?currpage=1">회원 정보 리스트</a>
 						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./AdminReserveList">객실 예약 정보 리스트</a>
 						<a class="list-group-item list-group-item-action active" id="list-messages-list" href="./AdminQnalist?orderNum=1">회원 문의 관리</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./AdminMileageRegist">마일리지 상품 관리</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./adminOrderList">마일리지 상품 관리</a>
 						
 					</div>
 				</div>
@@ -126,7 +126,6 @@
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일자</th>
-							
 						</tr>
 						<c:forEach items="${list}" var="board">
 							<tr>

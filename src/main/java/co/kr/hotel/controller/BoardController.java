@@ -63,14 +63,16 @@ public class BoardController {
 		logger.info("상세보기 요청 :{} ", board_num);
 		return service.detail(board_num, session);
 	}
-
+	
+	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(Model model, @RequestParam String board_num) {		
 		logger.info("삭제요청 : {}",board_num);		
-		service.delete(board_num);
-		logger.info("삭제요청2 : {}",board_num);	
-		return "redirect:/AdminQnalist";
+		service.delete(board_num);		
+		return "redirect:/AdminQnalist?orderNum=1";
+				
 	}
+	
 		
 	// 2022.03.14 문의페이지 리스트 박형민
 	@GetMapping(value = "/AdminQnalist")
