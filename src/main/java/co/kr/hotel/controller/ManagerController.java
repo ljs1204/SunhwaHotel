@@ -222,7 +222,7 @@ public class ManagerController {
 			return "redirect:/";
 		}		
 		
-		@RequestMapping(value = "/AdminMemInfo", method = RequestMethod.POST)
+		@RequestMapping(value = "/AdminMemInfo", method = RequestMethod.GET)
 		public String updating(Model model, @RequestParam String mem_id) {
 				
 			MemberDTO result = service.memInfo(mem_id);
