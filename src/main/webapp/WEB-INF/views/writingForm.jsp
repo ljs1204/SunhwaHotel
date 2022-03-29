@@ -60,14 +60,11 @@
 				<td><input type="text" name="product_price"/></td>
 			</tr>
 			<tr>
-			<th>사진</th>
-				<td><input type="file" name="photos"/></td>
-			</tr>	
 			 		
 			<tr>
 				
 				<th colspan="2" style="">
-					<input type="button" onclick="location.href='./AdminMileageRegist'" value="취소"/>
+					<input type="button" onclick="location.href='./adminOrderList'" value="취소"/>
 					<!--  <input class="btn" type="button" id = "submit" value="등록" />-->
 					<button id = "submit">등록</button>
 				</th>
