@@ -117,12 +117,13 @@
           
         <c:forEach items="${roomReservelist}" var="list" varStatus="i">
           <div class="col-md-3 col-lg-3 mb-3" id='roomList' data-aos="fade-up">
-          <c:if test="${list.room_type eq room_T1_B12_cnt}"><a href="roomdetail?room_num=1001" target=”_blank” class="room">디럭스룸 상세보기</a></c:if>
-          <c:if test="${list.room_type eq room_T2_B12_cnt}"><a href="roomdetail?room_num=1003" target=”_blank” class="room">프리미어룸 상세보기</a></c:if>
-          <c:if test="${list.room_type eq room_T3_B12_cnt}"><a href="roomdetail?room_num=1005" target=”_blank” class="room">패밀리룸 상세보기</a></c:if>
-          <c:if test="${list.room_type eq room_T4_B12_cnt}"><a href="roomdetail?room_num=1007" target=”_blank” class="room">스위트룸 상세보기</a> </c:if>
+          <c:if test="${list.room_type eq 1}"><a href="roomdetail?room_num=1001" target=”_blank” class="room">디럭스룸 상세보기</a></c:if>
+          <c:if test="${list.room_type eq 2}"><a href="roomdetail?room_num=1003" target=”_blank” class="room">프리미어룸 상세보기</a></c:if>
+          <c:if test="${list.room_type eq 3}"><a href="roomdetail?room_num=1005" target=”_blank” class="room">패밀리룸 상세보기</a></c:if>
+          <c:if test="${list.room_type eq 4}"><a href="roomdetail?room_num=1007" target=”_blank” class="room">스위트룸 상세보기</a> </c:if>
         	
               <figure class="img-wrap">
+              
                 <img src="resources/images/${list.room_img}" alt="Free website template" class="img-fluid mb-3">
                 
               </figure>
