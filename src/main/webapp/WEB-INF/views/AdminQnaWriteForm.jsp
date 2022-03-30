@@ -120,8 +120,7 @@
 						<form action="write" method="POST">
 						<h4 style="color: #633e12;">관리자 게시글 문의 답변 페이지</h4>
 						<hr style="border-color: #633e12;" />
-
-
+                        <input type="hidden" name="board_orinum" value=${board_orinum}> 
 						<!-- 프로필 - 유선화 20220316 -->
 						<table class="table table-bordered">
 							<tbody>
