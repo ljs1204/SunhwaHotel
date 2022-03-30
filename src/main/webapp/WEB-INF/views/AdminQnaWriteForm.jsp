@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -41,7 +40,7 @@
 <style>
 /* 세로 네비게이션(리스트그룹) 관련 css START - SI 20220314 */
 	.list-group-item.active {
-		background-color:  #98cade !important;
+		background-color: #f1ebd6 !important;
 		/* border: 1px solid #f1ebd6 !important; */
 		color: #633e12 !important;
 		font-weight: bold;
@@ -54,9 +53,23 @@
 	}
 /* 세로 네비게이션(리스트그룹) 관련 css END - SI 20220314 */
 
-/* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 */
+/* 컨텐츠 - 프로필 영역 css START - SI 20220314 */
+	
+    #list-home .table{
+       width: 100%;
+       height: auto;
+       text-align: center;
+       color: #333333;
+    }
+    #list-home th, #list-home td{
+       width: 40%;
+    }
+/* 컨텐츠 - 프로필 영역 css END - SI 20220314 */
+
+/* 컨텐츠 - 예약 조회 영역 css START - SI 20220314 => 페이지 분리 */
+	/* 
 	#list-reserve .table th{
-		background-color: #98cade;
+		background-color: #f1ebd6;
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 		color: #633e12 !important;
@@ -65,19 +78,8 @@
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 	}
+	 */
 /* 컨텐츠 - 예약 조회 영역 css END - SI 20220314 */	
-
-/* 20220317 페이징 영역 SI */
-	.custom-pagination ul li.active span{
-		background: #633e12 !important;
-	    color: #fff !important;
-	    border-radius: 50% !important;
-	}
-
-<style>
-
-
-
 
 
 </style>
@@ -102,187 +104,67 @@
 		<!-- 세로 네비게이션 바 -->
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
-
-						<a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
-						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="#">객실 예약 정보 리스트</a>
-						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
+						 <a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-profile-list" href="#">객실 예약 정보 리스트</a>
+						<a class="list-group-item list-group-item-action active" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./adminOrderList">마일리지 상품 관리</a>
 						
-
 					</div>
 				</div>
-<!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
 
-<!-- 예약조회 START - SI 20220314 -->
-			<!-- tabContent 있어야 발동함 -->
 			<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
-				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
-						style="max-width:100% !important">
-					<form action="write" method="POST">
-						<h2 style="text-align:center;">관리자 게시글 문의 답변 페이지 </h2>
-						
-						<input type="hidden" name="board_orinum" value=${board_orinum}> 
-						
-						<table>	
-							<tr>
-								<th>아이디</th>
-								<td>
-								admin
-								<input type="hidden" name="id"/>
-								</td>
-							</tr>
-							<tr>
-								<th>제목</th>
-								<td><input type="text" name="board_title" 
-								style= "width:500px;height:30px;font-size:12px;"/></td>
-							</tr>
-							<tr>
-								<th>내용</th>
-								<td><textarea name="board_content"				
-								style= "width:500px;height:200px;font-size:12px;"/></textarea></td>
-							</tr>
-							<tr>
-								<th colspan="2">
-									<input type="submit" class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;" value="등록"/>
-									<!-- <input type="submit" onclick="location.href='./list'" value="등록"/> -->
-									<input type="button"class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;" onclick="location.href='./AdminQnalist?orderNum=1'" value="취소"/>
-								</th>
-							</tr>
+
+				<!-- 프로필 START - SI 20220314 -->
+				<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+
+						<form action="write" method="POST">
+						<h4 style="color: #633e12;">관리자 게시글 문의 답변 페이지</h4>
+						<hr style="border-color: #633e12;" />
+
+
+						<!-- 프로필 - 유선화 20220316 -->
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th>아이디</th>
+									<td>
+									admin
+									<input type="hidden" name="id"/>
+									</td>
+								</tr>
+								<tr>
+									<th>제목</th>
+									<td><input type="text" name="board_title" 
+									style= "width:500px;height:30px;font-size:12px;"/></td>
+								</tr>
+								<tr>
+									<th>내용</th>
+									<td><textarea name="board_content"				
+									style= "width:500px;height:200px;font-size:12px;"/></textarea></td>
+								</tr>
+								<tr>
+									<th colspan="2">
+										<input type="submit"class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;" value="등록"/>
+										<!-- <input type="submit" onclick="location.href='./list'" value="등록"/> -->
+										<input type="button" class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;"onclick="location.href='./AdminQnalist?orderNum=1'" value="취소"/>
+									</th>
+								</tr>
+							</tbody>
 						</table>
+						
 					</form>
 
+
 				</div>
-			</div>
-<!-- 예약조회 END - SI 20220314 -->	
-
-
-
-
-
-					
-					
 				
+					
+			</div>		
 
-				<!-- 20220314 폐기
-				<div class="col-md-5" data-aos="fade-up" data-aos-delay="200">
-					<div class="row">
-						<div class="col-md-10 ml-auto contact-info">
-							<p>
-								<span class="d-block">Address:</span> <span class="text-black"> 98 West 21th Street, Suite 721 New York NY 10016</span>
-							</p>
-							<p>
-								<span class="d-block">Phone:</span> <span class="text-black"> (+1) 435 3533</span>
-							</p>
-							<p>
-								<span class="d-block">Email:</span> <span class="text-black"> info@yourdomain.com</span>
-							</p>
-						</div>
-					</div>
-				</div>
-				 -->
 			</div>
 		</div>
 	</section>
 
-	<section class="section testimonial-section bg-light">
-		<div class="container">
-			<div class="row justify-content-center text-center mb-5">
-				<div class="col-md-7">
-					<h2 class="heading" data-aos="fade-up">People Says</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="js-carousel-2 owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200">
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; Jean Smith</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-							<p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; Jean Smith</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-							<p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-				</div>
-				<!-- END slider -->
-			</div>
-
-		</div>
-	</section>
+	
 
 
 
@@ -299,81 +181,9 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 		</div>
 	</section>
 
-	<footer class="section footer-section">
-		<div class="container">
-			<div class="row mb-4">
-				<div class="col-md-3 mb-5">
-					<ul class="list-unstyled link">
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Terms &amp; Conditions</a></li>
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Rooms</a></li>
-					</ul>
-				</div>
-				<div class="col-md-3 mb-5">
-					<ul class="list-unstyled link">
-						<li><a href="#">The Rooms &amp; Suites</a></li>
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Contact Us</a></li>
-						<li><a href="#">Restaurant</a></li>
-					</ul>
-				</div>
-				<div class="col-md-3 mb-5 pr-md-5 contact-info">
-					<!-- <li>198 West 21th Street, <br> Suite 721 New York NY 10016</li> -->
-					<p>
-						<span class="d-block"><span class="ion-ios-location h5 mr-3 text-primary"></span>Address:</span> <span> 198 West 21th Street, <br> Suite 721 New York NY 10016
-						</span>
-					</p>
-					<p>
-						<span class="d-block"><span class="ion-ios-telephone h5 mr-3 text-primary"></span>Phone:</span> <span> (+1) 435 3533</span>
-					</p>
-					<p>
-						<span class="d-block"><span class="ion-ios-email h5 mr-3 text-primary"></span>Email:</span> <span> info@domain.com</span>
-					</p>
-				</div>
-				<div class="col-md-3 mb-5">
-					<p>Sign up for our newsletter</p>
-					<form action="#" class="footer-newsletter">
-						<div class="form-group">
-							<input type="email" class="form-control" placeholder="Email...">
-							<button type="submit" class="btn">
-								<span class="fa fa-paper-plane"></span>
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-			<div class="row pt-5">
-				<p class="col-md-6 text-left">
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					Copyright &copy;
-					<script>
-						document.write(new Date().getFullYear());
-					</script>
-					All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by
-					<a href="https://colorlib.com" target="_blank">Colorlib</a>
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-				</p>
-
-				<p class="col-md-6 text-right social">
-					<a href="#">
-						<span class="fa fa-tripadvisor"></span>
-					</a>
-					<a href="#">
-						<span class="fa fa-facebook"></span>
-					</a>
-					<a href="#">
-						<span class="fa fa-twitter"></span>
-					</a>
-					<a href="#">
-						<span class="fa fa-linkedin"></span>
-					</a>
-					<a href="#">
-						<span class="fa fa-vimeo"></span>
-					</a>
-				</p>
-			</div>
-		</div>
+	<!-- footer 20220314 SI -->
+	<footer class="footer-section">
+		<jsp:include page="footer.jsp" flush="true" />
 	</footer>
 
 	<script src="resources/js/jquery-3.3.1.min.js"></script>
@@ -393,34 +203,32 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 </body>
 <script>
 
-var userId = "${sessionScope.loginId}";
-console.log(userId);
-if (userId == "") {
-	console.log(userId);
-	location.href="logout";
-}
-
-
-var grade = "${sessionScope.grade}";
-console.log(grade);
-if (grade != "admin") {
-	console.log(grade);
-	location.href="logout";
-}
-
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 START - SI 20220314 */
-	var d = new Date();
-
-	var year = d.getFullYear();
-	
-	$(document).ready(function(){
-		$('#useFrequency').html(year+"년 이용실적");
-		$('#useFrequency').css({'color':'#633e12'});
-	});
-/* 올해 년도 계산해서 이용실적 앞에 적어주기 END - SI 20220314 */
-
-
-
 </script>
 
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sogo Hotel by Colorlib.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700">
+
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/animate.css">
+    <link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="resources/css/aos.css">
+    <link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="resources/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="resources/css/fancybox.min.css">
+    
+    <link rel="stylesheet" href="resources/fonts/ionicons/resources/css/ionicons.min.css">
+    <link rel="stylesheet" href="resources/fonts/fontawesome/resources/css/font-awesome.min.css">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="resources/css/style.css">
+  </head>
+  <body>
+ 
 </html>

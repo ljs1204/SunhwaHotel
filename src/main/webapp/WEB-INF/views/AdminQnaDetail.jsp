@@ -154,7 +154,9 @@
 											
 							</tr>
 						</table>
+						<c:if test="${board.board_type == 1}"> 
 						<input type="button" onclick="location.href='./AdminQnaWriteForm?board_orinum=${board.board_orinum}'" class="btn btn-primary btn-block text-white" value="글쓰기" style="width: 1000px"/>
+						</c:if>
 						<input type="button" onclick="del()" class="btn btn-primary btn-block text-white" value="삭제" style="width: 100px"/>	
 
 <!-- 20220317 페이징 START - SI -->

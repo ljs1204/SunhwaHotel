@@ -245,7 +245,7 @@
 	INSERT INTO board(
       board_title,board_orinum,board_type,mem_id,board_content
       )VALUES(
-      #{board_title},(select ifnull( max(board_orinum),0)+1 from board b),2,#{mem_id},#{board_content})
+      #{board_title},(select ifnull( max(board_orinum),0)+1 from board b),1,#{mem_id},#{board_content})
 	</insert>
 	
 		<select id="boardlist_allCount" parameterType='co.kr.hotel.dto.BoardDTO' resultType="int">
