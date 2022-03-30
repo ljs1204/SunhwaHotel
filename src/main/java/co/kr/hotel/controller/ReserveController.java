@@ -451,33 +451,35 @@ public class ReserveController {
 		return "reserveResult";
 	}
 	
+	// 20220329 환불 START - SI
 	@RequestMapping(value = "/reFund", method = RequestMethod.GET)
 	public String refund(Model model, HttpSession session,
 			@RequestParam String reserve_idx1,
 			@RequestParam(required=false) String reserve_idx2,
-			@RequestParam(required=false) String reserve_idx3,
-			@RequestParam(required=true) String refundCategory
+			@RequestParam(required=false) String reserve_idx3,		// ...예약번호
+			@RequestParam(required=true) String refundCategory		// 완전예약, 부분예약 구분
 			) throws ParseException {
 		
-		logger.info("환불 시작 : "+ reserve_idx1 + reserve_idx2 + reserve_idx3);
+		logger.info("환불 시작 : "+ reserve_idx1 + reserve_idx2 + reserve_idx3 + refundCategory);
 		// 아이디 확인( 회원/비회원 구분 )
 		String loginId = (String) session.getAttribute("loginId");
+		String reserve_num = "";
+		
 		if(loginId != null) {
 			//회원
-			service.reFund(reserve_idx1, reserve_idx2, reserve_idx3, loginId, refundCategory);
+			reserve_num = service.reFund(reserve_idx1, reserve_idx2, reserve_idx3, loginId, refundCategory);
 		}else {
 			//비회원
-			service.reFund(reserve_idx1, reserve_idx2, reserve_idx3, "비회원", refundCategory);
+			reserve_num = service.reFund(reserve_idx1, reserve_idx2, reserve_idx3, "비회원", refundCategory);
 		}
 		
-		
-		
-		
-		
-		return null;
+		// 환불 리스트로 redirect
+		return "redirect:/mypageRefundDetail?reserve_num="+reserve_num;
 	}
 	
 	
+	
+	// 20220329 환불 END - SI 
 	
 	
 	

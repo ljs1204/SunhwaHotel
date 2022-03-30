@@ -131,36 +131,39 @@ public class ReserveService {
 
 
 // 환불 20220325
-	public void reFund(String reserve_idx1, String reserve_idx2, String reserve_idx3, String loginId, String refundCategory) throws ParseException {
+	public String reFund(String reserve_idx1, String reserve_idx2, String reserve_idx3, String loginId, String refundCategory) throws ParseException {
 	// 1. reserve 테이블에 insert
-		// 1-1. 일단 해당 idx로 객실 몇개가 예약되어 있는지 확인 => myReserveRefund.jsp 에서 처리
-		// 1-2. 부분인지 완전취소인지 분기
+		// 부분인지 완전취소인지 분기
 		if(refundCategory.equals("2")) {
-			//부분취소
-			//int successParts = reserveDao.refundParts(reserve_idx1, reserve_idx2, reserve_idx3, loginId);
+			//부분취소 => 예약상태 컬럼에 2으로 insert
+			int successParts = reserveDao.refundParts(reserve_idx1, reserve_idx2, reserve_idx3, loginId);
 			//logger.info(successParts + "메론");
 		}else if(refundCategory.equals("3")) {
-			//완전취소
-			//int successAll = reserveDao.refundAll(reserve_idx1, reserve_idx2, reserve_idx3, loginId);
+			//완전취소 => 예약상태 컬럼에 3으로 insert
+			int successAll = reserveDao.refundAll(reserve_idx1, reserve_idx2, reserve_idx3, loginId);
 			//logger.info("메론" + successAll);
 		}
 		
 	// 2. pay 테이블에 insert
-		// 1. 해당 예약에 대한 가격을 가져온다
+		// 1. 해당 예약을 select( 금액 포함 )
 			ArrayList<ReserveDTO> priceRoom = reserveDao.priceAll(reserve_idx1, reserve_idx2, reserve_idx3, loginId);
 		
 		// 2. 오늘 날짜 계산
 			Calendar getToday = Calendar.getInstance();
 			getToday.setTime(new java.util.Date()); //오늘 날짜
+			logger.info("오늘 날짜 : {}", getToday);
 			
 			// 내가 계산하고 싶은 날짜
 			String s_date = priceRoom.get(0).getCheckindate();
 			java.util.Date date = new SimpleDateFormat("yyyy-MM-dd").parse(s_date);
 			Calendar cmpDate = Calendar.getInstance();
 			cmpDate.setTime(date); //특정 일자
+			logger.info("체크인 날짜 : {}", cmpDate);
 			
-			long diffSec = (getToday.getTimeInMillis() - cmpDate.getTimeInMillis()) / 1000;
-			long diffDays = diffSec / (24*60*60); //일자수 차이
+			long diffSec = (cmpDate.getTimeInMillis() - getToday.getTimeInMillis()) / 1000;
+			long diffDays = diffSec / (24*60*60); //일자수 차이		=> 원래 이걸로 써야해용
+			logger.info("날짜차이 : {}", diffDays);
+			//long diffDays = 3;
 			
 			//System.out.println(diffDays + "일 차이");
 			
@@ -169,85 +172,133 @@ public class ReserveService {
 			// ArrayList, List, HashMap => iterator for문 or while 돌리세요
 			Iterator<ReserveDTO> iter = priceRoom.iterator();			// (1) iterator 준비
 			ReserveDTO reserveDTO = null;								// (2) 한줄 담을 DTO
-			
+			// 마일리지 차감을 위해 환불금액 총합을 계산할 변수
+			int AmountPrice = 0;
+				
 			while(iter.hasNext()) {
 				reserveDTO = iter.next();
 				
+				// 1) 당일(날짜차이가 0) 취소의 경우 환불금액 X
 				if(diffDays==0) {
-					// 환불 X
 					// => 돌려받을 금액 0 => insert 0
 					reserveDTO.setAmount(0);
 					reserveDTO.setPay_mileage(0);
 					reserveDTO.setPay_price(0);
 					logger.info("총 금액"+reserveDTO.getAmount());
 					
-				}else if(diffDays >= 1 && diffDays < 7 ){
-					// 마일리지 계산 금액이 있으면 마일리지 부터 차감
+				// 2) 1~7일 사이의 취소일 경우 환불금액 50% / 마일리지부터 차감
+				}else if(1 <= diffDays  && diffDays < 7){
+					// 2-1. 마일리지 사용 금액이 있으면
 					if(reserveDTO.getPay_mileage()>0) {
-						//(reserveDTO.getAmount() * (0.5))	// 총 환불금액
-						//reserveDTO.getPay_mileage()			// 마일리지 사용 금액
-						// 환불 금액이 마일리지 사용 금액보다 크면 
+						//(reserveDTO.getAmount() * (0.5))		// 총 환불금액
+						//reserveDTO.getPay_mileage()			// 마일리지 사용 금액 => 현재는 예약에서 마일리지를 사용할 수 업서용
+						
+						// 2-1-1. 환불 금액이 마일리지 사용 금액보다 크면 => 마일리지에서 차감 후 남은 금액은 현금 금액에서 차감 
 						if((reserveDTO.getAmount() * (0.5)) > reserveDTO.getPay_mileage()) {
 							// 금액가격 - ( 총액 - 마일리지금액 )
 							int refundPrice = (int) (reserveDTO.getPay_price() - ((reserveDTO.getAmount() * (0.5)) - reserveDTO.getPay_mileage()));
-							reserveDTO.setAmount(refundPrice);
+							
+							reserveDTO.setAmount(refundPrice*(-1));
 							reserveDTO.setPay_mileage(0);
-							reserveDTO.setPay_price(refundPrice);
+							reserveDTO.setPay_price(refundPrice*(-1));
+
+							// 마일리지를 위해 총 금액에 합산
+							AmountPrice += Math.abs(reserveDTO.getAmount());
+							
+						// 2-1-2. 환불 금액이 마일리지 사용 금액보다 작으면 => 마일리지에서만 차감
 						}else {
-						// 환불 금액이 마일리지 사용 금액보다 작으면
-							reserveDTO.setAmount((int) (reserveDTO.getAmount() * (0.5)));
-							reserveDTO.setPay_price(reserveDTO.getPay_price());
-							reserveDTO.setPay_mileage((int) (reserveDTO.getPay_mileage() - (reserveDTO.getAmount() * (0.5))));
+							reserveDTO.setAmount((int) ((reserveDTO.getAmount() * (0.5))*(-1)));
+							reserveDTO.setPay_price(reserveDTO.getPay_price()*(-1));
+							reserveDTO.setPay_mileage((int) (reserveDTO.getPay_mileage() - (reserveDTO.getAmount() * (0.5))*(-1)));
+							
+								// 마일리지를 위해 총 금액에 합산
+								AmountPrice += Math.abs(reserveDTO.getAmount());
 						}
 						
+					// 2-2. 마일리지 사용이 없을 때	
+					}else {	
+						// 돌려받을 금액 50% => insert
+						reserveDTO.setAmount((int) (reserveDTO.getAmount()*(-0.5)));
+						//reserveDTO.setPay_mileage((int) (reserveDTO.getPay_mileage()*(-0.5)));
+						reserveDTO.setPay_price((int) (reserveDTO.getPay_price()*(-0.5)));
 						
-						// 완료
-						
-						
-						
-					}else {		// 마일리지 사용이 없을 때
-					// => 돌려받을 금액 50% => insert
-					reserveDTO.setAmount((int) (reserveDTO.getAmount()*(-0.5)));
-					reserveDTO.setPay_mileage((int) (reserveDTO.getPay_mileage()*(-0.5)));
-					reserveDTO.setPay_price((int) (reserveDTO.getPay_price()*(-0.5)));
+							// 마일리지를 위해 총 금액에 합산
+							AmountPrice += Math.abs(reserveDTO.getAmount());
 					}
+				// 3) 7일 이후의 취소일 경우 환불금액 100%
 				}else {
-					// 100%
 					// => 돌려받을 금액 100% => insert
 					reserveDTO.setAmount((int) reserveDTO.getAmount()*(-1));
-					reserveDTO.setPay_mileage((int) (reserveDTO.getPay_mileage()*(-1)));
-					reserveDTO.setPay_price((int) (reserveDTO.getPay_price()*(-1)));
-				}
+					reserveDTO.setPay_mileage((int) reserveDTO.getPay_mileage()*(-1));
+					reserveDTO.setPay_price((int) reserveDTO.getPay_price()*(-1));
 					
+						// 마일리지를 위해 총 금액에 합산
+						AmountPrice += Math.abs(reserveDTO.getAmount());
 				}
 				
-				
+				// 4) 5) 을 여기서 처리할 수 있음( iterator next 될때마다 바로 DB에 insert )
+				// 이번에 사용한 방식은 while 루프가 끝난 후 ArrayList를 mapper에서 foreach 돌리며 insert
+			}
 			
-	
-		// 3. insert
-		// 4. 마일리지 선차감이니까 만약에 마일리지 사용한게 있으면 마일리지 먼저 빼고 그 다음에 금액 뺀다
-		// 5. 마일리지 상품은 다 없어지는거니까 3. 번처럼하면 된다
-		
-		
-		// 2-1. 저장된 결제 내역 가져와서 값을 바꿔서 그대로 insert
-		if(refundCategory.equals("2")) {
-			//int successPayParts = reserveDao.refundPayParts(reserve_idx1, reserve_idx2, reserve_idx3);
-		}else if(refundCategory.equals("3")) {
-			//int successPayAll = reserveDao.refundPayAll(reserve_idx1, reserve_idx2, reserve_idx3);
+		// 4) 환불 계좌 정보 DTO에 저장해야함( 현재는 예약할 때 썼던 계좌로 바로 환불 해주고 있음, jsp에서 계좌정보 받아와야함)
+		// HEX(AES_ENCRYPT(#{param3}, SHA2('a-key',512)))
+							
+		// 5) 금액 계산이 끝난 환불 데이터 insert
+		if(refundCategory.equals("2")) {			// 부분 취소일 경우
+			int successPayParts = reserveDao.refundPayParts(priceRoom);
+			//logger.info("부분취소 결제 결과 rows"+successPayParts);
+		}else if(refundCategory.equals("3")) {		// 완전 취소일 경우
+			int successPayAll = reserveDao.refundPayAll(priceRoom);
+			//logger.info("완전취소 결제 결과 rows"+successPayAll);
 		}
 		
 	// 3. (마일리지 상품 있다면) cart 테이블에 insert
-		//int refundCart = reserveDao.refundCart(reserve_idx1, reserve_idx2, reserve_idx3);		
+		int refundCart = reserveDao.refundCart(reserve_idx1, reserve_idx2, reserve_idx3);		
 		
 	// 4. (회원이면) mileage 테이블 insert
-		// 1. 해당 예약에 대한 가격을 가져온다
-		// 2. 오늘 날짜와 체크인 데이트 비교해서 얼마 환불해줘야되는지 계산한다(환불 규정)
-		// 3. 환불금액에서 쌓인 마일리지 만큼 취소된다
+		// 주의! 환불로 인해 적립된 마일리지를 차감할 경우 이미 적립이 된 마일리지를 사용했을 때, 음수값이 될 수 있다~
+
+		// 4-1. 해당 예약에 대한 가격을 가져온다
+		// 4-2. 오늘 날짜와 체크인 데이트 비교해서 얼마 환불해줘야되는지 계산한다(환불 규정) => 2. 번에서 계산 => AmountPrice
+		// 4-3. 회원등급에 따라 차감할 마일리지를 계산한다
+		int DeMileage = 0;				// 차감 마일리지
 		
-		// 마일리지 전량 폐기 -> 다시 적립하는 방식으루 한닷!
-		
-		
+		if(!loginId.equals("비회원")){
+			// 회원정보 떼오기
+			String grade = reserveDao.memberGradeAll(loginId);
+			// 4-4. 차감 마일리지 계산
+			if(grade.equals("silver")) {
+				DeMileage = (AmountPrice * 1/100) * (-1);
+			}else if(grade.equals("gold")) {
+				DeMileage = (AmountPrice * 3/100) * (-1);
+			}else if(grade.equals("diamond")) {
+				DeMileage = (AmountPrice * 5/100) * (-1);
+			}
+
+			// 4-5. 차감
+			int successMil = reserveDao.mileageDeduction(DeMileage, loginId);
+			
 		}
+	
+	// 5. 예약번호 가져오기
+	String reserveNum = priceRoom.get(0).getReserve_num();
+	logger.info(reserveNum);
+	
+	
+	return reserveNum;
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}
 	
 	

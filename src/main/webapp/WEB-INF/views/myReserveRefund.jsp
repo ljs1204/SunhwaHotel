@@ -484,7 +484,7 @@
 					<div style="text-align: right;">
 						<input type="button" class="btn btn-outline-warning focu" style="color: #633e12; border-color: #633e12;" onclick="refund()" value="환불">
 						<!-- 20220319 취소는 뒤로가기와 같음 SI -->
-						<input type="button" class="btn btn-outline-warning focu" style="color: #633e12; border-color: #633e12;" onclick="window.history.back()" value="취소">
+						<input type="button" class="btn btn-outline-warning focu" style="color: #633e12; border-color: #633e12;" onclick="location.href='./myReserve?num=1" value="취소">
 					</div>
 				</div>
 				<!-- 예약조회 END - SI 20220314 -->
@@ -725,7 +725,7 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	var refundIdx = [];		// idx
 
 
-/* 20220319 환불 신청할 수 있게 테이블 클릭 이벤트 => Off 클래스는 클릭 안됨 SI */
+/* 20220319 환불 신청할 수 있게 체크박스 클릭 이벤트 => Off 클래스는 클릭 안됨 SI */
 	$('.firstOn').on('mouseover', function(){	// 첫 번째 테이블
 		$(this).css({'cursor':'pointer'});
 	});
@@ -803,7 +803,7 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 		}
 		
 	});
-/* 20220319 환불 신청할 수 있게 테이블 클릭 이벤트 SI */
+/* 20220319 환불 신청할 수 있게 체크박스 클릭 이벤트 SI */
 	
 	
 	
@@ -829,18 +829,51 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 		
 		// 2. 환불 여부 판단 & 환불 금액 계산
 		var refundPrice = 0;	// 최종 환불액
-	
+		
+		// 가격정보가 있는것만 저장하려고 했는데 3번째 방이 없다면 정보 자체가 뜨지 않아서 실패
+		/* 
+		// n번째 예약 정보가 있다면 price 저장
+		if(${first[0].pay_price} != null){
+			var firstPrice = ${first[0].pay_price};
+		}
+		if(${second[0].pay_price} != null){
+			var secondPrice = ${second[0].pay_price};
+		}
+		if(${third}){
+			var thirdPrice = 0;
+		}
+		
+		// price가 있다면 마일리지와 더해주기
+		if(firstPrice > 0){
+			firstPrice = 0 + ${first[0].pay_price} + ${first[0].pay_mileage};		// 첫 번째 방의 총 가격( 마일리지 선차감 같은 문제는 service에서 처리)
+		}else if(secondPrice > 0){
+			secondPrice = 0 + ${second[0].pay_price} + ${second[0].pay_mileage};	// 두 번째
+		}else if(thirdPrice > 0){
+			thirdPrice = 0 + ${third[0].pay_price} + ${third[0].pay_mileage};		// 세 번째		
+		}	
+		 */
+		
+		var firstPrice = ${first[0].pay_price}+0;
+		var firstAmount = ${first[0].pay_mileage}+firstPrice;
+		
+		var secondPrice = ${second[0].pay_price}+0;
+		var secondAmount = ${second[0].pay_mileage}+secondPrice;
+		
+		var thirdPrice = ${third[0].pay_price}+0;
+		var thirdAmount = ${third[0].pay_mileage}+thirdPrice;
+		 
+		// 체크박스 선택한 객실정보를 찾아서 날짜에 따라 환불가격을 책정
 		if(dateGap >= 7){							// 7일보다 전
 			for(var i=0; i<refundIdx.length; i++){		// 100% 환불
 				if(refundIdx[i] == "${first[0].reserve_idx}"){
 					//console.log("환불할 예약순번 : ", refundIdx[i]);
-					refundPrice = refundPrice + ${first[0].pay_price};
+					refundPrice = firstAmount + refundPrice;
 					console.log(refundPrice);
 				}else if(refundIdx[i] == "${second[0].reserve_idx}"){
-					refundPrice = refundPrice + ${second[0].pay_price};
+					refundPrice = secondAmount + refundPrice;
 					console.log(refundPrice);
 				}else if(refundIdx[i] == "${third[0].reserve_idx}"){
-					refundPrice = refundPrice + ${second[0].pay_price};
+					refundPrice = thirdAmount + refundPrice;
 					console.log(refundPrice);
 				}
 			}
@@ -848,13 +881,13 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 			for(var i=0; i<refundIdx.length; i++) {		//50%환불
 				if(refundIdx[i] == "${first[0].reserve_idx}"){
 					//console.log("환불할 예약순번 : ", refundIdx[i]);
-					refundPrice = refundPrice + (${first[0].pay_price} * 0.5);
+					refundPrice = (firstAmount * 0.5) + refundPrice;
 					console.log(refundPrice);
 				}else if(refundIdx[i] == "${second[0].reserve_idx}"){
-					refundPrice = refundPrice + (${second[0].pay_price} * 0.5);
+					refundPrice = (secondAmount * 0.5) + refundPrice;
 					console.log(refundPrice);
 				}else if(refundIdx[i] == "${third[0].reserve_idx}"){
-					refundPrice = refundPrice + (${second[0].pay_price} * 0.5);
+					refundPrice = (thirdAmount * 0.5) + refundPrice;
 					console.log(refundPrice);
 				}
 			}
@@ -863,15 +896,15 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 		}
 		
 	// 3. 환불 금액 확인 & 환불 진행( 환불가 : refundPrice / 환불순번 : refundIdx(배열) )
+	if(refundPrice > 0){
 		if(refundIdx.length > 0){
 			confirm(amountComma(refundPrice) + '원 환불이 가능합니다. 정말 환불하시겠습니까?');
-			// 배열 쪼개기
+			// 배열 쪼개기 => 예약순번
 			var param1 = refundIdx[0];
 			var param2 = refundIdx[1];
 			var param3 = refundIdx[2];
 			console.log(param1, param2, param3);
-			
-			
+						
 			if(roomsCount == refundIdx.length){
 				// 완전 취소
 				location.href="./reFund?reserve_idx1="+param1+"&reserve_idx2="+param2+"&reserve_idx3="+param3+"&refundCategory="+3;
@@ -880,8 +913,13 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 				location.href="./reFund?reserve_idx1="+param1+"&reserve_idx2="+param2+"&reserve_idx3="+param3+"&refundCategory="+2;
 			}
 		}else{
+			// 환불 실패
 			alert('객실을 선택해주셔야 환불진행이 가능합니다.');
-		}	
+		}
+	}else{
+		// 환불 실패
+		alert('이미 환불 가능 기간이 지난 예약입니다.');
+	}
 }
 /* 20220319 환불  */
 		

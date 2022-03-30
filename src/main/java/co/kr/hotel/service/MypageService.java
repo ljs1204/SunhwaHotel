@@ -162,13 +162,13 @@ public class MypageService {
 	}
 // 20220315 예약 리스트 조회 SI END
 	
-	public MypageDTO reserInfo(String userId, int reserve_idx) {
+	public ArrayList<ReserveDTO> reserInfo(String userId, String reserve_num) {
 		// TODO Auto-generated method stub
-		return mypageDao.reserInfo(userId,reserve_idx);
+		return mypageDao.reserInfo(userId,reserve_num);
 	}
 
 
-	public ReserveDTO payDto(String reserve_num) {
+	public ArrayList<ReserveDTO> payDto(String reserve_num) {
 		// TODO Auto-generated method stub
 		return mypageDao.payDto(reserve_num);
 	}

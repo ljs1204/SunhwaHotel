@@ -26,9 +26,9 @@ public interface MypageDAO {
 
 	//ArrayList<ReserveDTO> mypage2Reservelist(String loginId);
 	
-	MypageDTO reserInfo(String userId, int reserve_idx);
+	ArrayList<ReserveDTO> reserInfo(String userId, String reserve_idx);
 	
-	ReserveDTO payDto(String reserve_num);
+	ArrayList<ReserveDTO> payDto(String reserve_num);
 	
 	ReserveDTO resernum(String loginId);
 	

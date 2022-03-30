@@ -113,67 +113,69 @@
 				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
 						style="max-width:100% !important">
 					<form action="myReserve" method="get">
-						<h4 style="color: #633e12;">${loginId} 님의 예약 리스트</h4>
+						<h4 style="color: #633e12;">예약번호 ${refundReserve[0].reserve_num } 에 대한 취소 정보</h4>
 						<hr style="border-color: #633e12;" />
 						 <table class="table table-hover">
-				      		<tr style="background-color:#212529;color:white;">
-				            	 
 					            <tr>
 					             	<td >아이디</td>
-					           		<td>${payInfo.mem_id}</td>           
+					           		<td>${refundPay[0].mem_id}</td>           
 					            </tr>               
 					            <tr>
 					            	<td id="title">예약번호</td>
-					             	<td>${payInfo.reserve_num}</td>
+					             	<td>${refundReserve[0].reserve_num}</td>
 					            </tr>   
 					            <tr>
 					            	<td id="title">신용카드번호</td>
-					           		<td>${payInfo.credit_num} </td>
+					           		<td>${refundPay[0].credit_num} </td>
 					            </tr>   
 					            <tr>
 					            	<td id="title">유효기간</td>
-					           		<td>${payInfo.credit_validity}</td>
+					           		<td>${refundPay[0].credit_validity}</td>
 								</tr>   
 					            <tr> 
 									<td id="title">카드종류</td>
-					           		<c:if test="${payInfo.credit_type eq 1}"><td>하나카드</td></c:if>
-					           		<c:if test="${payInfo.credit_type eq 2}"><td>국민카드</td></c:if>
-					           		<c:if test="${payInfo.credit_type eq 3}"><td>현대카드</td></c:if>
+					           		<c:if test="${refundPay[0].credit_type eq 1}"><td>하나카드</td></c:if>
+					           		<c:if test="${refundPay[0].credit_type eq 2}"><td>국민카드</td></c:if>
+					           		<c:if test="${refundPay[0].credit_type eq 3}"><td>현대카드</td></c:if>
 					            </tr>                               
 					            <tr>
 					            	<td id="title">신청날짜</td>          
-								 	<td>${payInfo.pay_date}</td> 
+								 	<td>${refundPay[0].pay_date}</td> 
 					            </tr> 
-					            <tr>
+					           <%--  <tr>
 					            	<td id="title">예약현황</td>          
-								 	<c:if test="${payInfo.reserve_state eq 1}"><td>예약완료</td></c:if> 
-								 	<c:if test="${payInfo.reserve_state eq 2}"><td>부분취소</td></c:if> 
-									<c:if test="${payInfo.reserve_state eq 3}"><td>예약취소</td></c:if>
+								 	<c:if test="${refundPay[0].reserve_state eq 1}"><td>예약 완료</td></c:if> 
+								 	<c:if test="${refundPay[0].reserve_state eq 2}"><td>부분 취소</td></c:if> 
+									<c:if test="${refundPay[0].reserve_state eq 3}"><td>예약 취소</td></c:if>
 							 	
-					            </tr> 
+					            </tr>  --%>
 					            <tr>
 					            	<td id="title">처리상태</td>          
 							 	
-							 		<c:if test="${payInfo.pay_state eq 1}"><td>결제완료</td></c:if> 
-									<c:if test="${payInfo.pay_state eq 2}"><td>부분환불완료</td></c:if>
-									<c:if test="${payInfo.pay_state eq 3}"><td>환불 완료</td></c:if>
+							 		<c:if test="${refundPay[0].pay_state eq 1}"><td>결제 완료</td></c:if> 
+									<c:if test="${refundPay[0].pay_state eq 2}"><td>부분 환불 완료</td></c:if>
+									<c:if test="${refundPay[0].pay_state eq 3}"><td>환불 완료</td></c:if>
 							 	
 					            </tr>	
 					            <tr>
 					            	<td id="title">처리날짜</td>          
-								 	<td>${payInfo.pay_date}</td> 
+								 	<td>${refundPay[0].pay_date}</td> 
 					            </tr> 	
 					            <tr>
-					            	<td id="title">환불 금액</td>          
-								 	<td>${payInfo.amount}</td> 
-					            </tr>            
-				            </tr>
+					            	<td id="title">환불 금액</td>      
+										<c:forEach var="refundPay" items="${refundPay }">
+								 			<c:set var="amount" value="${amount + refundPay.amount}" />								 			
+								 		</c:forEach>
+								 	<td>
+								 		<c:set var="amount" value="${amount * (-1)}"/>
+								 		<fmt:formatNumber type="number" maxFractionDigits="3" value="${amount}" />
+								 	</td>
+					            </tr>
 				          </table>
 				          <br/>
-				          <c:if test="${payInfo.pay_state eq 1}"><button type="submit" class="btn">예약보기</button></c:if>
-				          <br/>
 				          <hr style="border-color: #633e12;" />
-				          <button type="submit" class="btn">목록으로</button>
+				         <input type="button" class="btn btn-outline-warning focu" style="color: #633e12; border-color: #633e12;" 
+				         onclick="location.href='./myReserve?num=1'" value="목록으로">
 										
 						  <hr style="border-color: #633e12;" />
 					</form>

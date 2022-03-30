@@ -63,10 +63,17 @@ public interface ReserveDAO {
 	ArrayList<ReserveDTO> priceAll(String reserve_idx1, String reserve_idx2, String reserve_idx3, String loginId);
 	
 	// 2. 결제 테이블 insert
-	int refundPayParts(String reserve_idx1, String reserve_idx2, String reserve_idx3);					// 부분취소
-	int refundPayAll(String reserve_idx1, String reserve_idx2, String reserve_idx3);					// 완전취소
+	int refundPayParts(ArrayList<ReserveDTO> priceRoom);					// 부분취소
+	int refundPayAll(ArrayList<ReserveDTO> priceRoom);					// 완전취소
 	
 	//refundCart
 	int refundCart(String reserve_idx1, String reserve_idx2, String reserve_idx3);
+
+// 마일리지
+	// 회원등급
+	String memberGradeAll(String loginId);
+
+	// 마일리지 차감
+	int mileageDeduction(int deMileage, String loginId);
 
 }

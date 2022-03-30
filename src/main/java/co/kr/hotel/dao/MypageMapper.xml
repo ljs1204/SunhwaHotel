@@ -7,16 +7,24 @@
 <mapper namespace="co.kr.hotel.dao.MypageDAO">
 
 	
-	<select id="reserInfo" resultType="co.kr.hotel.dto.MypageDTO">
+	<select id="reserInfo" resultType="co.kr.hotel.dto.ReserveDTO">
 		<!-- select * from reserve r  where mem_id = #{param1} and reserve_num = #{param2} order by reserve_date,reserve_idx desc limit 1 -->
-		select * from reserve r  where mem_id = #{param1} and reserve_idx = #{param2} order by reserve_date,reserve_idx
+		select * 
+		from reserve r 
+		where mem_id = #{param1} 
+		and 
+		reserve_num = #{param2} 
+		and
+		reserve_state not in (1)
+		order by reserve_date,reserve_idx
 	</select>
 
 	<select id="payDto" resultType="co.kr.hotel.dto.ReserveDTO">
-		select r.*,pay_idx,r.reserve_idx,pay_num,AES_DECRYPT(UNHEX(credit_num), SHA2('a-key',512))AS credit_num,pay_date,pay_state,credit_validity,credit_type,pay_price,pay_mileage,amount 
-		from pay p inner join reserve r on r.reserve_idx = p.reserve_idx 
-		where reserve_num = #{param1}
-		order by pay_date desc limit 1
+		select r.*, pay_idx, r.reserve_idx, pay_num, AES_DECRYPT(UNHEX(credit_num), SHA2('a-key',512)) AS credit_num, pay_date,pay_state, credit_validity, credit_type, pay_price, pay_mileage, amount 
+		from pay p 
+			inner join reserve r 
+			on r.reserve_idx = p.reserve_idx 
+		where reserve_num = #{param1} and pay_state not in (1);
 	</select>
 
 
