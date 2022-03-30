@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -58,7 +58,7 @@
 			border: 1px solid darkgray;
 			text-align : center;
 			width: 23%;
-			height: 300px;
+			height: 408px;
 			display:inline-table;
 			margin-right: 8px;
     		margin-left: 5px;
@@ -108,7 +108,10 @@
 			outline:none !important;
 			text-align:center !important;
 		}
-
+		.img{
+			width: 162px;
+ 		    height: 162px;
+		}
             
 	</style>
 </head>
@@ -200,7 +203,7 @@
 				
 			  	<c:forEach var="p" items="${product}" varStatus="pnum">	
 			  	<div class="list">
-			  		<img class="img" src="/photo/${p.product_img}" alt="상품이미지"/>
+			  		<img class="img" src="resources/mileage/${p.product_img}.png" alt="상품이미지"/>
 			  		<p>	${p.product_name}</p>
 			  		<p>	<fmt:formatNumber value="${p.product_price}" pattern="#,###"/>마일리지</p>
 			  		<input type="hidden" value="${p.product_num}" name="product${pnum.count}_${RDS.count}"/>

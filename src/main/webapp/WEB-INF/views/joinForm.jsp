@@ -76,7 +76,7 @@
 		<tr>
 			<th>아이디</th>
 			<td>
-				<input type="text" name="mem_id" placeholder="아이디를 입력해주세요."/>
+				<input type="text" id="mem_id" name="mem_id" placeholder="아이디를 입력해주세요."/>
 				<input id="overlay" type="button" value="중복체크"/>
 				<p id="overlay_msg"></p>
 			</td>
@@ -105,14 +105,14 @@
 		<tr>
 			<th>생년월일</th>
 			<td>
-				<input type="text" id="birth" name ="mem_birth"  maxlength=8 placeholder="ex)19990101"/>
+				<input type="text" id="birth" name ="mem_birth"  onkeyup='removeChar(event)' maxlength=8 placeholder="ex)19990101"/>
 				<p id="birthmsg"></p>
 			</td>
 		</tr>
 		<tr>
 			<th>휴대폰 번호</th>
 			<td>
-				<input type="text" name="mem_phone"  maxlength=11 placeholder="ex)01012341234"/>
+				<input type="text" name="mem_phone"  onkeyup='removeChar(event)' maxlength=11 placeholder="ex)01012341234"/>
 			</td>
 		</tr>
 		<tr>
@@ -336,6 +336,7 @@
 	});
 	
 	
+	
 	//생년월일
 	$('#birth').keyup(function(){
 			
@@ -347,13 +348,19 @@
 			var year = birth.substring(0,4);
 			var month = birth.substring(4,6);
 			var day = birth.substring(6,8);
+			var birth_pattern = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
 			
-			if(birth.length<8 || birth.length>8 || month>12 || day>31){
+			
+			if(birth.length<8 || birth.length>8){
 				birthChk = false;
-				msg = "생년월일을 다시 확인바랍니다.";
+				msg = "생년월일 8자 입력바랍니다.";
 			}else if(eng != -1 || spe != -1){
 				birthChk = false;
-				msg = ("생년월일은 숫자만 입력해주세요.");
+				msg = "생년월일은 숫자만 입력해주세요.";
+			}else if(!birth_pattern.test(birth)){
+				birthChk = false;
+				msg = "생년월일을 다시 확인바랍니다.";
+			     
 			}else{
 				birthChk = true;
 			}		
@@ -474,8 +481,14 @@
 		certifinum_check = false;
 	});	
 	
-	//한글만 입력 가능
+	$('input[name="mem_id"]').keyup(function(e){
+		overlayChk = false;
+		$("#overlay_msg").html('');
+	});
+	
+	
 	$(function(){
+			//한글만 입력 가능
 	       $("#name_kr").keyup(function (event) {
 	            regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
 	            v = $(this).val();
@@ -484,16 +497,32 @@
 	                $(this).val(v.replace(regexp, ''));
 	            }
 	        });
+
+	
+	
+			//영어+숫자만 입력 가능
+			$("#mem_id").keyup(function(event){
+			
+				v = $(this).val();
+				var engNum = /^[a-zA-Z0-9]*$/;
+				
+		        if (!engNum.test(v)) {
+		            alert("영어와 숫자만 입력가능 합니다.");
+		            $(this).val(v.replace(v,''));
+		        }
+			});
+	
 	});
 	
-	
-	$("#name_en").keyup(function(event){
-		if (!(event.keyCode >=37 && event.keyCode<=40)) {
-			var inputVal = $(this).val();
-			$(this).val(inputVal.replace(/[^a-z]/gi,''));
-			}
-	});
-	
+	//숫자만
+	 function removeChar(event) {
+        event = event || window.event;
+        var keyID = (event.which) ? event.which : event.keyCode;
+        if ( keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 )
+            return;
+        else
+            event.target.value = event.target.value.replace(/[^0-9]/g, "");
+    }
 	
 
 </script>

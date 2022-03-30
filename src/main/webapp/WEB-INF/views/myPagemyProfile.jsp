@@ -207,15 +207,19 @@
 								<tr>
 									<th scope="row">유효 기간</th>
 									<c:if test="${memberlist.credit_validity ne 0}"><td colspan="2">${memberlist.credit_validity}</td></c:if>
-									<c:if test="${memberlist.credit_validity eq 0}"><td>등록된 카드정가 없습니다</td></c:if>
+									<c:if test="${memberlist.credit_validity eq 0}"><td>등록된 카드정보가 없습니다</td></c:if>
 								</tr>
 								<tr>
 									<th scope="row">카드 종류</th>
-									<c:if test="${memberlist.credit_type eq 1}"><td colspan="2">하나카드</td></c:if>
-					           		<c:if test="${memberlist.credit_type eq 2}"><td colspan="2">국민카드</td></c:if>
-					           		<c:if test="${memberlist.credit_type eq 3}"><td colspan="2">현대카드</td></c:if>
-					           		<c:if test="${memberlist.credit_validity eq 0}"><td>등록된 카드정가 없습니다</td></c:if>
-									<c:if test="${memberlist.credit_validity eq 0}"><td>카드정보 입력하기</td></c:if>
+									<c:if test="${memberlist.credit_type eq 1}"><td colspan="2">국민카드</td></c:if>
+					           		<c:if test="${memberlist.credit_type eq 2}"><td colspan="2">카카오카드</td></c:if>
+					           		<c:if test="${memberlist.credit_type eq 3}"><td colspan="2">신한카드</td></c:if>
+					           		<c:if test="${memberlist.credit_type eq 4}"><td colspan="2">우리카드</td></c:if>
+					           		<c:if test="${memberlist.credit_type eq 5}"><td colspan="2">농협카드</td></c:if>
+					           		<c:if test="${memberlist.credit_type eq 6}"><td colspan="2">하나카드</td></c:if>
+					           		<c:if test="${memberlist.credit_type eq 7}"><td colspan="2">기업카드</td></c:if>
+					           		<c:if test="${memberlist.credit_validity eq 0}"><td>등록된 카드정보가 없습니다</td></c:if>
+									<c:if test="${memberlist.credit_validity eq 0}"></c:if>
 									
 								</tr>
 							</tbody>

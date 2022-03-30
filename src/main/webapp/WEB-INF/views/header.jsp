@@ -99,6 +99,7 @@
                                 <li><a href="./joinForm" class="nav-link">회원가입</a></li>
                                 <li class="non-display">|</li>
                                 <li><a href="./unMyReserve" class="nav-link">비 회원 예약조회</a></li>
+
                             </ul>
                         </nav>
                     </div>
@@ -115,7 +116,7 @@
 	                                <li class="non-display">|</li>
 	                                <li><a href="./myPage" class="nav-link">마이페이지</a></li>
 	                                <li class="non-display">|</li>
-	                                <li><a href="./myReserve" class="nav-link">예약확인</a></li>
+	                                <li><a href="./myReserve?num=1" class="nav-link">예약확인</a></li>
 	                            </ul>
 	                        </nav>
 	                    </div>
@@ -210,8 +211,8 @@
                         <!-- 20220314 로그인 상태에 따라 회원/비대면, ID에 따라 관리자 구분 START -->
                         <c:if test="${loginId eq null}">
                             <li><a href="./roomsList" class="nav-link" style="font-weight: bold;">객실 소개</a></li>
-                            <li><a href="./tomemberboardlist" class="nav-link" style="font-weight: bold;">고객문의</a></li>
-                            <li><a href="./myPagemilelist?orderNum=1" class="nav-link" style="font-weight: bold;">마일리지</a></li>
+                            <li><a href="./login" class="nav-link" style="font-weight: bold;">고객문의</a></li>
+                            <li><a href="./login" class="nav-link" style="font-weight: bold;">마일리지</a></li>
                         </c:if>
                         
                         <c:if test="${loginId ne null}">

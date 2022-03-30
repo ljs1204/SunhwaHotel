@@ -103,17 +103,12 @@
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
 
-<<<<<<< HEAD
-						<a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
-						<a class="list-group-item list-group-item-action active" id="list-profile-list" href="./myReserveAdmin?num=1&mem_id=seon119">객실 예약 정보 리스트</a>
-						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./adminOrderList">마일리지 상품 관리</a>
-=======
+
 						<a class="list-group-item list-group-item-action active" id="list-home-list" href="./memlist?currpage=1">회원 정보 리스트</a>
 						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./AdminReserveList">객실 예약 정보 리스트</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist?orderNum=1">회원 문의 관리</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./AdminMileageRegist">마일리지 상품 관리</a>
->>>>>>> d1bbfbf73ffc39e56d494115ba500a00f58c6190
+
 						
 
 					</div>

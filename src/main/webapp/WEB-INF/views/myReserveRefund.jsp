@@ -484,7 +484,7 @@
 					<div style="text-align: right;">
 						<input type="button" class="btn btn-outline-warning focu" style="color: #633e12; border-color: #633e12;" onclick="refund()" value="환불">
 						<!-- 20220319 취소는 뒤로가기와 같음 SI -->
-						<input type="button" class="btn btn-outline-warning focu" style="color: #633e12; border-color: #633e12;" onclick="location.href='./myReserve?num=1" value="취소">
+						<input type="button" class="btn btn-outline-warning focu" style="color: #633e12; border-color: #633e12;" onclick="window.history.back()" value="취소">
 					</div>
 				</div>
 				<!-- 예약조회 END - SI 20220314 -->

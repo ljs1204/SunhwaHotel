@@ -191,7 +191,7 @@
 												<td>예약완료</td>									
 											</c:when>
 											<c:when test="${res.reserve_state eq 2}">
-												<td><a href="" style="font-weight: 550; color:#633e12 !important; text-decoration:underline !important;">부분취소</a></td>									
+												<td><a href="mypageRefundDetail?reserve_num=${res.reserve_num}&reserve_idx=${res.reserve_idx}" style="font-weight: 550; color:#633e12 !important; text-decoration:underline !important;">부분취소</a></td>									
 											</c:when>
 											<c:when test="${res.reserve_state eq 3}">
 												<td style="color:red;">예약취소</td>
