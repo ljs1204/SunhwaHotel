@@ -177,7 +177,9 @@
 
 <!-- 20220319 환불 신청 페이지 SI - START -->
 	<select id = "myReserveRefund" resultType="co.kr.hotel.dto.ReserveDTO">
-		select r.reserve_idx, r.reserve_state, ro.bed_type, ro.room_type_name, r.adult_cnt, r.extrabed_cnt, 
+		select *
+	from(
+		select r.room_num, r.reserve_idx, r.reserve_state, ro.bed_type, ro.room_type_name, r.adult_cnt, r.extrabed_cnt, 
 				r.breakfast_cnt, p.pay_price, p.pay_mileage, p.amount, c.product_num, pr.product_name, c.product_cnt, r.checkindate,
 				pr.product_img, pr.product_price
 		from reserve r
@@ -190,6 +192,23 @@
 			left outer join product pr
 				on c.product_num = pr.product_num 
 		where r.mem_id = #{param1} and r.reserve_num = #{param2}
+	) as res;
+	</select>
+	
+	<select id="myRefund" resultType="co.kr.hotel.dto.ReserveDTO">
+		select r.room_num, r.reserve_idx, r.reserve_state, ro.bed_type, ro.room_type_name, r.adult_cnt, r.extrabed_cnt, 
+				r.breakfast_cnt, p.pay_price, p.pay_mileage, p.amount, c.product_num, pr.product_name, c.product_cnt, r.checkindate,
+				pr.product_img, pr.product_price
+		from reserve r
+			left outer join room ro 
+				on r.room_num = ro.room_num
+			left outer join pay p 
+				on r.reserve_idx = p.reserve_idx 
+			left outer join cart c 
+				on r.reserve_idx = c.reserve_idx 
+			left outer join product pr
+				on c.product_num = pr.product_num 
+		where r.mem_id = #{param1} and r.reserve_num = #{param2} and r.reserve_state not in (1);
 	</select>
 
 

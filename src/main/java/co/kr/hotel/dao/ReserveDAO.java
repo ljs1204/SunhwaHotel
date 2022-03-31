@@ -64,7 +64,7 @@ public interface ReserveDAO {
 	
 	// 2. 결제 테이블 insert
 	int refundPayParts(ArrayList<ReserveDTO> priceRoom);					// 부분취소
-	int refundPayAll(ArrayList<ReserveDTO> priceRoom);					// 완전취소
+	int refundPayAll(ArrayList<ReserveDTO> priceRoom);						// 완전취소
 	
 	//refundCart
 	int refundCart(String reserve_idx1, String reserve_idx2, String reserve_idx3);
@@ -75,5 +75,8 @@ public interface ReserveDAO {
 
 	// 마일리지 차감
 	int mileageDeduction(int deMileage, String loginId);
+
+	// 환불 - 예약테이블 => 결제테이블에 쓸 idx 불러오기
+	String[] selectIdx(String reserve_idx1, String reserve_idx2, String reserve_idx3, String loginId);
 
 }

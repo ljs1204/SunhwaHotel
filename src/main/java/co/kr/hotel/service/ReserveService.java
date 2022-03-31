@@ -145,12 +145,27 @@ public class ReserveService {
 		}
 		
 	// 1-1. 방금 insert 한 예약idx를 select 해서 앞으로 insert 할 때 사용( 한 건의 환불에 대해서는 예약-결제-카트-마일리지가 모두 동일한 idx로 간다 )
+		// 1. idx들의 예약번호와 같은 idx 중 예약 상태가 1이 아닌 것 찾아오기( 결제 테이블에 insert 할 reserve_idx 찾기 위해 )
+		String[] reserve_num = reserveDao.selectIdx(reserve_idx1, reserve_idx2, reserve_idx3, loginId);
+		
+		String pay_idx1 = "";
+		String pay_idx2 = "";
+		String pay_idx3 = "";
+		
+		if(reserve_num[0] != null) {
+			pay_idx1 = reserve_num[0];			
+		}else if(reserve_num[1] != null) {
+			pay_idx2 = reserve_num[1];			
+		}else if(reserve_num[2] != null) {
+			pay_idx3 = reserve_num[2];
+		};
 		
 		
 	// 2. pay 테이블에 insert
 		// 1. 해당 예약을 select( 금액 포함 )
 			ArrayList<ReserveDTO> priceRoom = reserveDao.priceAll(reserve_idx1, reserve_idx2, reserve_idx3, loginId);
-		
+			logger.info("여기서 : {}", priceRoom.size());
+			
 		// 2. 오늘 날짜 계산
 			Calendar getToday = Calendar.getInstance();
 			getToday.setTime(new java.util.Date()); //오늘 날짜
@@ -164,7 +179,7 @@ public class ReserveService {
 			logger.info("체크인 날짜 : {}", cmpDate);
 			
 			long diffSec = (cmpDate.getTimeInMillis() - getToday.getTimeInMillis()) / 1000;
-			long diffDays = diffSec / (24*60*60); //일자수 차이		=> 원래 이걸로 써야해용
+			long diffDays = (diffSec / (24*60*60)) + 1; //일자수 차이		=> 원래 이걸로 써야해용
 			logger.info("날짜차이 : {}", diffDays);
 			//long diffDays = 3;
 			
@@ -177,9 +192,16 @@ public class ReserveService {
 			ReserveDTO reserveDTO = null;								// (2) 한줄 담을 DTO
 			// 마일리지 차감을 위해 환불금액 총합을 계산할 변수
 			int AmountPrice = 0;
-				
+			// reserve_idx가 담긴 String 배열의 index로 사용할 변수 선언
+			int flagIdx = 0;
+			
 			while(iter.hasNext()) {
 				reserveDTO = iter.next();
+				
+				// 0) reserve_idx 대체해주기 - 20220331( 환불 시 예약과 결제의 reserve_idx를 동일하게 insert )
+				reserveDTO.setReserve_idx(Integer.valueOf(reserve_num[flagIdx]));
+				flagIdx++;
+				
 				
 				// 1) 당일(날짜차이가 0) 취소의 경우 환불금액 X => 원래 진행안댐
 				if(diffDays==0) {
@@ -274,7 +296,7 @@ public class ReserveService {
 		}
 		
 	// 3. (마일리지 상품 있다면) cart 테이블에 insert
-		int refundCart = reserveDao.refundCart(reserve_idx1, reserve_idx2, reserve_idx3);		
+		int refundCart = reserveDao.refundCart(pay_idx1, pay_idx2, pay_idx3);		
 		
 	// 4. (회원이면) mileage 테이블 insert
 		// 4-1. 해당 예약에 대한 가격을 가져온다

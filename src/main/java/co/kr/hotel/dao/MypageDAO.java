@@ -60,6 +60,8 @@ public interface MypageDAO {
 	ArrayList<ReserveDTO> myReserveRefund(String loginId, String reserve_num);
 	ArrayList<HashMap<String, String>> boardlist_listCall(MemberDTO parameter);
 	int boardlist_allCount(MemberDTO parameter);
+	// 20220331 환불 후 찍어줄때
+	ArrayList<ReserveDTO> myRefund(String loginId, String reserve_num);
 
 	
 
