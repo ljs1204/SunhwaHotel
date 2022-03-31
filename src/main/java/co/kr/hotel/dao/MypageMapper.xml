@@ -155,13 +155,22 @@
 	<!-- 
 		3번 쿼리 
 		예약num에 걸린 방 타입과 이름 가져오기	
+		20220331 수정 => 환불해서 같은 객실일 경우 제외시켜주기 위해
+		Group by 추가 => 룸타입이 같으면 제외!
+		group by + order by 사용법 : https://jaenjoy.tistory.com/39
 	-->
 	<select id="myReserveRoom" resultType="co.kr.hotel.dto.ReserveDTO">
-		select r.reserve_idx, r.reserve_num, r.reserve_state, ro.room_type, ro.room_num, ro.room_type_name, ro.bed_type
-		from reserve r
-			left outer join room ro
-			on r.room_num = ro.room_num 
-		where r.mem_id = #{param1} and r.reserve_num = #{param2}
+		select r2.reserve_idx, r2.reserve_num, r2.reserve_state, ro.room_type, ro.room_num, ro.room_type_name, ro.bed_type
+		from (
+			select *
+			from reserve r 
+			where r.mem_id = #{param1} and r.reserve_num = #{param2}
+			order by r.reserve_idx desc
+			limit 18446744073709551615
+		) as r2
+				left outer join room ro
+				on r2.room_num = ro.room_num
+			group by r2.room_num;
 	</select>
 	
 <!-- 20220318 예약 상세보기 SI - END -->

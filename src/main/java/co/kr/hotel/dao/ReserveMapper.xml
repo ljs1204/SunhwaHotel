@@ -161,11 +161,21 @@
 	</insert>
 	
 <!-- 20220325 환불! -->
+	
+	<!-- 
+		useGeneratedKeys="true"		/ insert 후 키를 가져오는 옵션을 사용할 것인지?
+		keyProperty="idx"			/ dto 의 어느 필드에 담을 것인가?
+		keyColumn="idx"				/ 어느 컬럼을 가져올 것인가?
+		parameterType				/ #{subject}, #{content} 등의 타입이 뭔지 적어줌
+	 -->
+
+
 	<!-- 예약T - 부분 취소일 때 -->	
 	<insert id="refundParts">
 		insert 
 		into reserve(mem_id, reserve_num, room_num, reserve_state, checkindate, checkoutdate, adult_cnt, extrabed_cnt, breakfast_cnt, add_requests)
-		select mem_id , reserve_num , room_num , (CASE reserve_state WHEN 1 THEN 2 end) as reserve_state, checkindate , checkoutdate , adult_cnt , extrabed_cnt , breakfast_cnt, add_requests 
+		select mem_id , reserve_num , room_num , (CASE reserve_state WHEN 1 THEN 2 end) as reserve_state, checkindate , checkoutdate , 
+		(adult_cnt*(-1)) as adult_cnt , (extrabed_cnt*(-1)) as extrabed_cnt , (breakfast_cnt*(-1)) as breakfast_cnt, add_requests 
 		from reserve r 
 		where mem_id = #{param4} and reserve_idx in (#{param1}, #{param2}, #{param3})
 	</insert>

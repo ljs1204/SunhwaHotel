@@ -176,7 +176,7 @@
 											</tr>
 											<tr>
 												<th scope="row" style="background-color: lightgray; color: gray !important;">금액</th>
-												<td class="amount1" id="negativeFirst" style="text-decoration: line-through; color: gray !important;" colspan="3">${first[0].amount }</td>
+												<td class="amount1" id="negativeFirst" style="text-decoration: line-through; color: gray !important;" colspan="3">${first[0].pay_price }</td>
 											</tr>
 										</tbody>
 									</table>
@@ -230,7 +230,7 @@
 											</tr>
 											<tr>
 												<th scope="row">금액</th>
-												<td class="amount2" colspan="3"><fmt:formatNumber value="${first[0].amount }" pattern="#,### 원" /></td>
+												<td class="amount2" colspan="3"><fmt:formatNumber value="${first[0].pay_price }" pattern="#,### 원" /></td>
 											</tr>
 										</tbody>
 									</table>
@@ -292,7 +292,7 @@
 											</tr>
 											<tr>
 												<th scope="row" style="background-color: lightgray; color: gray !important;">금액</th>
-												<td class="amount3" style="text-decoration: line-through; color: gray !important;" colspan="3" id="negativeSecond">${second[0].amount }</td>
+												<td class="amount3" style="text-decoration: line-through; color: gray !important;" colspan="3" id="negativeSecond">${second[0].pay_price }</td>
 											</tr>
 										</tbody>
 									</table>
@@ -346,7 +346,7 @@
 											</tr>
 											<tr>
 												<th scope="row">금액</th>
-												<td class="amount4" colspan="3"><fmt:formatNumber value="${second[0].amount }" pattern="#,### 원" /></td>
+												<td class="amount4" colspan="3"><fmt:formatNumber value="${second[0].pay_price }" pattern="#,### 원" /></td>
 											</tr>
 										</tbody>
 									</table>
@@ -407,7 +407,7 @@
 											</tr>
 											<tr>
 												<th scope="row" style="background-color: lightgray; color: gray !important;">금액</th>
-												<td class="amount5" style="text-decoration: line-through; color: gray !important;" colspan="3" id="negativeThird">${third[0].amount }</td>
+												<td class="amount5" style="text-decoration: line-through; color: gray !important;" colspan="3" id="negativeThird">${third[0].pay_price }</td>
 											</tr>
 										</tbody>
 									</table>
@@ -461,7 +461,7 @@
 											</tr>
 											<tr>
 												<th scope="row">금액</th>
-												<td class="amount6" colspan="3"><fmt:formatNumber value="${third[0].amount }" pattern="#,### 원" /></td>
+												<td class="amount6" colspan="3"><fmt:formatNumber value="${third[0].pay_price }" pattern="#,### 원" /></td>
 											</tr>
 										</tbody>
 									</table>
@@ -809,18 +809,18 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 	
 	
 	
-	
 /* 20220319 환불  */
 	function refund(){
 		console.log(refundIdx);	// 환불할 예약idx가 담긴 배열
 		
+	
 	// 1. ( 체크인날짜 - 오늘날짜 ) 계산( 9시 기준 )
 		// 체크인 날짜 구하기
 		var checkInDate = new Date("${first[0].checkindate}");
 		console.log(checkInDate);
 		// 오늘 날짜 구하기
-		//var toDate = new Date();				// 실제로는 이걸로 해야함!!!!
-		var toDate = new Date("2022-03-13");	// 테스트 데이터를 위한 날짜
+		var toDate = new Date();				// 실제로는 이걸로 해야함!!!!
+		//var toDate = new Date("2022-03-13");	// 테스트 데이터를 위한 날짜
 		console.log(toDate);
 		// 차이 구하기
 		var dateGap = Math.ceil((checkInDate-toDate)/(1000*3600*24));
@@ -853,14 +853,14 @@ person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
 		}	
 		 */
 		
-		var firstPrice = ${first[0].pay_price}+0;
-		var firstAmount = ${first[0].pay_mileage}+firstPrice;
+		var firstAmount = ${first[0].pay_price}+0;
+		//var firstAmount = ${first[0].pay_mileage}+firstPrice;
 		
-		var secondPrice = ${second[0].pay_price}+0;
-		var secondAmount = ${second[0].pay_mileage}+secondPrice;
+		var secondAmount = ${second[0].pay_price}+0;
+		//var secondAmount = ${second[0].pay_mileage}+secondPrice;
 		
-		var thirdPrice = ${third[0].pay_price}+0;
-		var thirdAmount = ${third[0].pay_mileage}+thirdPrice;
+		var thirdAmount = ${third[0].pay_price}+0;
+		//var thirdAmount = ${third[0].pay_mileage}+thirdPrice;
 		 
 		// 체크박스 선택한 객실정보를 찾아서 날짜에 따라 환불가격을 책정
 		if(dateGap >= 7){							// 7일보다 전

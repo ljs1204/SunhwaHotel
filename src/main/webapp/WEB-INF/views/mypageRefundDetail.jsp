@@ -168,11 +168,11 @@
 					            <tr>
 					            	<td id="title">환불 금액</td>      
 										<c:forEach var="refundPay" items="${refundPay }">
-								 			<c:set var="amount" value="${amount + refundPay.amount}" />								 			
+								 			<c:set var="amo" value="${amo + refundPay.pay_price}" />								 			
 								 		</c:forEach>
 								 	<td>
-								 		<c:set var="amount" value="${amount * (-1)}"/>
-								 		<fmt:formatNumber type="number" maxFractionDigits="3" value="${amount}" />
+								 		<c:set var="amo" value="${amo * (-1)}"/>
+								 		<fmt:formatNumber type="number" maxFractionDigits="3" value="${amo}" />
 								 	</td>
 					            </tr>
 				          </table>

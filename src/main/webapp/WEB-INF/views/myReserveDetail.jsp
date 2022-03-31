@@ -152,7 +152,7 @@
 										<c:if test="${ro.reserve_state eq 2 }">											
 											<!-- 룸 타입별로 이름 주기 -->
 											<c:if test="${status.last eq false }">
-												<span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type }) ,</span>
+												<span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type }),</span>
 											</c:if>
 											<c:if test="${status.last eq true }">
 												<span style="color:gray; text-decoration:line-through">${ro.room_type_name }룸(${bed_type })</span>
@@ -193,7 +193,7 @@
 								</tr>
 								<tr>
 									<th scope="row">마일리지 상품</th>
-									<td colspan="3">
+									<td>
 										<!-- 구매한 마일리지 상품 있을 때 -->
 										<c:if test="${productSize ne 0 }">
 											<!-- 20220320 마일리지 상품 리스트 -->
@@ -215,12 +215,12 @@
 											구매한 마일리지 상품이 없어요.
 										</c:if>
 									</td>
+									<th scope="row">마일리지 사용 금액</th>
+									<td style="width:25%;">${result.pay_mileage }</td>
 								</tr>
 								<tr>
 									<th scope="row">현금 결제 금액</th>
-										<td>${result.pay_price }</td>
-									<th scope="row">마일리지 사용 금액</th>
-										<td>${result.pay_mileage }</td>
+									<td colspan="3">${result.pay_price }</td>
 								</tr>
 								<tr>
 									<th scope="row">총 금액</th>
