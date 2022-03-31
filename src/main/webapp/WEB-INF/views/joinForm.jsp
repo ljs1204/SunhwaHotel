@@ -197,7 +197,7 @@
 				data:{
 					id:chkId
 				},
-				dataType:'TEXT',
+				dataType:'JSON',
 				success:function(data){
 					var msg = "";
 				 	

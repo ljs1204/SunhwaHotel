@@ -23,6 +23,11 @@
 			<mvc:exclude-mapping path="/emailcheck"/>
 			<mvc:exclude-mapping path="/overlay"/>
 			<mvc:exclude-mapping path="/join"/>
+			<mvc:exclude-mapping path="/findid"/>
+			<mvc:exclude-mapping path="/findpw"/>
+			<mvc:exclude-mapping path="/findIdPw"/>
+			<mvc:exclude-mapping path="/overlayemail"/>
+			
 			<bean class="co.kr.hotel.utils.LoginInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
