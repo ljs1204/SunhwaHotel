@@ -108,7 +108,7 @@
 						<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
 						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve">예약 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./tomemberboardlist?currpage=1">문의 글 & 답 글</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
+						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemilelist?mem_id=${loginId}&&orderNum=1">마일리지 내역 조회</a>
 						<a class="list-group-item list-group-item-action  active" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myProfile">회원정보 수정</a>
 
@@ -183,7 +183,7 @@
 								</tr>
 								
 								<tr>
-									<th scope="row"><a href="./myPagemilelist?orderNum=1">마일리지</a></th>
+									<th scope="row"><a href="./myPagemilelist?mem_id=${loginId}&&orderNum=1">마일리지</a></th>
 									<td colspan="2">${mypageInfo.mileage_useable}</td>
 								</tr>
 								

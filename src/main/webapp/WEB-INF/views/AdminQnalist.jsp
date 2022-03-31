@@ -153,7 +153,7 @@
 			              <ul class="list-unstyled">
 			              
 			              <c:if test="${listPage.prev}">
-			                <li class="active"><a href="myPagemilelist?orderNum=${listPage.startPageNum - 1}">&lt;</a></li>
+			                <li class="active"><a href="myPagemilelist?mem_id=${loginId}&&orderNum=${listPage.startPageNum - 1}">&lt;</a></li>
 			              </c:if>
 		                  <c:forEach begin="${listPage.startPageNum}" end="${listPage.endPageNum}" var="num">
 						      <c:if test="${listNum == num}"> 

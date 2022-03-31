@@ -314,6 +314,7 @@ public class MypageController {
 
 		if (memDto.getMem_id() != null && !memDto.getMem_id().equals("")) {
 			loginId = memDto.getMem_id();
+			model.addAttribute("loginId" , loginId);
 		}
 		logger.info("loginId : " + loginId);
 
