@@ -136,6 +136,9 @@ public class ReserveController {
 			ArrayList<HashMap<String, String>> option = service.reservation_option();
 			logger.info("받아온 값 확인 {}",option);
 			model.addAttribute("option",option);
+			//옵션 수량 설정
+			String option_cnt = "0";
+			model.addAttribute("option_cnt",option_cnt);
 			
 			//마일리지 상품 4가지 불러오기
 			ArrayList<HashMap<String, String>> product = service.reservation_product();
@@ -160,6 +163,7 @@ public class ReserveController {
 		
 		
 		//공통
+		int pay_price2 = 0;
 		String loginId = params.get("loginId");
 		int extrabed_price = service.extrabed_price();//엑스트라베드 가격
 		int breakfast_price = service.breakfast_price();//조식 가격
@@ -267,12 +271,13 @@ public class ReserveController {
 			     String credit_num = params.get("credit_num");//카드번호
 			     int credit_validity =  Integer.parseInt(params.get("credit_valid"));
 			     String credit_type = params.get("credit_type");
+			     int dayCnt = Integer.parseInt(params.get("dayCnt"));
 			     //룸가격 + 엑베가격*수량 + 조식가격*수량
 			     int room_price = service.room_price(reserve_idx);//룸가격
-			     int pay_price = room_price +(extrabed_price * extrabed_cnt) + (breakfast_price * breakfast_cnt);
+			     int pay_price = ( room_price +(extrabed_price * extrabed_cnt) + (breakfast_price * breakfast_cnt) )*dayCnt;
 			     int pay_mile = Math.abs(productTotal);//(+) 마일리지 사용금액
 			     int amount = pay_price + pay_mile;
-			     
+			     pay_price2 += pay_price;
 			     service.roomPay(reserve_idx,Pay_num,credit_num,credit_validity,credit_type,pay_price,pay_mile,amount);
 			     //객실 결제 끝
 
@@ -285,7 +290,7 @@ public class ReserveController {
 		if(r > roomCnt) {
 			//회원 결제 마일리지 적립(최종가*회원등급, 객실별아님)
 			int mem_gradeRate = service.rate(loginId);//회원등급 불러오기
-			int cardTotal = Integer.parseInt(params.get("cardTotal")); //카드사용금액
+			int cardTotal = pay_price2; //카드사용금액
 			int mileageSave = cardTotal*mem_gradeRate/100; //적립 마일리지 금액 계산값
 			int useable = service.useable(loginId); //회원 사용가능금액
 			int useableSave = useable+mileageSave; //사용가능금액 계산값
@@ -421,7 +426,8 @@ public class ReserveController {
 			     String credit_type = params.get("credit_type");
 			     //룸가격 + 엑베가격*수량 + 조식가격*수량
 			     int room_price = service.room_price(reserve_idx);//룸가격
-			     int pay_price = room_price +(extrabed_price * extrabed_cnt) + (breakfast_price * breakfast_cnt);
+			     int dayCnt = Integer.parseInt(params.get("dayCnt"));
+			     int pay_price = ( room_price +(extrabed_price * extrabed_cnt) + (breakfast_price * breakfast_cnt) )*dayCnt;
 			     int pay_mile = 0;
 			     int amount = pay_price;
 			     

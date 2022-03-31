@@ -261,11 +261,11 @@
             <div class="row">
               <div class="col-md-6 form-group">
                 <label class="text-black font-weight-bold" for="credit_num">신용카드번호</label>
-                <input type="text" id="credit_num" value="${memInfo.credit_num}" onkeyup='removeChar(event)' name="credit_num" placeholder="16자 카드번호를 입력해주세요."class="form-control ">
+                <input type="text" id="credit_num" value="${memInfo.credit_num}" onkeyup='removeChar(event)' name="credit_num" maxlength=16 placeholder="16자 카드번호를 입력해주세요."class="form-control ">
               </div>
               <div class="col-md-6 form-group">
                 <label class="text-black font-weight-bold" for="credit_validity">유효기간</label>
-                <input type="text" id="credit_validity" value="${memInfo.credit_validity}" onkeyup='removeChar(event)' name="credit_valid" placeholder="YYMM" class="form-control ">
+                <input type="text" id="credit_validity" value="${memInfo.credit_validity}" onkeyup='removeChar(event)' maxlength=4 name="credit_valid" placeholder="YYMM" class="form-control ">
               </div>
             </div>
         
@@ -339,6 +339,7 @@
 				<span>결제 금액 : </span>			
 				<input type="text" class="cardTotal" value="" style="border-style:none; outline:none;" readonly/>
 				<input type="hidden" id="cardTotal" name="cardTotal" value="" style="border-style:none; outline:none;" readonly/>
+				<input type="hidden" id="dayCnt" name="dayCnt" value="" style="border-style:none; outline:none;" readonly/>
 			</div>
 			
 		</div>
@@ -513,58 +514,7 @@
 	//마일리지 상품 수량 변경시 함수 END
 	
  
-	//페이지 들어올때 총 결제금액 기본값
-	$(document).ready(function(){
-  
-			var cardTotal = 0;
 
-			var length = ${fn:length(reserveData)}+1;
-			
-			for (var i = 1; i < length; i++) { //들어온 reserveData 수만큼 반복
-				var room_price = parseInt($("input[name=room_price_"+i+"]").val());
-				
-				cardTotal += room_price;
-			}
-			$('#cardTotal').val(cardTotal);
-
-			$('.cardTotal').val(amountComma($('#cardTotal').val())+"원");
- 
-	});
-		
-	
-	//옵션 변경에 따른 총 결제금액 계산
-	//객실별 - 객실가격+(옵션가격*수량)
-	$(document).ready(function(){
-    var $input = $(".number"); // readonly inputBox  
-        $(".number").on('input', function() {
-			
-        	
-        	var cardTotal = 0;
-			
-			var length = ${fn:length(reserveData)}+1; 
-			console.log("length:"+length);
-				for (var i = 1; i < length; i++) { //들어온 reserveData 수만큼 반복
-					var room_price = parseInt($("input[name=room_price_"+i+"]").val());
-					console.log("룸가격 : "+room_price);
-					
-					var option1 = parseInt($("input[name=optionPrice1_"+i+"]").val() * $("input[name=option1_cnt_"+i+"]").val());
-					console.log("엑베 가격X수량 값: "+option1);
-					
-					var option2 = parseInt($("input[name=optionPrice2_"+i+"]").val() * $("input[name=option2_cnt_"+i+"]").val());
-					console.log("조식 가격X수량 값: "+option2);
-					
-					
-					cardTotal += (room_price+option1+option2);				
-					
-				}
-				
-				console.log("총 카드사용금액 : "+cardTotal);
-				$('#cardTotal').val(cardTotal);
-				$('.cardTotal').val(amountComma($('#cardTotal').val())+"원");
- 				
-        });
-	});
-	
 	
  	//카드사 변경 selectbox
  	$('#cardSelect').change(function() {
@@ -685,6 +635,129 @@
 		
 		return comma;
 	}
+
+	
+	$('#credit_validity').keyup(function(){
+		
+		var card = $('#credit_validity').val();
+		var inputYear = card.substring(0,2);
+		var inputMonth = card.substring(2,4);
+		
+        // 현재 날짜 값을 구한다.
+        var nowDate = new Date();
+        var nowMonth = autoLeftPad(nowDate.getMonth() + 1, 2);
+        var nowYear = autoLeftPad(nowDate.getFullYear().toString().substr(2, 2), 2);
+        console.log(nowYear + '-' + nowMonth);
+        
+		if(inputMonth>12){
+			alert("유효기간을 다시 확인바랍니다.");
+			$('#credit_validity').val('');
+		}else if(card.length >= 4){
+			 if((inputYear + inputMonth) <= (nowYear + nowMonth)) {
+	                alert("유효기간이 만료된 카드는 사용하실 수 없습니다.");
+	                $('#credit_validity').val('');
+	            }
+        }
+		// 입력한 유효기간을 현재날짜와 비교하여 사용 가능 여부를 판단한다.
+		
+});
+
+function autoLeftPad(num, digit) {
+    if(String(num).length < digit) {
+        num = new Array(digit - String(num).length + 1).join('0') + num;
+    }
+    return num;
+}
+
+
+
+
+function getDateRangeData(param1, param2){  //param1은 시작일, param2는 종료일이다.
+	var res_day = [];
+ 	var ss_day = new Date(param1);
+   	var ee_day = new Date(param2);    	
+  		while(ss_day.getTime() <= ee_day.getTime()){
+  			var _mon_ = (ss_day.getMonth()+1);
+  			_mon_ = _mon_ < 10 ? '0'+_mon_ : _mon_;
+  			var _day_ = ss_day.getDate();
+  			_day_ = _day_ < 10 ? '0'+_day_ : _day_;
+   			res_day.push(ss_day.getFullYear() + '-' + _mon_ + '-' +  _day_);
+   			ss_day.setDate(ss_day.getDate() + 1);
+   	}
+  	console.log(res_day);
+    console.log(res_day.length-1);
+    res_day_cnt = res_day.length-1;
+    $('#dayCnt').val(res_day_cnt);
+}
+
+
+
+//페이지 들어올때 총 결제금액 기본값
+$(document).ready(function(){
+		getDateRangeData('${checkindate}','${checkoutdate}');	//예약 숙박일 수 세기 0330
+	
+		var cardTotal = 0;
+
+		var length = ${fn:length(reserveData)}+1;
+		
+		for (var i = 1; i < length; i++) { //들어온 reserveData 수만큼 반복
+			var room_price = parseInt($("input[name=room_price_"+i+"]").val());
+			
+			cardTotal += room_price*res_day_cnt;
+		}
+		$('#cardTotal').val(cardTotal);
+
+		$('.cardTotal').val(amountComma($('#cardTotal').val())+"원");
+
+});
+	
+
+//옵션 변경에 따른 총 결제금액 계산
+//객실별 - 객실가격+(옵션가격*수량)
+$(document).ready(function(){
+var $input = $(".number"); // readonly inputBox  
+    $(".number").on('input', function() {
+		
+    	
+    	var cardTotal = 0;
+		
+		var length = ${fn:length(reserveData)}+1; 
+		console.log("length:"+length);
+			for (var i = 1; i < length; i++) { //들어온 reserveData 수만큼 반복
+				var room_price = parseInt($("input[name=room_price_"+i+"]").val());
+				console.log("룸가격 : "+room_price);
+				
+				var option1 = parseInt($("input[name=optionPrice1_"+i+"]").val() * $("input[name=option1_cnt_"+i+"]").val());
+				console.log("엑베 가격X수량 값: "+option1);
+				
+				var option2 = parseInt($("input[name=optionPrice2_"+i+"]").val() * $("input[name=option2_cnt_"+i+"]").val());
+				console.log("조식 가격X수량 값: "+option2);
+				
+				
+				cardTotal += (room_price+option1+option2)*res_day_cnt;				
+				
+			}
+			
+			console.log("총 카드사용금액 : "+cardTotal);
+			$('#cardTotal').val(cardTotal);
+			$('.cardTotal').val(amountComma($('#cardTotal').val())+"원");
+				
+    });
+});
+
+(function ($) {
+    var originalVal = $.fn.val;
+    $.fn.val = function (value) {
+        var res = originalVal.apply(this, arguments);
+ 
+        if (this.is('input:text') && arguments.length >= 1) {
+            // this is input type=text setter
+            this.trigger("input");
+        }
+ 
+        return res;
+    };
+})(jQuery);
 
 
 	

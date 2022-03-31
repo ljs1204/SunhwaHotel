@@ -116,7 +116,7 @@
 							<a class="list-group-item list-group-item-action" id="list-home-list" href="./myPage">프로필</a>
 							<a class="list-group-item list-group-item-action" id="list-profile-list" href="./myReserve?num=1">예약 조회</a>
 							<a class="list-group-item list-group-item-action" id="list-messages-list" href="./tomemberboardlist?currpage=1">문의 글 & 답 글</a>
-							<a class="list-group-item list-group-item-action  active" id="list-settings-list" href="./myPagemilelist?orderNum=1">마일리지 내역 조회</a>
+							<a class="list-group-item list-group-item-action  active" id="list-settings-list" href="./myPagemilelist?mem_id=${loginId}&&orderNum=1">마일리지 내역 조회</a>
 							<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myPagemyProfile">내 정보 조회</a>
 							<a class="list-group-item list-group-item-action" id="list-settings-list" href="./myProfile">회원정보 수정</a>							
 							</c:otherwise>
@@ -199,7 +199,7 @@
 			              <ul class="list-unstyled">
 			              
 			              <c:if test="${milelistPage.prev}">
-			                <li class="active"><a href="myPagemilelist?orderNum=${milelistPage.startPageNum - 1}">&lt;</a></li>
+			                <li class="active"><a href="myPagemilelist?mem_id=${loginId}&&orderNum=${milelistPage.startPageNum - 1}">&lt;</a></li>
 			              </c:if>
 		                  <c:forEach begin="${milelistPage.startPageNum}" end="${milelistPage.endPageNum}" var="num">
 						      <c:if test="${milelistNum == num}"> 
@@ -209,13 +209,13 @@
 						      </c:if>
 						      <c:if test="${milelistNum != num}">
 							      <li>
-							      	<a href="myPagemilelist?orderNum=${num}">${num}</a>
+							      	<a href="myPagemilelist?mem_id=${loginId}&&orderNum=${num}">${num}</a>
 							      </li>			     
 						      </c:if>    		
 					      </c:forEach>
 			              <c:if test="${milelistPage.next}">
 					      	<li>
-					      		<a href="myPagemilelist?orderNum=${milelistPage.endPageNum + 1}">&gt;</a>
+					      		<a href="myPagemilelist?mem_id=${loginId}&&orderNum=${milelistPage.endPageNum + 1}">&gt;</a>
 					      	</li>
 					      </c:if>
 			               

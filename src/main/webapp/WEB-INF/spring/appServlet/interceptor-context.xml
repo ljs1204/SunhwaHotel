@@ -19,7 +19,9 @@
 			<mvc:exclude-mapping path="/beMyReserve*"/>
 			<mvc:exclude-mapping path="/roomsList"/>
 			<mvc:exclude-mapping path="/joinForm"/>
-			
+			<mvc:exclude-mapping path="/emailPage"/>
+			<mvc:exclude-mapping path="/emailcheck"/>
+			<mvc:exclude-mapping path="/overlay"/>
 			<bean class="co.kr.hotel.utils.LoginInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
