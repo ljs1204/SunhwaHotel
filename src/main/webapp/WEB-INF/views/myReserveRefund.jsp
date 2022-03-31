@@ -129,13 +129,13 @@
 								<c:when test="${first[0].reserve_state eq 2 }">
 									<!-- 체크박스 비활성 -->
 									<div class="form-check icheck-sunflower" style="padding-left: 0px;">
-										<span style="font-size: 20px; font-weight: 550; font-family: Helvetica; padding: 4px; color: #633e12; border-radius: 0.5rem;">객실 3</span>
-										<input class="form-check-input" name = "test_check" type="checkbox" value=" ${first[0].reserve_idx }" id="defaultCheck1" style="margin-left: 0.5rem; zoom: 1.4; margin-bottom: 0.5rem;" disabled>
+										<span style="font-size: 20px; font-weight: 550; font-family: Helvetica; padding: 4px; color: #633e12; border-radius: 0.5rem;">객실 1</span>
+										 <input class="form-check-input" name = "test_check" type="checkbox" value=" ${first[0].reserve_idx }" id="defaultCheck1" style="margin-left: 0.5rem; zoom: 1.4; margin-bottom: 0.5rem;" disabled>
 										<!-- <label class="form-check-label" for="defaultCheck1">
 									Default checkbox
 								  </label> -->
 									</div>
-									<span style="visible: none;">${first[0].reserve_idx }</span>
+									<%-- <span style="visible: none;">${first[0].reserve_idx }</span> --%>
 									<table class="table table-bordered" id="firstOff">
 										<tbody>
 											<tr>
@@ -159,7 +159,7 @@
 											</tr>
 											<tr>
 												<th scope="row" style="background-color: lightgray; color: gray !important;">옵션</th>
-												<td style="text-decoration: line-through; color: gray !important;" colspan="3">엑스트라베드 ${first[0].extrabed_cnt}, 조식 ${first.breakfast_cnt }</td>
+												<td style="text-decoration: line-through; color: gray !important;" colspan="3">엑스트라베드 ${first[0].extrabed_cnt}, 조식 ${first[0].breakfast_cnt }</td>
 											</tr>
 											<tr>
 												<th scope="row" style="background-color: lightgray; color: gray !important;">마일리지 상품</th>
@@ -246,13 +246,13 @@
 								<c:when test="${second[0].reserve_state eq 2 }">
 									<!-- 체크박스 비활성 -->
 									<div class="form-check icheck-sunflower" style="padding-left: 0px;">
-										<span style="font-size: 20px; font-weight: 550; font-family: Helvetica; padding: 4px; color: #633e12; border-radius: 0.5rem;">객실 3</span>
+										<span style="font-size: 20px; font-weight: 550; font-family: Helvetica; padding: 4px; color: #633e12; border-radius: 0.5rem;">객실 2</span>
 										<input class="form-check-input" type="checkbox" value="" id="defaultCheck1" style="margin-left: 0.5rem; zoom: 1.4; margin-bottom: 0.5rem;" disabled>
 										<!-- <label class="form-check-label" for="defaultCheck1">
 									Default checkbox
 								  </label> -->
 									</div>
-									<span style="display: none;">${second[0].reserve_idx }</span>
+									<%-- <span style="display: none;">${second[0].reserve_idx }</span> --%>
 									<table class="table table-bordered" id="secondOff">
 										<tbody>
 											<tr>

@@ -198,6 +198,15 @@
 		where r.reserve_idx in (#{param1}, #{param2}, #{param3})
 	</select>
 	
+	<select id="selectIdx" resultType="String">
+		select reserve_idx
+		from reserve r2
+		where reserve_num in (
+			select reserve_num
+			from reserve r1
+			where reserve_idx in (#{param1}, #{param2}, #{param3})
+		) and reserve_state not in (1);
+	</select>
 	
 	
 	<!-- 결제T - 부분 취소일 때 -->

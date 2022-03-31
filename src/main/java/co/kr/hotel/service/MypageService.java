@@ -265,6 +265,57 @@ public class MypageService {
 	// 2. 쿼리
 		ArrayList<ReserveDTO> reserveDTO = mypageDao.myReserveRefund(loginId, reserve_num);
 		
+		// 2-1. 원래 예약이 있던 방이 취소되었을 때, 취소된 방의 정보로 교환시켜주기
+			ArrayList<ReserveDTO> refundDTO = mypageDao.myRefund(loginId, reserve_num);
+			
+			logger.info("1번쿼리 사이즈"+reserveDTO.size());
+			logger.info("1번쿼리 사이즈"+refundDTO.size());
+			
+		// 2-2. iterator 순회
+			Iterator<ReserveDTO> itera = reserveDTO.iterator();
+			Iterator<ReserveDTO> iterb = refundDTO.iterator();
+			ReserveDTO reserveItera = null;
+			ReserveDTO reserveIterb = null;
+			
+			while(itera.hasNext()) {
+				reserveItera = itera.next();
+				
+				while(iterb.hasNext()) {
+					reserveIterb = iterb.next();
+
+					logger.info(reserveItera.getRoom_num());
+					logger.info(reserveIterb.getRoom_num());
+					logger.info(""+reserveItera.getReserve_idx());
+					logger.info(""+reserveIterb.getReserve_idx());
+					
+					if(reserveItera.getRoom_num().equals(reserveIterb.getRoom_num()) && reserveItera.getReserve_idx() != reserveIterb.getReserve_idx()) {
+						reserveItera.setRoom_num(reserveIterb.getRoom_num());
+						reserveItera.setReserve_idx(reserveIterb.getReserve_idx());
+						reserveItera.setReserve_state(reserveIterb.getReserve_state());
+						reserveItera.setAdult_cnt(reserveIterb.getAdult_cnt());
+						reserveItera.setExtrabed_cnt(reserveIterb.getExtrabed_cnt());
+						reserveItera.setPay_price(Math.abs(reserveIterb.getPay_price()));
+						reserveItera.setPay_mileage(reserveIterb.getPay_mileage());
+						reserveItera.setAmount(reserveIterb.getAmount());
+						
+					}else if(reserveItera.getRoom_num().equals(reserveIterb.getRoom_num()) && reserveItera.getReserve_idx() == reserveIterb.getReserve_idx()) {
+						itera.remove();
+						logger.info("삭제가 대야대");
+					}
+				}
+				
+				iterb = refundDTO.iterator();
+			}
+			
+			Iterator<ReserveDTO> iterc = reserveDTO.iterator();
+			while(iterc.hasNext()) {
+				reserveItera = iterc.next();
+				
+				logger.info("여기서 찍기 : {}",reserveItera.getRoom_num());
+				logger.info("여기도 찍기 : {}",reserveItera.getReserve_state());
+			}
+		
+		
 	// 3. iterator로 순회하면서 hashmap에 담기
 		// 3-1. 변수 초기화
 		Iterator<ReserveDTO> iter = reserveDTO.iterator();					// iterator
