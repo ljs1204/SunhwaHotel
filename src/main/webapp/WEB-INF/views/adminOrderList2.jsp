@@ -39,6 +39,14 @@
 
 </head>
 <style>
+	table, th, td{
+		border : 1px solid black;
+		border-collapse: collapse;
+		padding: 5px;
+		width: 700px;
+		height: 50px;
+	}
+	
 /* 세로 네비게이션(리스트그룹) 관련 css START - SI 20220314 */
 	.list-group-item.active {
 		background-color: #f1e3c4 !important;
@@ -47,7 +55,7 @@
 		font-weight: bold;
 	}
 	.list-group-item {
-		font-size: 12px;
+		font-size: 14px;
 		font-family: Helvetica;
 		border: 1px solid #f1ebd6 !important;
 		padding-right: 10px !important;
@@ -60,6 +68,7 @@
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 		color: #633e12 !important;
+		width: 160px;
 	}
 	#list-reserve .table tr{
 		border-top: 1px solid #cdcbbe;
@@ -73,6 +82,8 @@
 	    color: #fff !important;
 	    border-radius: 50% !important;
 	}
+
+
 
 <style>
 
@@ -102,12 +113,11 @@
 		<!-- 세로 네비게이션 바 -->
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
-
-						<a class="list-group-item list-group-item-action active" id="list-home-list" href="./memlist?currpage=1">회원 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-home-list" href="./memlist?currpage=1">회원 정보 리스트</a>
 						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./AdminReserveList">객실 예약 정보 리스트</a>
-						<a class="list-group-item list-group-item-action" id="list-mescsages-list" href="./AdminQnalist?orderNum=1">회원 문의 관리</a>
-						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./adminOrderList">마일리지 상품 관리</a>
-						
+						<a class="list-group-item list-group-item-action" id="list-messages-list" href="./AdminQnalist?orderNum=1">회원 문의 관리</a>
+						<a class="list-group-item list-group-item-action active" id="list-settings-list" href="./adminOrderList">마일리지 상품 관리</a>
+
 					</div>
 				</div>
 <!-- 마이페이지 세로 네비게이션 추가 END - SI 20220314 -->
@@ -116,88 +126,37 @@
 			<!-- tabContent 있어야 발동함 -->
 			<div class="col-md-10 tab-content" id="nav-tabContent" data-aos="fade-up" data-aos-duration="1000">
 				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
-						style="max-width:100% !important">				
-						<h4 style="color: #633e12;">회원 정보 리스트</h4>
-						<hr style="border-color: #633e12;" />				
-					<table class="table table-hover">
-						<tr>
-							<th>아이디</th>
-							<th>이름(한글)</th>
-							<th>이름(영문)</th>
-							<th>생년월일</th>
-							<th>이메일</th>
-							<th>회원등급</th>
-							<th>예약 내역 조회</th>
-							<th>마일리지 내역 조회</th>
-						</tr>
-						<c:forEach items="${memlist}" var="memlist">
-							<tr>
-								<td><a href="AdminMemInfo?mem_id=${memlist.mem_id}">${memlist.mem_id}</a></td>
-								<td>${memlist.mem_name_kr}</td>
-								<td>${memlist.mem_name_en}</td>
-								<td>${memlist.mem_birth}</td>
-								<td>${memlist.mem_email}</td>
-								<td>${memlist.mem_grade}</td>
-								<td><button class="btn btn-outline-secondary" id="button-addon2" onclick="location.href='myReserveAdmin?num=1&mem_id=${memlist.mem_id}'">예약 내역 조회</button></td>
-								<td><button class="btn btn-outline-secondary" id="button-addon2" onclick="location.href='myPagemilelist?mem_id=${memlist.mem_id}&&orderNum=1'">마일리지내역조회</button></td>
-							</tr>
-						</c:forEach>					
-					</table>
-<!-- 20220317 페이징 START - SI -->
-					<!-- 페이징 이지선 start 20220324 -->
-					<div class="row" data-aos="fade">
-			          <div class="col-12">
-			            <div class="custom-pagination">
-			              <ul class="list-unstyled">
-			              
-			              <c:if test="${listPage.prev}">
-			                <li class="active"><a href="./memlist?currpage=${listPage.startPageNum - 1}&&select=${parameter.select}&&keyword=${parameter.keyword }">&lt;</a></li>
-			              </c:if>
-		                  <c:forEach begin="${listPage.startPageNum}" end="${listPage.endPageNum}" var="num">
-						      <c:if test="${listNum == num}"> 
-							      <li class="active">
-							      	<span>${num}</span>
-							      </li>
-						      </c:if>
-						      <c:if test="${listNum != num}">
-							      <li>
-							      	<a href="./memlist?currpage=${num}&&select=${parameter.select}&&keyword=${parameter.keyword }">${num}</a>
-							      </li>			     
-						      </c:if>    		
-					      </c:forEach>
-			              <c:if test="${milelistPage.next}">
-					      	<li>
-					      		<a href="./memlist?currpage=${listPage.endPageNum + 1}&&select=${parameter.select}&&keyword=${parameter.keyword }">&gt;</a>
-					      	</li>
-					      </c:if>
-			               
-			              </ul>
-			            </div>
-			          </div>
-			        </div>
-						<!-- 페이징 유선화 end 20220324 -->
+						style="max-width:100% !important">
+						<h2>마일리지 상품 리스트</h2>
+	<button style="width:100px; height:35px; float:right; text-align:center;" class="btn btn-outline-secondary" onclick="location.href= './writingForm?loginId=${loginId}'">상품등록</button>
+	<br/>
+	<table class="table table-bordered">
+    <tr>
+        <th>상품번호</th>   
+        <th>이름</th>
+     	<th>가격</th>
+     	<th>삭제</th>
+    </tr>
 
-<!-- 20220317 페이징 END - SI -->					
-					<form name="search" action="./memlist">
- 						<input type="hidden" name="currpage" value= 1>
-						<div class="input-group mb-5">
-						<select name ="select" class="btn btn-outline-secondary" aria-describedby="button-addon2">
-							<option value="mem_id" <c:if test='${parameter.select eq "mem_id"}'>selected</c:if>>아이디</option>
-							<option value="mem_name_kr" <c:if test='${parameter.select eq "mem_name_kr"}'>selected</c:if>>이름(한글)</option>
-							<option value="mem_name_en" <c:if test='${parameter.select eq "mem_name_en"}'>selected</c:if>>이름(영어)</option>
-							<option value="mem_birth" <c:if test='${parameter.select eq "mem_birth"}'>selected</c:if>>생년월일</option>
-						</select> 
-  <input type="text" class="w-20" aria-label="Recipient's username" aria-describedby="button-addon2" name ="keyword" value ="${parameter.keyword }">
-  <div class="input-group-append">
-    <input class="btn btn-outline-secondary" type="submit" id="button-addon2" value="검색">
-  </div>
-</div>
-					</form>
-					<hr style="border-color: #633e12;" /> 					
+    	<c:if test="${adOrderList eq null || size == 0}">
+			<tr>
+				<td colspan="9">등록된 글이 없습니다.</td>
+			</tr>
+		</c:if>		
+			<c:forEach items="${adOrderList}" var="adOrderList">
+			<tr>
+				<td>${adOrderList.product_num}</td>
+				<td>${adOrderList.product_name}</td>
+				<td>${adOrderList.product_price}</td>	
+				<td><a href="del?product_num=${adOrderList.product_num}" >삭제</a></td>				
+			</tr>	
+			</c:forEach>
+		</table>	
 
 				</div>
 			</div>
 <!-- 예약조회 END - SI 20220314 -->	
+
 
 
 
@@ -226,7 +185,6 @@
 			</div>
 		</div>
 	</section>
-
 
 
 	<section class="section bg-image overlay" style="background-image: url(' resources/ images/ hero_4.jpg ');">
@@ -291,6 +249,16 @@
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 					Copyright &copy;
 					<script>
+				
+					function del(){
+						var yn = confirm("정말 이 글을 삭제 하시겠습니까?");
+						
+						if(yn){
+							location.href='./delete?board_num=${board.board_num}';
+						}
+						
+					}
+					 
 						document.write(new Date().getFullYear());
 					</script>
 					All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by
@@ -350,23 +318,8 @@ if (grade != "admin") {
 	location.href="logout";
 }
 
-   var startpage = "${nowpage}";
-   startpage = startpage*1;
-   var totalpage = "${pages}";
-   totalpage = (totalpage*1) ;  	   
-$('#pagination').twbsPagination({
-    startPage : startpage,
-    totalPages : totalpage,
-    visiblePages : 5,
-    onPageClick:function(evt,page){
-       console.log(evt);
-       console.log(page);
-       if("${nowpage}" != page) {
-          location.href="./memlist"+"?currpage="+page;         
-       }
-    }
- 
- });
+
+
 </script>
 
 </html>

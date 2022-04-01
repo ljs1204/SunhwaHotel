@@ -60,6 +60,7 @@
 		border-top: 1px solid #cdcbbe;
 		border-bottom: 1px solid #cdcbbe;
 		color: #633e12 !important;
+		width: 160px;
 	}
 	#list-reserve .table tr{
 		border-top: 1px solid #cdcbbe;
@@ -73,6 +74,8 @@
 	    color: #fff !important;
 	    border-radius: 50% !important;
 	}
+
+
 
 <style>
 
@@ -118,17 +121,18 @@
 						style="max-width:100% !important">
 					<form action="" method="">
 						
-						<h4 style="color: #633e12;"> ${mem_grade} ${loginId}님 어서오세요.오늘도 즐거운 workLife 선화호텔<br/> 문의 관리 페이지입니다.</h4>
+						<h4 style="color: #633e12;"> 오늘도 즐거운 workLife 선화호텔 문의 관리 페이지입니다.</h4>
 						
 						
 						<hr style="border-color: #633e12;" />
 						<c:if test="${board.mem_id eq mem_grade}">
-						<h1 style="text-align:center;">답글입니다</h1>
+						<h3 style="text-align:center; color: #633e12;">답글입니다.</h3>
 						</c:if>
 						<c:if test="${board.mem_id ne mem_grade}">
-						<h1 style="text-align:center;">${board.mem_id}님의 문의글 입니다</h1>
+						<h3 style="text-align:center; color: #633e12;">${board.mem_id}님의 문의글입니다.</h3>
 						</c:if>
-						<table>
+						
+						<table class="table table-hover">
 							<tr>
 								<th>글번호</th>
 								<td>${board.board_num}</td>
@@ -155,15 +159,16 @@
 							</tr>
 						</table>
 						<c:if test="${board.board_type == 1}"> 
-						<input type="button" onclick="location.href='./AdminQnaWriteForm?board_orinum=${board.board_orinum}'" class="btn btn-primary btn-block text-white" value="글쓰기" style="width: 1000px"/>
+						<input class="btn btn-outline-secondary" type="button" onclick="location.href='./AdminQnaWriteForm?board_orinum=${board.board_orinum}'" value="답변 작성하기" style="width: 1000px"/>
 						</c:if>
-						<input type="button" onclick="del()" class="btn btn-primary btn-block text-white" value="삭제" style="width: 100px"/>	
-
+						<c:if test="${board.mem_id eq mem_grade}">
+							<input class="btn btn-outline-secondary" type="button" onclick="del()"  value="삭제" style="width: 100px; float:right;"/>    
+						</c:if>
 <!-- 20220317 페이징 START - SI -->
 					
 <!-- 20220317 페이징 END - SI -->					
 										
-					
+					<div style="height:50px;"></div>
 					<hr style="border-color: #633e12;" />
 					</form>
 
@@ -199,107 +204,6 @@
 			</div>
 		</div>
 	</section>
-
-	<section class="section testimonial-section bg-light">
-		<div class="container">
-			<div class="row justify-content-center text-center mb-5">
-				<div class="col-md-7">
-					<h2 class="heading" data-aos="fade-up">People Says</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="js-carousel-2 owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200">
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; Jean Smith</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-							<p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; Jean Smith</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-							<p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-					<div class="testimonial text-center slider-item">
-						<div class="author-image mb-3">
-							<img src="resources/images/
-person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
-						</div>
-						<blockquote>
-
-							<p>&ldquo;When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.&rdquo;</p>
-						</blockquote>
-						<p>
-							<em>&mdash; John Doe</em>
-						</p>
-					</div>
-
-				</div>
-				<!-- END slider -->
-			</div>
-
-		</div>
-	</section>
-
 
 
 	<section class="section bg-image overlay" style="background-image: url(' resources/ images/ hero_4.jpg ');">

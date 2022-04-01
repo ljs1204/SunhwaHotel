@@ -118,7 +118,7 @@
 				<div class="tab-pane fade show active" id="list-reserve" role="tabpanel" aria-labelledby="list-reserve-list"
 						style="max-width:100% !important">
 					<form action="" method="">
-						<h4 style="color: #633e12;">${loginId}님 어서오세요 문의 관리 페이지입니다.</h4>
+						<h4 style="color: #633e12;">문의 관리 페이지</h4>
 						<hr style="border-color: #633e12;" />
 					<table class="table table-hover">
 						<tr>

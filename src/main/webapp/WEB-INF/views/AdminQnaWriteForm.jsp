@@ -118,7 +118,7 @@
 				<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
 
 						<form action="write" method="POST">
-						<h4 style="color: #633e12;">관리자 게시글 문의 답변 페이지</h4>
+						<h4 style="color: #633e12;">게시글 문의 답변 페이지</h4>
 						<hr style="border-color: #633e12;" />
                         <input type="hidden" name="board_orinum" value=${board_orinum}> 
 						<!-- 프로필 - 유선화 20220316 -->
@@ -139,13 +139,13 @@
 								<tr>
 									<th>내용</th>
 									<td><textarea name="board_content"				
-									style= "width:500px;height:200px;font-size:12px;"/></textarea></td>
+									style= "width:500px;height:200px;font-size:12px; resize:none;"/></textarea></td>
 								</tr>
 								<tr>
 									<th colspan="2">
-										<input type="submit"class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;" value="등록"/>
+										<input type="submit" class="btn btn-outline-secondary" style="color:#633e12; border-color:#633e12;" value="등록"/>
 										<!-- <input type="submit" onclick="location.href='./list'" value="등록"/> -->
-										<input type="button" class="btn btn-outline-warning focu" style="color:#633e12; border-color:#633e12;"onclick="location.href='./AdminQnalist?orderNum=1'" value="취소"/>
+										<input type="button" class="btn btn-outline-secondary" style="color:#633e12; border-color:#633e12;"onclick="location.href='./AdminQnalist?orderNum=1'" value="취소"/>
 									</th>
 								</tr>
 							</tbody>

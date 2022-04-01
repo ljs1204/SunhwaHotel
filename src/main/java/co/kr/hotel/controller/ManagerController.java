@@ -142,7 +142,7 @@ public class ManagerController {
 			model.addAttribute("adOrderList", adOrderList);
 			String loginId = (String)session.getAttribute("loginId");
 			model.addAttribute("loginId", loginId);
-			String page = "adminOrderList";
+			String page = "adminOrderList2";
 			
 			return page;
 		}
