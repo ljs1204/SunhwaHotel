@@ -161,7 +161,7 @@
 		<!-- 객실 상세보기 이동 - 선화 20220311 -->
 			<div class="row">
 				<c:forEach items="${roomlist}" var="list">
-					<div class="col-md-6 col-lg-5" data-aos="fade-up">
+					<div class="col-md-6 col-lg-6" data-aos="fade-up">
 						<a href="roomdetail?room_num=${list.room_num}" class="room">
 							<!-- 여기를 클릭하면 디럭스룸의 객실 상세보기로 이동한다. -->
 							<figure class="img-wrap">

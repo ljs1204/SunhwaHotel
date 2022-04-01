@@ -104,9 +104,10 @@
 		<!-- 세로 네비게이션 바 -->
 				<div data-aos="fade-right" data-aos-duration="500" class="col-2" style="height: 800px; border-right: 1px solid rightgray;">
 					<div class="list-group" id="list-tab" role="tablist" style="border: 1px solid #f1ebd6">
-						 <a class="list-group-item list-group-item-action" id="list-home-list" href="#">회원 정보 리스트</a>
-						<a class="list-group-item list-group-item-action" id="list-profile-list" href="#">객실 예약 정보 리스트</a>
-						<a class="list-group-item list-group-item-action active" id="list-messages-list" href="./AdminQnalist">회원 문의 관리</a>
+
+						<a class="list-group-item list-group-item-action" id="list-home-list" href="./memlist?currpage=1">회원 정보 리스트</a>
+						<a class="list-group-item list-group-item-action" id="list-profile-list" href="./AdminReserveList">객실 예약 정보 리스트</a>
+						<a class="list-group-item list-group-item-action active" id="list-messages-list" href="./AdminQnalist?orderNum=1">회원 문의 관리</a>
 						<a class="list-group-item list-group-item-action" id="list-settings-list" href="./adminOrderList">마일리지 상품 관리</a>
 						
 					</div>
@@ -117,33 +118,27 @@
 				<!-- 프로필 START - SI 20220314 -->
 				<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
 
-						<form action="write" method="POST">
+						<form action="write" method="POST" class="form">
 						<h4 style="color: #633e12;">게시글 문의 답변 페이지</h4>
 						<hr style="border-color: #633e12;" />
                         <input type="hidden" name="board_orinum" value=${board_orinum}> 
 						<!-- 프로필 - 유선화 20220316 -->
 						<table class="table table-bordered">
+									<input type="hidden" name="id" value=${loginId} readonly/> 
 							<tbody>
 								<tr>
-									<th>아이디</th>
-									<td>
-									admin
-									<input type="hidden" name="id"/>
-									</td>
-								</tr>
-								<tr>
 									<th>제목</th>
-									<td><input type="text" name="board_title" 
+									<td><input type="text" value="" name="board_title" class="textform"
 									style= "width:500px;height:30px;font-size:12px;"/></td>
 								</tr>
 								<tr>
 									<th>내용</th>
-									<td><textarea name="board_content"				
+									<td><textarea name="board_content"	class="textform2" value="" 		
 									style= "width:500px;height:200px;font-size:12px; resize:none;"/></textarea></td>
 								</tr>
 								<tr>
 									<th colspan="2">
-										<input type="submit" class="btn btn-outline-secondary" style="color:#633e12; border-color:#633e12;" value="등록"/>
+										<input id="btn" type="button" class="btn btn-outline-secondary" style="color:#633e12; border-color:#633e12;" value="등록"/>
 										<!-- <input type="submit" onclick="location.href='./list'" value="등록"/> -->
 										<input type="button" class="btn btn-outline-secondary" style="color:#633e12; border-color:#633e12;"onclick="location.href='./AdminQnalist?orderNum=1'" value="취소"/>
 									</th>
@@ -201,7 +196,22 @@
 	<script src="resources/js/main.js"></script>
 </body>
 <script>
-
+	
+	$('#btn').click(function(){
+		
+		var text = $('.textform').val();
+		var text2 = $('.textform2').val();
+		console.log(text);
+		console.log(text2);
+		if (text == '' || text2 == ''){
+			alert('내용을 입력해주세요.');
+			return false;
+			
+		}else{
+			$('.form').submit();
+		};
+	});
+	
 </script>
 
   <head>

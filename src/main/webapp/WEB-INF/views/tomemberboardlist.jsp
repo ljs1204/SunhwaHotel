@@ -143,7 +143,7 @@
 								<td><a href="tomemberboarddetail?board_num=${tomemberboardlist.board_num}">${tomemberboardlist.board_title}</a></td>
 								</c:when>
 								<c:otherwise>
-								<td><a href="tomemberboarddetail?board_num=${tomemberboardlist.board_num}">RE)${tomemberboardlist.board_title}</a></td>
+								<td><a href="tomemberboarddetail?board_num=${tomemberboardlist.board_num}">&nbsp&nbsp&nbsp└RE)${tomemberboardlist.board_title}</a></td>
 								</c:otherwise>
 								</c:choose>
 								<td>${tomemberboardlist.mem_id}</td>
@@ -153,7 +153,7 @@
 							</c:forEach>
 							<c:if test="${size eq 0 }">
 								<tr>
-									<td style="text-align:center;" colspan="6"> 내역이 없어요.</td>
+									<td style="text-align:center;" colspan="6"> 내역이 없습니다.</td>
 								</tr>
 							</c:if>
 						</tbody>

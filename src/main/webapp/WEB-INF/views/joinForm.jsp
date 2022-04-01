@@ -511,6 +511,19 @@
 		            $(this).val(v.replace(v,''));
 		        }
 			});
+			
+			//영어만 입력 가능
+			$("#name_en").keyup(function(event){
+			
+				v = $(this).val();
+				var eng = /[^a-zA-Z]/;  
+				
+		        if (eng.test(v)) {
+		            alert("영어만 입력가능 합니다.");
+		            $(this).val('');
+		        }
+			});
+			
 	
 	});
 	
@@ -524,6 +537,9 @@
             event.target.value = event.target.value.replace(/[^0-9]/g, "");
     }
 	
+
+	 
+	 
 
 </script>
 </html>

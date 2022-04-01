@@ -112,7 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
       							start: elem.checkindate,
       							end: elem.checkoutdate,
       							groupId: elem.mem_id,
-      							color: '#2e3b58'
+      							color: '#2e3b58',
+      							
       						 });
       					 }
       				 });
@@ -328,6 +329,10 @@ body {
 	max-width: 1100px;
 	margin: 40px auto;
 	padding: 0 10px;
+}
+
+.fc-event-title-container{
+	cursor : pointer;
 }
 </style>
 </head>

@@ -267,7 +267,7 @@
 		
 		
 	});
-	
+/*
 	$("[name=check]").click(function(){
 		var val = $(this).val();
 		var type = $(this).data("type");
@@ -275,7 +275,7 @@
 		alert("침대 : "+val+" 룸 : "+type+" 가격 : "+price);
 		
 	});
-	
+*/
 	// 수량 +
 	$(document).on('click','[name=plus]',function(){	
 	   var one = $(this).prev().html();
